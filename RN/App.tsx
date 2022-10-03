@@ -1,22 +1,31 @@
-import { StatusBar } from "expo-status-bar";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import React from 'react';
+import {SafeAreaView, StyleSheet, Text} from 'react-native';
 
-import useCachedResources from "./src/hooks/useCachedResources";
-import useColorScheme from "./src/hooks/useColorScheme";
-import Navigation from "./navigation";
+import Main from './src/components/main/main'
+import Login from './src/components/login/login'
 
-export default function App() {
-  const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
-
-  if (!isLoadingComplete) {
-    return null;
-  } else {
-    return (
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-      </SafeAreaProvider>
-    );
-  }
+const App = () => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <Login />
+      {/* <Main /> */}
+      {/* <Login /> */}
+    </SafeAreaView>
+  )
 }
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#00284E',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  title: {
+    color: '#FFFFFF',
+    fontSize: 50
+  }
+});
+
+export default App;
