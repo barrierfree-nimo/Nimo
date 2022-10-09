@@ -5,11 +5,13 @@ const get=require('./routes/get');
 const post=require('./routes/post');
 const del=require('./routes/delete');
 const put=require('./routes/put');
+const user = require('./routes/user');
 
 module.exports=()=>{
 	get(router);
 	post(router);
 	del(router);
 	put(router);
+	user(router);
 	return router;
 }
