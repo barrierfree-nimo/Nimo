@@ -1,84 +1,33 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, TextInput, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { SafeAreaView, Text, View, TextInput, Image, TouchableOpacity} from 'react-native';
+import CommonStyle from '../common/common_style';
+import LoginStyle from './login_style';
 
-const SCREEN_WIDTH = Dimensions.get("window").width
-
-const Login = () => {
+const Login = ({navigation}: any) => {
   return (
-    <SafeAreaView style={styles.container_login}>
-      <View style={styles.container_login_title}>
-        <Text style={styles.text_login}>Login</Text>
+    <SafeAreaView style={CommonStyle.container}>
+      <View style={LoginStyle.container_login_title}>
+        <Text style={LoginStyle.text_login}>Login</Text>
         
       </View>
       
-      <View style={styles.container_login_img}>
-        <Image style={styles.img_login} source={require('../../assets/images/nimo.png')} />
+      <View style={LoginStyle.container_login_img}>
+        <Image style={LoginStyle.img_login} source={require('../../assets/images/nimo.png')} />
       </View>
 
-      <View style={styles.container_login_input}>
-        <TextInput style={styles.textInput_login} placeholder="닉네임" />
-        <TextInput style={styles.textInput_login} placeholder="비밀번호" />
-        <TouchableOpacity style={styles.btn_login}>
-          <Text style={styles.btnText_login}>로그인하기</Text>
+      <View style={LoginStyle.container_login_input}>
+        <TextInput style={LoginStyle.textInput_login} placeholder="닉네임" />
+        <TextInput style={LoginStyle.textInput_login} placeholder="비밀번호" />
+        <TouchableOpacity onPress={() => navigation.navigate("Main")} style={LoginStyle.btn_login}>
+          <Text style={LoginStyle.btnText_login}>로그인하기</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate("Register")} style={LoginStyle.btn_register}>
+          <Text style={LoginStyle.btnText_login}>회원가입하기</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   )
 }
-
-const styles = StyleSheet.create({
-  container_login: {
-    flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },  
-  container_login_title: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 50,
-  },
-  text_login: {
-    color: '#FFFFFF', 
-    fontSize: 50,
-  },
-  container_login_img: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  img_login: {
-    width: 150,
-    height: 150
-  },
-  container_login_input: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  textInput_login: {
-    width: SCREEN_WIDTH - 100,
-    height: 50,
-    marginTop: 10,
-    paddingLeft: 20,
-    borderRadius: 10,
-    backgroundColor: 'orange',
-    fontSize: 20,
-  },
-  btn_login: {
-    width: SCREEN_WIDTH - 100,
-    height: 50,
-    marginTop: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 15,
-    backgroundColor: 'coral',
-  },
-  btnText_login: {
-    color: '#FFFFFF',
-    fontSize: 20,
-    fontWeight: "500"
-  }
-})
 
 export default Login;
