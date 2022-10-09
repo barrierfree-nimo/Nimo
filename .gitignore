@@ -9,7 +9,6 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-config/
 # macOS
 .DS_Store
 node_modules
@@ -17,7 +16,6 @@ node_modules
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/config
 /node_modules
 /.pnp
 .pnp.js
