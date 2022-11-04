@@ -52,7 +52,7 @@ const RegisterStyle = StyleSheet.create({
   btn_register: {
     width: SCREEN_WIDTH - 100,
     height: 50,
-    marginTop: 65,
+    marginTop: 55,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,

@@ -5,9 +5,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Main from './src/components/main/main'
 import Login from './src/components/login/login'
-import Register from './src/components/register/register'
-import RegisterCheck from './src/components/register/registercheck';
-import RegisterInfo from './src/components/register/registerinfo';
+import Register from './src/components/register/register/register'
+import RegisterCheck from './src/components/register/registercheck/registercheck';
+import RegisterInfo from './src/components/register/registerinfo/registerinfo';
 import Quiz from './src/components/quiz/quiz';
 import Community from './src/components/community/community';
 import Info from './src/components/info/info';

@@ -4,11 +4,27 @@ module.exports = class User extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {
-                email: {
-                    type: Sequelize.STRING(20),
+                userId: {
+                    type: Sequelize.INTEGER,
                     allowNull: false,
+					primaryKey: true,
                     unique: true,
                 },
+				password: {
+					type: Sequelize.STRING(20),
+					allowNull: false,
+					unique: false,
+				},
+				nickname: {
+					type: Sequelize.STRING(20),
+                    allowNull: false,
+                    unique: true,
+				},
+				quizNum: {
+					type: Sequelize.INTEGER,
+					allowNull: true,
+					default: 0,
+				}
 			},
 			{
 				sequelize,

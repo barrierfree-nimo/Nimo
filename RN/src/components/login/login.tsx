@@ -1,13 +1,28 @@
-import React from 'react';
+import React, {useState} from 'react';
+import Axios from 'axios';
 import { SafeAreaView, Text, View, TextInput, Image, TouchableOpacity} from 'react-native';
 import CommonStyle from '../common/common_style';
 import LoginStyle from './login_style';
+import baseURL from '../baseURL';
 
 const Login = ({navigation}: any) => {
+  const [userId, setUserId] = useState('')
+  const [password, setPassword] = useState('')
+
+  const userLogin = () => {
+    Axios.post(baseURL + '/user/login', {
+      userId: userId,
+      password: password
+    }).then(res => {
+        console.log(res.data)
+        navigation.replace("Main")
+      }).catch(err => console.log(err))
+  }
+
   return (
     <SafeAreaView style={CommonStyle.container}>
       <View style={LoginStyle.container_login_title}>
-        <Text style={LoginStyle.text_login}>Login</Text>
+        <Text style={LoginStyle.text_login}>Login!</Text>
         
       </View>
       
@@ -16,9 +31,9 @@ const Login = ({navigation}: any) => {
       </View>
 
       <View style={LoginStyle.container_login_input}>
-        <TextInput style={LoginStyle.textInput_login} placeholder="닉네임" />
-        <TextInput style={LoginStyle.textInput_login} placeholder="비밀번호" />
-        <TouchableOpacity onPress={() => navigation.navigate("Main")} style={LoginStyle.btn_login}>
+        <TextInput value={userId} onChangeText={(userId) => setUserId(userId)} style={LoginStyle.textInput_login} placeholder="아이디" />
+        <TextInput value={password} onChangeText={(password) => setPassword(password)} style={LoginStyle.textInput_login} placeholder="비밀번호" />
+        <TouchableOpacity onPress={() => {userLogin()}} style={LoginStyle.btn_login}>
           <Text style={LoginStyle.btnText_login}>로그인하기</Text>
         </TouchableOpacity>
 

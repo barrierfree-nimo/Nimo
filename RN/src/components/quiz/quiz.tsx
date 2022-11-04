@@ -9,6 +9,11 @@ const Quiz = ({navigation}: any) => {
         <Text style={CommonStyle.title}>피싱 퀴즈</Text>
       </View>
 
+      <View>
+        <Text>문제</Text>
+        
+      </View>
+
       <View style={CommonStyle.container_exit}>
         <TouchableOpacity onPress={() => navigation.goBack()}><Text style={CommonStyle.btnText_exit}>피싱퀴즈 나가기</Text></TouchableOpacity>
       </View>

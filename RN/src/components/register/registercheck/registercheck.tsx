@@ -1,6 +1,6 @@
 import React from "react";
 import { SafeAreaView, View, Text, TouchableOpacity } from "react-native";
-import CommonStyle from "../common/common_style";
+import CommonStyle from "../../common/common_style";
 import RegisterCheckStyle from "./registercheck_style";
 
 const RegisterCheck = ({navigation}: any) => {
