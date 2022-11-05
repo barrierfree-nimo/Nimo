@@ -43,8 +43,4 @@ module.exports = class SimulData extends Sequelize.Model {
 			}
         );
     }
-
-    static associate(db) {
-		db.SimulData.belongsTo(db.MSG);
-	}
 };

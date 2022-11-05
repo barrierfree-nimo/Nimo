@@ -37,8 +37,4 @@ module.exports = class Msg extends Sequelize.Model {
 			}
         );
     }
-
-    static associate(db) {
-		db.MSG.hasOne(db.SimulData);
-	}
 };
