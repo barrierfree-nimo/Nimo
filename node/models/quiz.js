@@ -1,7 +1,7 @@
-const Sequelize = require('sequalize');
+const Sequelize = require('sequelize');
 
 module.exports = class Quiz extends Sequelize.Model {
-  static init(sequalize) {
+  static init(sequelize) {
     return super.init(
       {
         id: {
@@ -11,7 +11,7 @@ module.exports = class Quiz extends Sequelize.Model {
           unique: true,
         },
         tag: {
-          type: Sequelize.STRING(45),
+          type: Sequelize.STRING(10),
           allowNull:false,
           unique: false
         },
@@ -20,7 +20,7 @@ module.exports = class Quiz extends Sequelize.Model {
           allowNull:false,
           unique: false
         },
-        qAnswer: {
+        aText: {
           type: Sequelize.STRING(500),
           allowNull:false,
           unique: false
@@ -30,9 +30,14 @@ module.exports = class Quiz extends Sequelize.Model {
           allowNull:false,
           unique: false
         },
+        commentary: {
+					type: Sequelize.STRING(200),
+					allowNull: false,
+					unique: false,
+				}
       },
       {
-        sequalize,
+        sequelize,
         timestamps:false,
 				underscored:false,
 				modelName:'Quiz',
@@ -42,5 +47,6 @@ module.exports = class Quiz extends Sequelize.Model {
 				collate:'utf8_general_ci',
       }
     );
+
   }
 }
