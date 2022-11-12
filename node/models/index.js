@@ -3,6 +3,7 @@ const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[env];
 const User = require('./user');
 const Msg = require('./msg');
+const Sns = require('./sns');
 const SimulData = require('./simuldata');
 const History = require('./history')
 
@@ -15,11 +16,13 @@ db.sequelize = sequelize;
 
 db.User=User;
 db.Msg=Msg;
+db.Sns=Sns;
 db.SimulData=SimulData;
 db.History=History;
 
 User.init(sequelize);
 Msg.init(sequelize);
+Sns.init(sequelize);
 SimulData.init(sequelize);
 History.init(sequelize);
 
