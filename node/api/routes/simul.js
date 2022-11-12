@@ -12,6 +12,7 @@ module.exports = (app) => {
   app.use("/simul", router);
 
   router.get("/", async function (req, res, next) {
+    //userId = token
     arr = ["sns", "msg", "voice"];
     //type = arr[Math.floor(Math.random() * 1)];
     type = arr[Math.round(Math.random())] // 0 or 1 (except voice)
@@ -177,6 +178,21 @@ module.exports = (app) => {
 
       res.status(200).json(data);
     } catch (error) {
+      res.status(400);
+    }
+  });
+
+  router.get("/history", async function (req, res, next) {
+    try {
+      const history = await History.findAll({
+        where: {
+          userId: "test1",
+        },
+        attributes: ["type", "simulNum"],
+        raw: true,
+      });
+      res.status(200).json(history);
+    } catch(error) {
       res.status(400);
     }
   });
