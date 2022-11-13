@@ -15,6 +15,9 @@ const sequelize = new Sequelize(
 db.sequelize = sequelize;
 
 db.User=User;
+db.Msg=Msg;
+db.SimulData=SimulData;
+db.History=History;
 
 db.Msg=Msg;
 db.SimulData=SimulData;

@@ -5,7 +5,6 @@ const SCREEN_WIDTH = Dimensions.get("window").width
 const QuizStyle = StyleSheet.create({
   container_question: {
     width: SCREEN_WIDTH - 30,
-    height: 200,
     alignContent: 'center',
     marginVertical: 20,
     marginHorizontal: 20,
@@ -15,7 +14,16 @@ const QuizStyle = StyleSheet.create({
     color: "white"
   },
   container_option: {
-    
+
+  },
+  btn_container_option: {
+    width: SCREEN_WIDTH - 100,
+    height: 50,
+    backgroundColor: 'ivory',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    marginBottom: 10
   },
   container_navigator: {
     flexDirection: "row"
@@ -36,7 +44,7 @@ const QuizStyle = StyleSheet.create({
   btn_container_next: {
     width: SCREEN_WIDTH - 270,
     height: 60,
-    backgroundColor: 'green',
+    backgroundColor: 'greenyellow',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 20,

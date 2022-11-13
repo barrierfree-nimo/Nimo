@@ -6,14 +6,54 @@ import QuizStyle from './quiz_style'
 import baseURL from '../baseURL';
 
 const Quiz = ({navigation}: any) => {
-  const [quizData, setQuizData] = useState([]);
+  const [idData, setIdData] = useState(0);
+  const [qTextData, setQTextData] = useState();
+  const [aTextData, setATextData] = useState([]);
+  const [answerData, setAnswerData] = useState();
+  const [commentaryData, setCommentaryData] = useState();
 
   const fetchQuiz = async () => {
     Axios.get("http://172.30.1.85:5000"+ '/quiz')    // 나중에 baseURL로 변경해야 함
     .then(res => {
-      setQuizData(res.data[0])
-      console.log(quizData)
+      setIdData(Number(res.data[0]['id']))
+      setQTextData(res.data[0]['qText'])
+      setATextData((res.data[0]['aText']).split(','))
+      setAnswerData(res.data[0]['answer'])
+      setCommentaryData(res.data[0]['commentary'])
     })
+      console.log("fetch")
+  }
+
+  const check_answer = (answer: String) => {
+    if(answer == answerData) {
+      console.log('정답')
+    }
+
+    else {
+      console.log('오답')
+    }
+
+    console.log(commentaryData)
+  }
+
+  const move_back = async () => {
+    var backId = idData - 2
+    await Axios.get("http://172.30.1.85:5000"+ '/quiz/' + String(backId))
+    .then(res => {
+      console.log(res)
+      fetchQuiz()
+    })
+    
+  }
+
+  const move_next = async () => {
+    console.log("1st " + idData)
+    await Axios.get("http://172.30.1.85:5000"+ '/quiz/' + String(idData))
+    .then(res => {
+      console.log(res)
+      fetchQuiz()
+    })
+    
   }
 
   useEffect(() => {
@@ -28,16 +68,17 @@ const Quiz = ({navigation}: any) => {
 
 
       <View style={QuizStyle.container_question}>
-        <Text style={QuizStyle.text_question}>Q. {quizData['qText']}</Text>
+        <Text style={QuizStyle.text_question}>Q. {qTextData}</Text>
       </View>
 
       <View style={QuizStyle.container_option}>
-        <TouchableOpacity><Text style={QuizStyle.btn_text}>{quizData['aText']}</Text></TouchableOpacity>
+        {aTextData.map((item) => <TouchableOpacity onPress={() => check_answer(item)} style={QuizStyle.btn_container_option}><Text style={QuizStyle.btn_text}>{item}</Text></TouchableOpacity>)}
       </View>
 
+
       <View style={QuizStyle.container_navigator}>
-        <TouchableOpacity style={QuizStyle.btn_container_back}><Text style={QuizStyle.btn_text}>이전 문제</Text></TouchableOpacity>
-        <TouchableOpacity style={QuizStyle.btn_container_next}><Text style={QuizStyle.btn_text}>다음 문제</Text></TouchableOpacity>
+        <TouchableOpacity onPress={move_back} style={QuizStyle.btn_container_back}><Text style={QuizStyle.btn_text}>이전 문제</Text></TouchableOpacity>
+        <TouchableOpacity onPress={move_next} style={QuizStyle.btn_container_next}><Text style={QuizStyle.btn_text}>다음 문제</Text></TouchableOpacity>
       </View>
 
       <View style={CommonStyle.container_exit}>

@@ -32,6 +32,7 @@ module.exports = (app) => {
     
   })
 
+
   // 퀴즈 1개 참여 완료
   router.get("/:id", async function(req, res, next) {
     try {
