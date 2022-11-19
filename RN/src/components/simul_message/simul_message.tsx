@@ -20,7 +20,26 @@ const MessageSimul = () => {
         style={styles.img_bg}
       />
       <Text style={styles.text_title}>메세지</Text>
-      <MessageCard title="대출빙자형 피싱" content="dfdf" check={true} />
+      <MessageCard
+        title="지인 사칭형 피싱"
+        content="엄마 나 송아야"
+        check={false}
+      />
+      <MessageCard
+        title="지인 사칭형 피싱"
+        content="민서야 잘 지내? 다름이..."
+        check={false}
+      />
+      <MessageCard
+        title="대출 빙자형 피싱"
+        content="[Web발신] 국민은행 대..."
+        check={true}
+      />
+      <MessageCard
+        title="허위 정보 피싱"
+        content="[국제발신] 해외직구 지..."
+        check={true}
+      />
     </SafeAreaView>
   );
 };
