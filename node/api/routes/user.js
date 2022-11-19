@@ -2,12 +2,21 @@ const express = require("express");
 const router = express.Router();
 const { User } = require("../../models");
 
-const Sequelize = require("sequelize");
+const cors = require("cors");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
 
 module.exports = (app) => {
   app.use("/user", router);
+  app.use(
+    session({
+      secret: "nimosecretsession1887254",
+      resave: false,
+      saveUninitialized: true,
+    })
+  );
 
-  router.post("/join", async function (req,res) {
+  router.post("/join", async function (req, res) {
     try {
       const { userId, password, nickname } = req.body;
 
@@ -35,7 +44,7 @@ module.exports = (app) => {
     }
   });
 
-  router.post("/login", async function (req,res) {
+  router.post("/login", async function (req, res) {
     try {
       const { userId, password } = req.body;
       if (!userId || !password) {
@@ -51,7 +60,16 @@ module.exports = (app) => {
         if (!user) {
           res.status(400).json({ message: "Retry (not exist or typeerror)" });
         } else {
-          res.status(200).json({ message: "Login Success!" });
+          var token = jwt.sign(
+            {
+              userId: req.body.userId,
+            },
+            process.env.JWT_SECRET
+          );
+          res.status(200).json({
+            message: "Login Success!",
+            token: token,
+          });
         }
       }
     } catch (error) {
