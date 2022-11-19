@@ -13,9 +13,9 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const SimulMain = () => {
   const [push, setPush] = useState<string>("message");
-  const [messageType, setMessageType] = useState<string>("default");
-  const [snsType, setSnsType] = useState<string>("default");
-  const [callType, setCallType] = useState<string>("default");
+  const [messageType, setMessageType] = useState<string>("red");
+  const [snsType, setSnsType] = useState<string>("red");
+  const [callType, setCallType] = useState<string>("red");
 
   return (
     <SafeAreaView style={styles.container}>
@@ -23,6 +23,7 @@ const SimulMain = () => {
         source={require("../../assets/icons/simul_main/galaxy.png")}
         style={styles.img_galaxy}
       />
+      {/*  나머지 앱 이미지들 */}
       <View>
         <Image
           source={require("../../assets/icons/simul_main/ic_app1.png")}
@@ -70,93 +71,104 @@ const SimulMain = () => {
         />
       </View>
 
-      <TouchableOpacity>
-        {snsType === "star" ? (
-          <Image
-            source={require(`../../assets/icons/simul_main/sns_star.png`)}
-            style={[styles.img_app_icon_new, { top: 378, left: 75 }]}
-          />
-        ) : (
-          <Image
-            source={require(`../../assets/icons/simul_main/sns_red.png`)}
-            style={[styles.img_app_icon_new, { top: 378, left: 75 }]}
-          />
-        )}
-        <Image
-          source={require(`../../assets/icons/simul_main/sns_default.png`)}
-          style={[styles.img_app_icon, { top: 395, left: 95 }]}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity>
-        {messageType === "star" ? (
-          <Image
-            source={require(`../../assets/icons/simul_main/message_star.png`)}
-            style={[styles.img_app_icon_new, { top: 378, left: 75 }]}
-          />
-        ) : (
-          <Image
-            source={require(`../../assets/icons/simul_main/message_red.png`)}
-            style={[styles.img_app_icon_new, { top: 378, left: 75 }]}
-          />
-        )}
-        <Image
-          source={require("../../assets/icons/simul_main/call_default.png")}
-          style={[styles.img_app_icon, { top: 600, right: 80 }]}
-        />
-      </TouchableOpacity>
+      {/*  앱 서랍장 */}
       <TouchableOpacity>
         <Image
           source={require("../../assets/icons/simul_main/app_container.png")}
           style={[styles.img_app_icon, { top: 600, right: -40 }]}
         />
       </TouchableOpacity>
+
+      {/*  SNS */}
       <TouchableOpacity>
-        {callType === "star" ? (
+        {push === "sns" && snsType === "star" && (
           <Image
-            source={require(`../../assets/icons/simul_main/call_star.png`)}
-            style={[styles.img_app_icon_new, { top: 378, left: 75 }]}
-          />
-        ) : (
-          <Image
-            source={require(`../../assets/icons/simul_main/call_red.png`)}
+            source={require(`../../assets/icons/simul_main/sns_star.png`)}
             style={[styles.img_app_icon_new, { top: 378, left: 75 }]}
           />
         )}
-        <Image
-          source={require("../../assets/icons/simul_main/message_default.png")}
-          style={[styles.img_app_icon, { top: 600, left: 80 }]}
-        />
+        {push === "sns" && snsType === "red" && (
+          <Image
+            source={require(`../../assets/icons/simul_main/sns_red.png`)}
+            style={[styles.img_app_icon_new, { top: 378, left: 75 }]}
+          />
+        )}
+        {push !== "sns" && (
+          <Image
+            source={require(`../../assets/icons/simul_main/sns_default.png`)}
+            style={[styles.img_app_icon, { top: 395, left: 95 }]}
+          />
+        )}
       </TouchableOpacity>
+
+      {/*  MSG */}
+      <TouchableOpacity>
+        {push === "message" && messageType === "star" && (
+          <Image
+            source={require(`../../assets/icons/simul_main/message_star.png`)}
+            style={[styles.img_app_icon_new, { top: 580, left: 65 }]}
+          />
+        )}
+        {push === "message" && messageType === "red" && (
+          <Image
+            source={require(`../../assets/icons/simul_main/message_red.png`)}
+            style={[styles.img_app_icon_new, { top: 580, left: 65 }]}
+          />
+        )}
+        {push !== "message" && (
+          <Image
+            source={require("../../assets/icons/simul_main/message_default.png")}
+            style={[styles.img_app_icon, { top: 600, left: 85 }]}
+          />
+        )}
+      </TouchableOpacity>
+
+      {/*  CALL */}
+      <TouchableOpacity>
+        {push === "call" && callType === "star" && (
+          <Image
+            source={require(`../../assets/icons/simul_main/call_star.png`)}
+            style={[styles.img_app_icon_new, { top: 580, right: 75 }]}
+          />
+        )}
+        {push === "call" && callType === "red" && (
+          <Image
+            source={require(`../../assets/icons/simul_main/call_red.png`)}
+            style={[styles.img_app_icon_new, { top: 580, right: 75 }]}
+          />
+        )}
+        {push !== "call" && (
+          <Image
+            source={require("../../assets/icons/simul_main/call_default.png")}
+            style={[styles.img_app_icon, { top: 600, right: 80 }]}
+          />
+        )}
+      </TouchableOpacity>
+
       <View>
-        {push === "sns" ? (
+        {push === "sns" && (
           <TouchableOpacity>
             <Image
               source={require("../../assets/icons/simul_main/sns_push.png")}
               style={styles.img_push}
             />
           </TouchableOpacity>
-        ) : (
-          ""
         )}
-        {push === "message" ? (
+        {push === "message" && (
           <TouchableOpacity>
             <Image
               source={require("../../assets/icons/simul_main/message_push.png")}
               style={styles.img_push}
             />
           </TouchableOpacity>
-        ) : (
-          ""
         )}
-        {push === "call" ? (
+        {push === "call" && (
           <TouchableOpacity>
             <Image
               source={require("../../assets/icons/simul_main/call_push.png")}
               style={styles.img_push}
             />
           </TouchableOpacity>
-        ) : (
-          ""
         )}
       </View>
     </SafeAreaView>
