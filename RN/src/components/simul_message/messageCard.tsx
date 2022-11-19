@@ -17,11 +17,9 @@ export interface MessageCardProps {
 }
 
 const MessageCard = (props: MessageCardProps) => {
-  // const router = useRouter();
   const { title, content, check } = props;
   return (
     <View>
-      {/* <TouchableOpacity onPress={() => router.push(`/simul_message/${id}`)}> */}
       <TouchableOpacity>
         <View style={styles.card_container}>
           <Image
