@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   SafeAreaView,
   TouchableOpacity,
@@ -17,9 +17,11 @@ export interface MessageCardProps {
 }
 
 const MessageCard = (props: MessageCardProps) => {
+  // const router = useRouter();
   const { title, content, check } = props;
   return (
     <View>
+      {/* <TouchableOpacity onPress={() => router.push(`/simul_message/${id}`)}> */}
       <TouchableOpacity>
         <View style={styles.card_container}>
           <Image
@@ -62,9 +64,10 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   img_checkbox: {
+    position: "absolute",
     width: 30,
     height: 30,
-    marginLeft: 100,
+    marginLeft: SCREEN_WIDTH - 120,
     marginTop: 10,
   },
   text_title: {
@@ -81,6 +84,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     borderWidth: 0.5,
     borderColor: "gray",
+    marginBottom: 30,
   },
 });
 
