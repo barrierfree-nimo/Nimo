@@ -6,15 +6,34 @@ const QuizStyle = StyleSheet.create({
   container_question: {
     width: SCREEN_WIDTH - 30,
     alignContent: 'center',
-    marginVertical: 20,
+    marginVertical: 10,
     marginHorizontal: 20,
   },
   text_question: {
-    fontSize: 20,
+    fontSize: 23,
     color: "white"
   },
   container_option: {
-
+    
+  },
+  container_commentary: {
+    backgroundColor: 'ivory',
+    marginVertical: 5,
+    marginHorizontal: 20,
+    paddingVertical: 40,
+    paddingHorizontal: 27,
+    borderRadius: 15,
+    alignItems: 'center'
+  },
+  text_quizResult: {
+    marginBottom: 10,
+    fontSize: 38,
+    fontWeight: 'bold',
+    color: "coral"
+    
+  },
+  text_commentary: {
+    fontSize: 20
   },
   btn_container_option: {
     width: SCREEN_WIDTH - 100,

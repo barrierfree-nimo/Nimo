@@ -10,6 +10,8 @@ const Quiz = ({navigation}: any) => {
   const [qTextData, setQTextData] = useState();
   const [aTextData, setATextData] = useState([]);
   const [answerData, setAnswerData] = useState();
+  const [showCommentary, setShowCommentary] = useState(false);
+  const [quizResult, setQuizResult] = useState('');
   const [commentaryData, setCommentaryData] = useState();
 
   const fetchQuiz = async () => {
@@ -20,37 +22,34 @@ const Quiz = ({navigation}: any) => {
       setATextData((res.data[0]['aText']).split(','))
       setAnswerData(res.data[0]['answer'])
       setCommentaryData(res.data[0]['commentary'])
+      setShowCommentary(false)
     })
-      console.log("fetch")
   }
 
   const check_answer = (answer: String) => {
+    setShowCommentary(true)
+
     if(answer == answerData) {
-      console.log('정답')
+      setQuizResult("정답입니다!")
     }
 
     else {
-      console.log('오답')
+      setQuizResult("오답입니다!")
     }
-
-    console.log(commentaryData)
   }
 
   const move_back = async () => {
     var backId = idData - 2
     await Axios.get("http://172.30.1.85:5000"+ '/quiz/' + String(backId))
     .then(res => {
-      console.log(res)
       fetchQuiz()
     })
     
   }
 
   const move_next = async () => {
-    console.log("1st " + idData)
     await Axios.get("http://172.30.1.85:5000"+ '/quiz/' + String(idData))
     .then(res => {
-      console.log(res)
       fetchQuiz()
     })
     
@@ -71,9 +70,18 @@ const Quiz = ({navigation}: any) => {
         <Text style={QuizStyle.text_question}>Q. {qTextData}</Text>
       </View>
 
-      <View style={QuizStyle.container_option}>
-        {aTextData.map((item) => <TouchableOpacity onPress={() => check_answer(item)} style={QuizStyle.btn_container_option}><Text style={QuizStyle.btn_text}>{item}</Text></TouchableOpacity>)}
-      </View>
+      { showCommentary === false ? (
+        <View style={QuizStyle.container_option}>
+          {aTextData.map((item) => <TouchableOpacity onPress={() => check_answer(item)} style={QuizStyle.btn_container_option}><Text style={QuizStyle.btn_text}>{item}</Text></TouchableOpacity>)}
+        </View>
+      ) : (
+        <View style={QuizStyle.container_commentary}>
+          <Text style={QuizStyle.text_quizResult}>{quizResult}</Text>
+          <Text style={QuizStyle.text_commentary}>{commentaryData}</Text>
+        </View>
+      )
+      
+      }
 
 
       <View style={QuizStyle.container_navigator}>
