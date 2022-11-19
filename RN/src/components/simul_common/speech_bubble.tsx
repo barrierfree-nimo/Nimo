@@ -13,7 +13,7 @@ export interface SpeechBubbleProps {
 const SpeechBubble = (props: SpeechBubbleProps) => {
   const { bubbleColor, bubbleDirection, textColor, textContent } = props;
   return (
-    <View>
+    <View style={styles.position}>
       <View style={styles.talkBubble}>
         <View
           style={[styles.talkBubbleSquare, { backgroundColor: bubbleColor }]}
@@ -43,28 +43,21 @@ const SpeechBubble = (props: SpeechBubbleProps) => {
 };
 
 const styles = StyleSheet.create({
+  position: {
+    position: "relative",
+    height: "auto",
+    paddingBottom: 30,
+  },
   talkBubble: {
     position: "absolute",
     zIndex: 2,
     flex: 1,
-    left: Dimensions.get("window").width / 2 - 180,
-    marginTop: 180,
   },
   talkBubbleSquare: {
     width: 200,
     height: "auto",
-    borderRadius: 10,
+    borderRadius: 12,
   },
-  // talkBubbleTriangle: {
-  //   position: "absolute",
-  //   bottom: 0,
-  //   left: -30,
-  //   borderLeftWidth: 20,
-  //   borderRightWidth: 20,
-  //   borderTopWidth: 20,
-  //   borderLeftColor: "transparent",
-  //   borderTopColor: "transparent",
-  // },
   talkBubbleTriangle: {
     position: "absolute",
     bottom: 0,
@@ -77,6 +70,7 @@ const styles = StyleSheet.create({
   },
   talkBubbleMessage: {
     margin: 10,
+    fontSize: 20,
   },
 });
 
