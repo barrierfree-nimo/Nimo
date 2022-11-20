@@ -23,7 +23,7 @@ const MessageSimul = ({ navigation }: any) => {
       <TouchableOpacity onPress={() => navigation.navigate("MessageDetail")}>
         <MessageCard
           title="지인 사칭형 피싱"
-          content="엄마 나 송아야"
+          content="엄마 나 송아야!"
           check={false}
         />
       </TouchableOpacity>
