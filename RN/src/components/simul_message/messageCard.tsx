@@ -20,29 +20,27 @@ const MessageCard = (props: MessageCardProps) => {
   const { title, content, check } = props;
   return (
     <View>
-      <TouchableOpacity>
-        <View style={styles.card_container}>
-          <Image
-            source={require("../../assets/icons/simul_message/ic_profile.png")}
-            style={styles.img_profile}
-          />
-          <View style={styles.text_container}>
-            <Text style={styles.text_title}>{title}</Text>
-            <Text style={styles.text_content}>{content}</Text>
-          </View>
-          {check === true ? (
-            <Image
-              source={require("../../assets/icons/simul_message/checkbox_true.png")}
-              style={styles.img_checkbox}
-            />
-          ) : (
-            <Image
-              source={require("../../assets/icons/simul_message/checkbox_false.png")}
-              style={styles.img_checkbox}
-            />
-          )}
+      <View style={styles.card_container}>
+        <Image
+          source={require("../../assets/icons/simul_message/ic_profile.png")}
+          style={styles.img_profile}
+        />
+        <View style={styles.text_container}>
+          <Text style={styles.text_title}>{title}</Text>
+          <Text style={styles.text_content}>{content}</Text>
         </View>
-      </TouchableOpacity>
+        {check === true ? (
+          <Image
+            source={require("../../assets/icons/simul_message/checkbox_true.png")}
+            style={styles.img_checkbox}
+          />
+        ) : (
+          <Image
+            source={require("../../assets/icons/simul_message/checkbox_false.png")}
+            style={styles.img_checkbox}
+          />
+        )}
+      </View>
       <View style={styles.lineStyle} />
     </View>
   );

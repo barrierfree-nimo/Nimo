@@ -14,7 +14,7 @@ import Info from "./src/components/info/info";
 
 import SimulMain from "./src/components/simul_main/simul_main";
 import MessageSimul from "./src/components/simul_message/simul_message";
-import MessageDetail from "./src/components/simul_message/[id]";
+import MessageDetail from "./src/components/simul_message/id";
 import CorrectPage from "./src/components/simul_message/correct";
 import WrongPage from "./src/components/simul_message/wrong";
 

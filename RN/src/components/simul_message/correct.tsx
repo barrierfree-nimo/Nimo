@@ -11,7 +11,7 @@ import {
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
-const CorrectPage = () => {
+const CorrectPage = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.container}>
       <Image
@@ -31,18 +31,25 @@ const CorrectPage = () => {
       </View>
       {/* 이동버튼 */}
       <View style={styles.navigate_btn_container}>
-        <TouchableOpacity style={styles.navigate_btn}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.navigate_btn}
+        >
           <Text style={styles.navigate_btn_text}>이전 화면</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navigate_btn}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("SimulMain")}
+          style={styles.navigate_btn}
+        >
           <Text style={styles.navigate_btn_text}>체험 첫화면</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.exit_btn}>
-        <TouchableOpacity>
-          <Text style={styles.text_exit}>체험 나가기</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Main")}
+        style={styles.exit_btn}
+      >
+        <Text style={styles.text_exit}>체험 나가기</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -52,6 +59,8 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 30,
     alignItems: "center",
+    top: 60,
+    backgroundColor: "#00284E",
   },
   img_bg: {
     position: "absolute",

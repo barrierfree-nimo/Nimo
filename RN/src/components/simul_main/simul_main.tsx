@@ -11,7 +11,7 @@ import {
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
-const SimulMain = () => {
+const SimulMain = ({ navigation }: any) => {
   const [push, setPush] = useState<string>("message");
   const [messageType, setMessageType] = useState<string>("red");
   const [snsType, setSnsType] = useState<string>("red");
@@ -102,7 +102,7 @@ const SimulMain = () => {
       </TouchableOpacity>
 
       {/*  MSG */}
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("MessageSimul")}>
         {push === "message" && messageType === "star" && (
           <Image
             source={require(`../../assets/icons/simul_main/message_star.png`)}
@@ -147,7 +147,7 @@ const SimulMain = () => {
 
       <View>
         {push === "sns" && (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("MessageSimul")}>
             <Image
               source={require("../../assets/icons/simul_main/sns_push.png")}
               style={styles.img_push}
@@ -155,7 +155,7 @@ const SimulMain = () => {
           </TouchableOpacity>
         )}
         {push === "message" && (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("MessageSimul")}>
             <Image
               source={require("../../assets/icons/simul_main/message_push.png")}
               style={styles.img_push}
@@ -171,6 +171,13 @@ const SimulMain = () => {
           </TouchableOpacity>
         )}
       </View>
+      {/* 이동버튼 */}
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Main")}
+        style={styles.exit_btn}
+      >
+        <Text style={styles.text_exit}>체험 나가기</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -179,6 +186,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 30,
+    top: 60,
     alignItems: "center",
   },
   img_galaxy: {
@@ -209,6 +217,22 @@ const styles = StyleSheet.create({
     width: 108,
     height: 108,
     resizeMode: "stretch",
+  },
+  exit_btn: {
+    position: "absolute",
+    width: SCREEN_WIDTH - 150,
+    height: 60,
+
+    alignItems: "center",
+    justifyContent: "center",
+    top: 750,
+    backgroundColor: "#FF4D4D",
+    borderRadius: 15,
+    overflow: "hidden",
+  },
+  text_exit: {
+    fontSize: 30,
+    fontWeight: "800",
   },
 });
 

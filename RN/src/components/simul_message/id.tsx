@@ -9,6 +9,7 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
+import navigation from "../../../navigation";
 import SpeechBubble from "../simul_common/speech_bubble";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -36,7 +37,7 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 //   },
 // };
 
-const MessageDetail = () => {
+const MessageDetail = ({ navigation }: any) => {
   const scrollViewRef = useRef<ScrollView | null>(null);
   return (
     <SafeAreaView style={styles.container}>
@@ -126,10 +127,14 @@ const MessageDetail = () => {
                 textContent="링크를 클릭하시겠습니까?"
               />
               <View style={styles.choice_box}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("CorrectPage")}
+                >
                   <Text style={styles.text_choice}> 예</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("WrongPage")}
+                >
                   <Text style={styles.text_choice}>아니오</Text>
                 </TouchableOpacity>
               </View>
@@ -140,18 +145,25 @@ const MessageDetail = () => {
 
       {/* 이동버튼 */}
       <View style={styles.navigate_btn_container}>
-        <TouchableOpacity style={styles.navigate_btn}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.navigate_btn}
+        >
           <Text style={styles.navigate_btn_text}>이전 화면</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navigate_btn}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("SimulMain")}
+          style={styles.navigate_btn}
+        >
           <Text style={styles.navigate_btn_text}>체험 첫화면</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.exit_btn}>
-        <TouchableOpacity>
-          <Text style={styles.text_exit}>체험 나가기</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Main")}
+        style={styles.exit_btn}
+      >
+        <Text style={styles.text_exit}>체험 나가기</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -161,7 +173,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 30,
     alignItems: "center",
-    width: SCREEN_WIDTH - 80,
+    top: 60,
   },
   img_bg: {
     position: "absolute",
