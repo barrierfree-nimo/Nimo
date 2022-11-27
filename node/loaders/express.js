@@ -9,7 +9,9 @@ const helmet = require('helmet');
 const hpp = require('hpp');
 const cors = require('cors')();
 
-const router = require('../api');
+const mainRouter = require('../api/routes/main')
+const userRouter = require('../api/routes/user')
+const simulRouter = require('../api/routes/simul')
 
 module.exports = (app) => {
     dotenv.config();
@@ -64,6 +66,7 @@ module.exports = (app) => {
         next();
     });
 
-    app.use(router());
-
+    app.use("/main", mainRouter);
+    app.use("/user", userRouter);
+    app.use("/simul", simulRouter);
 };
