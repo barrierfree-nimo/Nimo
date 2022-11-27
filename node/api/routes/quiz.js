@@ -13,7 +13,7 @@ module.exports = (app) => {
     const quizNum = await User.findOne({
       attributes:['quizNum'],
       where: {
-        userId: "test4",
+        nickname: "tester",
       }
     })
     const currentNum = quizNum.quizNum
@@ -38,7 +38,7 @@ module.exports = (app) => {
     try {
       User.update(
         { quizNum: req.params.id },
-        { where: { userId: "test4" } }
+        { where: { nickname: "tester" } }
       ).then(() => { res.redirect('/quiz/')})
     } catch (error) {
 
