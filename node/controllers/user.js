@@ -57,7 +57,6 @@ const user = {
             },
             process.env.JWT_SECRET
           );
-          const refreshtoken = jwt.
           res.status(200).json({
             message: "Login Success!",
             token: token,
