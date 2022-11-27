@@ -10,7 +10,7 @@ module.exports = class User extends Sequelize.Model {
           primaryKey: true,
           autoIncrement: true,
         },
-        userId: {
+        nickname: {
           type: Sequelize.STRING(10),
           allowNull: false,
           unique: true,
@@ -19,11 +19,6 @@ module.exports = class User extends Sequelize.Model {
           type: Sequelize.STRING(20),
           allowNull: false,
           unique: false,
-        },
-        nickname: {
-          type: Sequelize.STRING(20),
-          allowNull: false,
-          unique: true,
         },
         quizNum: {
           type: Sequelize.INTEGER,

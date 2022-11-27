@@ -5,6 +5,8 @@ dotenv.config();
 
 async function startServer() {
 const app=express();
+
+app.set('jwt-secret', process.env.JWT_SECRET)
 app.set('port',process.env.PORT || 5000);
 	
   await require('./loaders')(app);

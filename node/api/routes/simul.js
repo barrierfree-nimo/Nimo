@@ -12,14 +12,14 @@ module.exports = (app) => {
   app.use("/simul", router);
 
   router.get("/", async function (req, res, next) {
-    //userId = token
+    //nickname = token
     arr = ["sns", "msg", "voice"];
     //type = arr[Math.floor(Math.random() * 1)];
     type = arr[Math.round(Math.random())] // 0 or 1 (except voice)
     console.log(type)
     const doneNum = await History.findAll({
       where: {
-        userId: "test1",
+        nickname: "tester",
         type: type,
       },
       attributes: ["simulNum"],
@@ -67,7 +67,7 @@ module.exports = (app) => {
       });
       const history = await History.findAll({
         where: {
-          userId: "test1",
+          nickname: "tester",
           type: "msg",
         },
         attributes: ["simulNum"],
@@ -130,7 +130,7 @@ module.exports = (app) => {
       });
       const history = await History.findAll({
         where: {
-          userId: "test1",
+          nickname: "tester",
           type: "sns",
         },
         attributes: ["simulNum"],
@@ -186,13 +186,13 @@ module.exports = (app) => {
     try {
       const history = await History.findAll({
         where: {
-          userId: "test1",
+          nickname: "tester",
         },
         attributes: ["type", "simulNum"],
         raw: true,
       });
       res.status(200).json(history);
-    } catch(error) {
+    } catch (error) {
       res.status(400);
     }
   });
