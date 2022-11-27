@@ -10,6 +10,7 @@ import {
 } from "react-native";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
+const SCREEN_HEIGHT = Dimensions.get("window").height;
 
 const SimulMain = ({ navigation }: any) => {
   const [push, setPush] = useState<string>("message");
@@ -186,13 +187,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 30,
-    top: 60,
+    top: 10,
     alignItems: "center",
   },
   img_galaxy: {
     position: "absolute",
     width: SCREEN_WIDTH - 20,
-    height: 720,
+    height: SCREEN_HEIGHT - 20,
     resizeMode: "stretch",
   },
   img_app_icon: {
@@ -205,7 +206,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 60,
     left: -160,
-
     width: SCREEN_WIDTH - 100,
     height: 70,
     justifyContent: "center",

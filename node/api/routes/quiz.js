@@ -27,8 +27,8 @@ module.exports = (app) => {
         id: { [Sequelize.Op.gt]: currentNum },
       },
     })
-
-    res.send(nextQuiz);
+    res.status(200).json(nextQuiz);
+    // res.send(nextQuiz);
     
   })
 
