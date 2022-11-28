@@ -12,6 +12,7 @@ const cors = require('cors')();
 const mainRouter = require('../api/routes/main')
 const userRouter = require('../api/routes/user')
 const simulRouter = require('../api/routes/simul')
+const quizRouter = require('../api/routes/quiz')
 
 module.exports = (app) => {
     dotenv.config();
@@ -69,4 +70,5 @@ module.exports = (app) => {
     app.use("/main", mainRouter);
     app.use("/user", userRouter);
     app.use("/simul", simulRouter);
+    app.use("/quiz", quizRouter);
 };

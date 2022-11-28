@@ -125,7 +125,7 @@ const SimulMain = ({ navigation }: any) => {
       </TouchableOpacity>
 
       {/*  CALL */}
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => {navigation.navigate("VoiceSimulStart")}}>
         {push === "call" && callType === "star" && (
           <Image
             source={require(`../../assets/icons/simul_main/call_star.png`)}
