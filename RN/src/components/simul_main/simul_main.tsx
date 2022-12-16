@@ -8,8 +8,10 @@ import {
   Text,
   Dimensions,
 } from "react-native";
+import CommonStyle from "../common/common_style";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
+const SCREEN_HEIGHT = Dimensions.get("window").height;
 
 const SimulMain = ({ navigation }: any) => {
   const [push, setPush] = useState<string>("message");
@@ -18,57 +20,81 @@ const SimulMain = ({ navigation }: any) => {
   const [callType, setCallType] = useState<string>("red");
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={CommonStyle.container}>
       <Image
         source={require("../../assets/icons/simul_main/galaxy.png")}
         style={styles.img_galaxy}
       />
-      {/*  나머지 앱 이미지들 */}
-      <View>
-        <Image
-          source={require("../../assets/icons/simul_main/ic_app1.png")}
-          style={[styles.img_app_icon, { top: 150, right: 95 }]}
-        />
-        <Image
-          source={require("../../assets/icons/simul_main/ic_app2.png")}
-          style={[styles.img_app_icon, { top: 150, right: 5 }]}
-        />
-        <Image
-          source={require("../../assets/icons/simul_main/ic_app3.png")}
-          style={[styles.img_app_icon, { top: 150, left: 5 }]}
-        />
-        <Image
-          source={require("../../assets/icons/simul_main/ic_app4.png")}
-          style={[styles.img_app_icon, { top: 150, left: 95 }]}
-        />
-        <Image
-          source={require("../../assets/icons/simul_main/ic_app5.png")}
-          style={[styles.img_app_icon, { top: 270, right: 95 }]}
-        />
-        <Image
-          source={require("../../assets/icons/simul_main/ic_app6.png")}
-          style={[styles.img_app_icon, { top: 270, right: 5 }]}
-        />
-        <Image
-          source={require("../../assets/icons/simul_main/ic_app7.png")}
-          style={[styles.img_app_icon, { top: 270, left: 5 }]}
-        />
-        <Image
-          source={require("../../assets/icons/simul_main/ic_app8.png")}
-          style={[styles.img_app_icon, { top: 270, left: 95 }]}
-        />
-        <Image
-          source={require("../../assets/icons/simul_main/ic_app9.png")}
-          style={[styles.img_app_icon, { top: 390, right: 95 }]}
-        />
-        <Image
-          source={require("../../assets/icons/simul_main/ic_app10.png")}
-          style={[styles.img_app_icon, { top: 390, right: 5 }]}
-        />
-        <Image
-          source={require("../../assets/icons/simul_main/ic_app11.png")}
-          style={[styles.img_app_icon, { top: 390, left: 5 }]}
-        />
+
+      {/*  앱 바탕 */}
+      <View style={styles.app_div}>
+        <>
+          <Image
+            source={require("../../assets/icons/simul_main/ic_app1.png")}
+            style={styles.img_app_icon}
+          />
+          <Image
+            source={require("../../assets/icons/simul_main/ic_app2.png")}
+            style={styles.img_app_icon}
+          />
+          <Image
+            source={require("../../assets/icons/simul_main/ic_app3.png")}
+            style={styles.img_app_icon}
+          />
+          <Image
+            source={require("../../assets/icons/simul_main/ic_app4.png")}
+            style={styles.img_app_icon}
+          />
+          <Image
+            source={require("../../assets/icons/simul_main/ic_app5.png")}
+            style={styles.img_app_icon}
+          />
+          <Image
+            source={require("../../assets/icons/simul_main/ic_app6.png")}
+            style={styles.img_app_icon}
+          />
+          <Image
+            source={require("../../assets/icons/simul_main/ic_app7.png")}
+            style={styles.img_app_icon}
+          />
+          <Image
+            source={require("../../assets/icons/simul_main/ic_app8.png")}
+            style={styles.img_app_icon}
+          />
+          <Image
+            source={require("../../assets/icons/simul_main/ic_app9.png")}
+            style={styles.img_app_icon}
+          />
+          <Image
+            source={require("../../assets/icons/simul_main/ic_app10.png")}
+            style={styles.img_app_icon}
+          />
+          <Image
+            source={require("../../assets/icons/simul_main/ic_app11.png")}
+            style={styles.img_app_icon}
+          />
+        </>
+        {/*  SNS */}
+        <TouchableOpacity>
+          {push === "sns" && snsType === "star" && (
+            <Image
+              source={require(`../../assets/icons/simul_main/sns_star.png`)}
+              style={styles.img_app_icon}
+            />
+          )}
+          {push === "sns" && snsType === "red" && (
+            <Image
+              source={require(`../../assets/icons/simul_main/sns_red.png`)}
+              style={styles.img_app_icon}
+            />
+          )}
+          {push !== "sns" && (
+            <Image
+              source={require(`../../assets/icons/simul_main/sns_default.png`)}
+              style={styles.img_app_icon}
+            />
+          )}
+        </TouchableOpacity>
       </View>
 
       {/*  앱 서랍장 */}
@@ -79,40 +105,18 @@ const SimulMain = ({ navigation }: any) => {
         />
       </TouchableOpacity>
 
-      {/*  SNS */}
-      <TouchableOpacity>
-        {push === "sns" && snsType === "star" && (
-          <Image
-            source={require(`../../assets/icons/simul_main/sns_star.png`)}
-            style={[styles.img_app_icon_new, { top: 378, left: 75 }]}
-          />
-        )}
-        {push === "sns" && snsType === "red" && (
-          <Image
-            source={require(`../../assets/icons/simul_main/sns_red.png`)}
-            style={[styles.img_app_icon_new, { top: 378, left: 75 }]}
-          />
-        )}
-        {push !== "sns" && (
-          <Image
-            source={require(`../../assets/icons/simul_main/sns_default.png`)}
-            style={[styles.img_app_icon, { top: 395, left: 95 }]}
-          />
-        )}
-      </TouchableOpacity>
-
       {/*  MSG */}
       <TouchableOpacity onPress={() => navigation.navigate("MessageSimul")}>
         {push === "message" && messageType === "star" && (
           <Image
             source={require(`../../assets/icons/simul_main/message_star.png`)}
-            style={[styles.img_app_icon_new, { top: 580, left: 65 }]}
+            style={[styles.img_app_icon, { top: 580, left: 65 }]}
           />
         )}
         {push === "message" && messageType === "red" && (
           <Image
             source={require(`../../assets/icons/simul_main/message_red.png`)}
-            style={[styles.img_app_icon_new, { top: 580, left: 65 }]}
+            style={[styles.img_app_icon, { top: 580, left: 65 }]}
           />
         )}
         {push !== "message" && (
@@ -128,13 +132,13 @@ const SimulMain = ({ navigation }: any) => {
         {push === "call" && callType === "star" && (
           <Image
             source={require(`../../assets/icons/simul_main/call_star.png`)}
-            style={[styles.img_app_icon_new, { top: 580, right: 75 }]}
+            style={[styles.img_app_icon, { top: 580, right: 75 }]}
           />
         )}
         {push === "call" && callType === "red" && (
           <Image
             source={require(`../../assets/icons/simul_main/call_red.png`)}
-            style={[styles.img_app_icon_new, { top: 580, right: 75 }]}
+            style={[styles.img_app_icon, { top: 580, right: 75 }]}
           />
         )}
         {push !== "call" && (
@@ -183,39 +187,35 @@ const SimulMain = ({ navigation }: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 30,
-    top: 60,
-    alignItems: "center",
-  },
   img_galaxy: {
     position: "absolute",
     width: SCREEN_WIDTH - 20,
-    height: 720,
+    height: SCREEN_HEIGHT - 100,
+    marginTop: 20,
     resizeMode: "stretch",
   },
+  app_div: {
+    width: SCREEN_WIDTH - 80,
+    height: SCREEN_HEIGHT - 400,
+    marginTop: 120,
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "blue",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
   img_app_icon: {
-    position: "absolute",
-    width: 80,
-    height: 80,
-    resizeMode: "stretch",
+    width: SCREEN_WIDTH / 6,
+    height: SCREEN_WIDTH / 6,
   },
   img_push: {
     position: "absolute",
     top: 60,
     left: -160,
-
     width: SCREEN_WIDTH - 100,
     height: 70,
     justifyContent: "center",
     alignItems: "center",
-    resizeMode: "stretch",
-  },
-  img_app_icon_new: {
-    position: "absolute",
-    width: 108,
-    height: 108,
     resizeMode: "stretch",
   },
   exit_btn: {
