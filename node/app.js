@@ -5,6 +5,7 @@ dotenv.config();
 
 async function startServer() {
 const app=express();
+
 app.set('port',process.env.PORT || 5000);
 	
   await require('./loaders')(app);
