@@ -96,7 +96,7 @@ const community = {
                     console.log(error)
                 }
                 function convertDate(date) {
-                    var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+                    var newDate = new Date()
                     var offset = date.getTimezoneOffset() / 60;
                     var hours = date.getHours();
                     newDate.setHours(hours - offset);
