@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {User, Msg, Sns, SimulData, History} = require("../models");
+const { History, Msg, Sns, SimulData } = require("../models");
 var Sequelize = require("sequelize");
 const {json, HasMany} = require("sequelize");
 
@@ -9,7 +9,7 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const jwt = require('jsonwebtoken');
 
-const simul = {
+const simulation = {
     randomApp: async function (req, res, next) {
         arr = [ "sns", "msg", "voice" ];
         //type = arr[Math.floor(Math.random() * 1)];
@@ -190,4 +190,4 @@ const simul = {
         }
     }
 }
-module.exports = simul;
+module.exports = simulation;
