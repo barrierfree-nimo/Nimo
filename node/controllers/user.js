@@ -6,11 +6,11 @@ const cors = require("cors");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const jwt = require('jsonwebtoken');
+const {refreshToken} = require("../api/middlewares/auth");
 
 const user = {
   createNewUser: async function (req, res, next) {
     try {
-      console.log("controller!")
       const {nickname, password} = req.body;
   
       if (!nickname || !password) {
@@ -51,12 +51,27 @@ const user = {
         if (!user) {
           res.status(400).json({message: "Retry (not exist or typeerror)"});
         } else {
-          const token = jwt.sign(
+          const accessToken = jwt.sign(
             {
-              nickname: req.body.nickname,
+              user_id: user.id,
             },
-            process.env.JWT_SECRET
+            process.env.JWT_SECRET,{
+              expiresIn: '1d'
+            }
           );
+          const refreshToken = jwt.sign({},
+            process.env.JWT_SECRET,{
+              expiresIn: '14d'
+            });
+
+          user.update({
+              refresh_token: refreshToken
+            })
+
+          const token = {
+            accessToken: accessToken,
+            refreshToken: refreshToken
+          }
           res.status(200).json({
             message: "Login Success!",
             token: token,

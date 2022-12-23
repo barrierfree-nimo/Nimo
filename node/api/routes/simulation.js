@@ -1,8 +1,8 @@
 const {application} = require("express");
 const express = require("express");
 const router = express.Router();
-const simulController = require('../../controllers/simul');
-const auth = require('../middlewares/auth').checkToken
+const simulController = require('../../controllers/simulation');
+const auth = require('../middlewares/auth').checkTokens
 
 const { json, HasMany } = require("sequelize");
 
