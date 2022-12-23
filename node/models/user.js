@@ -11,12 +11,12 @@ module.exports = class User extends Sequelize.Model {
           autoIncrement: true,
         },
         nickname: {
-          type: Sequelize.STRING(10),
+          type: Sequelize.STRING(45),
           allowNull: false,
           unique: true,
         },
         password: {
-          type: Sequelize.STRING(20),
+          type: Sequelize.STRING(45),
           allowNull: false,
           unique: false,
         },
@@ -24,6 +24,10 @@ module.exports = class User extends Sequelize.Model {
           type: Sequelize.INTEGER,
           allowNull: true,
           default: 0,
+        },
+        refresh_token: {
+          type: Sequelize.STRING(100),
+          allowNull: true,
         },
       },
       {
@@ -40,6 +44,7 @@ module.exports = class User extends Sequelize.Model {
   }
 
   static associate(db) {
-    //db.User.hasMany(db.Post);
+    db.User.hasMany(db.Post, { foreignKey: "user_nickname", sourceKey: "nickname"});
+    db.User.hasMany(db.Comment, { foreignKey: "user_nickname", sourceKey: "nickname"});
   }
 };
