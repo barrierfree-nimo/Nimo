@@ -36,8 +36,22 @@ const community = {
             const comment = await Comment.findAll({
                 where: {
                     post_id: req.params.id
-                }
-            })
+                },
+                order: [
+                    [ 'date', 'ASC' ],
+                ]
+            });
+            function convertDate(date) {
+                var offset = date.getTimezoneOffset() / 60;
+                var hours = date.getHours();
+                var newDate = date.setHours(hours - offset);
+                return newDate;
+            }
+            post.date = convertDate(post.date);
+            for (i in comment) {
+                console.log(comment[i])
+                comment[i].date = convertDate(comment[i].date)
+            }
             const list = {
                 post: post,
                 comment: comment
@@ -65,10 +79,9 @@ const community = {
                     console.log(error)
                 }
                 function convertDate(date) {
-                    var newDate = new Date()
                     var offset = date.getTimezoneOffset() / 60;
                     var hours = date.getHours();
-                    newDate.setHours(hours - offset);
+                    var newDate = date.setHours(hours - offset);
                     return newDate;
                 }
                 newPost.date = convertDate(newPost.date)
@@ -96,10 +109,9 @@ const community = {
                     console.log(error)
                 }
                 function convertDate(date) {
-                    var newDate = new Date()
                     var offset = date.getTimezoneOffset() / 60;
                     var hours = date.getHours();
-                    newDate.setHours(hours - offset);
+                    var newDate = date.setHours(hours - offset);
                     return newDate;
                 }
                 newComment.date = convertDate(newComment.date)
