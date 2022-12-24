@@ -1,6 +1,7 @@
 import React from "react";
 import {
   SafeAreaView,
+  StatusBar,
   TouchableOpacity,
   View,
   StyleSheet,
@@ -13,6 +14,7 @@ import MainStyle from "./main_style";
 const Main = ({ navigation }: any) => {
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <StatusBar />
       <TouchableOpacity style={MainStyle.btn_tutorial}>
         <Text style={MainStyle.btnText_tutorial}>어플사용설명서</Text>
       </TouchableOpacity>

@@ -11,6 +11,7 @@ const cors = require('cors')();
 
 const mainRouter = require('../api/routes/main')
 const userRouter = require('../api/routes/user')
+const quizRouter = require('../api/routes/quiz')
 const simulRouter = require('../api/routes/simulation')
 const commRouter = require('../api/routes/community')
 
@@ -57,6 +58,7 @@ module.exports = (app) => {
 
     app.use("/main", mainRouter);
     app.use("/user", userRouter);
+    app.use("/quiz", quizRouter);
     app.use("/simulation", simulRouter);
     app.use("/community", commRouter);
 };

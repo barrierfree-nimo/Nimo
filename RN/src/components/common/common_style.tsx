@@ -16,6 +16,11 @@ const CommonStyle = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'orange'
   },
+  container_contents: {
+    width: "95%",
+    height: "90%",
+    alignItems: 'center',
+  },
   container_exit: {
     width: SCREEN_WIDTH - 80,
     height: 50,
