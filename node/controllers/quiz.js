@@ -11,7 +11,6 @@ const jwt = require('jsonwebtoken');
 const quiz = {
   fetchQuiz: async function (req, res, next) {
     try {
-      console.log(req.nickname)
       // user가 가장 최근에 풀이한 quizNum
       const quizNum = await User.findOne({
         attributes:['quizNum'],

@@ -3,9 +3,6 @@ import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import initializeApp from "@react-native-firebase/app";
-import getStorage from '@react-native-firebase/storage';
-
 import Main from "./src/components/main/main";
 import Login from "./src/components/login/login";
 import Register from "./src/components/register/register/register";
@@ -23,7 +20,6 @@ import WrongPage from "./src/components/simul_message/wrong";
 
 import VoiceSimulMain from "./src/components/simul_voice/id";
 import VoiceSimulCommentary from "./src/components/simul_voice/simul_voice_commentary";
-
 
 const Stack = createNativeStackNavigator();
 

@@ -24,7 +24,7 @@ const Quiz = ({ navigation }: any) => {
     const token = ``
 
     try {
-      Axios.get("http://localhost:5000/quiz", {
+      Axios.get(baseURL + "/quiz", {
         headers: {
           'token': `${token}`
         }
@@ -40,7 +40,6 @@ const Quiz = ({ navigation }: any) => {
       } catch(err) {
         console.log(err)
       }
-    
   };
 
   const check_answer = (answer: String) => {
@@ -57,7 +56,7 @@ const Quiz = ({ navigation }: any) => {
     var backId = idData - 2;
     const token = ``
 
-    await Axios.get("http://localhost:5000/quiz/" + String(backId), {
+    await Axios.get(baseURL + "/quiz/" + String(backId), {
       headers: { 'token': `${token}` }
     }).then((res) => {
         fetchQuiz();
@@ -67,7 +66,7 @@ const Quiz = ({ navigation }: any) => {
   const move_next = async () => {
     const token = ``
 
-    await Axios.get("http://localhost:5000/quiz/" + String(idData), {
+    await Axios.get(baseURL + "/quiz/" + String(idData), {
       headers: { 'token': `${token}` }
     }).then((res) => {
         fetchQuiz();
