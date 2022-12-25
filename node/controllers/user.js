@@ -1,12 +1,6 @@
 const express = require("express");
-const router = express.Router();
 const {User} = require("../models");
-const crypto = require('crypto');
-const cors = require("cors");
-const session = require("express-session");
-const cookieParser = require("cookie-parser");
 const jwt = require('jsonwebtoken');
-const {refreshToken} = require("../api/middlewares/auth");
 const bcrypt = require('bcrypt');
 const salt = 10;
 

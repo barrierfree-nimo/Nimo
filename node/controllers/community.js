@@ -1,15 +1,7 @@
 const express = require("express");
-const router = express.Router();
 const {User, Post, Comment, sequelize} = require("../models");
 var Sequelize = require("sequelize");
 const {json, HasMany} = require("sequelize");
-
-const cors = require("cors");
-const session = require("express-session");
-const cookieParser = require("cookie-parser");
-const jwt = require('jsonwebtoken');
-
-
 
 const community = {
     readList: async function (req, res, next) {

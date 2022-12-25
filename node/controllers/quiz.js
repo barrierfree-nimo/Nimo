@@ -1,12 +1,6 @@
 const express = require("express")
-const router = express.Router()
 const { User, Quiz } = require("../models")
 const Sequelize = require("sequelize")
-
-const cors = require("cors");
-const session = require("express-session");
-const cookieParser = require("cookie-parser");
-const jwt = require('jsonwebtoken');
 
 const quiz = {
   fetchQuiz: async function (req, res, next) {
