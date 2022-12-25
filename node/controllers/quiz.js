@@ -15,7 +15,7 @@ const quiz = {
       const quizNum = await User.findOne({
         attributes:['quizNum'],
         where: {
-          nickname: req.nickname,
+          id: req.user_id,
         },
         raw: true
       })
@@ -48,7 +48,7 @@ const quiz = {
     try {
       User.update(
         { quizNum: req.params.id },
-        { where: { nickname: req.nickname } }
+        { where: { id: req.user_id } }
       ).then(() => { res.status(200).redirect('/quiz/')})
     } catch (error) {
       res.status(400).json(error);
