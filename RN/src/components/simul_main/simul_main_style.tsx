@@ -53,26 +53,6 @@ const SimulMainStyle = StyleSheet.create({
     width: SCREEN_WIDTH / 5,
     height: SCREEN_WIDTH / 5,
   },
-  exit_div: {
-    position: "absolute",
-    top: SCREEN_HEIGHT - 60,
-    width: SCREEN_WIDTH - 80,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  exit_btn: {
-    width: SCREEN_WIDTH - 150,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FF4D4D",
-    borderRadius: 15,
-    overflow: "hidden",
-  },
-  exit_btn_text: {
-    fontSize: 30,
-    fontWeight: "800",
-  },
 });
 
 export default SimulMainStyle;
