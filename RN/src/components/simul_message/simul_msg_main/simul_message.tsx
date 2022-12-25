@@ -32,7 +32,7 @@ const MessageSimul = ({ navigation }: any) => {
   }, []);
 
   const fetchSimulMsg = async () => {
-    const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMiwiaWF0IjoxNjcxOTc5OTAxLCJleHAiOjE2NzIwNjYzMDF9.mLYpE6iwEsNN7zu0GkyYDsaZSno6kVXLhWvtw_pCyxo`;
+    const token = ``;
     try {
       Axios.get(baseURL + "/simulation/msg", {
         headers: {
