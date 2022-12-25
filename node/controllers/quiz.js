@@ -1,12 +1,6 @@
 const express = require("express")
-const router = express.Router()
 const { User, Quiz } = require("../models")
 const Sequelize = require("sequelize")
-
-const cors = require("cors");
-const session = require("express-session");
-const cookieParser = require("cookie-parser");
-const jwt = require('jsonwebtoken');
 
 const quiz = {
   fetchQuiz: async function (req, res, next) {
@@ -15,7 +9,7 @@ const quiz = {
       const quizNum = await User.findOne({
         attributes:['quizNum'],
         where: {
-          nickname: req.nickname,
+          id: req.user_id,
         },
         raw: true
       })
@@ -48,7 +42,7 @@ const quiz = {
     try {
       User.update(
         { quizNum: req.params.id },
-        { where: { nickname: req.nickname } }
+        { where: { id: req.user_id } }
       ).then(() => { res.status(200).redirect('/quiz/')})
     } catch (error) {
       res.status(400).json(error);

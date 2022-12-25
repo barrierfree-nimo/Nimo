@@ -1,13 +1,7 @@
 const express = require("express");
-const router = express.Router();
 const {User, History, Msg, Sns, SimulData} = require("../models");
 var Sequelize = require("sequelize");
 const {json, HasMany} = require("sequelize");
-
-const cors = require("cors");
-const session = require("express-session");
-const cookieParser = require("cookie-parser");
-const jwt = require('jsonwebtoken');
 
 const simulation = {
     randomApp: async function (req, res, next) {
@@ -39,7 +33,6 @@ const simulation = {
                     raw: true,
                 });
                 var num = notDone[ 0 ].num;
-                console.log(num);
             } else if (type == "sns") {
                 var notDone = await Sns.findAll({
                     limit: 1,
@@ -50,10 +43,17 @@ const simulation = {
                     raw: true,
                 });
                 var num = notDone[ 0 ].num;
-                console.log(num);
+            }
+            
+            const red = []
+            for (t of [ "msg", "sns", "voice" ]) {
+                var calc = await SimulData.count({where: {type: t}}) - await History.count({where: {type: t, user_nickname: user.nickname}})
+                if (calc > 0) {
+                    red.push(t)
+                }
             }
 
-            res.status(200).json({type, num});
+            res.status(200).json({type, num, red});
         } catch (error) {
             res.status(400)
         }
