@@ -1,6 +1,11 @@
 const Sequelize = require("sequelize");
+const bcrypt = require('bcrypt');
 
 module.exports = class User extends Sequelize.Model {
+  validPassword(password) {
+    return bcrypt.compare(password, this.password);
+  }
+
   static init(sequelize) {
     return super.init(
       {
@@ -16,7 +21,7 @@ module.exports = class User extends Sequelize.Model {
           unique: true,
         },
         password: {
-          type: Sequelize.STRING(45),
+          type: Sequelize.STRING(150),
           allowNull: false,
           unique: false,
         },
@@ -29,6 +34,30 @@ module.exports = class User extends Sequelize.Model {
           type: Sequelize.STRING(100),
           allowNull: true,
         },
+        birth: {
+          type: Sequelize.DATE(),
+          allowNull: true,
+        },
+        gender: {
+          type: Sequelize.STRING(10),
+          allowNull: true
+        },
+        job: {
+          type: Sequelize.STRING(45),
+          allowNull: true
+        },
+        interest: {
+          type: Sequelize.STRING(45),
+          allowNull: true
+        },
+        offspring: {
+          type: Sequelize.INTEGER,
+          allowNull: true
+        },
+        bank: {
+          type: Sequelize.STRING(45),
+          allowNull: true
+        }
       },
       {
         sequelize,
@@ -44,7 +73,7 @@ module.exports = class User extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.User.hasMany(db.Post, { foreignKey: "user_nickname", sourceKey: "nickname"});
-    db.User.hasMany(db.Comment, { foreignKey: "user_nickname", sourceKey: "nickname"});
+    db.User.hasMany(db.Post, {foreignKey: "user_nickname", sourceKey: "nickname"});
+    db.User.hasMany(db.Comment, {foreignKey: "user_nickname", sourceKey: "nickname"});
   }
 };
