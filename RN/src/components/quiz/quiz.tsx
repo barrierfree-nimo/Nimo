@@ -21,15 +21,25 @@ const Quiz = ({ navigation }: any) => {
   const [commentaryData, setCommentaryData] = useState();
 
   const fetchQuiz = async () => {
-    Axios.get("http://172.30.1.85:5000" + "/quiz") // 나중에 baseURL로 변경해야 함
-      .then((res) => {
-        setIdData(Number(res.data[0]["id"]));
-        setQTextData(res.data[0]["qText"]);
-        setATextData(res.data[0]["aText"].split(","));
-        setAnswerData(res.data[0]["answer"]);
-        setCommentaryData(res.data[0]["commentary"]);
-        setShowCommentary(false);
-      });
+    const token = ``
+
+    try {
+      Axios.get(baseURL + "/quiz", {
+        headers: {
+          'token': `${token}`
+        }
+      }) // 나중에 baseURL로 변경해야 함
+        .then((res) => {
+          setIdData(Number(res.data[0]["id"]));
+          setQTextData(res.data[0]["qText"]);
+          setATextData(res.data[0]["aText"].split(","));
+          setAnswerData(res.data[0]["answer"]);
+          setCommentaryData(res.data[0]["commentary"]);
+          setShowCommentary(false);
+        });
+      } catch(err) {
+        console.log(err)
+      }
   };
 
   const check_answer = (answer: String) => {
@@ -44,19 +54,23 @@ const Quiz = ({ navigation }: any) => {
 
   const move_back = async () => {
     var backId = idData - 2;
-    await Axios.get("http://172.30.1.85:5000" + "/quiz/" + String(backId)).then(
-      (res) => {
+    const token = ``
+
+    await Axios.get(baseURL + "/quiz/" + String(backId), {
+      headers: { 'token': `${token}` }
+    }).then((res) => {
         fetchQuiz();
-      }
-    );
+      });
   };
 
   const move_next = async () => {
-    await Axios.get("http://172.30.1.85:5000" + "/quiz/" + String(idData)).then(
-      (res) => {
+    const token = ``
+
+    await Axios.get(baseURL + "/quiz/" + String(idData), {
+      headers: { 'token': `${token}` }
+    }).then((res) => {
         fetchQuiz();
-      }
-    );
+      });
   };
 
   useEffect(() => {

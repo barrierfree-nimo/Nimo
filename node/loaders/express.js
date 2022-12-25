@@ -11,22 +11,12 @@ const cors = require('cors')();
 
 const mainRouter = require('../api/routes/main')
 const userRouter = require('../api/routes/user')
-const simulRouter = require('../api/routes/simul')
+const quizRouter = require('../api/routes/quiz')
+const simulRouter = require('../api/routes/simulation')
+const commRouter = require('../api/routes/community')
 
 module.exports = (app) => {
     dotenv.config();
-    /*
-    const sessionMiddleware = session({
-        resave: false,
-        saveUninitialized: false,
-        secret: process.env.COOKIE_SECRET,
-        cookie: {
-            httpOnly: true,
-            secure: false,
-        },
-        store: new RedisStore({ client: redisClient }),
-    });
-	*/
     /*  https를 사용해야하는경우 
 	if(process.env.NODE_ENV==='production'){
 		sessionMiddleware.proxy=true;
@@ -68,5 +58,7 @@ module.exports = (app) => {
 
     app.use("/main", mainRouter);
     app.use("/user", userRouter);
-    app.use("/simul", simulRouter);
+    app.use("/quiz", quizRouter);
+    app.use("/simulation", simulRouter);
+    app.use("/community", commRouter);
 };

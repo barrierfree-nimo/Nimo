@@ -18,6 +18,9 @@ import MessageDetail from "./src/components/simul_message/id";
 import CorrectPage from "./src/components/simul_message/correct";
 import WrongPage from "./src/components/simul_message/wrong";
 
+import VoiceSimulMain from "./src/components/simul_voice/id";
+import VoiceSimulCommentary from "./src/components/simul_voice/simul_voice_commentary";
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -40,6 +43,8 @@ const App = () => {
         <Stack.Screen name="MessageDetail" component={MessageDetail} />
         <Stack.Screen name="CorrectPage" component={CorrectPage} />
         <Stack.Screen name="WrongPage" component={WrongPage} />
+        <Stack.Screen name="VoiceSimulMain" component={VoiceSimulMain}/>
+        {/* <Stack.Screen name="VoiceSimulCommentary" component={VoiceSimulCommentary}/> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

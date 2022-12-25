@@ -5,23 +5,26 @@ module.exports = {
     username: "admin",
     password: process.env.SEQUELIZE_PASSWORD,
     database: process.env.SEQUELIZE_DATABASE,
-    host: "database-nimo.cc9lwgerupgb.ap-northeast-2.rds.amazonaws.com",
+    host: process.env.HOST,
     dialect: "mysql",
     logging: false,
+    timezone: "Asia/Seoul"
   },
   test: {
     username: "admin",
     password: process.env.SEQUELIZE_PASSWORD,
     database: process.env.SEQUELIZE_DATABASE,
-    host: "database-nimo.cc9lwgerupgb.ap-northeast-2.rds.amazonaws.com",
+    host: process.env.HOST,
     dialect: "mysql",
     logging: false,
+    timezone: "Asia/Seoul"
+
   },
   production: {
     username: "admin",
     password: process.env.SEQUELIZE_PASSWORD,
     database: process.env.SEQUELIZE_DATABASE,
-    host: "database-nimo.cc9lwgerupgb.ap-northeast-2.rds.amazonaws.com",
+    host: process.env.HOST,
     dialect: "mysql",
     logging: false,
   },

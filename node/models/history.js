@@ -21,7 +21,7 @@ module.exports = class History extends Sequelize.Model {
                     unique: true,
                 },
                 user_nickname: {
-                    type: Sequelize.STRING(10),
+                    type: Sequelize.STRING(45),
                     allowNull: false,
                     unique: true,
                   }

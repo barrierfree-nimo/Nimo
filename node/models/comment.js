@@ -10,41 +10,43 @@ module.exports = class User extends Sequelize.Model {
           primaryKey: true,
           autoIncrement: true,
         },
-        nickname: {
-          type: Sequelize.STRING(45),
-          allowNull: false,
-          unique: true,
-        },
-        password: {
-          type: Sequelize.STRING(45),
+        post_id: {
+          type: Sequelize.INTEGER,
           allowNull: false,
           unique: false,
         },
-        quizNum: {
-          type: Sequelize.INTEGER,
-          allowNull: true,
-          default: 0,
+        user_nickname: {
+          type: Sequelize.STRING(45),
+          allowNull: false,
         },
-        refresh_token: {
-          type: Sequelize.STRING(100),
-          allowNull: true,
+        contents: {
+          type: Sequelize.STRING(200),
+          allowNull: false,
+          unique: false,
         },
+        date: {
+          type: Sequelize.DATE(),
+          defaultValue: Sequelize.DataTypes.NOW,
+          allowNull: false,
+          unique: false,
+        }
       },
       {
         sequelize,
         timestamps: false,
         underscored: false,
-        modelName: "User",
-        tableName: "users",
+        modelName: "Comment",
+        tableName: "comments",
         paranoid: false,
         charset: "utf8",
         collate: "utf8_general_ci",
-      }
+      },
     );
   }
 
   static associate(db) {
-    db.User.hasMany(db.Post, { foreignKey: "user_nickname", sourceKey: "nickname"});
-    db.User.hasMany(db.Comment, { foreignKey: "user_nickname", sourceKey: "nickname"});
+    db.Comment.belongsTo(db.Post, { foreignKey: "post_id", targetKey: "id"});
+    db.Comment.belongsTo(db.User, {foreignKey: "user_nickname", targetKey: "nickname"});
+
   }
 };
