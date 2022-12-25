@@ -4,8 +4,6 @@ const router = express.Router();
 const simulController = require('../../controllers/simulation');
 const auth = require('../middlewares/auth').checkTokens
 
-const { json, HasMany } = require("sequelize");
-
 router.get("/", auth, simulController.randomApp);
 router.get("/msg", auth, simulController.msgDoneList);
 router.get("/msg/:num", auth, simulController.msgSimul);
