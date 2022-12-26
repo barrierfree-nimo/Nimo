@@ -9,10 +9,9 @@ const RegisterStyle = StyleSheet.create({
     alignContent: 'center',
     marginVertical: 20,
     marginHorizontal: 20,
-    backgroundColor: 'white',
   },
   container_item: {
-    flex: 1,
+    // flex: 1,
     marginTop: 30
   },
   container_item_input: {
@@ -22,46 +21,61 @@ const RegisterStyle = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     marginLeft: 15,
+    color: '#FFFFFF',
     fontSize: 20,
     fontWeight: 'bold'
   },
   textInput_item: {
     width: SCREEN_WIDTH - 140,
-    height: 50,
+    height: 60,
     marginTop: 10,
     marginLeft: 15,
     paddingLeft: 20,
     borderRadius: 10,
-    backgroundColor: 'orange',
+    backgroundColor: '#FFFFFF',
+    fontSize: 20,
+  },
+  textInput_item_pw: {
+    width: SCREEN_WIDTH - 60,
+    height: 60,
+    marginTop: 10,
+    marginLeft: 15,
+    paddingLeft: 20,
+    borderRadius: 10,
+    backgroundColor: '#FFFFFF',
     fontSize: 20,
   },
   btn_overlapping: {
     width: 80,
-    height: 50,
+    height: 60,
     marginTop: 10,
-    marginLeft: 5,
+    marginLeft: 10,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,
     backgroundColor: 'gray',
   },
+  btnText_overlapping: {
+    color: '#FFFFFF',
+    fontSize: 17,
+    fontWeight: "bold"
+  },
   container_btn: {
-    flex: 1.5,
     alignItems: 'center',
   },
   btn_register: {
-    width: SCREEN_WIDTH - 100,
-    height: 50,
+    width: SCREEN_WIDTH - 60,
+    height: 65,
     marginTop: 55,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 15,
+    borderRadius: 30,
     backgroundColor: 'coral',
   },
   btnText_register: {
-    color: '#FFFFFF',
-    fontSize: 20,
-    fontWeight: "500"
+    color: '#000000',
+    fontSize: 27,
+    fontWeight: "bold"
   },
 })
 

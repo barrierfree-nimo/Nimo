@@ -6,12 +6,15 @@ import {
   Text,
   TouchableOpacity,
   Button,
+  ToastAndroid
 } from "react-native";
 import CommonStyle from "../common/common_style";
 import QuizStyle from "./quiz_style";
 import baseURL from "../baseURL";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Quiz = ({ navigation }: any) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [idData, setIdData] = useState(0);
   const [qTextData, setQTextData] = useState();
   const [aTextData, setATextData] = useState([]);
@@ -20,26 +23,46 @@ const Quiz = ({ navigation }: any) => {
   const [quizResult, setQuizResult] = useState("");
   const [commentaryData, setCommentaryData] = useState();
 
-  const fetchQuiz = async () => {
-    const token = ``
+  useEffect(() => {
+    fetchQuiz()
+  }, []);
 
+  const showToast = () => {
+    ToastAndroid.show('더이상 불러올 문제가 없습니다.', ToastAndroid.SHORT)
+  }
+
+  const fetchQuiz = async () => {
     try {
-      Axios.get(baseURL + "/quiz", {
-        headers: {
-          'token': `${token}`
+      const token = await AsyncStorage.getItem('user_Token')
+
+      if(token != null) {
+        console.log("QUIZ TOKEN : " + token)
+        
+        try {
+          Axios.get(baseURL + "/quiz", {
+            headers: {
+              'accessToken': `${token}`
+            }
+          }).then((res) => {
+            if(res.status == 200) {
+              console.log(res.data)
+              setIdData(Number(res.data[0]["id"]));
+              setQTextData(res.data[0]["qText"]);
+              setATextData(res.data[0]["aText"].split(","));
+              setAnswerData(res.data[0]["answer"]);
+              setCommentaryData(res.data[0]["commentary"]);
+              setShowCommentary(false);
+            }
+          });
+        } catch(err) {
+          console.log(err)
         }
-      }) // 나중에 baseURL로 변경해야 함
-        .then((res) => {
-          setIdData(Number(res.data[0]["id"]));
-          setQTextData(res.data[0]["qText"]);
-          setATextData(res.data[0]["aText"].split(","));
-          setAnswerData(res.data[0]["answer"]);
-          setCommentaryData(res.data[0]["commentary"]);
-          setShowCommentary(false);
-        });
-      } catch(err) {
-        console.log(err)
-      }
+      } 
+    } catch(e) {
+      console.log(e)
+    }
+
+    setIsLoading(false)    
   };
 
   const check_answer = (answer: String) => {
@@ -54,28 +77,30 @@ const Quiz = ({ navigation }: any) => {
 
   const move_back = async () => {
     var backId = idData - 2;
-    const token = ``
+    const token = await AsyncStorage.getItem('user_Token')
 
-    await Axios.get(baseURL + "/quiz/" + String(backId), {
-      headers: { 'token': `${token}` }
-    }).then((res) => {
-        fetchQuiz();
-      });
+    if(token != null) {
+      await Axios.get(baseURL + "/quiz/" + String(backId), {
+        headers: { 'accessToken': `${token}` }
+      }).then((res) => {
+          fetchQuiz();
+        });
+    }
   };
 
   const move_next = async () => {
-    const token = ``
+    const token = await AsyncStorage.getItem('user_Token')
 
-    await Axios.get(baseURL + "/quiz/" + String(idData), {
-      headers: { 'token': `${token}` }
-    }).then((res) => {
-        fetchQuiz();
-      });
+    if(token != null) {
+      await Axios.get(baseURL + "/quiz/" + String(idData), {
+        headers: { 'accessToken': `${token}` }
+      }).then((res) => {
+          fetchQuiz();
+        });
+    }
   };
 
-  useEffect(() => {
-    fetchQuiz();
-  }, []);
+  
 
   return (
     <SafeAreaView style={CommonStyle.container}>

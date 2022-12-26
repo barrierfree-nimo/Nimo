@@ -8,11 +8,17 @@ const LoginStyle = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 30,
+  },
+  text_title: {
+    color: '#FFD542', 
+    fontSize: 40,
+    fontWeight: 'bold'
   },
   text_login: {
     color: '#FFFFFF', 
     fontSize: 50,
+    fontWeight: 'bold'
   },
   container_login_img: {
     flex: 1,
@@ -21,7 +27,7 @@ const LoginStyle = StyleSheet.create({
   },
   img_login: {
     width: 150,
-    height: 150
+    height: 150,
   },
   container_login_input: {
     flex: 2,
@@ -34,8 +40,8 @@ const LoginStyle = StyleSheet.create({
     marginTop: 10,
     paddingLeft: 20,
     borderRadius: 10,
-    backgroundColor: 'orange',
-    fontSize: 20,
+    backgroundColor: '#D9D9D9',
+    fontSize: 24,
   },
   btn_login: {
     width: SCREEN_WIDTH - 100,
@@ -43,8 +49,8 @@ const LoginStyle = StyleSheet.create({
     marginTop: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 15,
-    backgroundColor: 'coral',
+    borderRadius: 25,
+    backgroundColor: '#FFD542',
   },
   btn_register: {
     width: SCREEN_WIDTH - 100,
@@ -52,13 +58,13 @@ const LoginStyle = StyleSheet.create({
     marginTop: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 15,
-    backgroundColor: 'grey',
+    borderRadius: 25,
+    backgroundColor: 'orange',
   },
   btnText_login: {
-    color: '#FFFFFF',
-    fontSize: 20,
-    fontWeight: "500"
+    color: '#000000',
+    fontSize: 23,
+    fontWeight: 'bold'
   },
 })
 
