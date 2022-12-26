@@ -1,12 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const mainController = require('../../controllers/main');
+const auth = require('../middlewares/auth').checkTokens
 
-const cors = require("cors");
-const session = require("express-session");
-const cookieParser = require("cookie-parser");
 
-router.get("/", async function (req, res, next) {
-  console.log("this is main")
-})
+router.get("/", auth, mainController.userInfo);
 
 module.exports = router;

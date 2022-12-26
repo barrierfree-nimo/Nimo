@@ -11,13 +11,16 @@ import {
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export interface MessageCardProps {
+  simulNum: number;
   title: string;
-  content: string;
+  commentary: string;
   check: boolean;
+  navigation: any;
 }
 
 const MessageCard = (props: MessageCardProps) => {
-  const { title, content, check } = props;
+  const { simulNum, title, commentary, check } = props;
+
   return (
     <View>
       <View style={styles.card_container}>
@@ -25,10 +28,7 @@ const MessageCard = (props: MessageCardProps) => {
           source={require("../../assets/icons/simul_message/ic_profile.png")}
           style={styles.img_profile}
         />
-        <View style={styles.text_container}>
-          <Text style={styles.text_title}>{title}</Text>
-          <Text style={styles.text_content}>{content}</Text>
-        </View>
+        <Text style={styles.text_title}>{title}</Text>
         {check === true ? (
           <Image
             source={require("../../assets/icons/simul_message/checkbox_true.png")}
@@ -51,9 +51,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: SCREEN_WIDTH - 80,
   },
-  text_container: {
-    flexDirection: "column",
-  },
   img_profile: {
     width: 60,
     height: 60,
@@ -64,11 +61,11 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     marginLeft: SCREEN_WIDTH - 120,
-    marginTop: 10,
+    marginTop: 20,
   },
   text_title: {
     color: "#000000",
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "700",
   },
   text_content: {
@@ -77,10 +74,10 @@ const styles = StyleSheet.create({
     fontWeight: "400",
   },
   lineStyle: {
-    marginTop: 15,
+    marginTop: 10,
     borderWidth: 0.5,
     borderColor: "gray",
-    marginBottom: 30,
+    marginBottom: 20,
   },
 });
 
