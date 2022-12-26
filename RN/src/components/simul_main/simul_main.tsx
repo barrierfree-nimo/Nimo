@@ -23,8 +23,6 @@ const SimulMain = ({ navigation }: any) => {
   }, []);
 
   const fetchSimulMain = async () => {
-    
-    // const token = ``;
     try {
       const token = await AsyncStorage.getItem('user_Token')
       Axios.get(baseURL + "/simulation", {

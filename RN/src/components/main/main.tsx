@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import Axios from "axios";
 import {
   SafeAreaView,
   StatusBar,
@@ -10,9 +11,40 @@ import {
 } from "react-native";
 import CommonStyle from "../common/common_style";
 import MainStyle from "./main_style";
+import baseURL from "../baseURL";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Main = ({ navigation }: any) => {
+  const [nickname, setNickname] = useState('니모');
+  const [donePercent, setDonePercent] = useState(50);
+  
+
+  useEffect(() => {
+    setUserInfo()
+  })
+
+  const setUserInfo = async () => {
+    let token 
+    try {
+      token = await AsyncStorage.getItem('user_Token')
+      if(token != null) {
+        console.log(token)
+        Axios.get(baseURL + "/main", {
+          headers: {
+            'accessToken': `${token}`
+          }
+        }).then((res) => {
+          setNickname(String(res.data["nickname"]));
+          setDonePercent(Number(100 * res.data["done"] / res.data['all'] ));
+        });
+      }
+      else console.log('token: ' + token)
+    } catch(err) {
+      console.log(err)
+    }
+    
+  }
+
   const clear = async () => {
     try {
       await AsyncStorage.clear();
@@ -34,9 +66,14 @@ const Main = ({ navigation }: any) => {
             source={require("../../assets/images/main_progress.png")}
             style={MainStyle.img_progress}
           />
-          <Text style={MainStyle.text_progress}>
-            니모님의 체험 완료도는 {"\n"}45% 입니다
-          </Text>
+          <View style={MainStyle.container_progress_text}>
+            <Text style={MainStyle.text_progress}>
+              {`${nickname}님의 체험 완료도는 \n`}
+              <Text style={MainStyle.text_progress_percent}>{`${donePercent}% 입니다`}</Text>
+            </Text>
+            
+          </View>
+          
         </View>
       </View>
 

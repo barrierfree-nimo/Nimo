@@ -15,6 +15,7 @@ import Axios from "axios";
 import baseURL from "../../baseURL";
 import ExitBtn from "../../simul_common/exit_btn";
 import NavigateBtn from "../../simul_common/navigate_btn";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
@@ -32,7 +33,7 @@ const MessageDetail = ({ route, navigation }: any) => {
   }, []);
 
   const fetchSimulMsgDetail = async () => {
-    const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMiwiaWF0IjoxNjcxOTc5OTAxLCJleHAiOjE2NzIwNjYzMDF9.mLYpE6iwEsNN7zu0GkyYDsaZSno6kVXLhWvtw_pCyxo`;
+    const token = await AsyncStorage.getItem('user_Token')
     try {
       Axios.get(baseURL + `/simulation/msg/${route.params.simulNum}`, {
         headers: {
@@ -93,53 +94,52 @@ const MessageDetail = ({ route, navigation }: any) => {
         </View>
 
         {/* 대화창 */}
-        <>
-          <View style={msgDetailStyle.text_container}>
-            <ScrollView
-              ref={scrollViewRef}
-              onContentSizeChange={() =>
-                scrollViewRef.current &&
-                scrollViewRef.current.scrollToEnd({ animated: true })
-              }
-              style={msgDetailStyle.scroll}
-              persistentScrollbar={true}
-            >
-              {filteredScripts?.map((data) => (
-                <View
-                  style={[
-                    {
-                      left:
-                        data[1] === 1 ? SCREEN_WIDTH / 15 : SCREEN_WIDTH / 5,
-                    },
-                  ]}
-                >
-                  <SpeechBubble
-                    bubbleColor={data[1] === 1 ? "#f2f2f2" : "#00284E"}
-                    bubbleDirection={data[1] === 1 ? "left" : "right"}
-                    textColor={data[1] === 1 ? "#000000" : "#ffffff"}
-                    textContent={data[0]}
-                  />
-                </View>
-              ))}
-              <View style={msgDetailStyle.choice_box}>
-                <TouchableOpacity
-                  onPress={() => handleClickCorrect(true)}
-                  style={msgDetailStyle.choice_box_child}
-                >
-                  <Text style={msgDetailStyle.text_choice}>{correct}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => handleClickCorrect(false)}
-                  style={msgDetailStyle.choice_box_child}
-                >
-                  <Text style={msgDetailStyle.text_choice}>{wrong}</Text>
-                </TouchableOpacity>
+        <View style={msgDetailStyle.text_container}>
+          <ScrollView
+            ref={scrollViewRef}
+            onContentSizeChange={() =>
+              scrollViewRef.current &&
+              scrollViewRef.current.scrollToEnd({ animated: true })
+            }
+            style={msgDetailStyle.scroll}
+            persistentScrollbar={true}
+          >
+            {filteredScripts?.map((data) => (
+              <View
+                style={[
+                  {
+                    left:
+                      data[1] === 1 ? SCREEN_WIDTH / 15 : SCREEN_WIDTH / 5,
+                  },
+                ]}
+              >
+                <SpeechBubble
+                  bubbleColor={data[1] === 1 ? "#f2f2f2" : "#00284E"}
+                  bubbleDirection={data[1] === 1 ? "left" : "right"}
+                  textColor={data[1] === 1 ? "#000000" : "#ffffff"}
+                  textContent={data[0]}
+                />
               </View>
-            </ScrollView>
-          </View>
-        </>
+            ))}
+            <View style={msgDetailStyle.choice_box}>
+              <TouchableOpacity
+                onPress={() => handleClickCorrect(true)}
+                style={msgDetailStyle.choice_box_child}
+              >
+                <Text style={msgDetailStyle.text_choice}>{correct}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => handleClickCorrect(false)}
+                style={msgDetailStyle.choice_box_child}
+              >
+                <Text style={msgDetailStyle.text_choice}>{wrong}</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </View>
 
-        {/* 이동버튼 */}
+
+        {/* 이동버튼이 스크롤과 겹치는 문제 있음 */}
         <NavigateBtn navigation={navigation} />
       </View>
       {/* 체험나가기 버튼 */}

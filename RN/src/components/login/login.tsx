@@ -20,15 +20,9 @@ const Login = ({navigation}: any) => {
         nickname: nickname,
         password: password
       }).then(res => {
-        console.log(res.data)
-        console.log(res.status)
-
         if(res.status == 200) {
           const token = String(res.data['token']['accessToken'])
           AsyncStorage.setItem('user_Token', token)
-          AsyncStorage.getItem('user_Token').then(res =>
-            console.log('Storage Token : ', res),
-          );
           navigation.replace("MainStackNavigator")
         }
         }).catch((err) => {

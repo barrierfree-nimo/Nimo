@@ -84,7 +84,7 @@ const CommonStyle = StyleSheet.create({
   },
   navigate_btn_text: {
     color: "#000000",
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: "800",
   },
 });

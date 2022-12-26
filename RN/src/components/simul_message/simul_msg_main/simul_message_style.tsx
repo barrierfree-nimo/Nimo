@@ -25,10 +25,10 @@ const SimulMsgStyle = StyleSheet.create({
     alignItems: "center",
   },
   text_title: {
-    flex: 1,
-    right: 120,
-    fontSize: 35,
-    marginTop: 20,
+    alignSelf: 'flex-start',
+    marginLeft: 20,
+    marginBottom: 10,
+    fontSize: 32,
     fontWeight: "900",
   },
   msg_card_div: {

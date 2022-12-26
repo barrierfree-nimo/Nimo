@@ -48,12 +48,13 @@ const msgDetailStyle = StyleSheet.create({
   },
   choice_box: {
     width: SCREEN_WIDTH - 80,
-    flexDirection: "row",
-    marginTop: 50,
+    paddingVertical: 20,
+    marginBottom: 60,
   },
   choice_box_child: {
-    width: (SCREEN_WIDTH - 80) / 2,
-    marginTop: 50,
+    width: SCREEN_WIDTH - 90,
+    marginTop: 10,
+    justifyContent: 'center',
   },
   text_choice: {
     wordWrap: "break-word",
@@ -65,7 +66,7 @@ const msgDetailStyle = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
 
-    backgroundColor: "#FFD542",
+    backgroundColor: "orange",
     borderRadius: 15,
     overflow: "hidden",
   },

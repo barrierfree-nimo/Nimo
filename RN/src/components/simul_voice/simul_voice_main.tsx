@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import CommonStyle from '../common/common_style';
 import SpeechBubble from '../simul_common/speech_bubble';
+import NavigateBtn from '../simul_common/navigate_btn';
 // import { Audio } from 'expo-av';
 
 const VoiceSimulMain = ({navigation} : any) => {
@@ -72,7 +73,7 @@ const VoiceSimulMain = ({navigation} : any) => {
               {scripts.map((item) => (
                 <View key={item} style={styles.bubble_voice}>
                   <SpeechBubble 
-                  bubbleColor="#f5ee64"
+                  bubbleColor="#FFFFFF"
                   bubbleDirection="left"
                   textColor="#000000"
                   textContent={item} />
@@ -82,6 +83,8 @@ const VoiceSimulMain = ({navigation} : any) => {
             </ScrollView>
           </View>
         ) }        
+
+        <NavigateBtn navigation={navigation} />
       </View>
 
       <View style={CommonStyle.container_exit}>

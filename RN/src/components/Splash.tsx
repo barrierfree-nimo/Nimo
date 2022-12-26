@@ -22,7 +22,7 @@ const Splash = ({navigation}: any) => {
         setHasLocalToken(true) 
         navigation.replace("AuthStackNavigator")
       }
-      console.log('hastoken: ' + hasLocalToken)
+      //console.log('hastoken: ' + hasLocalToken)
 
     } catch(error) {
       console.log(error)

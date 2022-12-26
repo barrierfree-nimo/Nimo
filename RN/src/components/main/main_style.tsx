@@ -35,13 +35,22 @@ const MainStyle  = StyleSheet.create({
     flexDirection: 'row'
   },
   img_progress: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
+  },
+  container_progress_text: {
+    alignItems: 'center',
   },
   text_progress: {
     color: '#FFFFFF',
     fontSize: 23,
     marginLeft: 10
+  },
+  text_progress_percent: {
+    color: '#FFFFFF',
+    fontSize: 30,
+    marginLeft: 10,
+    fontWeight: 'bold'
   },
   container_menu: {
     flex: 2.5,

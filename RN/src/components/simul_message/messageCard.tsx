@@ -24,22 +24,30 @@ const MessageCard = (props: MessageCardProps) => {
   return (
     <View>
       <View style={styles.card_container}>
-        <Image
-          source={require("../../assets/icons/simul_message/ic_profile.png")}
-          style={styles.img_profile}
-        />
-        <Text style={styles.text_title}>{title}</Text>
-        {check === true ? (
+
+        <View style={styles.card_container_child}>
           <Image
-            source={require("../../assets/icons/simul_message/checkbox_true.png")}
-            style={styles.img_checkbox}
+            source={require("../../assets/icons/simul_message/ic_profile.png")}
+            style={styles.img_profile}
           />
-        ) : (
-          <Image
-            source={require("../../assets/icons/simul_message/checkbox_false.png")}
-            style={styles.img_checkbox}
-          />
-        )}
+          <Text style={styles.text_title}>{title}</Text>
+        </View>
+
+        {/*/ 체험 제목 자동 줄바꿈 하니까 체크박스가 안보이는 문제 있음 */}
+        <View style={styles.card_container_child_checkbox}>
+          {check === true ? (
+            <Image
+              source={require("../../assets/icons/simul_message/checkbox_true.png")}
+              style={styles.img_checkbox}
+            />
+          ) : (
+            <Image
+              source={require("../../assets/icons/simul_message/checkbox_false.png")}
+              style={styles.img_checkbox}
+            />
+          )}
+        </View>
+        
       </View>
       <View style={styles.lineStyle} />
     </View>
@@ -50,6 +58,14 @@ const styles = StyleSheet.create({
   card_container: {
     flexDirection: "row",
     width: SCREEN_WIDTH - 80,
+  },
+  card_container_child: {
+    flexDirection: "row",
+    flex: 2
+  },
+  card_container_child_checkbox: {
+    //backgroundColor: 'blue',
+    flex: 1
   },
   img_profile: {
     width: 60,

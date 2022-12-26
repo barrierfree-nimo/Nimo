@@ -2,6 +2,7 @@ import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
+  ScrollView,
   TouchableOpacity,
   View,
   Image,
@@ -65,20 +66,24 @@ const MessageSimul = ({ navigation }: any) => {
       <View style={SimulMsgStyle.phone_div}>
         <View style={SimulMsgStyle.message_div}>
           <Text style={SimulMsgStyle.text_title}>메세지</Text>
-          <View style={SimulMsgStyle.msg_card_div}>
-            {simulList?.map(({ simulNum, title, commentary, check }) => (
-              <TouchableOpacity onPress={() => handleOnPress(simulNum)}>
-                <MessageCard
-                  key={simulNum}
-                  simulNum={simulNum}
-                  title={title}
-                  commentary={commentary}
-                  check={check}
-                  navigation={navigation}
-                />
-              </TouchableOpacity>
-            ))}
-          </View>
+          <ScrollView>
+            
+            <View style={SimulMsgStyle.msg_card_div}>
+              {simulList?.map(({ simulNum, title, commentary, check }) => (
+                <TouchableOpacity onPress={() => handleOnPress(simulNum)}>
+                  <MessageCard
+                    key={simulNum}
+                    simulNum={simulNum}
+                    title={title}
+                    commentary={commentary}
+                    check={check}
+                    navigation={navigation}
+                  />
+                </TouchableOpacity>
+              ))}
+            </View>
+          </ScrollView>
+          
         </View>
 
         {/* 이동버튼 */}
