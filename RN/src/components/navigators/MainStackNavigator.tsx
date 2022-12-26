@@ -11,9 +11,12 @@ import Info from "../info/info";
 
 import SimulMain from "../simul_main/simul_main";
 import MessageSimul from "../simul_message/simul_msg_main/simul_message";
+<<<<<<< HEAD
 // import MessageDetail from "../simul_message/id/[id]";
+=======
+import MessageDetail from "../simul_message/id/[id]";
+>>>>>>> d7549ef5853836ada16879b6d2dfbc75f9aa29c0
 import CorrectPage from "../simul_message/correct";
-import WrongPage from "../simul_message/wrong";
 
 import VoiceSimulMain from "../simul_voice/simul_voice_main";
 
@@ -34,10 +37,12 @@ const MainStackNavigator = () => {
         <Stack.Screen name="MessageSimul" component={MessageSimul} />
         {/* <Stack.Screen name="MessageDetail" component={MessageDetail} /> */}
         <Stack.Screen name="CorrectPage" component={CorrectPage} />
-        <Stack.Screen name="WrongPage" component={WrongPage} />
-        <Stack.Screen name="VoiceSimulMain" component={VoiceSimulMain}/>
+        <Stack.Screen name="VoiceSimulMain" component={VoiceSimulMain} />
 
-        <Stack.Screen name="AuthStackNavigator" component={AuthStackNavigator} />
+        <Stack.Screen
+          name="AuthStackNavigator"
+          component={AuthStackNavigator}
+        />
         {/* <Stack.Screen name="VoiceSimulCommentary" component={VoiceSimulCommentary}/> */}
       </Stack.Navigator>
     </NavigationContainer>

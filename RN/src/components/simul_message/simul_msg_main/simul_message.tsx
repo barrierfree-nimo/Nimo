@@ -10,6 +10,7 @@ import {
 import baseURL from "../../baseURL";
 import CommonStyle from "../../common/common_style";
 import ExitBtn from "../../simul_common/exit_btn";
+import NavigateBtn from "../../simul_common/navigate_btn";
 import MessageCard from "../messageCard";
 import SimulMsgStyle from "./simul_message_style";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -26,7 +27,7 @@ interface MsgContent {
 //   "commentary": "이렇게 지인을 사칭하며 악성 링크의 클릭을 유도하는 문자는 메신저 피싱의 전형적인 수법입니다! 주의하세요!"
 
 const MessageSimul = ({ navigation }: any) => {
-  const [simulList, setSimulList] = useState<MsgContent[]>();
+  const [simulList, setSimulList] = useState<MsgContent[]>([]);
 
   useEffect(() => {
     fetchSimulMsg();
@@ -46,9 +47,13 @@ const MessageSimul = ({ navigation }: any) => {
       console.log(err);
     }
   };
-  const handleOnPress = () => {
-    navigation.navigate("MessageDetail");
+
+  const handleOnPress = (simulNum: number) => {
+    navigation.navigate("MessageDetail", {
+      simulNum: simulNum,
+    });
   };
+
   return (
     <SafeAreaView style={CommonStyle.container}>
       <Image
@@ -62,7 +67,7 @@ const MessageSimul = ({ navigation }: any) => {
           <Text style={SimulMsgStyle.text_title}>메세지</Text>
           <View style={SimulMsgStyle.msg_card_div}>
             {simulList?.map(({ simulNum, title, commentary, check }) => (
-              <TouchableOpacity onPress={handleOnPress}>
+              <TouchableOpacity onPress={() => handleOnPress(simulNum)}>
                 <MessageCard
                   key={simulNum}
                   simulNum={simulNum}
@@ -77,20 +82,7 @@ const MessageSimul = ({ navigation }: any) => {
         </View>
 
         {/* 이동버튼 */}
-        <View style={SimulMsgStyle.navigate_btn_container}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={SimulMsgStyle.navigate_btn}
-          >
-            <Text style={SimulMsgStyle.navigate_btn_text}>이전 화면</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("SimulMain")}
-            style={SimulMsgStyle.navigate_btn}
-          >
-            <Text style={SimulMsgStyle.navigate_btn_text}>체험 첫화면</Text>
-          </TouchableOpacity>
-        </View>
+        <NavigateBtn navigation={navigation} />
       </View>
       {/* 체험나가기 버튼 */}
       <ExitBtn navigation={navigation} />

@@ -13,10 +13,17 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Splash"
-        screenOptions={{ headerShown: false }} >
+        screenOptions={{ headerShown: false }}
+      >
         <Stack.Screen name="Splash" component={Splash} />
-        <Stack.Screen name="MainStackNavigator" component={MainStackNavigator} />
-        <Stack.Screen name="AuthStackNavigator" component={AuthStackNavigator} />
+        <Stack.Screen
+          name="MainStackNavigator"
+          component={MainStackNavigator}
+        />
+        <Stack.Screen
+          name="AuthStackNavigator"
+          component={AuthStackNavigator}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
