@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import CommonStyle from '../common/common_style';
 import SpeechBubble from '../simul_common/speech_bubble';
-import { Audio } from 'expo-av';
+// import { Audio } from 'expo-av';
 
 const VoiceSimulMain = ({navigation} : any) => {
   const [ ok, setOk ] = useState(false);

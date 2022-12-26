@@ -185,9 +185,9 @@ const SimulMain = ({ navigation }: any) => {
       </View>
 
       {/* 이동버튼 */}
-      <View style={styles.exit_div}>
+      <View style={CommonStyle.container_exit}>
         <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-          <View style={styles.exit_btn}>
+          <View>
             <Text style={styles.exit_btn_text}>체험 나가기</Text>
           </View>
         </TouchableOpacity>
