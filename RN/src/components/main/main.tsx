@@ -10,8 +10,16 @@ import {
 } from "react-native";
 import CommonStyle from "../common/common_style";
 import MainStyle from "./main_style";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Main = ({ navigation }: any) => {
+  const clear = async () => {
+    try {
+      await AsyncStorage.clear();
+    } catch(err) {
+      console.log(err)
+    }
+  }
   return (
     <SafeAreaView style={CommonStyle.container}>
       <StatusBar />
@@ -23,7 +31,7 @@ const Main = ({ navigation }: any) => {
         <Text style={MainStyle.title_main}>체험 완료도</Text>
         <View style={MainStyle.container_progress_detail}>
           <Image
-            source={require("../../assets/images/nimo.png")}
+            source={require("../../assets/images/main_progress.png")}
             style={MainStyle.img_progress}
           />
           <Text style={MainStyle.text_progress}>
@@ -52,7 +60,7 @@ const Main = ({ navigation }: any) => {
           <Text style={MainStyle.btnText_menu}>소통하기</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Info")}
+          onPress={() => clear()}
           style={MainStyle.btn_menu}
         >
           <Text style={MainStyle.btnText_menu}>정보 얻기</Text>

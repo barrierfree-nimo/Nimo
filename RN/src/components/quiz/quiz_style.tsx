@@ -54,7 +54,7 @@ const QuizStyle = StyleSheet.create({
   btn_container_back: {
     width: SCREEN_WIDTH - 270,
     height: 60,
-    backgroundColor: 'green',
+    backgroundColor: '#FFD542',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 20,
@@ -63,7 +63,7 @@ const QuizStyle = StyleSheet.create({
   btn_container_next: {
     width: SCREEN_WIDTH - 270,
     height: 60,
-    backgroundColor: 'greenyellow',
+    backgroundColor: '#0BCD74',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 20,

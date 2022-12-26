@@ -8,23 +8,26 @@ const MainStyle  = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'blue',
+    backgroundColor: 'orange'
   },
   btnText_tutorial: {
-    color: '#FFFFFF',
-    fontSize: 20,
-    fontWeight: "500"
+    color: '#000000',
+    fontSize: 25,
+    fontWeight: 'bold'
   },
   title_main: {
     fontSize: 20,
+    fontWeight: 'bold',
     color: '#FFFFFF'
   },
   container_progress: {
     flex: 1,
-    width: SCREEN_WIDTH,
+    width: SCREEN_WIDTH - 10,
     marginTop: 20,
     padding: 20,
-    backgroundColor: 'gray'
+    borderColor: '#FFFFFF',
+    borderWidth: 0.7,
+    borderRadius: 20
   },
   container_progress_detail: {
     flex: 1,
@@ -51,12 +54,12 @@ const MainStyle  = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 20,
-    backgroundColor: 'orange',
+    backgroundColor: '#FFD542',
   },
   btnText_menu: {
-    color: '#FFFFFF',
+    color: '#000000',
     fontSize: 25,
-    fontWeight: "500"
+    fontWeight: 'bold'
   }
 })
 

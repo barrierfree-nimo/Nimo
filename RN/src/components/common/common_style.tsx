@@ -13,9 +13,9 @@ const CommonStyle = StyleSheet.create({
   container_header: {
     width: SCREEN_WIDTH,
     height: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "orange",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFD542'
   },
   container_contents: {
     width: "95%",
@@ -29,7 +29,7 @@ const CommonStyle = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
-    backgroundColor: "coral",
+    backgroundColor: '#FF4D4D'
   },
   btnText_exit: {
     fontSize: 25,
