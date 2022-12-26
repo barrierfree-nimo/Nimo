@@ -27,5 +27,6 @@ module.exports = {
     host: process.env.HOST,
     dialect: "mysql",
     logging: false,
+    timezone: "+09:00"
   },
 };
