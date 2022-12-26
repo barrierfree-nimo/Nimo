@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   TouchableOpacity,
@@ -8,73 +8,66 @@ import {
   Text,
   Dimensions,
 } from "react-native";
+import CommonStyle from "../common/common_style";
+import ExitBtn from "../simul_common/exit_btn";
+import NavigateBtn from "../simul_common/navigate_btn";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
+const SCREEN_HEIGHT = Dimensions.get("window").height;
 
-const CorrectPage = ({ navigation }: any) => {
+const CorrectPage = ({ route, navigation }: any) => {
+  const [commentary, setCommentary] = useState<string>("");
+  const [isCorrect, setIsCorrect] = useState<boolean>();
+  const [titleText, setTitleText] = useState<string>("");
+
+  useEffect(() => {
+    setCommentary(route.params.commentary);
+    setIsCorrect(route.params.correct);
+  }, []);
+
+  useEffect(() => {
+    isCorrect ? setTitleText("정답입니다!") : setTitleText("오답입니다!");
+  }, [isCorrect]);
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={CommonStyle.container}>
       <Image
         source={require("../../assets/icons/simul_message/message_bg.png")}
         style={styles.img_bg}
       />
-      <View style={styles.yellow_box}>
-        <Text style={styles.text_title}>정답입니다!</Text>
-        <Text style={styles.text_content}>
-          링크를 통해 스마트폰을 원격으로 조정할 수 있는 앱이 설치될 수
-          있습니다!
-        </Text>
-        <Text style={styles.text_content}>
-          신원이 불분명한 번호로 온 문자, 본인과 관련없는 내용의 문자에 있는
-          링크는 절대 클릭하지 마세요!
-        </Text>
-      </View>
-      {/* 이동버튼 */}
-      <View style={styles.navigate_btn_container}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.navigate_btn}
-        >
-          <Text style={styles.navigate_btn_text}>이전 화면</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("SimulMain")}
-          style={styles.navigate_btn}
-        >
-          <Text style={styles.navigate_btn_text}>체험 첫화면</Text>
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Main")}
-        style={styles.exit_btn}
+      <View
+        style={[
+          styles.color_box,
+          { backgroundColor: isCorrect ? "blue" : "red" },
+        ]}
       >
-        <Text style={styles.text_exit}>체험 나가기</Text>
-      </TouchableOpacity>
+        <Text style={styles.text_title}>{titleText}</Text>
+        <Text style={styles.text_content}>{commentary}</Text>
+      </View>
+
+      {/* 이동버튼 */}
+      <NavigateBtn navigation={navigation} />
+
+      {/* 체험나가기 버튼 */}
+      <ExitBtn navigation={navigation} />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 30,
-    alignItems: "center",
-    top: 60,
-    backgroundColor: "#00284E",
-  },
   img_bg: {
     position: "absolute",
     width: SCREEN_WIDTH - 20,
-    height: 720,
+    height: SCREEN_HEIGHT - 100,
+    marginTop: 20,
     resizeMode: "stretch",
   },
-  yellow_box: {
+  color_box: {
     alignItems: "center",
     justifyContent: "center",
     top: 100,
     width: SCREEN_WIDTH - 100,
     height: "auto",
-    backgroundColor: "blue",
     padding: 30,
     paddingBottom: 90,
     borderRadius: 15,
@@ -117,18 +110,23 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "800",
   },
-  exit_btn: {
-    width: SCREEN_WIDTH - 150,
-    height: 60,
+  exit_div: {
+    position: "absolute",
+    top: SCREEN_HEIGHT - 60,
+    width: SCREEN_WIDTH - 80,
     alignItems: "center",
     justifyContent: "center",
-    position: "absolute",
-    top: 750,
+  },
+  exit_btn: {
+    width: SCREEN_WIDTH - 150,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "#FF4D4D",
     borderRadius: 15,
     overflow: "hidden",
   },
-  text_exit: {
+  exit_btn_text: {
     fontSize: 30,
     fontWeight: "800",
   },
