@@ -44,7 +44,7 @@ const simulation = {
                 });
                 var num = notDone[ 0 ].num;
             }
-            
+
             const red = []
             for (t of [ "msg", "sns", "voice" ]) {
                 var calc = await SimulData.count({where: {type: t}}) - await History.count({where: {type: t, user_nickname: user.nickname}})
@@ -180,6 +180,30 @@ const simulation = {
             res.status(200).json(data);
         } catch (error) {
             res.status(400);
+        }
+    },
+    addDoneList: async function (req, res, next) {
+        try {
+            const {type, simulNum} = req.body;
+            const user = await User.findOne({where: {id: req.user_id}});
+
+            const [ history, created ] = await History.findOrCreate({
+                where: {
+                    user_nickname: user.nickname,
+                    type: type,
+                    simulNum: simulNum
+                }
+            })
+
+            if (created) {
+                console.log("if")
+                res.status(200).json({message: "simulation done"})
+            } else {
+                console.log("else")
+                res.status(201).json({message: "already done"})
+            }
+        } catch (error) {
+            res.status(400).json(error);
         }
     },
     showHistory: async function (req, res, next) {
