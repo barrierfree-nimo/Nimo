@@ -82,7 +82,16 @@ const simulation = {
                 simul: simul,
                 done: done,
             };
-            res.status(200).json(data);
+
+            for (const i of simul) {
+                if (done.includes(i.simulNum)) {
+                    i[ 'done' ] = 'true'
+                } else {
+                    i[ 'done' ] = 'false'
+                }
+            }
+            
+            res.status(200).json(simul);
         } catch (error) {
             res.status(400);
         }
