@@ -18,25 +18,18 @@ const SpeechBubble = (props: SpeechBubbleProps) => {
         <View
           style={[styles.talkBubbleSquare, { backgroundColor: bubbleColor }]}
         >
-          <Text style={[styles.talkBubbleMessage, { color: textColor }]}>
+          <Text
+            style={[
+              styles.talkBubbleMessage,
+              {
+                color: textColor,
+                textAlign: bubbleDirection === "right" ? "right" : "left",
+              },
+            ]}
+          >
             {textContent}
           </Text>
         </View>
-        {bubbleDirection === "left" ? (
-          <View
-            style={[
-              styles.talkBubbleTriangle,
-              { borderRightColor: bubbleColor, left: -30 },
-            ]}
-          />
-        ) : (
-          <View
-            style={[
-              styles.talkBubbleTriangle,
-              { borderLeftColor: bubbleColor, right: -30 },
-            ]}
-          />
-        )}
       </View>
     </View>
   );
@@ -44,12 +37,10 @@ const SpeechBubble = (props: SpeechBubbleProps) => {
 
 const styles = StyleSheet.create({
   position: {
-    position: "relative",
     height: "auto",
-    paddingBottom: 30,
+    paddingBottom: 10,
   },
   talkBubble: {
-    position: "absolute",
     zIndex: 2,
     flex: 1,
   },
@@ -57,16 +48,6 @@ const styles = StyleSheet.create({
     width: 200,
     height: "auto",
     borderRadius: 12,
-  },
-  talkBubbleTriangle: {
-    position: "absolute",
-    bottom: 0,
-    borderLeftWidth: 20,
-    borderRightWidth: 20,
-    borderTopWidth: 20,
-    borderRightColor: "transparent",
-    borderLeftColor: "transparent",
-    borderTopColor: "transparent",
   },
   talkBubbleMessage: {
     margin: 10,
