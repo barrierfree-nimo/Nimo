@@ -35,47 +35,6 @@ const SimulMsgStyle = StyleSheet.create({
     flex: 10,
     width: SCREEN_WIDTH - SCREEN_WIDTH / 6,
   },
-  navigate_btn_container: {
-    position: "absolute",
-    top: SCREEN_HEIGHT - 190,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 15,
-  },
-  navigate_btn: {
-    width: 130,
-    height: 50,
-    padding: 10,
-
-    marginHorizontal: 20,
-    alignItems: "center",
-    justifyContent: "center",
-
-    backgroundColor: "#FFD542",
-    borderRadius: 15,
-    overflow: "hidden",
-  },
-  navigate_btn_text: {
-    color: "#000000",
-    fontSize: 25,
-    fontWeight: "800",
-  },
-  exit_btn: {
-    width: SCREEN_WIDTH - 150,
-    height: 60,
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
-    top: 750,
-    backgroundColor: "#FF4D4D",
-    borderRadius: 15,
-    overflow: "hidden",
-  },
-  text_exit: {
-    fontSize: 30,
-    fontWeight: "800",
-  },
 });
 
 export default SimulMsgStyle;
