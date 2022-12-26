@@ -11,6 +11,7 @@ import ExitBtn from "../simul_common/exit_btn";
 import SimulMainStyle from "./simul_main_style";
 import Axios from "axios";
 import baseURL from "../baseURL";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SimulMain = ({ navigation }: any) => {
   const [type, setType] = useState<string>("");
@@ -22,8 +23,10 @@ const SimulMain = ({ navigation }: any) => {
   }, []);
 
   const fetchSimulMain = async () => {
-    const token = ``;
+    
+    // const token = ``;
     try {
+      const token = await AsyncStorage.getItem('user_Token')
       Axios.get(baseURL + "/simulation", {
         headers: {
           accessToken: `${token}`,
@@ -201,7 +204,7 @@ const SimulMain = ({ navigation }: any) => {
       <View style={CommonStyle.container_exit}>
         <TouchableOpacity onPress={() => navigation.navigate("Main")}>
           <View>
-            <Text style={styles.exit_btn_text}>체험 나가기</Text>
+            <Text style={CommonStyle.exit_btn_text}>체험 나가기</Text>
           </View>
         </TouchableOpacity>
       </View>

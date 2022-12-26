@@ -54,11 +54,15 @@ const VoiceSimulMain = ({navigation} : any) => {
         { ok === false ? (
           <View style={styles.container_phone}>
             <Text style={styles.text_phoneNum}>02-XXXX-XXXX</Text>
-            <TouchableOpacity onPress={() => start()} style={styles.btn_call}>
-              <Image source={require("../../assets/icons/simul_voice/ic_call.png")}/>
-              <Text style={styles.text_btn_call_swipe}>{`	〉〉`}</Text>
-              <Text style={styles.text_btn_call}>전화받기</Text>
-            </TouchableOpacity>
+            <View style={styles.container_btn_call}>
+              <TouchableOpacity onPress={() => start()}>
+                <Image source={require("../../assets/icons/simul_voice/ic_call.png")}/>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Image source={require("../../assets/icons/simul_voice/ic_call_red.png")}/>
+              </TouchableOpacity>
+            </View>
+            
           </View>
         ) : (
           <View style={styles.container_phone}>
@@ -66,7 +70,7 @@ const VoiceSimulMain = ({navigation} : any) => {
             <Text style={styles.text_callTime}>00:24</Text>
             <ScrollView style={styles.container_bubble_voice}>
               {scripts.map((item) => (
-                <View style={styles.bubble_voice}>
+                <View key={item} style={styles.bubble_voice}>
                   <SpeechBubble 
                   bubbleColor="#f5ee64"
                   bubbleDirection="left"
@@ -121,30 +125,14 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: '#FFFFFF', 
   },  
-  btn_call: {
-    display: "flex",
-    flexDirection: "row",
-    width: SCREEN_WIDTH - 130,
-    marginTop: 250,
-    padding: 10,
-    borderRadius: 20,
-    alignItems: "center",
-    backgroundColor: "rgba( 255, 255, 255, 0.55 )",
-  },
-  text_btn_call_swipe: {
-    paddingLeft: 10,
-    fontSize: 25,
-    fontWeight: "bold",
-    color: '#FFFFFF', 
-  },
-  text_btn_call: {
-    flex: 1,
-    paddingRight: 10,
-    fontSize: 22,
-    fontWeight: "bold",
-    color: '#FFFFFF', 
-    textAlign: "right"
-  },
+  container_btn_call: {
+    width: SCREEN_WIDTH,
+    flexDirection:'row',
+    alignContent: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 60,
+    marginTop: 200
+  },  
   text_callTime: {
     marginTop: 20,
     fontSize: 25,

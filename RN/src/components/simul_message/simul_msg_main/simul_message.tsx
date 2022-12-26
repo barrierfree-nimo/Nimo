@@ -12,6 +12,7 @@ import CommonStyle from "../../common/common_style";
 import ExitBtn from "../../simul_common/exit_btn";
 import MessageCard from "../messageCard";
 import SimulMsgStyle from "./simul_message_style";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface MsgContent {
   simulNum: number;
@@ -32,8 +33,8 @@ const MessageSimul = ({ navigation }: any) => {
   }, []);
 
   const fetchSimulMsg = async () => {
-    const token = ``;
     try {
+      const token = await AsyncStorage.getItem('user_Token')
       Axios.get(baseURL + "/simulation/msg", {
         headers: {
           accessToken: `${token}`,

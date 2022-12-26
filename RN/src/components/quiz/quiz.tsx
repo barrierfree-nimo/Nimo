@@ -36,7 +36,7 @@ const Quiz = ({ navigation }: any) => {
       const token = await AsyncStorage.getItem('user_Token')
 
       if(token != null) {
-        console.log("QUIZ TOKEN : " + token)
+        //console.log("QUIZ TOKEN : " + token)
         
         try {
           Axios.get(baseURL + "/quiz", {
@@ -45,7 +45,7 @@ const Quiz = ({ navigation }: any) => {
             }
           }).then((res) => {
             if(res.status == 200) {
-              console.log(res.data)
+              //console.log(res.data)
               setIdData(Number(res.data[0]["id"]));
               setQTextData(res.data[0]["qText"]);
               setATextData(res.data[0]["aText"].split(","));
@@ -115,7 +115,7 @@ const Quiz = ({ navigation }: any) => {
       {showCommentary === false ? (
         <View style={QuizStyle.container_option}>
           {aTextData.map((item) => (
-            <TouchableOpacity
+            <TouchableOpacity key={item}
               onPress={() => check_answer(item)}
               style={QuizStyle.btn_container_option}
             >
