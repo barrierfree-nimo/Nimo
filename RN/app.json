@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "nimo-client",
+    "name": "phishing-vaccine}",
     "slug": "nimo-client",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./src/assets/images/logo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./src/assets/images/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,9 +23,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./src/assets/images/logo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.nimo.phishingvaccine"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

@@ -22,7 +22,15 @@ const simulation = {
             const done = doneNum.map((x) => Number(x.simulNum));
 
             if (type == "voice") {
-                //
+                var notDone = await Voice.findAll({
+                    limit: 1,
+                    where: {
+                        num: {[ Sequelize.Op.notIn ]: done},
+                    },
+                    attributes: [ "num" ],
+                    raw: true,
+                });
+                var num = notDone[ 0 ].num;
             } else if (type == "msg") {
                 var notDone = await Msg.findAll({
                     limit: 1,
@@ -57,6 +65,49 @@ const simulation = {
         } catch (error) {
             res.status(400)
         }
+    },
+    voiceDoneList: async function (req, res, next) {
+        try {
+            const user = await User.findOne({where: {id: req.user_id}});
+
+            const simul = await SimulData.findAll({
+                where: {
+                    type: "voice",
+                },
+                attributes: [ "simulNum", "title", "commentary" ],
+                raw: true,
+            });
+
+            const history = await History.findAll({
+                where: {
+                    user_nickname: user.nickname,
+                    type: "voice",
+                },
+                attributes: [ "simulNum" ],
+                raw: true,
+            });
+            const done = history.map((x) => Number(x.simulNum));
+
+            const data = {
+                simul: simul,
+                done: done,
+            };
+
+            for (const i of simul) {
+                if (done.includes(i.simulNum)) {
+                    i[ 'done' ] = 'true'
+                } else {
+                    i[ 'done' ] = 'false'
+                }
+            }
+            res.status(200).json(simul);
+
+        } catch(error) {
+            res.status(400)
+        }
+    },
+    voiceSimul: async function (req, res, next) {
+
     },
     msgDoneList: async function (req, res, next) {
         try {

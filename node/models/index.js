@@ -3,6 +3,7 @@ const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[ env ];
 const User = require('./user');
 const Quiz = require('./quiz');
+const Voice = require('./voice')
 const Msg = require('./msg');
 const Sns = require('./sns');
 const SimulData = require('./simuldata');
@@ -18,11 +19,11 @@ const sequelize = new Sequelize(
 db.sequelize = sequelize;
 
 db.User = User;
+db.Voice = Voice;
 db.Msg = Msg;
 db.Sns = Sns;
 db.SimulData = SimulData;
 db.History = History;
-db.Msg = Msg;
 db.SimulData = SimulData;
 db.History = History;
 db.Quiz = Quiz;
@@ -30,6 +31,7 @@ db.Post = Post;
 db.Comment = Comment;
 
 User.init(sequelize);
+Voice.init(sequelize);
 Msg.init(sequelize);
 Sns.init(sequelize);
 SimulData.init(sequelize);
