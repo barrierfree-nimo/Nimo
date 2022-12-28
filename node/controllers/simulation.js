@@ -1,5 +1,5 @@
 const express = require("express");
-const {User, History, Msg, Sns, SimulData} = require("../models");
+const {User, History, Voice, Msg, Sns, SimulData} = require("../models");
 var Sequelize = require("sequelize");
 const {json, HasMany} = require("sequelize");
 
@@ -22,7 +22,15 @@ const simulation = {
             const done = doneNum.map((x) => Number(x.simulNum));
 
             if (type == "voice") {
-                //
+                var notDone = await Voice.findAll({
+                    limit: 1,
+                    where: {
+                        num: {[ Sequelize.Op.notIn ]: done},
+                    },
+                    attributes: [ "num" ],
+                    raw: true,
+                });
+                var num = notDone[ 0 ].num;
             } else if (type == "msg") {
                 var notDone = await Msg.findAll({
                     limit: 1,
@@ -56,6 +64,79 @@ const simulation = {
             res.status(200).json({type, num, red});
         } catch (error) {
             res.status(400)
+        }
+    },
+    voiceDoneList: async function (req, res, next) {
+        try {
+            const user = await User.findOne({where: {id: req.user_id}});
+
+            const simul = await SimulData.findAll({
+                where: {
+                    type: "voice",
+                },
+                attributes: [ "simulNum", "title", "commentary" ],
+                raw: true,
+            });
+
+            const history = await History.findAll({
+                where: {
+                    user_nickname: user.nickname,
+                    type: "voice",
+                },
+                attributes: [ "simulNum" ],
+                raw: true,
+            });
+            const done = history.map((x) => Number(x.simulNum));
+
+            const data = {
+                simul: simul,
+                done: done,
+            };
+
+            for (const i of simul) {
+                if (done.includes(i.simulNum)) {
+                    i[ 'done' ] = 'true'
+                } else {
+                    i[ 'done' ] = 'false'
+                }
+            }
+            res.status(200).json(simul);
+
+        } catch(error) {
+            res.status(400)
+        }
+    },
+    voiceSimul: async function (req, res, next) {
+        try {
+            const scripts = await Voice.findAll({
+                where: {
+                    num: req.params.num,
+                },
+                attributes: [ "contents", "response" ],
+                raw: true,
+            });
+            const scrp = [];
+            scripts.map((x) => {
+                scrp.push([ x.contents, parseInt(x.response) ]);
+            });
+
+            const comm = await SimulData.findOne({
+                where: {
+                    type: "voice",
+                    simulNum: req.params.num,
+                },
+                attributes: [ "commentary" ],
+                raw: true,
+            });
+
+            const data = {
+                scripts: scrp,
+                commentary: String(Object.values(comm)),
+            };
+
+            res.status(200).json(data);
+        } catch (error) {
+            res.status(400);
         }
     },
     msgDoneList: async function (req, res, next) {

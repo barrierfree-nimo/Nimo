@@ -109,7 +109,8 @@ const Quiz = ({ navigation }: any) => {
       </View>
 
       <View style={QuizStyle.container_question}>
-        <Text style={QuizStyle.text_question}>Q. {qTextData}</Text>
+        <Text style={QuizStyle.text_question}>문제 {idData}.</Text> 
+        <Text style={QuizStyle.text_question}>{qTextData}</Text>
       </View>
 
       {showCommentary === false ? (
