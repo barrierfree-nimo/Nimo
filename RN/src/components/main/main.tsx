@@ -28,7 +28,6 @@ const Main = ({ navigation }: any) => {
     try {
       token = await AsyncStorage.getItem('user_Token')
       if(token != null) {
-        console.log(token)
         Axios.get(baseURL + "/main", {
           headers: {
             'accessToken': `${token}`
@@ -38,7 +37,6 @@ const Main = ({ navigation }: any) => {
           setDonePercent(Number(100 * res.data["done"] / res.data['all'] ));
         });
       }
-      else console.log('token: ' + token)
     } catch(err) {
       console.log(err)
     }
@@ -69,7 +67,7 @@ const Main = ({ navigation }: any) => {
           <View style={MainStyle.container_progress_text}>
             <Text style={MainStyle.text_progress}>
               {`${nickname}님의 체험 완료도는 \n`}
-              <Text style={MainStyle.text_progress_percent}>{`${donePercent}% 입니다`}</Text>
+              <Text style={MainStyle.text_progress_percent}>{`${Math.floor(donePercent)}% 입니다`}</Text>
             </Text>
             
           </View>

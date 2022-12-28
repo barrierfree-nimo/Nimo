@@ -1,5 +1,5 @@
 const express = require("express");
-const {User, History, Msg, Sns, SimulData} = require("../models");
+const {User, History, Voice, Msg, Sns, SimulData} = require("../models");
 var Sequelize = require("sequelize");
 const {json, HasMany} = require("sequelize");
 
@@ -107,7 +107,37 @@ const simulation = {
         }
     },
     voiceSimul: async function (req, res, next) {
+        try {
+            const scripts = await Voice.findAll({
+                where: {
+                    num: req.params.num,
+                },
+                attributes: [ "contents", "response" ],
+                raw: true,
+            });
+            const scrp = [];
+            scripts.map((x) => {
+                scrp.push([ x.contents, parseInt(x.response) ]);
+            });
 
+            const comm = await SimulData.findOne({
+                where: {
+                    type: "voice",
+                    simulNum: req.params.num,
+                },
+                attributes: [ "commentary" ],
+                raw: true,
+            });
+
+            const data = {
+                scripts: scrp,
+                commentary: String(Object.values(comm)),
+            };
+
+            res.status(200).json(data);
+        } catch (error) {
+            res.status(400);
+        }
     },
     msgDoneList: async function (req, res, next) {
         try {
