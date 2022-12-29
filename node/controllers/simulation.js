@@ -1,3 +1,4 @@
+const { getStorage, ref, getDownloadURL } = require('firebase/storage')
 const express = require("express");
 const {User, History, Voice, Msg, Sns, SimulData} = require("../models");
 var Sequelize = require("sequelize");
@@ -115,10 +116,27 @@ const simulation = {
                 attributes: [ "contents", "response" ],
                 raw: true,
             });
+
+            
+            // Init Firebase Storage
+            const storage = getStorage()
+            const storageRef = ref(storage)
+            const voicesRef = ref(storage, 'voice/test01.mp3')
+
+
+            getDownloadURL(voicesRef)
+            .then((url) => {
+                console.log(String(url))
+            }).catch((err) => {
+                console.log('err: ' + err)
+            })
+
+
             const scrp = [];
             scripts.map((x) => {
                 scrp.push([ x.contents, parseInt(x.response) ]);
             });
+            
 
             const comm = await SimulData.findOne({
                 where: {
