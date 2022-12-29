@@ -14,17 +14,38 @@ import {
 import CommonStyle from '../common/common_style';
 import SpeechBubble from '../simul_common/speech_bubble';
 import NavigateBtn from '../simul_common/navigate_btn';
-// import { Audio } from 'expo-av';
+import {
+  InterruptionModeAndroid,
+  Audio,
+  ResizeMode,
+  Video
+} from "expo-av";
 
 const VoiceSimulMain = ({navigation} : any) => {
   const [ ok, setOk ] = useState(false);
-  const [sound, setSound] = useState();
+  //const [sound, setSound] = useState<Audio.Sound|null>(null)
 
   const start = async () => {
     setOk(true);
   }
 
   const scripts = ["안녕하세요", "고객님", "행복은행입니다"]
+
+  const play = async () => {
+    const sound = new Audio.Sound()
+
+    await sound.loadAsync({
+        uri: 'https://firebasestorage.googleapis.com/v0/b/phishing-vaccine.appspot.com/o/voice%2F1%2F1.mp3?alt=media&token=3697b50e-9da3-4ee5-9a00-6b8d8590d832'
+    })
+
+    await sound.playAsync()
+  }
+
+  useEffect(() => {
+    play()
+  })
+
+  
 
   // async function playSound() {
   //   console.log("Loading Sound");
