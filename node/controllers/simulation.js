@@ -217,7 +217,7 @@ const simulation = {
             
             res.status(200).json(simul);
         } catch (error) {
-            res.status(400);
+            res.status(500);
         }
     },
     msgSimul: async function (req, res, next) {
@@ -250,7 +250,7 @@ const simulation = {
 
             res.status(200).json(data);
         } catch (error) {
-            res.status(400);
+            res.status(500);
         }
     },
     snsDoneList: async function (req, res, next) {
@@ -279,7 +279,7 @@ const simulation = {
             };
             res.status(200).json(data);
         } catch (error) {
-            res.status(400);
+            res.status(500);
         }
     },
     snsSimul: async function (req, res, next) {
@@ -312,7 +312,7 @@ const simulation = {
 
             res.status(200).json(data);
         } catch (error) {
-            res.status(400);
+            res.status(500);
         }
     },
     addDoneList: async function (req, res, next) {
@@ -351,7 +351,7 @@ const simulation = {
             });
             res.status(200).json(history);
         } catch (error) {
-            res.status(400);
+            res.status(500);
         }
     }
 }
