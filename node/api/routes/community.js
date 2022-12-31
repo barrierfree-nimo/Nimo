@@ -8,5 +8,6 @@ router.get("/:id", auth, commController.readPost);
 router.post("/write", auth, commController.writePost);
 router.post("/comment", auth, commController.writeComment);
 router.get("/keyword/:keyword", auth, commController.findKeyword);
+router.get("/tag/:tag", auth, commController.findTag);
 
 module.exports = router;
