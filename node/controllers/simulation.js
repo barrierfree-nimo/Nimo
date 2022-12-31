@@ -1,7 +1,9 @@
+const { getStorage, ref, getDownloadURL, listAll } = require('firebase/storage')
 const express = require("express");
 const {User, History, Voice, Msg, Sns, SimulData} = require("../models");
 var Sequelize = require("sequelize");
 const {json, HasMany} = require("sequelize");
+const { async } = require('@firebase/util');
 
 const simulation = {
     randomApp: async function (req, res, next) {
@@ -115,11 +117,7 @@ const simulation = {
                 attributes: [ "contents", "response" ],
                 raw: true,
             });
-            const scrp = [];
-            scripts.map((x) => {
-                scrp.push([ x.contents, parseInt(x.response) ]);
-            });
-
+            
             const comm = await SimulData.findOne({
                 where: {
                     type: "voice",
@@ -129,12 +127,57 @@ const simulation = {
                 raw: true,
             });
 
-            const data = {
-                scripts: scrp,
-                commentary: String(Object.values(comm)),
-            };
 
-            res.status(200).json(data);
+            // Firebase Storage
+            const storage = getStorage();
+            const voiceRef = ref(storage, 'voice/' + String(req.params.num));
+            let urlList = [];
+
+            await listAll(voiceRef).then((response) => {
+                response.items.forEach((itemRef) => {
+                    getDownloadURL(itemRef).then((url) => {
+                        urlList.push(String(url))
+                        
+                        if(urlList.length == (response.items).length) {
+                            urlList.sort()
+                            console.log(urlList)
+
+                            const scrp = [];
+                            
+                            for(let i=0 ; i<scripts.length ; i++) {
+                                let item;
+                                if(i < urlList.length) {
+                                    item = {
+                                        contents : scripts[i].contents,
+                                        response : parseInt(scripts[i].response),
+                                        url : urlList[i]
+                                    }
+                                }
+                                else {
+                                    item = {
+                                        contents : scripts[i].contents,
+                                        response : parseInt(scripts[i].response),
+                                        url : ''
+                                    }
+                                }
+                                
+                                scrp.push(item)
+                            }
+
+                            const data = {
+                                scripts: scrp,
+                                commentary: String(Object.values(comm))
+                            };
+                
+                            res.status(200).json(data);
+                            
+                        }
+                    })
+                })
+            }).catch((e) => {
+                res.status(400);
+            });
+
         } catch (error) {
             res.status(400);
         }

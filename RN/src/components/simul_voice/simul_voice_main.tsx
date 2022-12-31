@@ -20,16 +20,42 @@ import {
   ResizeMode,
   Video
 } from "expo-av";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import baseURL from "../baseURL";
 
 const VoiceSimulMain = ({navigation} : any) => {
   const [ ok, setOk ] = useState(false);
-  //const [sound, setSound] = useState<Audio.Sound|null>(null)
+  const [ scriptsList, setSrciptsList ] = useState([]);
 
   const start = async () => {
     setOk(true);
   }
 
   const scripts = ["안녕하세요", "고객님", "행복은행입니다"]
+
+  const fetchScripts = async () => {
+    try {
+      const token = await AsyncStorage.getItem('user_Token')
+
+      if(token != null) {
+        try {
+          Axios.get(baseURL + "/simulation/voice/1", {
+            headers: {
+              'accessToken': `${token}`
+            }
+          }).then((res) => {
+            if(res.status == 200) {
+              console.log(res.data)
+            }
+          });
+        } catch(err) {
+
+        }
+      }
+    } catch(err) {
+    
+    }
+  }
 
   const play = async () => {
     const sound = new Audio.Sound()
@@ -42,7 +68,8 @@ const VoiceSimulMain = ({navigation} : any) => {
   }
 
   useEffect(() => {
-    play()
+    play();
+    //fetchScripts();
   })
 
   
