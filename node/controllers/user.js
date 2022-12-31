@@ -19,7 +19,7 @@ const user = {
         });
 
         if (user) {
-          res.status(400).json({message: "Already exist nickname"});
+          res.status(500).json({message: "Already exist nickname"});
         } else {
           bcrypt.genSalt(10, function (err, salt) {
             if (err) return;
@@ -50,7 +50,7 @@ const user = {
         });
 
         if (!user) {
-          res.status(400).json({message: "Retry (not exist or typeerror)"});
+          res.status(500).json({message: "Retry (not exist or typeerror)"});
         } else {
           const valid = user.validPassword(req.body.password.toString());
           if (!valid) {
