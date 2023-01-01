@@ -6,7 +6,6 @@ import AuthStackNavigator from "./AuthStackNavigator";
 
 import Main from "../main/main";
 import Quiz from "../quiz/quiz";
-import Community from "../community/community_main/community";
 import Info from "../info/info";
 
 import SimulMain from "../simul_main/simul_main";
@@ -15,6 +14,9 @@ import MessageDetail from "../simul_message/id/[id]";
 import CorrectPage from "../simul_message/correct";
 
 import VoiceSimulMain from "../simul_voice/simul_voice_main";
+
+import Community from "../community/community_main/community";
+import CommunityWrite from "../community/community_write/write";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +30,7 @@ const MainStackNavigator = () => {
         <Stack.Screen name="Main" component={Main} />
         <Stack.Screen name="Quiz" component={Quiz} />
         <Stack.Screen name="Community" component={Community} />
+        <Stack.Screen name="CommunityWrite" component={CommunityWrite} />
         <Stack.Screen name="Info" component={Info} />
         <Stack.Screen name="SimulMain" component={SimulMain} />
         <Stack.Screen name="MessageSimul" component={MessageSimul} />
