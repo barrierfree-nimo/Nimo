@@ -6,7 +6,7 @@ import AuthStackNavigator from "./AuthStackNavigator";
 
 import Main from "../main/main";
 import Quiz from "../quiz/quiz";
-import Community from "../community/community";
+import Community from "../community/community_main/community";
 import Info from "../info/info";
 
 import SimulMain from "../simul_main/simul_main";
