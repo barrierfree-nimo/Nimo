@@ -18,6 +18,6 @@ if ! type docker-compose > /dev/null
 then
   echo "docker-compose does not exist"
   echo "Start installing docker-compose"
-  sudo curl -L "https://github.com/docker/compose/releases/download/1.27.3/docker-compose-$(uname -s)-$(uname -m)" -o /app/node/docker-compose
-  sudo chmod +x /app/node/docker-compose
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.27.3/docker-compose-$(uname -s)-$(uname -m)" -o /app/docker-compose
+  sudo chmod +x /app/docker-compose
 fi
