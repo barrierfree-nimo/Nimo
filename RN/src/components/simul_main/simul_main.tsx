@@ -179,10 +179,7 @@ const SimulMain = ({ navigation }: any) => {
 
           {/*  CALL */}
           <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("VoiceSimulMain");
-            }}
-          >
+            onPress={() => navigation.navigate("VoiceSimul")}>
             {type === "call" || isInRed("call") ? (
               <Image
                 source={require(`../../assets/icons/simul_main/call_red.png`)}
