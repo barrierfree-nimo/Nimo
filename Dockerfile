@@ -6,7 +6,7 @@ COPY ./node /app
 
 WORKDIR /app/node
 
-RUN apt-get update && npm install && sh /app/node/config/scripts/deploy.sh
+RUN apt-get update && npm install && sh ./config/scripts/deploy.sh
 
 EXPOSE 3000 80
 
