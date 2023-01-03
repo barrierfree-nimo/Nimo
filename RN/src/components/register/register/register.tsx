@@ -1,7 +1,7 @@
 import React from "react";
 import {useState} from 'react';
 import Axios from 'axios';
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ToastAndroid } from "react-native";
+import { SafeAreaView, ScrollView, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ToastAndroid } from "react-native";
 import CommonStyle from "../../common/common_style";
 import RegisterStyle from "./register_style";
 import baseURL from "../../baseURL";
@@ -31,11 +31,12 @@ const Register = ({navigation}: any) => {
       <SafeAreaView style={CommonStyle.container}>
       
         <View style={CommonStyle.container_header}>
-          <Text style={CommonStyle.title}>회원가입</Text>
+          <Text style={CommonStyle.text_header}>회원가입</Text>
         </View>
 
-        <View style={RegisterStyle.container}>
-          <View style={RegisterStyle.container_item}>
+        <ScrollView style={RegisterStyle.container}>
+          <View style={RegisterStyle.container_input}>
+            <View style={RegisterStyle.container_item}>
               <Text style={RegisterStyle.title_item}>닉네임</Text>
               <View style={RegisterStyle.container_item_input}>
                 <TextInput value={nickname} onChangeText={(nickname) => setNickname(nickname)} 
@@ -44,7 +45,7 @@ const Register = ({navigation}: any) => {
                   <Text style={RegisterStyle.btnText_overlapping}>중복확인</Text>
                 </TouchableOpacity>
               </View>
-          </View>
+            </View>
 
             <View style={RegisterStyle.container_item}>
               <Text style={RegisterStyle.title_item}>비밀번호</Text>
@@ -60,7 +61,7 @@ const Register = ({navigation}: any) => {
                 <TextInput style={RegisterStyle.textInput_item_pw} secureTextEntry={true} placeholder="비밀번호를 한번 더 입력해주세요" />
               </View>
             </View>
-
+          </View>
 
           <View style={RegisterStyle.container_btn}>
             <TouchableOpacity onPress={() => {addUser()}} style={RegisterStyle.btn_register}>
@@ -68,7 +69,7 @@ const Register = ({navigation}: any) => {
             </TouchableOpacity>
           </View>
 
-        </View>
+        </ScrollView>
 
       </SafeAreaView>
     </TouchableWithoutFeedback>

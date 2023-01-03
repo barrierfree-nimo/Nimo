@@ -11,6 +11,7 @@ import {
 import CommonStyle from "../common/common_style";
 import ExitBtn from "../simul_common/exit_btn";
 import NavigateBtn from "../simul_common/navigate_btn";
+import SimulMainStyle from "../simul_main/simul_main_style";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
@@ -33,7 +34,7 @@ const CorrectPageVoice = ({ route, navigation }: any) => {
     <SafeAreaView style={CommonStyle.container}>
       <Image
         source={require("../../assets/icons/simul_voice/voice_bg_purple.png")}
-        style={styles.img_bg}
+        style={SimulMainStyle.img_galaxy}
       />
       <View
         style={[
@@ -49,19 +50,16 @@ const CorrectPageVoice = ({ route, navigation }: any) => {
       <NavigateBtn navigation={navigation} />
 
       {/* 체험나가기 버튼 */}
-      <ExitBtn navigation={navigation} />
+      <View style={CommonStyle.container_exit}>
+        <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+          <Text style={CommonStyle.btnText_exit}>체험 나가기</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  img_bg: {
-    position: "absolute",
-    width: SCREEN_WIDTH - 20,
-    height: SCREEN_HEIGHT - 100,
-    marginTop: 20,
-    resizeMode: "stretch",
-  },
   color_box: {
     alignItems: "center",
     justifyContent: "center",
@@ -79,7 +77,7 @@ const styles = StyleSheet.create({
   },
   text_content: {
     color: "#ffffff",
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "600",
     top: 40,
   },

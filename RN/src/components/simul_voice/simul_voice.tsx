@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import baseURL from "../baseURL";
 import CommonStyle from "../common/common_style";
+import SimulMainStyle from "../simul_main/simul_main_style";
 import SimulVoiceStyle from "./simul_voice_style";
 import NavigateBtn from "../simul_common/navigate_btn";
 import MessageCard from "./messageCard";
@@ -37,7 +38,7 @@ const VoiceSimul = ({ navigation }: any) => {
   const fetchSimulVoice = async () => {
     try {
       const token = await AsyncStorage.getItem('user_Token')
-      Axios.get("http://172.30.1.85:5000/simulation/voice", {
+      Axios.get(baseURL + "/simulation/voice", {
         headers: {
           accessToken: `${token}`,
         },
@@ -60,7 +61,7 @@ const VoiceSimul = ({ navigation }: any) => {
     <SafeAreaView style={CommonStyle.container}>
       <Image
         source={require("../../assets/icons/simul_voice/voice_bg_white.png")}
-        style={SimulVoiceStyle.img_bg}
+        style={SimulMainStyle.img_galaxy}
       />
       {/* 스마트폰 */}
       <View style={SimulVoiceStyle.phone_div}>

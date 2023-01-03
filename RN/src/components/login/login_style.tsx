@@ -1,36 +1,32 @@
 import { StyleSheet, Dimensions } from "react-native";
-import CommonStyle from "../common/common_style";
 
 const SCREEN_WIDTH = Dimensions.get("window").width
 
 const LoginStyle = StyleSheet.create({  
   container_login_title: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 30,
+    marginTop: 70,
   },
   text_title: {
-    color: '#FFD542', 
+    color: '#00284E', 
     fontSize: 40,
     fontWeight: 'bold'
   },
   text_login: {
-    color: '#FFFFFF', 
+    color: '#FFD542', 
     fontSize: 50,
     fontWeight: 'bold'
   },
-  container_login_img: {
+  
+  container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: SCREEN_WIDTH - 30,
+    alignContent: 'center',
+    marginHorizontal: 20,
   },
-  img_login: {
-    width: 150,
-    height: 150,
-  },
+
   container_login_input: {
-    flex: 2,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -40,8 +36,13 @@ const LoginStyle = StyleSheet.create({
     marginTop: 10,
     paddingLeft: 20,
     borderRadius: 10,
-    backgroundColor: '#D9D9D9',
+    backgroundColor: '#ebebeb',
     fontSize: 24,
+  },
+  container_login_btn: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10
   },
   btn_login: {
     width: SCREEN_WIDTH - 100,
@@ -50,20 +51,20 @@ const LoginStyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 25,
-    backgroundColor: '#FFD542',
+    backgroundColor: '#00284E',
   },
   btn_register: {
     width: SCREEN_WIDTH - 100,
     height: 50,
-    marginTop: 15,
+    marginTop: 10,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 25,
-    backgroundColor: 'orange',
+    backgroundColor: '#000000',
   },
   btnText_login: {
-    color: '#000000',
-    fontSize: 23,
+    color: '#FFFFFF',
+    fontSize: 22,
     fontWeight: 'bold'
   },
 })

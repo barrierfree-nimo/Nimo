@@ -33,7 +33,7 @@ const CommunityArchiveStyle = StyleSheet.create({
   content_container: {
     flex: 10,
     width: SCREEN_WIDTH - 40,
-    backgroundColor: "white",
+    backgroundColor: "#D9D9D9",
     marginTop: 20,
     marginBottom: 20,
   },

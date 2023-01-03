@@ -10,8 +10,11 @@ const RegisterStyle = StyleSheet.create({
     marginVertical: 20,
     marginHorizontal: 20,
   },
+  container_input: {
+    flex: 1,
+    alignContent: 'center',
+  },
   container_item: {
-    // flex: 1,
     marginTop: 30
   },
   container_item_input: {
@@ -21,7 +24,7 @@ const RegisterStyle = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     marginLeft: 15,
-    color: '#FFFFFF',
+    color: '#00284E',
     fontSize: 20,
     fontWeight: 'bold'
   },
@@ -32,7 +35,7 @@ const RegisterStyle = StyleSheet.create({
     marginLeft: 15,
     paddingLeft: 20,
     borderRadius: 10,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#ebebeb',
     fontSize: 20,
   },
   textInput_item_pw: {
@@ -42,7 +45,7 @@ const RegisterStyle = StyleSheet.create({
     marginLeft: 15,
     paddingLeft: 20,
     borderRadius: 10,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#ebebeb',
     fontSize: 20,
   },
   btn_overlapping: {
@@ -65,16 +68,16 @@ const RegisterStyle = StyleSheet.create({
   },
   btn_register: {
     width: SCREEN_WIDTH - 60,
-    height: 65,
-    marginTop: 55,
+    height: 60,
+    marginTop: 70,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 30,
-    backgroundColor: 'coral',
+    backgroundColor: '#00284E',
   },
   btnText_register: {
-    color: '#000000',
-    fontSize: 27,
+    color: '#FFFFFF',
+    fontSize: 25,
     fontWeight: "bold"
   },
 })

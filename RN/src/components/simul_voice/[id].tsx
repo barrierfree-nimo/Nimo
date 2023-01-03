@@ -24,6 +24,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import baseURL from "../baseURL";
 import { Sound } from 'expo-av/build/Audio';
+import SimulMainStyle from '../simul_main/simul_main_style';
 
 const VoiceDetail = ({route, navigation} : any) => {
   const [ ok, setOk ] = useState(false);
@@ -47,7 +48,7 @@ const VoiceDetail = ({route, navigation} : any) => {
 
     if(token != null) {
       try {
-        Axios.get(`http://172.30.1.85:5000`+ `/simulation/voice/${route.params.simulNum}`, {
+        Axios.get(baseURL + `/simulation/voice/${route.params.simulNum}`, {
           headers: {
             'accessToken': `${token}`
           }
@@ -110,7 +111,7 @@ const VoiceDetail = ({route, navigation} : any) => {
       <View style={CommonStyle.container_contents}>
         <Image
           source={require("../../assets/icons/simul_voice/voice_bg_purple.png")}
-          style={styles.img_galaxy}         
+          style={SimulMainStyle.img_galaxy}         
         />
 
         { ok === false ? (
@@ -162,10 +163,11 @@ const VoiceDetail = ({route, navigation} : any) => {
             </ScrollView>
           </View>
         ) }        
-
+        {/* 이동버튼 */}
         <NavigateBtn navigation={navigation} />
       </View>
 
+      {/* 체험나가기 버튼 */}
       <View style={CommonStyle.container_exit}>
         <TouchableOpacity onPress={() => navigation.navigate("Main")}>
           <Text style={CommonStyle.btnText_exit}>체험 나가기</Text>
@@ -184,27 +186,21 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: '#00284E'
   },  
-  img_galaxy: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    resizeMode: "stretch",
-  },
   container_phone: {
     position: "absolute",
     width: "100%",
     height: "100%",
     alignItems: "center",
+    paddingTop: 20
   },
   img_profile: {
-    marginTop: 80,
+    marginTop: 70,
     width: 90,
     height: 90,
   },
   text_phoneNum: {
-    marginTop: 50,
+    marginTop: 40,
     fontSize: 30,
     fontWeight: "500",
     color: '#FFFFFF', 
@@ -221,7 +217,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 60,
-    marginTop: 200
+    marginTop: 120
   },  
   container_bubble_voice: {
     width: SCREEN_WIDTH,

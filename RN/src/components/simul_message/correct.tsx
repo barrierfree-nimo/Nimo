@@ -11,6 +11,7 @@ import {
 import CommonStyle from "../common/common_style";
 import ExitBtn from "../simul_common/exit_btn";
 import NavigateBtn from "../simul_common/navigate_btn";
+import SimulMainStyle from "../simul_main/simul_main_style";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
@@ -33,7 +34,7 @@ const CorrectPage = ({ route, navigation }: any) => {
     <SafeAreaView style={CommonStyle.container}>
       <Image
         source={require("../../assets/icons/simul_message/message_bg.png")}
-        style={styles.img_bg}
+        style={SimulMainStyle.img_galaxy}
       />
       <View
         style={[

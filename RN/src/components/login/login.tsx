@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { SafeAreaView, KeyboardAvoidingView, StatusBar, Text, View, TextInput, Image, TouchableOpacity, ToastAndroid, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { SafeAreaView, KeyboardAvoidingView, ScrollView, StatusBar, Text, View, TextInput, Image, TouchableOpacity, ToastAndroid, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import CommonStyle from '../common/common_style';
 import LoginStyle from './login_style';
 import baseURL from '../baseURL';
@@ -38,17 +38,21 @@ const Login = ({navigation}: any) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={CommonStyle.container}>
-        <StatusBar />
-        <KeyboardAvoidingView>
-          <View style={LoginStyle.container_login_title}>
-            <Text style={LoginStyle.text_title}>피싱백신</Text>
-            <Text style={LoginStyle.text_login}>로그인</Text>
-          </View>
 
+        <View style={LoginStyle.container_login_title}>
+          <Text style={LoginStyle.text_title}>피싱백신</Text>
+          <Text style={LoginStyle.text_login}>로그인</Text>
+        </View>
+
+        <View style={LoginStyle.container}>
           <View style={LoginStyle.container_login_input}>
-            <TextInput value={nickname} onChangeText={(nickname) => setNickname(nickname)} style={LoginStyle.textInput_login} placeholder="닉네임" />
+            <TextInput value={nickname} style={LoginStyle.textInput_login} 
+              onChangeText={(nickname) => setNickname(nickname)}  placeholder="닉네임" />
             <TextInput value={password} onChangeText={(password) => setPassword(password)} 
               secureTextEntry={true} style={LoginStyle.textInput_login} placeholder="비밀번호" />
+          </View>
+
+          <View style={LoginStyle.container_login_btn}>
             <TouchableOpacity onPress={() => {userLogin(); Keyboard.dismiss()}} style={LoginStyle.btn_login}>
               <Text style={LoginStyle.btnText_login}>로그인하기</Text>
             </TouchableOpacity>
@@ -57,8 +61,9 @@ const Login = ({navigation}: any) => {
               <Text style={LoginStyle.btnText_login}>회원가입하기</Text>
             </TouchableOpacity>
           </View>
-        </KeyboardAvoidingView>
-        
+          
+        </View>
+
       </SafeAreaView>
     </TouchableWithoutFeedback>
     

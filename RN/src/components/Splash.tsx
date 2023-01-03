@@ -41,7 +41,7 @@ const Splash = ({navigation}: any) => {
       <StatusBar />
       <View>
         <View style={styles.container}>
-          <Image source={require('../assets/images/nimo2.png')} />
+          <Image source={require('../assets/images/main_progress.png')} style={styles.img} />
           <Text style={styles.text_title}>피싱백신</Text>
         </View>
       </View>
@@ -54,9 +54,13 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center'
   },
+  img: {
+    marginTop: 70,
+    marginBottom: 20,
+  },
   text_title: {
     fontSize: 70,
-    color: '#FFFFFF',
+    color: '#00284E',
     fontWeight: 'bold',
     alignItems: 'center'
   }
