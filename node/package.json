@@ -4,7 +4,7 @@
   "description": "app-init",
   "main": "app.js",
   "scripts": {
-    "start": "NODE_ENV=production PORT=3000 pm2 start node/app.js",
+    "start": "NODE_ENV=production PORT=3000 pm2 start app.js",
     "test": "node app.js"
   },
   "repository": {
