@@ -38,7 +38,7 @@ jobs:
 
       - name: Make .env
         run: |
-          touch ./app/node/.env
+          touch ./.env
           echo "$ENV" > ./app/node/.env
         env:
           ENV: ${{ secrets.ENV }}
