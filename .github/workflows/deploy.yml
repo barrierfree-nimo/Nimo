@@ -46,8 +46,8 @@ jobs:
 
       - name: Make .env
         run: |
-          touch ~/app/node/.env
-          echo "$ENV" > ~/app/node/.env
+          touch /home/ubuntu/app/node/.env
+          echo "$ENV" > /home/ubuntu/app/node/.env
         env:
           ENV: ${{ secrets.ENV }}
       
@@ -55,7 +55,7 @@ jobs:
         uses: burnett01/rsync-deployments@4.1
         with:
           switches: -avzr --delete
-          remote_path: ~/app/node/
+          remote_path: /home/ubuntu/app/node/
           remote_host: ${{ secrets.EC2_HOST }}
           remote_user: ubuntu
           remote_key: ${{ secrets.EC2_KEY }}
