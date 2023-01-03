@@ -55,8 +55,8 @@ jobs:
       
       - name: Make .env
         run: |
-          touch /home/ubuntu/node/.env
-          echo "$ENV" > /home/ubuntu/node/.env
+          touch ~/node/.env
+          echo "$ENV" > ~/node/.env
         env:
           ENV: ${{ secrets.ENV }}
 
