@@ -13,7 +13,7 @@ export interface SpeechBubbleProps {
 const SpeechBubble = (props: SpeechBubbleProps) => {
   const { bubbleColor, bubbleDirection, textColor, textContent } = props;
   return (
-    <View style={styles.position}>
+    <View style={[styles.position, { justifyContent: bubbleDirection === "right" ? "flex-start" : "flex-end" }]}>
       <View style={styles.talkBubble}>
         <View
           style={[styles.talkBubbleSquare, { backgroundColor: bubbleColor }]}
@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   talkBubbleSquare: {
-    width: 200,
+    width: "auto",
+    maxWidth: 200,
     height: "auto",
     borderRadius: 12,
   },

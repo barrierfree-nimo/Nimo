@@ -71,7 +71,7 @@ const VoiceSimul = ({ navigation }: any) => {
             
             <View style={SimulVoiceStyle.msg_card_div}>
               {simulList?.map(({ simulNum, title, commentary, done }) => (
-                <TouchableOpacity onPress={() => handleOnPress(simulNum)}>
+                <TouchableOpacity key={simulNum} onPress={() => handleOnPress(simulNum)}>
                   <MessageCard
                     key={simulNum}
                     simulNum={simulNum}
