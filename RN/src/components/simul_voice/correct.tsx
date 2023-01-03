@@ -36,14 +36,10 @@ const CorrectPageVoice = ({ route, navigation }: any) => {
         source={require("../../assets/icons/simul_voice/voice_bg_purple.png")}
         style={SimulMainStyle.img_galaxy}
       />
-      <View
-        style={[
-          styles.color_box,
-          { backgroundColor: isCorrect ? "blue" : "red" },
-        ]}
-      >
-        <Text style={styles.text_title}>{titleText}</Text>
-        <Text style={styles.text_content}>{commentary}</Text>
+      <View style={[styles.color_box, { backgroundColor: isCorrect ? "rgba(151, 174, 255, 0.7)" : "rgba(255, 151, 151, 0.55)"}]}>
+        <Image source={require('../../assets/images/main_progress.png')} style={{width: 20, height: 60}} />
+        <Text style={[styles.text_title, { color: isCorrect ? "blue" : "#AF0000" }]}>{titleText}</Text>
+        <Text style={styles.text_content}>{commentary}</Text> 
       </View>
 
       {/* 이동버튼 */}
@@ -63,70 +59,24 @@ const styles = StyleSheet.create({
   color_box: {
     alignItems: "center",
     justifyContent: "center",
-    top: 100,
+    top: 120,
     width: SCREEN_WIDTH - 100,
     height: "auto",
-    padding: 30,
-    paddingBottom: 90,
+    paddingHorizontal: 30,
+    paddingTop: 30,
+    paddingBottom: 50,
     borderRadius: 15,
   },
   text_title: {
-    color: "#ffffff",
-    fontSize: 40,
+    fontSize: 38,
     fontWeight: "900",
   },
   text_content: {
-    color: "#ffffff",
-    fontSize: 20,
-    fontWeight: "600",
-    top: 40,
-  },
-  navigate_btn_container: {
-    position: "absolute",
-    top: 620,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#CADBE8",
-    paddingVertical: 15,
-  },
-  navigate_btn: {
-    width: 130,
-    height: 50,
-    padding: 10,
-
-    marginHorizontal: 20,
-    alignItems: "center",
-    justifyContent: "center",
-
-    backgroundColor: "#FFD542",
-    borderRadius: 15,
-    overflow: "hidden",
-  },
-  navigate_btn_text: {
-    color: "#000000",
-    fontSize: 25,
-    fontWeight: "800",
-  },
-  exit_div: {
-    position: "absolute",
-    top: SCREEN_HEIGHT - 60,
-    width: SCREEN_WIDTH - 80,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  exit_btn: {
-    width: SCREEN_WIDTH - 150,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FF4D4D",
-    borderRadius: 15,
-    overflow: "hidden",
-  },
-  exit_btn_text: {
-    fontSize: 30,
-    fontWeight: "800",
+    color: "#FFFFFF",
+    fontSize: 19,
+    fontWeight: "100",
+    top: 20,
+    lineHeight: 30
   },
 });
 

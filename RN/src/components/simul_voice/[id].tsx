@@ -48,7 +48,7 @@ const VoiceDetail = ({route, navigation} : any) => {
 
     if(token != null) {
       try {
-        Axios.get(baseURL + `/simulation/voice/${route.params.simulNum}`, {
+        Axios.get(`http://172.30.1.85:5000`+ `/simulation/voice/${route.params.simulNum}`, {
           headers: {
             'accessToken': `${token}`
           }
@@ -144,8 +144,8 @@ const VoiceDetail = ({route, navigation} : any) => {
                   {
                     left: item[1] === 1 ? SCREEN_WIDTH / 30 : SCREEN_WIDTH / 4,
                   }]}>
-                  <SpeechBubble 
-                    bubbleColor={item[1] === 1 ?"#a7c8fc" : "#f2f2f2"}
+                  <SpeechBubble
+                    bubbleColor={item[1] === 1 ?"#a7c8fc" : "#FFFFFF"}
                     bubbleDirection={item[1]  === 1 ? "left" : "right"}
                     textColor="#000000"
                     textContent={item[0]} />
@@ -153,19 +153,25 @@ const VoiceDetail = ({route, navigation} : any) => {
               ))}
 
               <View style={styles.container_option}>
+                <Text style={styles.text_notice_select}>대응 방법을 선택해주세요</Text>
                 {options?.map((item) => (
-                    <TouchableOpacity onPress={() => handleClickCorrect(item[1])}  key={item} style={styles.btn_option}>
+                  <View key={item}  style={styles.btn_option}>
+                    <TouchableOpacity onPress={() => handleClickCorrect(item[1])}>
                       <Text style={styles.text_option}>{item[0]}</Text>
                     </TouchableOpacity>
+                  </View>
+                  
                 ))}
               </View>
               
             </ScrollView>
           </View>
         ) }        
-        {/* 이동버튼 */}
-        <NavigateBtn navigation={navigation} />
+        
       </View>
+
+      {/* 이동버튼 */}
+      <NavigateBtn navigation={navigation} />
 
       {/* 체험나가기 버튼 */}
       <View style={CommonStyle.container_exit}>
@@ -230,21 +236,31 @@ const styles = StyleSheet.create({
   container_option: {
     width: SCREEN_WIDTH - 80,
     marginVertical: 10,
+    paddingVertical: 20,
     alignContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.38)',
+    borderRadius: 20,
+  },
+  text_notice_select : {
+    color: "#FFFFFF", 
+    fontSize: 20, 
+    fontWeight: "700",
+    marginBottom: 10,
   },
   btn_option: {
-    width: SCREEN_WIDTH - 100,
-    backgroundColor: 'orange',
-    alignItems: 'center',
+    width: SCREEN_WIDTH - 120,
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
-    borderRadius: 10,
-    marginBottom: 10,
-    padding: 10
+    alignItems: 'center',
+    borderRadius: 15,
+    marginBottom: 15,
+    padding: 15
   },
   text_option: {
-    fontSize: 18,
-    fontWeight: '500'
+    fontSize: 17,
+    fontWeight: '700',
+    color: "#565656"
   }
 });
 

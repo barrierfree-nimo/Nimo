@@ -34,6 +34,11 @@ const MessageCard = (props: MessageCardProps) => {
             <Text style={styles.text_title_phoneNum}>010-XXX-XXXX</Text>
             <Text style={styles.text_title}>{title}</Text>
           </View>
+
+          <Image
+            source={require("../../assets/icons/simul_voice/ic_phone.png")}
+            style={styles.img_phone}
+          />
           
         </View>
 
@@ -75,6 +80,12 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     marginRight: 10,
+  },
+  img_phone: {
+    width: 25,
+    height: 25,
+    marginTop: 20,
+    marginLeft: 10
   },
   img_checkbox: {
     position: "absolute",
