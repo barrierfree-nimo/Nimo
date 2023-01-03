@@ -13,7 +13,9 @@ import MessageSimul from "../simul_message/simul_msg_main/simul_message";
 import MessageDetail from "../simul_message/id/[id]";
 import CorrectPage from "../simul_message/correct";
 
-import VoiceSimulMain from "../simul_voice/simul_voice_main";
+import VoiceSimul from "../simul_voice/simul_voice";
+import VoiceDetail from "../simul_voice/[id]";
+import CorrectPageVoice from "../simul_voice/correct";
 
 import Community from "../community/community_main/community";
 import CommunityWrite from "../community/community_write/write";
@@ -38,7 +40,9 @@ const MainStackNavigator = () => {
         <Stack.Screen name="MessageSimul" component={MessageSimul} />
         <Stack.Screen name="MessageDetail" component={MessageDetail} />
         <Stack.Screen name="CorrectPage" component={CorrectPage} />
-        <Stack.Screen name="VoiceSimulMain" component={VoiceSimulMain} />
+        <Stack.Screen name="VoiceSimul" component={VoiceSimul} />
+        <Stack.Screen name="VoiceDetail" component={VoiceDetail} />
+        <Stack.Screen name="CorrectPageVoice" component={CorrectPageVoice} />
 
         <Stack.Screen
           name="AuthStackNavigator"
