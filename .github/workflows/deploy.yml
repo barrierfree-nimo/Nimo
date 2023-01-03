@@ -55,8 +55,8 @@ jobs:
       
       - name: Make .env
         run: |
-          touch ~/node/.env
-          echo "$ENV" > ~/node/.env
+          touch /home/ubuntu/node/.env
+          echo "$ENV" > /home/ubuntu/app/node/.env
         env:
           ENV: ${{ secrets.ENV }}
 
@@ -72,4 +72,4 @@ jobs:
             sudo docker rm $(sudo docker ps -a -q)
             sudo docker rmi $(sudo docker images -q)
             sudo docker run -p 3000:3000 
-            sudo docker-compose -f ~/ubuntu/node/docker-compose.yml up --build -d
+            sudo docker-compose -f ~/node/docker-compose.yml up --build -d
