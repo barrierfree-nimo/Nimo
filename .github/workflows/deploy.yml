@@ -72,5 +72,5 @@ jobs:
             sudo docker stop $(sudo docker ps -a -q)
             sudo docker rm $(sudo docker ps -a -q)
             sudo docker rmi $(sudo docker images -q)
-            sudo docker run -p 3000:3000 
+            sudo docker-compose -f ~/app/node/docker-compose.yml pull 
             sudo docker-compose -f ~/app/node/docker-compose.yml up --build -d
