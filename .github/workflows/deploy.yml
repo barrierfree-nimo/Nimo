@@ -50,7 +50,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           script: |
-            sh ./node/config/scripts/deploy.sh
+            sh ~/ubuntu/app/node/config/scripts/deploy.sh
             sudo docker stop $(sudo docker ps -a -q)
             sudo docker rm $(sudo docker ps -a -q)
             sudo docker rmi $(sudo docker images -q)
