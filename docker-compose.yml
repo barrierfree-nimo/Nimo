@@ -2,7 +2,7 @@ version: "3"
 
 services:
   backend-dev:
-    image: nimo/nimo-server-dev:dev
+    image: nimovaccine/nimo-server-dev:dev
     container_name: backend-dev
     hostname: backend-dev
     expose:
