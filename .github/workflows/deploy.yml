@@ -42,16 +42,9 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
-          script: mkdir -p ~/app/node
-
-      - name: Make .env
-        run: |
-          touch /home/ubuntu/app/node/.env
-          echo "$ENV" > /home/ubuntu/app/node/.env
-        env:
-          ENV: ${{ secrets.ENV }}
+          script: mkdir -p /home/ubuntu/app/node
       
-      - name: copy source via ssh key
+      - name: Copy source via ssh key
         uses: burnett01/rsync-deployments@4.1
         with:
           switches: -avzr --delete
@@ -59,7 +52,13 @@ jobs:
           remote_host: ${{ secrets.EC2_HOST }}
           remote_user: ubuntu
           remote_key: ${{ secrets.EC2_KEY }}
-
+      
+      - name: Make .env
+        run: |
+          touch /home/ubuntu/app/node/.env
+          echo "$ENV" > /home/ubuntu/app/node/.env
+        env:
+          ENV: ${{ secrets.ENV }}
 
       - name: Executing remote ssh commands using password
         uses: appleboy/ssh-action@master
@@ -68,7 +67,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           script: |
-            sh ~/app/node/config/scripts/deploy.sh
+            sh /home/ubuntu/app/node/config/scripts/deploy.sh
             sudo docker stop $(sudo docker ps -a -q)
             sudo docker rm $(sudo docker ps -a -q)
             sudo docker rmi $(sudo docker images -q)
