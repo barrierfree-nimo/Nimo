@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import baseURL from "../../baseURL";
 import CommonStyle from "../../common/common_style";
+import SimulMainStyle from "../../simul_main/simul_main_style";
 import ExitBtn from "../../simul_common/exit_btn";
 import NavigateBtn from "../../simul_common/navigate_btn";
 import MessageCard from "../messageCard";
@@ -59,7 +60,7 @@ const MessageSimul = ({ navigation }: any) => {
     <SafeAreaView style={CommonStyle.container}>
       <Image
         source={require("../../../assets/icons/simul_message/message_bg.png")}
-        style={SimulMsgStyle.img_bg}
+        style={SimulMainStyle.img_galaxy}
       />
 
       {/* 스마트폰 */}
@@ -90,7 +91,13 @@ const MessageSimul = ({ navigation }: any) => {
         <NavigateBtn navigation={navigation} />
       </View>
       {/* 체험나가기 버튼 */}
-      <ExitBtn navigation={navigation} />
+      <View style={CommonStyle.container_exit}>
+        <TouchableOpacity onPress={() => navigation.navigate("Main")}>
+          <View>
+            <Text style={CommonStyle.exit_btn_text}>체험 나가기</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };

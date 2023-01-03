@@ -6,7 +6,7 @@ const Info = ({navigation}: any) => {
   return (
     <SafeAreaView style={CommonStyle.container}>
       <View style={CommonStyle.container_header}>
-        <Text style={CommonStyle.title}>정보 얻기</Text>
+        <Text style={CommonStyle.text_header}>정보 얻기</Text>
       </View>
 
       <View style={CommonStyle.container_exit}>

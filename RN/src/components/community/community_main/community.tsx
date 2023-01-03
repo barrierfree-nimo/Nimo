@@ -7,7 +7,7 @@ const Community = ({ navigation }: any) => {
   return (
     <SafeAreaView style={CommonStyle.container}>
       <View style={CommonStyle.container_header}>
-        <Text style={CommonStyle.title}>소통하기</Text>
+        <Text style={CommonStyle.text_header}>소통하기</Text>
       </View>
       <View style={CommunityMainStyle.choice_box_wrapper}>
         <TouchableOpacity

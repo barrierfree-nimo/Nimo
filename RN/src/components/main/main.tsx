@@ -53,12 +53,11 @@ const Main = ({ navigation }: any) => {
   return (
     <SafeAreaView style={CommonStyle.container}>
       <StatusBar />
-      <TouchableOpacity style={MainStyle.btn_tutorial}>
-        <Text style={MainStyle.btnText_tutorial}>어플사용설명서</Text>
-      </TouchableOpacity>
+      <View style={CommonStyle.container_header}>
+        <Text style={CommonStyle.text_header}>피싱백신</Text>
+      </View>
 
       <View style={MainStyle.container_progress}>
-        <Text style={MainStyle.title_main}>체험 완료도</Text>
         <View style={MainStyle.container_progress_detail}>
           <Image
             source={require("../../assets/images/main_progress.png")}
@@ -76,6 +75,11 @@ const Main = ({ navigation }: any) => {
       </View>
 
       <View style={MainStyle.container_menu}>
+      <TouchableOpacity
+          style={MainStyle.btn_menu_tutorial}
+        >
+          <Text style={MainStyle.btnText_menu_tutorial}>어플 설명서 보기</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("SimulMain")}
           style={MainStyle.btn_menu}
@@ -95,7 +99,7 @@ const Main = ({ navigation }: any) => {
           <Text style={MainStyle.btnText_menu}>소통하기</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => clear()}
+          onPress={() => navigation.navigate("Info")}
           style={MainStyle.btn_menu}
         >
           <Text style={MainStyle.btnText_menu}>정보 얻기</Text>

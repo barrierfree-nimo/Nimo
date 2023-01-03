@@ -7,7 +7,7 @@ const SimulMainStyle = StyleSheet.create({
   img_galaxy: {
     position: "absolute",
     width: SCREEN_WIDTH - 20,
-    height: SCREEN_HEIGHT - 100,
+    height: SCREEN_HEIGHT - 120,
     marginTop: 20,
     resizeMode: "stretch",
   },

@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   Button,
+  Image,
   ToastAndroid
 } from "react-native";
 import CommonStyle from "../common/common_style";
@@ -105,11 +106,11 @@ const Quiz = ({ navigation }: any) => {
   return (
     <SafeAreaView style={CommonStyle.container}>
       <View style={CommonStyle.container_header}>
-        <Text style={CommonStyle.title}>피싱 문제 풀기</Text>
+        <Text style={CommonStyle.text_header}>피싱 문제 풀기</Text>
       </View>
 
       <View style={QuizStyle.container_question}>
-        <Text style={QuizStyle.text_question}>문제 {idData}.</Text> 
+        <Text style={QuizStyle.text_question_num}>문제 {idData}.</Text> 
         <Text style={QuizStyle.text_question}>{qTextData}</Text>
       </View>
 
@@ -134,15 +135,16 @@ const Quiz = ({ navigation }: any) => {
       <View style={QuizStyle.container_navigator}>
         <TouchableOpacity
           onPress={move_back}
-          style={QuizStyle.btn_container_back}
-        >
-          <Text style={QuizStyle.btn_text}>이전 문제</Text>
+          style={QuizStyle.btn_container_back}>
+            <Image source={require("../../assets/icons/quiz/ic_quiz_move_back.png")} />
+            <Text style={QuizStyle.btn_move_text}>이전 문제</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           onPress={move_next}
-          style={QuizStyle.btn_container_next}
-        >
-          <Text style={QuizStyle.btn_text}>다음 문제</Text>
+          style={QuizStyle.btn_container_next}>
+            <Image source={require("../../assets/icons/quiz/ic_quiz_move_next.png")} />
+            <Text style={QuizStyle.btn_move_text}>다음 문제</Text>
         </TouchableOpacity>
       </View>
 
