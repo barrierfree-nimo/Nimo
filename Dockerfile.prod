@@ -1,4 +1,4 @@
-FROM node:19.1.0 as builder
+FROM node:19.1.0
 
 RUN mkdir -p /app
 
