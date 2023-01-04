@@ -8,4 +8,4 @@ RUN apt-get update && npm install
 
 EXPOSE 3000 80
 
-CMD ["npm", "test"]
+CMD [ "pm2-runtime", "start", "npm", "--", "start" ]
