@@ -9,7 +9,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - /secure/node/config/.env:./node/config/.env
+      - /secure/node/config/.env:/Users/suhhyun/Projects/Nimo/node/config/.env
 
   backend-dev:
     depends_on:
