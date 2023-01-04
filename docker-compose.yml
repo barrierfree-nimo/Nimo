@@ -10,7 +10,7 @@ services:
       - "3306:3306"    
     networks:
       - app-tier
-    env_file: ${{ secrets.ENV }}   
+    env_file: .env   
     environment:
       MYSQL_DATABASE: ${SEQUELIZE_DATABASE}
       MYSQL_ALLOW_EMPTY_PASSWORD: ok
