@@ -57,9 +57,9 @@ jobs:
       
       - name: Make .env
         run: |
-          echo $PWD
-          touch /home/ubuntu/app/node/.env
-          echo "$ENV" > /home/ubuntu/app/node/.env
+          cd /home/ubuntu/app/node
+          touch .env
+          echo "$ENV" > .env
         env:
           ENV: ${{ secrets.ENV }}
 
