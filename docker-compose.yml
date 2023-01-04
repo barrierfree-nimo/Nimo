@@ -10,14 +10,6 @@ services:
       - "3306:3306"    
     networks:
       - app-tier
-    env_file: .env   
-    environment:
-      MYSQL_DATABASE: ${SEQUELIZE_DATABASE}
-      MYSQL_ALLOW_EMPTY_PASSWORD: ok
-      MYSQL_ROOT_PASSWORD: ${SEQUELIZE_PASSWORD}
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: ${SEQUELIZE_PASSWORD}
-      MYSQL_ROOT_HOST: ${HOST}
 
   backend-dev:
     depends_on:

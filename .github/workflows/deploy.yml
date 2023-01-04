@@ -57,7 +57,6 @@ jobs:
       
       - name: Make .env
         run: |
-          cd /home/ubuntu/app/node
           touch .env
           echo "$ENV" > .env
         env:
