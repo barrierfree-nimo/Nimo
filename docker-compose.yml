@@ -8,6 +8,8 @@ services:
       - "3306"
     ports:
       - "3306:3306"
+    env_file:
+      - .env
     environment:
       - MYSQL_HOST: ${MYSQL_HOST}
       - MYSQL_USER: ${MYSQL_USER}
