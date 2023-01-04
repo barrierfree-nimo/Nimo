@@ -64,7 +64,7 @@ jobs:
           script: |
             touch /home/ubuntu/app/.env
             sudo chmod 777 .env
-            echo "${{ secrets.ENV }}" > .env
+            echo "${{ secrets.ENV_DB }}" > .env
 
       - name: Executing remote ssh commands using password
         uses: appleboy/ssh-action@master
@@ -74,6 +74,7 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             sh /home/ubuntu/app/node/config/scripts/deploy.sh
+            sudo mv /home/ubuntu/.env /home/ubuntu/app/
             sudo docker stop $(sudo docker ps -a -q)
             sudo docker rm $(sudo docker ps -a -q)
             sudo docker rmi $(sudo docker images -q)
