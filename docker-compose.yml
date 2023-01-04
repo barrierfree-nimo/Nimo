@@ -9,10 +9,10 @@ services:
     ports:
       - "3306:3306"
     environment:
-      - DOCKER_HOST_IP: ${DOCKER_HOST_IP}
       - MYSQL_HOST: ${MYSQL_HOST}
       - MYSQL_USER: ${MYSQL_USER}
       - MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      - DOCKER_HOST_IP: ${DOCKER_HOST_IP}
     volumes:
       - /secure/node/config/.env:/Users/suhhyun/Projects/Nimo/node/config/.env
 
