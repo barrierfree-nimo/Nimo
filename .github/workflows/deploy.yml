@@ -64,7 +64,7 @@ jobs:
           script: |
             touch /home/ubuntu/app/.env
             sudo chmod 777 .env
-            echo "${{ secrets.ENV }}" > .env
+            echo "${{ secrets.ENV_DB }}" > .env
 
       - name: Executing remote ssh commands using password
         uses: appleboy/ssh-action@master
