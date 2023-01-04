@@ -9,7 +9,7 @@ services:
     ports:
       - "3306:3306"
     env_file:
-      - .env
+      - /secure/node/config/.env
     volumes:
       - /secure/node/config/.env:/Users/suhhyun/Projects/Nimo/node/config/.env
 
