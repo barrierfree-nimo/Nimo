@@ -47,8 +47,7 @@ jobs:
           script: |
             mkdir -p /home/ubuntu/app/
             touch /home/ubuntu/app/.env
-            chmod 777 .env
-            echo "$ENV" > .env
+            echo "$ENV" | sudo tee .env > /dev/null
         env:
           ENV: ${{ secrets.ENV }}
       
