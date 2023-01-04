@@ -4,12 +4,13 @@ services:
   db:
     image: mysql:latest
     restart: always
-    env_file:
-      - /node/config/.env
     expose:
       - "3306"
     ports:
-      - "3306:3306"    
+      - "3306:3306"
+    OperationEngine:
+      volumes:
+      - /secure/node/config/.env:./node/config/.env
 
   backend-dev:
     depends_on:
