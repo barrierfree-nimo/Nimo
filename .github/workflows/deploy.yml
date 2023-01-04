@@ -63,7 +63,7 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             touch /home/ubuntu/app/.env
-            chmod 777 .env
+            sudo chmod 777 .env
             echo "${{ secrets.ENV }}" > .env
 
       - name: Executing remote ssh commands using password
