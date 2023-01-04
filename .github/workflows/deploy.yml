@@ -44,7 +44,10 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
-          script: mkdir -p /home/ubuntu/app/ | touch /home/ubuntu/app/.env | echo "$ENV" > .env
+          script: |
+            mkdir -p /home/ubuntu/app/
+            sudo touch /home/ubuntu/app/.env
+            sudo echo "$ENV" > .env
         env:
           ENV: ${{ secrets.ENV }}
       
