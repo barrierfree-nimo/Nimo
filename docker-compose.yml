@@ -1,7 +1,27 @@
 version: "3"
 
 services:
+  db:
+    image: mysql:latest
+    restart: always
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"    
+    networks:
+      - app-tier
+    env_file: ${{ secrets.ENV }}   
+    environment:
+      MYSQL_DATABASE: ${SEQUELIZE_DATABASE}
+      MYSQL_ALLOW_EMPTY_PASSWORD: ok
+      MYSQL_ROOT_PASSWORD: ${SEQUELIZE_PASSWORD}
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: ${SEQUELIZE_PASSWORD}
+      MYSQL_ROOT_HOST: ${HOST}
+
   backend-dev:
+    depends_on:
+      - db
     image: nimovaccine/nimo-server-dev:dev
     container_name: backend-dev
     hostname: backend-dev
