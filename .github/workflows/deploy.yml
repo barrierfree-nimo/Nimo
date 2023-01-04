@@ -62,8 +62,9 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           script: |
-            touch /home/ubuntu/app/node/.env
-            echo "${{ secrets.ENV }}" | sudo tee -a .env > /dev/null
+            touch /home/ubuntu/app/.env
+            chmod 777 .env
+            echo "${{ secrets.ENV }}" > .env
 
       - name: Executing remote ssh commands using password
         uses: appleboy/ssh-action@master
