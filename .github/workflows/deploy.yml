@@ -46,8 +46,8 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             mkdir -p /home/ubuntu/app/
-            sudo touch /home/ubuntu/app/.env
-            sudo sh -c 'echo "$ENV" > .env' 
+            touch /home/ubuntu/app/.env
+            echo "$ENV" > .env
         env:
           ENV: ${{ secrets.ENV }}
       
