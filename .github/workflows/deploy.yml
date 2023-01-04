@@ -44,12 +44,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
-          script: |
-            mkdir -p /home/ubuntu/app/
-            touch /home/ubuntu/app/.env
-            echo "$ENV" | sudo tee .env > /dev/null
-        env:
-          ENV: ${{ secrets.ENV }}
+          script: mkdir -p /home/ubuntu/app/
       
       - name: Copy source via ssh key
         uses: burnett01/rsync-deployments@4.1
@@ -59,6 +54,18 @@ jobs:
           remote_host: ${{ secrets.EC2_HOST }}
           remote_user: ubuntu
           remote_key: ${{ secrets.EC2_KEY }}
+
+      - name: Create .env
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            touch /home/ubuntu/app/.env
+            echo "$ENV" | sudo tee .env > /dev/null
+        env:
+          ENV: ${{ secrets.ENV }}
 
       - name: Executing remote ssh commands using password
         uses: appleboy/ssh-action@master
