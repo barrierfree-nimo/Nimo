@@ -45,8 +45,10 @@ const CommunityArchive = ({ navigation }: any) => {
     }
   };
 
-  const handleOnPress = (id: number) => {
-    console.log(id);
+  const handleOnPress = (CommunityNum: number) => {
+    navigation.navigate("CommunityDetail", {
+      CommunityNum: CommunityNum,
+    });
   };
 
   return (
@@ -67,18 +69,15 @@ const CommunityArchive = ({ navigation }: any) => {
       </View>
       <View style={CommunityArchiveStyle.content_container}>
         <ScrollView style={CommunityArchiveStyle.content_container}>
-          {communityList?.map(
-            ({ contents, date, id, tag, title, user_nickname }) => (
-              <TouchableOpacity onPress={() => handleOnPress(id)}>
-                <CommunityCard
-                  key={id}
-                  contents={contents}
-                  date={date}
-                  user_nickname={user_nickname}
-                />
-              </TouchableOpacity>
-            )
-          )}
+          {communityList?.map(({ contents, date, id, user_nickname }) => (
+            <TouchableOpacity key={id} onPress={() => handleOnPress(id)}>
+              <CommunityCard
+                contents={contents}
+                date={date}
+                user_nickname={user_nickname}
+              />
+            </TouchableOpacity>
+          ))}
         </ScrollView>
       </View>
 
