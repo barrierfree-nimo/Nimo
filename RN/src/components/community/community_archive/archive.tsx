@@ -72,13 +72,9 @@ const CommunityArchive = ({ navigation }: any) => {
               <TouchableOpacity onPress={() => handleOnPress(id)}>
                 <CommunityCard
                   key={id}
-                  id={id}
                   contents={contents}
-                  title={title}
                   date={date}
-                  tag={tag}
                   user_nickname={user_nickname}
-                  navigation={navigation}
                 />
               </TouchableOpacity>
             )
