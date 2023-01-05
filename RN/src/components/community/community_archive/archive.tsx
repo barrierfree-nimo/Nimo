@@ -1,16 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   View,
   Text,
   TouchableOpacity,
   TextInput,
+  ScrollView,
 } from "react-native";
 import CommonStyle from "../../common/common_style";
 import CommunityArchiveStyle from "./archive_style";
+import Axios from "axios";
+import baseURL from "../../baseURL";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import CommunityCard from "./communityCard";
 
+interface CommunityData {
+  contents: string;
+  date: string;
+  id: number;
+  tag: string;
+  title: string;
+  user_nickname: string;
+}
 const CommunityArchive = ({ navigation }: any) => {
   const [search, setSearch] = useState<string>("");
+  const [communityList, setCommunityList] = useState<CommunityData[]>();
+
+  useEffect(() => {
+    fetchCommunityArchive();
+  }, []);
+
+  const fetchCommunityArchive = async () => {
+    try {
+      const token = await AsyncStorage.getItem("user_Token");
+      Axios.get(baseURL + "/community", {
+        headers: {
+          accessToken: `${token}`,
+        },
+      }).then((res) => {
+        setCommunityList(res.data);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleOnPress = (id: number) => {
+    console.log(id);
+  };
 
   return (
     <SafeAreaView style={CommonStyle.container}>
@@ -28,7 +65,26 @@ const CommunityArchive = ({ navigation }: any) => {
           <Text style={CommunityArchiveStyle.search_text}>검색</Text>
         </TouchableOpacity>
       </View>
-      <View style={CommunityArchiveStyle.content_container}></View>
+      <View style={CommunityArchiveStyle.content_container}>
+        <ScrollView style={CommunityArchiveStyle.content_container}>
+          {communityList?.map(
+            ({ contents, date, id, tag, title, user_nickname }) => (
+              <TouchableOpacity onPress={() => handleOnPress(id)}>
+                <CommunityCard
+                  key={id}
+                  id={id}
+                  contents={contents}
+                  title={title}
+                  date={date}
+                  tag={tag}
+                  user_nickname={user_nickname}
+                  navigation={navigation}
+                />
+              </TouchableOpacity>
+            )
+          )}
+        </ScrollView>
+      </View>
 
       <View style={CommonStyle.container_exit}>
         <TouchableOpacity onPress={() => navigation.navigate("Main")}>

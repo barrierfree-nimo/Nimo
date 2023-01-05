@@ -13,9 +13,9 @@ const CommonStyle = StyleSheet.create({
   container_header: {
     width: SCREEN_WIDTH,
     height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
     shadowColor: "#000000",
     shadowOffset: {
       width: 0,
@@ -26,9 +26,9 @@ const CommonStyle = StyleSheet.create({
     elevation: 9,
   },
   text_header: {
-    color: '#00284E',
+    color: "#00284E",
     fontSize: 30,
-    fontWeight: '900'
+    fontWeight: "900",
   },
   container_contents: {
     width: "95%",
@@ -42,7 +42,7 @@ const CommonStyle = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
-    backgroundColor: '#FFD542'
+    backgroundColor: "#FFD542",
   },
   btnText_exit: {
     fontSize: 25,
@@ -66,7 +66,7 @@ const CommonStyle = StyleSheet.create({
     height: 50,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FF4D4D",
+    backgroundColor: "#FFD542",
     borderRadius: 15,
     overflow: "hidden",
   },
