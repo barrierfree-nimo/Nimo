@@ -8,15 +8,39 @@ import {
 } from "react-native";
 import CommonStyle from "../../common/common_style";
 import CommunityWriteStyle from "./write_style";
+import Axios from "axios";
+import baseURL from "../../baseURL";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CommunityWrite = ({ navigation }: any) => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
 
-  const handleEnroll = () => {
-    console.log("post text", title, content);
-    console.log("완료 text 띄우고");
-    navigation.navigate("Community");
+  const handleEnroll = async () => {
+    const token = await AsyncStorage.getItem("user_Token");
+    try {
+      await Axios.post(
+        baseURL + "/community/write",
+        {
+          title: title,
+          contents: content,
+          tag: "일반",
+        },
+        {
+          headers: { accessToken: `${token}` },
+        }
+      )
+        .then((res) => {
+          if (res.status == 200) {
+            navigation.navigate("CommunityArchive");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -33,6 +57,7 @@ const CommunityWrite = ({ navigation }: any) => {
       <TextInput
         value={content}
         onChangeText={(content) => setContent(content)}
+        multiline={true}
         style={CommunityWriteStyle.content_input}
         placeholder="내용을 입력하세요"
       />

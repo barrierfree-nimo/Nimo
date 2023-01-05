@@ -17,13 +17,15 @@ const CommunityWriteStyle = StyleSheet.create({
   content_input: {
     flex: 6,
     width: SCREEN_WIDTH - 100,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingLeft: 20,
+
+    padding: 20,
     marginTop: 20,
+
     borderRadius: 10,
     backgroundColor: "#D9D9D9",
+
     fontSize: 24,
+    textAlignVertical: "top",
   },
   btn_wrapper: {
     flex: 2,
