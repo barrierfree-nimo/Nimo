@@ -1,26 +1,15 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
+import { View, StyleSheet, Image, Text, Dimensions } from "react-native";
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export interface CommunityCardProps {
   contents: string;
   date: string;
-  id: number;
-  tag: string;
-  title: string;
   user_nickname: string;
-  navigation: any;
 }
 
 const CommunityCard = (props: CommunityCardProps) => {
-  const { contents, date, id, tag, title, user_nickname, navigation } = props;
+  const { contents, date, user_nickname } = props;
   const [userTime, setUserTime] = useState<string | number>("");
   const [previewContent, setPreviewContent] = useState<string>("");
 
