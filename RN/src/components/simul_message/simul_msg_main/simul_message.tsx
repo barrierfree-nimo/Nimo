@@ -37,7 +37,7 @@ const MessageSimul = ({ navigation }: any) => {
 
   const fetchSimulMsg = async () => {
     try {
-      const token = await AsyncStorage.getItem('user_Token')
+      const token = await AsyncStorage.getItem("user_Token");
       Axios.get(baseURL + "/simulation/msg", {
         headers: {
           accessToken: `${token}`,
@@ -68,7 +68,6 @@ const MessageSimul = ({ navigation }: any) => {
         <View style={SimulMsgStyle.message_div}>
           <Text style={SimulMsgStyle.text_title}>메세지</Text>
           <ScrollView>
-            
             <View style={SimulMsgStyle.msg_card_div}>
               {simulList?.map(({ simulNum, title, commentary, check }) => (
                 <TouchableOpacity onPress={() => handleOnPress(simulNum)}>
@@ -84,20 +83,12 @@ const MessageSimul = ({ navigation }: any) => {
               ))}
             </View>
           </ScrollView>
-          
         </View>
 
         {/* 이동버튼 */}
         <NavigateBtn navigation={navigation} />
       </View>
-      {/* 체험나가기 버튼 */}
-      <View style={CommonStyle.container_exit}>
-        <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-          <View>
-            <Text style={CommonStyle.exit_btn_text}>체험 나가기</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <ExitBtn navigation={navigation} />
     </SafeAreaView>
   );
 };

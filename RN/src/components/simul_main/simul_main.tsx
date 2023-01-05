@@ -24,7 +24,7 @@ const SimulMain = ({ navigation }: any) => {
 
   const fetchSimulMain = async () => {
     try {
-      const token = await AsyncStorage.getItem('user_Token')
+      const token = await AsyncStorage.getItem("user_Token");
       Axios.get(baseURL + "/simulation", {
         headers: {
           accessToken: `${token}`,
@@ -178,8 +178,7 @@ const SimulMain = ({ navigation }: any) => {
           </TouchableOpacity>
 
           {/*  CALL */}
-          <TouchableOpacity
-            onPress={() => navigation.navigate("VoiceSimul")}>
+          <TouchableOpacity onPress={() => navigation.navigate("VoiceSimul")}>
             {type === "call" || isInRed("call") ? (
               <Image
                 source={require(`../../assets/icons/simul_main/call_red.png`)}
@@ -196,13 +195,7 @@ const SimulMain = ({ navigation }: any) => {
       </View>
 
       {/* 이동버튼 */}
-      <View style={CommonStyle.container_exit}>
-        <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-          <View>
-            <Text style={CommonStyle.exit_btn_text}>체험 나가기</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <ExitBtn navigation={navigation} />
     </SafeAreaView>
   );
 };
