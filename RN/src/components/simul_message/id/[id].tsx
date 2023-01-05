@@ -33,7 +33,7 @@ const MessageDetail = ({ route, navigation }: any) => {
   }, []);
 
   const fetchSimulMsgDetail = async () => {
-    const token = await AsyncStorage.getItem('user_Token')
+    const token = await AsyncStorage.getItem("user_Token");
     try {
       Axios.get(baseURL + `/simulation/msg/${route.params.simulNum}`, {
         headers: {
@@ -77,7 +77,7 @@ const MessageDetail = ({ route, navigation }: any) => {
     <SafeAreaView style={CommonStyle.container}>
       <Image
         source={require("../../../assets/icons/simul_message/message_bg.png")}
-        style={msgDetailStyle.img_bg}
+        style={msgDetailStyle.phone_div}
       />
       {/* 폰 화면 */}
       <View style={msgDetailStyle.phone_div}>
@@ -108,8 +108,7 @@ const MessageDetail = ({ route, navigation }: any) => {
               <View
                 style={[
                   {
-                    left:
-                      data[1] === 1 ? SCREEN_WIDTH / 15 : SCREEN_WIDTH / 5,
+                    left: data[1] === 1 ? SCREEN_WIDTH / 15 : SCREEN_WIDTH / 5,
                   },
                 ]}
               >
@@ -137,7 +136,6 @@ const MessageDetail = ({ route, navigation }: any) => {
             </View>
           </ScrollView>
         </View>
-
 
         {/* 이동버튼이 스크롤과 겹치는 문제 있음 */}
         <NavigateBtn navigation={navigation} />
