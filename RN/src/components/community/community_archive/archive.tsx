@@ -51,6 +51,21 @@ const CommunityArchive = ({ navigation }: any) => {
     });
   };
 
+  const handleSearch = async () => {
+    try {
+      const token = await AsyncStorage.getItem("user_Token");
+      Axios.get(baseURL + `/community/keyword/${search}`, {
+        headers: {
+          accessToken: `${token}`,
+        },
+      }).then((res) => {
+        setCommunityList(res.data);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <SafeAreaView style={CommonStyle.container}>
       <View style={CommonStyle.container_header}>
@@ -63,7 +78,10 @@ const CommunityArchive = ({ navigation }: any) => {
           style={CommunityArchiveStyle.search_input}
           placeholder="찾으시는 단어를 입력해주세요"
         />
-        <TouchableOpacity style={CommunityArchiveStyle.search_btn}>
+        <TouchableOpacity
+          onPress={() => handleSearch()}
+          style={CommunityArchiveStyle.search_btn}
+        >
           <Text style={CommunityArchiveStyle.search_text}>검색</Text>
         </TouchableOpacity>
       </View>
