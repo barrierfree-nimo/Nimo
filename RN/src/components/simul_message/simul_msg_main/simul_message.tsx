@@ -21,12 +21,8 @@ interface MsgContent {
   simulNum: number;
   title: string;
   commentary: string;
-  check: boolean;
+  done: string;
 }
-
-//   "simulNum": 1,
-//   "title": "지인 사칭형 - 핸드폰 수리",
-//   "commentary": "이렇게 지인을 사칭하며 악성 링크의 클릭을 유도하는 문자는 메신저 피싱의 전형적인 수법입니다! 주의하세요!"
 
 const MessageSimul = ({ navigation }: any) => {
   const [simulList, setSimulList] = useState<MsgContent[]>([]);
@@ -69,14 +65,14 @@ const MessageSimul = ({ navigation }: any) => {
           <Text style={SimulMsgStyle.text_title}>메세지</Text>
           <ScrollView>
             <View style={SimulMsgStyle.msg_card_div}>
-              {simulList?.map(({ simulNum, title, commentary, check }) => (
+              {simulList?.map(({ simulNum, title, commentary, done }) => (
                 <TouchableOpacity onPress={() => handleOnPress(simulNum)}>
                   <MessageCard
                     key={simulNum}
                     simulNum={simulNum}
                     title={title}
                     commentary={commentary}
-                    check={check}
+                    done={done}
                     navigation={navigation}
                   />
                 </TouchableOpacity>

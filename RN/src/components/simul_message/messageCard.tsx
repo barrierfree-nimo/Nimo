@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   TouchableOpacity,
@@ -14,17 +14,21 @@ export interface MessageCardProps {
   simulNum: number;
   title: string;
   commentary: string;
-  check: boolean;
+  done: string;
   navigation: any;
 }
 
 const MessageCard = (props: MessageCardProps) => {
-  const { simulNum, title, commentary, check } = props;
+  const { simulNum, title, commentary, done } = props;
+  const [check, setCheck] = useState<boolean>(false);
+
+  useEffect(() => {
+    done === "false" ? setCheck(false) : setCheck(true);
+  }, [done]);
 
   return (
     <View>
       <View style={styles.card_container}>
-
         <View style={styles.card_container_child}>
           <Image
             source={require("../../assets/icons/simul_message/ic_profile.png")}
@@ -47,7 +51,6 @@ const MessageCard = (props: MessageCardProps) => {
             />
           )}
         </View>
-        
       </View>
       <View style={styles.lineStyle} />
     </View>
@@ -61,11 +64,11 @@ const styles = StyleSheet.create({
   },
   card_container_child: {
     flexDirection: "row",
-    flex: 2
+    flex: 2,
   },
   card_container_child_checkbox: {
     //backgroundColor: 'blue',
-    flex: 1
+    flex: 1,
   },
   img_profile: {
     width: 60,
