@@ -55,16 +55,16 @@ jobs:
           remote_user: ubuntu
           remote_key: ${{ secrets.EC2_KEY }}
 
-      # - name: Create .env
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.EC2_HOST }}
-      #     username: ubuntu
-      #     key: ${{ secrets.EC2_KEY }}
-      #     script: |
-      #       touch /home/ubuntu/app/.env
-      #       sudo chmod 777 /home/ubuntu/app/.env
-      #       echo "${{ secrets.ENV }}" > /home/ubuntu/app/.env
+      - name: Create .env
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            touch /home/ubuntu/app/.env
+        #   sudo chmod 777 /home/ubuntu/app/.env
+            echo "${{ secrets.ENV }}" > /home/ubuntu/app/.env
 
       - name: Executing remote ssh commands using password
         uses: appleboy/ssh-action@master
