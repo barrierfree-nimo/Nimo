@@ -1,21 +1,21 @@
 version: "3"
 
 services:
-  db:
-    image: mysql:latest
-    restart: always
-    expose:
-      - "3306"
-    ports:
-      - "3306:3306"
-    env_file:
-      - .env
-    volumes:
-      - /secure/node/config/.env:/Users/suhhyun/Projects/Nimo/node/config/.env
+  # db:
+  #   image: mysql:latest
+  #   restart: always
+  #   expose:
+  #     - "3306"
+  #   ports:
+  #     - "3306:3306"
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - /secure/node/config/.env:/Users/suhhyun/Projects/Nimo/node/config/.env
 
   backend-dev:
-    depends_on:
-      - db
+    # depends_on:
+    #   - db
     image: nimovaccine/nimo-server-dev:dev
     container_name: backend-dev
     hostname: backend-dev
