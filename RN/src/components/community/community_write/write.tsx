@@ -15,33 +15,43 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const CommunityWrite = ({ navigation }: any) => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
+  // const [isTitle, setIsTitle] = useState<boolean>(false);
+  // const [isContent, setIsContent] = useState<boolean>(false);
 
   const handleEnroll = async () => {
-    const token = await AsyncStorage.getItem("user_Token");
-    try {
-      await Axios.post(
-        baseURL + "/community/write",
-        {
-          title: title,
-          contents: content,
-          tag: "일반",
-        },
-        {
-          headers: { accessToken: `${token}` },
-        }
-      )
-        .then((res) => {
-          if (res.status == 200) {
-            navigation.navigate("CommunityArchive");
+    // checkIsEmpty();
+    if (title !== "" && content !== "") {
+      const token = await AsyncStorage.getItem("user_Token");
+      try {
+        await Axios.post(
+          baseURL + "/community/write",
+          {
+            title: title,
+            contents: content,
+            tag: "일반",
+          },
+          {
+            headers: { accessToken: `${token}` },
           }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } catch (error) {
-      console.log(error);
+        )
+          .then((res) => {
+            if (res.status == 200) {
+              navigation.navigate("CommunityArchive");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
+
+  // const checkIsEmpty = () => {
+  //   title === "" ? setIsTitle(false) : setIsTitle(true);
+  //   content === "" ? setIsContent(false) : setIsContent(true);
+  // };
 
   return (
     <SafeAreaView style={CommonStyle.container}>
