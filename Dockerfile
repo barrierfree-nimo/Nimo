@@ -6,6 +6,6 @@ COPY ./node ./
 
 RUN apt-get update && npm install
 
-EXPOSE 3000 80
+EXPOSE 3000 3000
 
 CMD ["npm", "test"]
