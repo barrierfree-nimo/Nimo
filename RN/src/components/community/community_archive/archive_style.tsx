@@ -36,6 +36,11 @@ const CommunityArchiveStyle = StyleSheet.create({
     backgroundColor: "#D9D9D9",
     marginTop: 20,
     marginBottom: 20,
+    padding: 10,
+  },
+  exist_text: {
+    fontSize: 20,
+    fontWeight: "600",
   },
 });
 

@@ -25,6 +25,7 @@ interface CommunityData {
 const CommunityArchive = ({ navigation }: any) => {
   const [search, setSearch] = useState<string>("");
   const [communityList, setCommunityList] = useState<CommunityData[]>();
+  const [isExist, setIsExsist] = useState<boolean>(true);
 
   useEffect(() => {
     fetchCommunityArchive();
@@ -52,6 +53,10 @@ const CommunityArchive = ({ navigation }: any) => {
   };
 
   const handleSearch = async () => {
+    search === "" ? fetchCommunityArchive() : fetchCommunitySearch();
+  };
+
+  const fetchCommunitySearch = async () => {
     try {
       const token = await AsyncStorage.getItem("user_Token");
       Axios.get(baseURL + `/community/keyword/${search}`, {
@@ -59,7 +64,8 @@ const CommunityArchive = ({ navigation }: any) => {
           accessToken: `${token}`,
         },
       }).then((res) => {
-        setCommunityList(res.data);
+        res.data.msg ? setIsExsist(false) : setIsExsist(true);
+        res.data && setCommunityList(res.data);
       });
     } catch (err) {
       console.log(err);
@@ -86,16 +92,24 @@ const CommunityArchive = ({ navigation }: any) => {
         </TouchableOpacity>
       </View>
       <View style={CommunityArchiveStyle.content_container}>
-        <ScrollView style={CommunityArchiveStyle.content_container}>
-          {communityList?.map(({ contents, date, id, user_nickname }) => (
-            <TouchableOpacity key={id} onPress={() => handleOnPress(id)}>
-              <CommunityCard
-                contents={contents}
-                date={date}
-                user_nickname={user_nickname}
-              />
-            </TouchableOpacity>
-          ))}
+        <ScrollView>
+          {isExist ? (
+            <View>
+              {communityList?.map(({ contents, date, id, user_nickname }) => (
+                <TouchableOpacity key={id} onPress={() => handleOnPress(id)}>
+                  <CommunityCard
+                    contents={contents}
+                    date={date}
+                    user_nickname={user_nickname}
+                  />
+                </TouchableOpacity>
+              ))}
+            </View>
+          ) : (
+            <Text style={CommunityArchiveStyle.exist_text}>
+              관련 글이 존재하지 않습니다.
+            </Text>
+          )}
         </ScrollView>
       </View>
 
