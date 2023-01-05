@@ -1,12 +1,11 @@
 import { StyleSheet, Dimensions } from "react-native";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
-const SCREEN_HEIGHT = Dimensions.get("window").height;
 
 const communityDetailStyle = StyleSheet.create({
   community_container: {
     width: SCREEN_WIDTH - 40,
-    height: SCREEN_HEIGHT - 200,
+    flex: 9,
     alignItems: "center",
     padding: 30,
   },
@@ -23,7 +22,7 @@ const communityDetailStyle = StyleSheet.create({
     marginBottom: 10,
   },
   lineStyle: {
-    width: SCREEN_WIDTH - 80,
+    width: "100%",
     borderWidth: 1,
     borderColor: "#00284E",
     marginVertical: 10,
@@ -52,6 +51,34 @@ const communityDetailStyle = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
     color: "#00284E",
+  },
+  user_comment_container: {
+    width: SCREEN_WIDTH - 40,
+    flex: 1,
+    flexDirection: "row",
+    marginBottom: 30,
+  },
+  user_comment_input: {
+    flex: 6,
+    backgroundColor: "lightgray",
+    borderRadius: 10,
+    padding: 10,
+    fontSize: 20,
+  },
+  user_comment_apply: {
+    flex: 1,
+    backgroundColor: "#00284E",
+    borderRadius: 10,
+    padding: 3,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 20,
+    marginVertical: 5,
+  },
+  user_comment_apply_text: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: "white",
   },
 });
 

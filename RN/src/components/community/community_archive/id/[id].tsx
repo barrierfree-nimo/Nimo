@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, TouchableOpacity, View, Text } from "react-native";
+import {
+  SafeAreaView,
+  TouchableOpacity,
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+} from "react-native";
 import Axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import baseURL from "../../../baseURL";
@@ -20,6 +27,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
   const [postContent, setPostContent] = useState<PostContent>();
   const [userTime, setUserTime] = useState<string | number>("");
   const [comment, setComment] = useState<any[]>([]);
+  const [userComment, setUserComment] = useState<string>("");
 
   useEffect(() => {
     fetchCommunityDetail();
@@ -50,12 +58,39 @@ const CommunityDetail = ({ route, navigation }: any) => {
       if (diffMin < 60) {
         setUserTime(`${diffMin}분 전`);
       } else if (diffMin >= 60 && diffMin < 60 * 24) {
-        setUserTime(`${diffMin / 60}시간 전`);
+        setUserTime(`${Math.floor(diffMin / 60)}시간 전`);
       } else {
         setUserTime(postContent.date.substring(0, 10));
       }
     }
   }, [postContent, postContent?.date]);
+
+  const handleCommentPost = async () => {
+    const token = await AsyncStorage.getItem("user_Token");
+    try {
+      await Axios.post(
+        baseURL + "/community/comment",
+        {
+          post_id: postContent?.id,
+          contents: userComment,
+        },
+        {
+          headers: { accessToken: `${token}` },
+        }
+      )
+        .then((res) => {
+          if (res.status == 200) {
+            fetchCommunityDetail();
+            setUserComment("");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <SafeAreaView style={CommonStyle.container}>
@@ -69,7 +104,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
             {postContent?.contents}
           </Text>
         </View>
-        <View style={communityDetailStyle.comment_container}>
+        <ScrollView style={communityDetailStyle.comment_container}>
           <Text style={communityDetailStyle.comment_title}>댓글 목록</Text>
           <View style={communityDetailStyle.lineStyle} />
           <View>
@@ -79,18 +114,33 @@ const CommunityDetail = ({ route, navigation }: any) => {
               </Text>
             ) : (
               <View>
-                {comment.map(({ post_id, contents }) => (
+                {comment.map(({ post_id, contents }, id) => (
                   <CommunityCard
-                    key={post_id}
+                    key={id}
                     contents={contents}
-                    date=""
+                    date="0 분전"
                     user_nickname="{user_nickname}"
                   />
                 ))}
               </View>
             )}
           </View>
-        </View>
+        </ScrollView>
+      </View>
+
+      <View style={communityDetailStyle.user_comment_container}>
+        <TextInput
+          value={userComment}
+          onChangeText={(userComment) => setUserComment(userComment)}
+          style={communityDetailStyle.user_comment_input}
+          placeholder="댓글을 입력해주세요"
+        />
+        <TouchableOpacity
+          onPress={() => handleCommentPost()}
+          style={communityDetailStyle.user_comment_apply}
+        >
+          <Text style={communityDetailStyle.user_comment_apply_text}>등록</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={CommonStyle.container_exit}>
