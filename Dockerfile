@@ -8,4 +8,4 @@ RUN apt-get update && npm install
 
 EXPOSE 3000 3000
 
-CMD ["npm", "test"]
+CMD ["npm", "start"]
