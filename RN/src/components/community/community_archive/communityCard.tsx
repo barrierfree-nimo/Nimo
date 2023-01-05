@@ -22,7 +22,7 @@ const CommunityCard = (props: CommunityCardProps) => {
     if (diffMin < 60) {
       setUserTime(`${diffMin}분 전`);
     } else if (diffMin >= 60 && diffMin < 60 * 24) {
-      setUserTime(`${diffMin / 60}시간 전`);
+      setUserTime(`${Math.floor(diffMin / 60)}시간 전`);
     } else {
       setUserTime(date.substring(0, 10));
     }
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     float: "right",
     position: "absolute",
-    marginLeft: SCREEN_WIDTH / 2 + 60,
+    marginLeft: SCREEN_WIDTH / 2 + 40,
   },
   text_contents: {
     color: "#000000",
