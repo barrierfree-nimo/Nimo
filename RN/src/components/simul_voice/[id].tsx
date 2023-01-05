@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Axios from 'axios';
 import {
   StyleSheet,
@@ -9,46 +9,47 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  Button,
-  ToastAndroid
 } from "react-native";
 import CommonStyle from '../common/common_style';
+import SimulMainStyle from '../simul_main/simul_main_style';
 import SpeechBubble from '../simul_common/speech_bubble';
 import NavigateBtn from '../simul_common/navigate_btn';
-import {
-  InterruptionModeAndroid,
-  Audio,
-  ResizeMode,
-  Video
-} from "expo-av";
+import { Audio,} from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import baseURL from "../baseURL";
-import { Sound } from 'expo-av/build/Audio';
-import SimulMainStyle from '../simul_main/simul_main_style';
+
 
 const VoiceDetail = ({route, navigation} : any) => {
   const [ ok, setOk ] = useState(false);
   const [ data, setData ] = useState<any[]>();
   const [ scripts, setScripts ] = useState<any[]>([]);
+  const [ visibleScripts, setvisibleScripts ] = useState<any[]>();
   const [ options, setOptions ] = useState<any[]>([]);
   const [ commentary, setCommentary ] = useState('');
+  const [ showOptions, setShowOptions ] = useState(false);
+  const nextId = useRef<number>(0);
+  const sound = React.useRef(new Audio.Sound());
+  const scrollViewRef = React.useRef<ScrollView>();
+  
 
+  // 통화 버튼 클릭 시
   const start = async () => {
     setOk(true);
   }
 
-  //const scripts = ["안녕하세요", "고객님", "행복은행입니다"]
 
   useEffect(() => {
-    fetchScripts()
+    fetchData()
   }, [])
 
-  const fetchScripts = async () => {
+
+  // Fetch JSON Data 
+  const fetchData = async () => {
     const token = await AsyncStorage.getItem('user_Token')
 
     if(token != null) {
       try {
-        Axios.get(`http://172.30.1.85:5000`+ `/simulation/voice/${route.params.simulNum}`, {
+        Axios.get(baseURL+ `/simulation/voice/${route.params.simulNum}`, {
           headers: {
             'accessToken': `${token}`
           }
@@ -62,10 +63,13 @@ const VoiceDetail = ({route, navigation} : any) => {
     }
   } 
 
+
   useEffect(() => {
     setScriptItem()
   }, [data])
 
+
+  // Data to [Scripts or Options]
   const setScriptItem = async () => {
     let temp_scripts = []
     let temp_options = []
@@ -85,29 +89,60 @@ const VoiceDetail = ({route, navigation} : any) => {
     }
   }
 
+  
+  // 화면 터치 시 말풍선 보이게
+  const showScriptItem = async () => {
+    if(scripts.length == nextId.current) {
+      setShowOptions(true);
+      return;
+    }
+    
+    const item = scripts[nextId.current];
 
-
-  const play = async () => {
-    const sound = new Audio.Sound();
-    await sound.loadAsync({
-        uri: 'https://firebasestorage.googleapis.com/v0/b/phishing-vaccine.appspot.com/o/voice%2F1%2F1.mp3?alt=media&token=3697b50e-9da3-4ee5-9a00-6b8d8590d832'
+    // 음성 재생
+    await sound.current.unloadAsync()
+    await sound.current.loadAsync({
+        uri: item[2]
     })
-    await sound.playAsync()
+    await sound.current.playAsync()
 
+    setvisibleScripts([...(visibleScripts || []), item]);
+    nextId.current += 1;
   }
 
 
-  const handleClickCorrect = (response: number) => {
+  // 대응방법 선택 시 >> 완료 처리
+  const handleClickCorrect = async (response: number) => {
     const isCorrect = (response === 3) ? true : false
-    navigation.navigate("CorrectPageVoice", {
-      commentary: commentary,
-      correct: isCorrect,
-    });
+    const token = await AsyncStorage.getItem('user_Token')
+
+    if(token != null) {
+      const data = {
+        type: "voice",
+        simulNum: Number(route.params.simulNum)
+      }
+
+      try {
+        Axios.post(baseURL+ `/simulation/done`, 
+          data, 
+          { headers: { 'accessToken': `${token}` } }
+        
+          ).then(() => {
+          navigation.navigate("CorrectPageVoice", {
+            commentary: commentary,
+            correct: isCorrect,
+          });
+        });
+      } catch(err) {
+        console.log(err);
+      }
+    }
+    
   };
 
 
   return (
-    <SafeAreaView style={styles.container_voice_simul}>
+    <SafeAreaView style={CommonStyle.container}>
       <View style={CommonStyle.container_contents}>
         <Image
           source={require("../../assets/icons/simul_voice/voice_bg_purple.png")}
@@ -116,11 +151,12 @@ const VoiceDetail = ({route, navigation} : any) => {
 
         { ok === false ? (
           <View style={styles.container_phone}>
+            <Text style={styles.text_phoneNum}>02-XXXX-XXXX</Text>
             <Image 
               source={require("../../assets/icons/simul_voice/voice_profile.png")}
               style={styles.img_profile}
             />
-            <Text style={styles.text_phoneNum}>02-XXXX-XXXX</Text>
+            
             <View style={styles.container_btn_call}>
               <TouchableOpacity onPress={() => start()}>
                 <Image source={require("../../assets/icons/simul_voice/ic_call.png")}/>
@@ -134,12 +170,18 @@ const VoiceDetail = ({route, navigation} : any) => {
         ) : (
           <View style={styles.container_phone}>
             <Text style={styles.text_phoneNum}>02-XXXX-XXXX</Text>
-            <Text style={styles.text_callTime}>00:24</Text>
-            <TouchableOpacity onPress={() => play()}><Text>play</Text></TouchableOpacity>
+            {showOptions === false ? (
+              <Text style={styles.text_callTime}>화면을 터치해주세요</Text>
+            ) : (
+              <Text></Text>
+            )}
+            
             <ScrollView 
-              style={styles.container_bubble_voice}>
-                
-              {scripts?.map((item) => (
+              style={styles.container_bubble_voice}
+              onTouchStart={() => showScriptItem()}
+              >
+              
+              {visibleScripts?.map((item) => (
                 <View key={item} style={[
                   {
                     left: item[1] === 1 ? SCREEN_WIDTH / 30 : SCREEN_WIDTH / 4,
@@ -152,17 +194,21 @@ const VoiceDetail = ({route, navigation} : any) => {
                 </View>
               ))}
 
-              <View style={styles.container_option}>
-                <Text style={styles.text_notice_select}>대응 방법을 선택해주세요</Text>
-                {options?.map((item) => (
-                  <View key={item}  style={styles.btn_option}>
-                    <TouchableOpacity onPress={() => handleClickCorrect(item[1])}>
-                      <Text style={styles.text_option}>{item[0]}</Text>
-                    </TouchableOpacity>
-                  </View>
-                  
-                ))}
-              </View>
+              {showOptions === false ? (
+                <Text></Text>
+              ) : (
+                <View style={styles.container_option}>
+                  <Text style={styles.text_notice_select}>대응 방법을 선택해주세요</Text>
+                  {options?.map((item) => (
+                    <View key={item}  style={styles.btn_option}>
+                      <TouchableOpacity onPress={() => handleClickCorrect(item[1])}>
+                        <Text style={styles.text_option}>{item[0]}</Text>
+                      </TouchableOpacity>
+                    </View>
+                  ))}
+                </View>
+              )}
+              
               
             </ScrollView>
           </View>
@@ -201,12 +247,11 @@ const styles = StyleSheet.create({
     paddingTop: 20
   },
   img_profile: {
-    marginTop: 70,
-    width: 90,
-    height: 90,
+    marginTop: 20,
+    height: 90
   },
   text_phoneNum: {
-    marginTop: 40,
+    marginTop: 90,
     fontSize: 30,
     fontWeight: "500",
     color: '#FFFFFF', 
