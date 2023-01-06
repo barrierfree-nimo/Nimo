@@ -21,7 +21,7 @@ interface MsgContent {
   simulNum: number;
   title: string;
   commentary: string;
-  done: string;
+  done: boolean;
 }
 
 const MessageSimul = ({ navigation }: any) => {
@@ -39,7 +39,8 @@ const MessageSimul = ({ navigation }: any) => {
           accessToken: `${token}`,
         },
       }).then((res) => {
-        setSimulList(res.data.simul);
+        setSimulList(res.data);
+        console.log(simulList)
       });
     } catch (err) {
       console.log(err);

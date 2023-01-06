@@ -14,7 +14,7 @@ export interface MessageCardProps {
   simulNum: number;
   title: string;
   commentary: string;
-  done: string;
+  done: boolean;
   navigation: any;
 }
 
@@ -23,7 +23,7 @@ const MessageCard = (props: MessageCardProps) => {
   const [check, setCheck] = useState<boolean>(false);
 
   useEffect(() => {
-    done === "false" ? setCheck(false) : setCheck(true);
+    done === false ? setCheck(false) : setCheck(true);
   }, [done]);
 
   return (

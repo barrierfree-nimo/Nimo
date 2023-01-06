@@ -9,6 +9,7 @@ import {
   Image,
   Text,
   TouchableOpacity,
+  ScrollViewComponent,
 } from "react-native";
 import CommonStyle from '../common/common_style';
 import SimulMainStyle from '../simul_main/simul_main_style';
@@ -28,8 +29,8 @@ const VoiceDetail = ({route, navigation} : any) => {
   const [ commentary, setCommentary ] = useState('');
   const [ showOptions, setShowOptions ] = useState(false);
   const nextId = useRef<number>(0);
-  const sound = React.useRef(new Audio.Sound());
-  const scrollViewRef = React.useRef<ScrollView>();
+  const sound = useRef(new Audio.Sound());
+  const scrollViewRef = useRef<ScrollView>(null)
   
 
   // 통화 버튼 클릭 시
@@ -140,6 +141,8 @@ const VoiceDetail = ({route, navigation} : any) => {
     
   };
 
+  
+
 
   return (
     <SafeAreaView style={CommonStyle.container}>
@@ -177,6 +180,8 @@ const VoiceDetail = ({route, navigation} : any) => {
             )}
             
             <ScrollView 
+              ref={scrollViewRef}
+              onContentSizeChange={() => scrollViewRef.current?.scrollToEnd({ animated: true })}
               style={styles.container_bubble_voice}
               onTouchStart={() => showScriptItem()}
               >
@@ -244,7 +249,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     alignItems: "center",
-    paddingTop: 20
   },
   img_profile: {
     marginTop: 20,

@@ -77,7 +77,7 @@ const VoiceSimul = ({ navigation }: any) => {
                     simulNum={simulNum}
                     title={title}
                     commentary={commentary}
-                    check={done}
+                    done={done}
                     navigation={navigation}
                   />
                 </TouchableOpacity>

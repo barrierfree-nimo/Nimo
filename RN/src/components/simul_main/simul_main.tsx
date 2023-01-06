@@ -59,7 +59,9 @@ const SimulMain = ({ navigation }: any) => {
         <View style={SimulMainStyle.phone_push_div}>
           {type === "sns" && (
             <TouchableOpacity
-              onPress={() => navigation.navigate("MessageSimul")}
+              onPress={() => navigation.navigate("MessageDetail", {
+                simulNum: num,
+              })}
             >
               <Image
                 source={require("../../assets/icons/simul_main/sns_push.png")}
@@ -154,16 +156,16 @@ const SimulMain = ({ navigation }: any) => {
 
         {/*  앱 하단바 */}
         <View style={SimulMainStyle.phone_bottom_div}>
-          {/*  MSG */}
-          <TouchableOpacity onPress={() => navigation.navigate("MessageSimul")}>
-            {type === "message" || isInRed("message") ? (
+          {/*  CALL */}
+          <TouchableOpacity onPress={() => navigation.navigate("VoiceSimul")}>
+            {type === "call" || isInRed("call") ? (
               <Image
-                source={require(`../../assets/icons/simul_main/message_red.png`)}
+                source={require(`../../assets/icons/simul_main/call_red.png`)}
                 style={SimulMainStyle.img_bottom_app_icon}
               />
             ) : (
               <Image
-                source={require("../../assets/icons/simul_main/message_default.png")}
+                source={require("../../assets/icons/simul_main/call_default.png")}
                 style={SimulMainStyle.img_bottom_app_icon}
               />
             )}
@@ -177,16 +179,16 @@ const SimulMain = ({ navigation }: any) => {
             />
           </TouchableOpacity>
 
-          {/*  CALL */}
-          <TouchableOpacity onPress={() => navigation.navigate("VoiceSimul")}>
-            {type === "call" || isInRed("call") ? (
+          {/*  MSG */}
+          <TouchableOpacity onPress={() => navigation.navigate("MessageSimul")}>
+            {type === "message" || isInRed("message") ? (
               <Image
-                source={require(`../../assets/icons/simul_main/call_red.png`)}
+                source={require(`../../assets/icons/simul_main/message_red.png`)}
                 style={SimulMainStyle.img_bottom_app_icon}
               />
             ) : (
               <Image
-                source={require("../../assets/icons/simul_main/call_default.png")}
+                source={require("../../assets/icons/simul_main/message_default.png")}
                 style={SimulMainStyle.img_bottom_app_icon}
               />
             )}

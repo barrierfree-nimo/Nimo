@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   TouchableOpacity,
@@ -8,18 +8,25 @@ import {
   Text,
   Dimensions,
 } from "react-native";
+import { useNavigationState } from "@react-navigation/native";
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export interface MessageCardProps {
   simulNum: number;
   title: string;
   commentary: string;
-  check: boolean;
+  done: boolean;
   navigation: any;
 }
 
 const MessageCard = (props: MessageCardProps) => {
-  const { simulNum, title, commentary, check } = props;
+  const { simulNum, title, commentary, done } = props;
+  const [check, setCheck] = useState<boolean>(false);
+
+  useEffect(() => {
+    done === false ? setCheck(false) : setCheck(true);
+    console.log(done)
+  }, [done]);
 
   return (
     <View>

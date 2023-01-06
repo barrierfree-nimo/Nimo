@@ -6,18 +6,20 @@ const SCREEN_HEIGHT = Dimensions.get("window").height;
 const msgDetailStyle = StyleSheet.create({
   phone_div: {
     position: "absolute",
-    width: SCREEN_WIDTH - 40,
+    width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT - 100,
     justifyContent: "center",
     alignItems: "center",
+    paddingTop: 20
   },
   header: {
     justifyContent: "center",
     alignItems: "center",
   },
   img_profile: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
+    marginTop: 40
   },
   text_title: {
     fontSize: 22,
@@ -31,18 +33,22 @@ const msgDetailStyle = StyleSheet.create({
     width: SCREEN_WIDTH - 80,
   },
   text_container: {
-    width: SCREEN_WIDTH - 80,
+    width: SCREEN_WIDTH,
     height: 450,
     paddingTop: 10,
   },
   scroll: {
-    width: SCREEN_WIDTH - 80,
-    flex: 1,
+    width: SCREEN_WIDTH,
+    marginTop: 20,
+    marginBottom: 120,
+    paddingTop: 10,
+    paddingHorizontal: 40,
+    alignContent: 'center',
   },
   choice_box: {
     width: SCREEN_WIDTH - 80,
     paddingVertical: 20,
-    marginBottom: 60,
+    marginBottom: 10,
   },
   choice_box_child: {
     width: SCREEN_WIDTH - 90,
