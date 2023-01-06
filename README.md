@@ -1,1 +1,1 @@
-# Nimo
+# Nimo-server
