@@ -35,15 +35,6 @@ const CommonStyle = StyleSheet.create({
     height: "90%",
     alignItems: "center",
   },
-  container_exit: {
-    width: SCREEN_WIDTH - 80,
-    height: 50,
-    marginBottom: 15,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 20,
-    backgroundColor: "#FFD542",
-  },
   btnText_exit: {
     fontSize: 25,
     fontWeight: "bold",
@@ -54,21 +45,14 @@ const CommonStyle = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
   },
-  exit_div: {
-    position: "absolute",
-    top: SCREEN_HEIGHT - 60,
+  container_exit: {
     width: SCREEN_WIDTH - 80,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  exit_btn: {
-    width: SCREEN_WIDTH - 150,
     height: 50,
-    alignItems: "center",
+    marginBottom: 20,
     justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
     backgroundColor: "#FFD542",
-    borderRadius: 15,
-    overflow: "hidden",
   },
   exit_btn_text: {
     fontSize: 30,
