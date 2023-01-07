@@ -59,12 +59,11 @@ const CommonStyle = StyleSheet.create({
     fontWeight: "800",
   },
   navigate_btn_container: {
-    position: "absolute",
-    top: SCREEN_HEIGHT - 200,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 15,
+    marginBottom: 15,
   },
   navigate_btn: {
     width: 130,
