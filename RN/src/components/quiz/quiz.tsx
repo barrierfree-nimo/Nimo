@@ -150,7 +150,7 @@ const Quiz = ({ navigation }: any) => {
 
       <View style={CommonStyle.container_exit}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={CommonStyle.btnText_exit}>문제 나가기</Text>
+          <Text style={CommonStyle.btnText_exit}>피싱 문제 나가기</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
