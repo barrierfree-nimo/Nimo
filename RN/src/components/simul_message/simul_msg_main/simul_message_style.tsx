@@ -6,20 +6,19 @@ const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SimulMsgStyle = StyleSheet.create({
   phone_div: {
     width: SCREEN_WIDTH - 40,
-    height: SCREEN_HEIGHT - 100,
+    height: SCREEN_HEIGHT - 120,
     justifyContent: "center",
     alignItems: "center",
   },
   message_div: {
     width: SCREEN_WIDTH - 40,
-    height: SCREEN_HEIGHT - 300,
+    height: "80%",
     justifyContent: "center",
     alignItems: "center",
   },
   text_title: {
-    alignSelf: 'flex-start',
-    marginLeft: 20,
-    marginBottom: 10,
+    alignSelf: "flex-start",
+    margin: 30,
     fontSize: 32,
     fontWeight: "900",
   },
