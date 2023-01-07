@@ -223,7 +223,7 @@ const VoiceDetail = ({ route, navigation }: any) => {
         {/* 이동버튼 */}
         <NavigateBtn navigation={navigation} />
       </View>
-      <ExitBtn />
+      <ExitBtn navigation={navigation} />
     </SafeAreaView>
   );
 };
