@@ -3,6 +3,33 @@ import {StyleSheet, Dimensions} from 'react-native';
 const SCREEN_WIDTH = Dimensions.get("window").width
 
 const MainStyle  = StyleSheet.create({
+  container_header: {
+    width: SCREEN_WIDTH,
+    height: 60,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9,
+  },
+  text_header: {
+    position: "absolute",
+    color: "#00284E",
+    fontSize: 30,
+    fontWeight: "900",
+  },
+  img_setting: {
+    width: 30,
+    marginHorizontal: 6,
+    left: SCREEN_WIDTH / 2 - 40
+  },
   container_progress: {
     flex: 1,
     width: SCREEN_WIDTH - 60,
@@ -21,6 +48,7 @@ const MainStyle  = StyleSheet.create({
     height: 100,
     marginHorizontal: 6,
   },
+  
   container_progress_text: {
     alignItems: 'center',
   },

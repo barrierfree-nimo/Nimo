@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AuthStackNavigator from "./AuthStackNavigator";
 
 import Main from "../main/main";
+import Setting from "../setting/setting";
 import Quiz from "../quiz/quiz";
 import Info from "../info/info";
 
@@ -32,6 +33,7 @@ const MainStackNavigator = () => {
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Main" component={Main} />
+        <Stack.Screen name="Setting" component={Setting} />
         <Stack.Screen name="Quiz" component={Quiz} />
         <Stack.Screen name="Community" component={Community} />
         <Stack.Screen name="CommunityWrite" component={CommunityWrite} />
@@ -50,7 +52,7 @@ const MainStackNavigator = () => {
           name="AuthStackNavigator"
           component={AuthStackNavigator}
         />
-        {/* <Stack.Screen name="VoiceSimulCommentary" component={VoiceSimulCommentary}/> */}
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
