@@ -154,7 +154,7 @@ const VoiceDetail = ({route, navigation} : any) => {
 
         { ok === false ? (
           <View style={styles.container_phone}>
-            <Text style={styles.text_phoneNum}>02-XXXX-XXXX</Text>
+            <Text style={styles.text_phoneNum}>010-1234-5678</Text>
             <Image 
               source={require("../../assets/icons/simul_voice/voice_profile.png")}
               style={styles.img_profile}
@@ -172,7 +172,7 @@ const VoiceDetail = ({route, navigation} : any) => {
           </View>
         ) : (
           <View style={styles.container_phone}>
-            <Text style={styles.text_phoneNum}>02-XXXX-XXXX</Text>
+            <Text style={styles.text_phoneNum}>010-1234-5678</Text>
             {showOptions === false ? (
               <Text style={styles.text_callTime}>화면을 터치해주세요</Text>
             ) : (

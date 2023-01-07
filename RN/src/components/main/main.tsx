@@ -62,6 +62,7 @@ const Main = ({ navigation }: any) => {
           <Image
             source={require("../../assets/images/main_progress.png")}
             style={MainStyle.img_progress}
+            resizeMode="contain"
           />
           <View style={MainStyle.container_progress_text}>
             <Text style={MainStyle.text_progress}>

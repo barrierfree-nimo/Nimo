@@ -38,7 +38,7 @@ const MessageCard = (props: MessageCardProps) => {
             style={styles.img_profile}
           />
           <View>
-            <Text style={styles.text_title_phoneNum}>010-XXX-XXXX</Text>
+            <Text style={styles.text_title_phoneNum}>010-1234-5678</Text>
             <Text style={styles.text_title}>{title}</Text>
           </View>
 

@@ -47,7 +47,7 @@ const Login = ({navigation}: any) => {
         <View style={LoginStyle.container}>
           <View style={LoginStyle.container_login_input}>
             <TextInput value={nickname} style={LoginStyle.textInput_login} 
-              onChangeText={(nickname) => setNickname(nickname)}  placeholder="닉네임" />
+              onChangeText={(nickname) => setNickname(nickname)}  placeholder="아이디" />
             <TextInput value={password} onChangeText={(password) => setPassword(password)} 
               secureTextEntry={true} style={LoginStyle.textInput_login} placeholder="비밀번호" />
           </View>

@@ -12,7 +12,6 @@ const Splash = ({navigation}: any) => {
     let token;
     try {
       token = await AsyncStorage.getItem('user_Token')
-      console.log('token: ' + token)
 
       if(token != null) { 
         setHasLocalToken(true) 
@@ -22,7 +21,6 @@ const Splash = ({navigation}: any) => {
         setHasLocalToken(true) 
         navigation.replace("AuthStackNavigator")
       }
-      //console.log('hastoken: ' + hasLocalToken)
 
     } catch(error) {
       console.log(error)
@@ -41,7 +39,9 @@ const Splash = ({navigation}: any) => {
       <StatusBar />
       <View>
         <View style={styles.container}>
-          <Image source={require('../assets/images/main_progress.png')} style={styles.img} />
+          <Image source={require('../assets/images/main_progress.png')} 
+            style={styles.img} 
+            resizeMode="contain" />
           <Text style={styles.text_title}>피싱백신</Text>
         </View>
       </View>
@@ -55,6 +55,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   img: {
+    width: 80,
+    height: 250,
     marginTop: 70,
     marginBottom: 20,
   },

@@ -17,8 +17,9 @@ const MainStyle  = StyleSheet.create({
     flexDirection: 'row',
   },
   img_progress: {
-    width: 50,
-    height: 110
+    width: 32,
+    height: 100,
+    marginHorizontal: 6,
   },
   container_progress_text: {
     alignItems: 'center',

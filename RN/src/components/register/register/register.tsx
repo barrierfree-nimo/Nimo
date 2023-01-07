@@ -37,10 +37,10 @@ const Register = ({navigation}: any) => {
         <ScrollView style={RegisterStyle.container}>
           <View style={RegisterStyle.container_input}>
             <View style={RegisterStyle.container_item}>
-              <Text style={RegisterStyle.title_item}>닉네임</Text>
+              <Text style={RegisterStyle.title_item}>아이디</Text>
               <View style={RegisterStyle.container_item_input}>
                 <TextInput value={nickname} onChangeText={(nickname) => setNickname(nickname)} 
-                  style={RegisterStyle.textInput_item} placeholder="닉네임" />
+                  style={RegisterStyle.textInput_item} placeholder="아이디" />
                 <TouchableOpacity style={RegisterStyle.btn_overlapping}>
                   <Text style={RegisterStyle.btnText_overlapping}>중복확인</Text>
                 </TouchableOpacity>
