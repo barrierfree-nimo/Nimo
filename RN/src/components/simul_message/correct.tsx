@@ -36,19 +36,21 @@ const CorrectPage = ({ route, navigation }: any) => {
         source={require("../../assets/icons/simul_message/message_bg.png")}
         style={SimulMainStyle.img_galaxy}
       />
-      <View
-        style={[
-          styles.color_box,
-          { backgroundColor: isCorrect ? "blue" : "red" },
-        ]}
-      >
-        <Text style={styles.text_title}>{titleText}</Text>
-        <Text style={styles.text_content}>{commentary}</Text>
+      <View style={styles.phone_div}>
+        <View style={styles.content_container}>
+          <View
+            style={[
+              styles.color_box,
+              { backgroundColor: isCorrect ? "blue" : "red" },
+            ]}
+          >
+            <Text style={styles.text_title}>{titleText}</Text>
+            <Text style={styles.text_content}>{commentary}</Text>
+          </View>
+        </View>
+        {/* 이동버튼 */}
+        <NavigateBtn navigation={navigation} />
       </View>
-
-      {/* 이동버튼 */}
-      <NavigateBtn navigation={navigation} />
-
       {/* 체험나가기 버튼 */}
       <ExitBtn navigation={navigation} />
     </SafeAreaView>
@@ -56,19 +58,21 @@ const CorrectPage = ({ route, navigation }: any) => {
 };
 
 const styles = StyleSheet.create({
-  img_bg: {
-    position: "absolute",
-    width: SCREEN_WIDTH - 20,
-    height: SCREEN_HEIGHT - 100,
-    marginTop: 20,
-    resizeMode: "stretch",
+  phone_div: {
+    width: SCREEN_WIDTH - 40,
+    height: SCREEN_HEIGHT - 120,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  content_container: {
+    height: "80%",
   },
   color_box: {
+    width: SCREEN_WIDTH - 100,
     alignItems: "center",
     justifyContent: "center",
-    top: 100,
-    width: SCREEN_WIDTH - 100,
-    height: "auto",
+
+    marginTop: 50,
     padding: 30,
     paddingBottom: 90,
     borderRadius: 15,
