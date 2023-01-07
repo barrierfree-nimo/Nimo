@@ -11,15 +11,12 @@ import {
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export interface MessageCardProps {
-  simulNum: number;
   title: string;
-  commentary: string;
   done: string;
-  navigation: any;
 }
 
 const MessageCard = (props: MessageCardProps) => {
-  const { simulNum, title, commentary, done } = props;
+  const { title, done } = props;
   const [check, setCheck] = useState<boolean>(false);
 
   useEffect(() => {

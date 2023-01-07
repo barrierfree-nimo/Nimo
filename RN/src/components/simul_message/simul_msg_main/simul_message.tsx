@@ -21,7 +21,7 @@ interface MsgContent {
   simulNum: number;
   title: string;
   commentary: string;
-  done: boolean;
+  done: string;
 }
 
 const MessageSimul = ({ navigation }: any) => {
@@ -40,7 +40,6 @@ const MessageSimul = ({ navigation }: any) => {
         },
       }).then((res) => {
         setSimulList(res.data);
-        console.log(simulList)
       });
     } catch (err) {
       console.log(err);
@@ -68,14 +67,7 @@ const MessageSimul = ({ navigation }: any) => {
             <View style={SimulMsgStyle.msg_card_div}>
               {simulList?.map(({ simulNum, title, commentary, done }) => (
                 <TouchableOpacity onPress={() => handleOnPress(simulNum)}>
-                  <MessageCard
-                    key={simulNum}
-                    simulNum={simulNum}
-                    title={title}
-                    commentary={commentary}
-                    done={done}
-                    navigation={navigation}
-                  />
+                  <MessageCard key={simulNum} title={title} done={done} />
                 </TouchableOpacity>
               ))}
             </View>
