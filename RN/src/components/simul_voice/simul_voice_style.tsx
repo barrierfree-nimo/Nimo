@@ -12,14 +12,13 @@ const SimulVoiceStyle = StyleSheet.create({
   },
   voice_div: {
     width: SCREEN_WIDTH - 40,
-    height: SCREEN_HEIGHT - 300,
+    height: "80%",
     justifyContent: "center",
     alignItems: "center",
   },
   text_title: {
-    alignSelf: 'flex-start',
-    marginLeft: 20,
-    marginBottom: 20,
+    alignSelf: "flex-start",
+    margin: 30,
     fontSize: 30,
     fontWeight: "900",
   },

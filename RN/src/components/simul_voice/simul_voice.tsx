@@ -15,6 +15,7 @@ import SimulVoiceStyle from "./simul_voice_style";
 import NavigateBtn from "../simul_common/navigate_btn";
 import MessageCard from "./messageCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ExitBtn from "../simul_common/exit_btn";
 
 interface VoiceContent {
   simulNum: number;
@@ -37,14 +38,14 @@ const VoiceSimul = ({ navigation }: any) => {
 
   const fetchSimulVoice = async () => {
     try {
-      const token = await AsyncStorage.getItem('user_Token')
+      const token = await AsyncStorage.getItem("user_Token");
       Axios.get(baseURL + "/simulation/voice", {
         headers: {
           accessToken: `${token}`,
         },
       }).then((res) => {
         setSimulList(res.data);
-        console.log(res.data)
+        console.log(res.data);
       });
     } catch (err) {
       console.log(err);
@@ -68,10 +69,12 @@ const VoiceSimul = ({ navigation }: any) => {
         <View style={SimulVoiceStyle.voice_div}>
           <Text style={SimulVoiceStyle.text_title}>최근 통화</Text>
           <ScrollView>
-            
             <View style={SimulVoiceStyle.msg_card_div}>
               {simulList?.map(({ simulNum, title, commentary, done }) => (
-                <TouchableOpacity key={simulNum} onPress={() => handleOnPress(simulNum)}>
+                <TouchableOpacity
+                  key={simulNum}
+                  onPress={() => handleOnPress(simulNum)}
+                >
                   <MessageCard
                     key={simulNum}
                     simulNum={simulNum}
@@ -84,22 +87,10 @@ const VoiceSimul = ({ navigation }: any) => {
               ))}
             </View>
           </ScrollView>
-          
         </View>
-
-        {/* 이동버튼 */}
         <NavigateBtn navigation={navigation} />
       </View>
-
-      {/* 체험나가기 버튼 */}
-      <View style={CommonStyle.container_exit}>
-        <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-          <View>
-            <Text style={CommonStyle.exit_btn_text}>체험 나가기</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-
+      <ExitBtn navigation={navigation} />
     </SafeAreaView>
   );
 };
