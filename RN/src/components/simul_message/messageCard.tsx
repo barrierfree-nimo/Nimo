@@ -14,7 +14,7 @@ export interface MessageCardProps {
   simulNum: number;
   title: string;
   commentary: string;
-  done: boolean;
+  done: string;
   navigation: any;
 }
 
@@ -23,7 +23,7 @@ const MessageCard = (props: MessageCardProps) => {
   const [check, setCheck] = useState<boolean>(false);
 
   useEffect(() => {
-    done === false ? setCheck(false) : setCheck(true);
+    done === "false" ? setCheck(false) : setCheck(true);
   }, [done]);
 
   return (
@@ -37,7 +37,6 @@ const MessageCard = (props: MessageCardProps) => {
           <Text style={styles.text_title}>{title}</Text>
         </View>
 
-        {/*/ 체험 제목 자동 줄바꿈 하니까 체크박스가 안보이는 문제 있음 */}
         <View style={styles.card_container_child_checkbox}>
           {check === true ? (
             <Image
@@ -59,16 +58,18 @@ const MessageCard = (props: MessageCardProps) => {
 
 const styles = StyleSheet.create({
   card_container: {
+    position: "relative",
     flexDirection: "row",
-    width: SCREEN_WIDTH - 80,
+    width: SCREEN_WIDTH - 100,
   },
   card_container_child: {
     flexDirection: "row",
-    flex: 2,
+    flex: 8,
   },
   card_container_child_checkbox: {
-    //backgroundColor: 'blue',
-    flex: 1,
+    position: "absolute",
+    right: 10,
+    marginTop: 20,
   },
   img_profile: {
     width: 60,
@@ -79,13 +80,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: 30,
     height: 30,
-    marginLeft: SCREEN_WIDTH - 120,
-    marginTop: 20,
   },
   text_title: {
+    width: SCREEN_WIDTH / 2,
     color: "#000000",
     fontSize: 20,
     fontWeight: "700",
+    flexWrap: "wrap",
   },
   text_content: {
     color: "#000000",
