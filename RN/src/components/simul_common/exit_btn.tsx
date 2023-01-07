@@ -9,7 +9,7 @@ const ExitBtn = ({ navigation }: any) => {
       onPress={() => navigation.navigate("Main")}
     >
       <View>
-        <Text style={CommonStyle.exit_btn_text}>체험 나가기</Text>
+        <Text style={CommonStyle.exit_btn_text}>피싱 체험 나가기</Text>
       </View>
     </TouchableOpacity>
   );

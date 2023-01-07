@@ -51,8 +51,22 @@ const Main = ({ navigation }: any) => {
   return (
     <SafeAreaView style={CommonStyle.container}>
       <StatusBar />
-      <View style={CommonStyle.container_header}>
-        <Text style={CommonStyle.text_header}>피싱백신</Text>
+      <View style={MainStyle.container_header}>
+        <Text style={MainStyle.text_header}>피싱백신</Text>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Setting", {
+              nickname: nickname,
+              donePercent: donePercent,
+            });
+          }}
+        >
+          <Image
+            source={require("../../assets/icons/setting/setting.png")}
+            style={MainStyle.img_setting}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
       </View>
 
       <View style={MainStyle.container_progress}>
@@ -87,7 +101,7 @@ const Main = ({ navigation }: any) => {
           onPress={() => navigation.navigate("Quiz")}
           style={MainStyle.btn_menu}
         >
-          <Text style={MainStyle.btnText_menu}>피싱 퀴즈 풀기</Text>
+          <Text style={MainStyle.btnText_menu}>피싱 문제 풀기</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("CommunityMain")}
