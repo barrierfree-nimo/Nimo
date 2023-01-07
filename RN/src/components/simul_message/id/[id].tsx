@@ -111,12 +111,14 @@ const MessageDetail = ({ route, navigation }: any) => {
             </View>
             <View style={msgDetailStyle.lineStyle} />
           </View>
-
           {/* 대화창 */}
           <TouchableOpacity
             style={msgDetailStyle.text_container}
             onPress={() => addScript()}
           >
+            <Text style={msgDetailStyle.press_msg_text}>
+              화면을 클릭하면 메세지가 나옵니다
+            </Text>
             <ScrollView
               ref={scrollViewRef}
               onContentSizeChange={() =>

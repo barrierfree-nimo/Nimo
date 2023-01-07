@@ -33,13 +33,18 @@ const msgDetailStyle = StyleSheet.create({
     borderColor: "gray",
     width: SCREEN_WIDTH - 80,
   },
+  press_msg_text: {
+    fontSize: 20,
+    fontWeight: "500",
+    marginTop: 5,
+    marginLeft: 40,
+  },
   text_container: {
     width: SCREEN_WIDTH,
     flex: 7,
     paddingTop: 10,
   },
   scroll: {
-    width: SCREEN_WIDTH,
     marginTop: 20,
     paddingTop: 10,
     paddingHorizontal: 40,
