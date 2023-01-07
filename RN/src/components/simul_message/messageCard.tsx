@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  SafeAreaView,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  Dimensions,
-} from "react-native";
+import { View, StyleSheet, Image, Text, Dimensions } from "react-native";
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export interface MessageCardProps {
