@@ -13,14 +13,14 @@ const SimulMainStyle = StyleSheet.create({
   },
   phone_div: {
     width: SCREEN_WIDTH - 20,
-    height: SCREEN_HEIGHT - 100,
+    height: SCREEN_HEIGHT - 120,
     justifyContent: "center",
     alignItems: "center",
   },
   img_push: {
     width: SCREEN_WIDTH - 80,
     height: SCREEN_WIDTH / 5,
-    marginTop: 30,
+    marginTop: 20,
     resizeMode: "stretch",
   },
   phone_push_div: {

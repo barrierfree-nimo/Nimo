@@ -59,9 +59,11 @@ const SimulMain = ({ navigation }: any) => {
         <View style={SimulMainStyle.phone_push_div}>
           {type === "sns" && (
             <TouchableOpacity
-              onPress={() => navigation.navigate("MessageDetail", {
-                simulNum: num,
-              })}
+              onPress={() =>
+                navigation.navigate("MessageDetail", {
+                  simulNum: num,
+                })
+              }
             >
               <Image
                 source={require("../../assets/icons/simul_main/sns_push.png")}
