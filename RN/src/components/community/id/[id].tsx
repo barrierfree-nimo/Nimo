@@ -9,8 +9,8 @@ import {
 } from "react-native";
 import Axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import baseURL from "../../../baseURL";
-import CommonStyle from "../../../common/common_style";
+import baseURL from "../../baseURL";
+import CommonStyle from "../../common/common_style";
 import communityDetailStyle from "./[id]_style";
 import CommunityCard from "../communityCard";
 

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import {
   SafeAreaView,
@@ -15,41 +15,39 @@ import baseURL from "../baseURL";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Main = ({ navigation }: any) => {
-  const [nickname, setNickname] = useState('니모');
+  const [nickname, setNickname] = useState("니모");
   const [donePercent, setDonePercent] = useState(50);
-  
 
   useEffect(() => {
-    setUserInfo()
-  })
+    setUserInfo();
+  });
 
   const setUserInfo = async () => {
-    let token 
+    let token;
     try {
-      token = await AsyncStorage.getItem('user_Token')
-      if(token != null) {
+      token = await AsyncStorage.getItem("user_Token");
+      if (token != null) {
         Axios.get(baseURL + "/main", {
           headers: {
-            'accessToken': `${token}`
-          }
+            accessToken: `${token}`,
+          },
         }).then((res) => {
           setNickname(String(res.data["nickname"]));
-          setDonePercent(Number(100 * res.data["done"] / res.data['all'] ));
+          setDonePercent(Number((100 * res.data["done"]) / res.data["all"]));
         });
       }
-    } catch(err) {
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
-    
-  }
+  };
 
   const clear = async () => {
     try {
       await AsyncStorage.clear();
-    } catch(err) {
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
   return (
     <SafeAreaView style={CommonStyle.container}>
       <StatusBar />
@@ -67,18 +65,16 @@ const Main = ({ navigation }: any) => {
           <View style={MainStyle.container_progress_text}>
             <Text style={MainStyle.text_progress}>
               {`${nickname}님의 체험 완료도는 \n`}
-              <Text style={MainStyle.text_progress_percent}>{`${Math.floor(donePercent)}% 입니다`}</Text>
+              <Text style={MainStyle.text_progress_percent}>{`${Math.floor(
+                donePercent
+              )}% 입니다`}</Text>
             </Text>
-            
           </View>
-          
         </View>
       </View>
 
       <View style={MainStyle.container_menu}>
-      <TouchableOpacity
-          style={MainStyle.btn_menu_tutorial}
-        >
+        <TouchableOpacity style={MainStyle.btn_menu_tutorial}>
           <Text style={MainStyle.btnText_menu_tutorial}>어플 설명서 보기</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -94,7 +90,7 @@ const Main = ({ navigation }: any) => {
           <Text style={MainStyle.btnText_menu}>피싱 퀴즈 풀기</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Community")}
+          onPress={() => navigation.navigate("CommunityMain")}
           style={MainStyle.btn_menu}
         >
           <Text style={MainStyle.btnText_menu}>소통하기</Text>

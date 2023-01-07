@@ -39,7 +39,7 @@ const CommunityCard = (props: CommunityCardProps) => {
       <View style={styles.card_container}>
         <View style={styles.card_header}>
           <Image
-            source={require("../../../assets/icons/community/community_profile.png")}
+            source={require("../../assets/icons/community/community_profile.png")}
             style={styles.img_profile}
           />
           <Text style={styles.text_nickname}>{user_nickname}</Text>
