@@ -5,12 +5,13 @@ const SCREEN_HEIGHT = Dimensions.get("window").height;
 
 const msgDetailStyle = StyleSheet.create({
   phone_div: {
-    position: "absolute",
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT - 100,
+    width: SCREEN_WIDTH - 40,
+    height: SCREEN_HEIGHT - 120,
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 20,
+  },
+  phone_detail_div: {
+    height: "80%",
   },
   header: {
     justifyContent: "center",
@@ -34,13 +35,12 @@ const msgDetailStyle = StyleSheet.create({
   },
   text_container: {
     width: SCREEN_WIDTH,
-    height: 450,
+    flex: 7,
     paddingTop: 10,
   },
   scroll: {
     width: SCREEN_WIDTH,
     marginTop: 20,
-    marginBottom: 120,
     paddingTop: 10,
     paddingHorizontal: 40,
     alignContent: "center",

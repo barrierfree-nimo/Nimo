@@ -93,13 +93,13 @@ const MessageDetail = ({ route, navigation }: any) => {
 
   return (
     <SafeAreaView style={CommonStyle.container}>
-      <View style={CommonStyle.container_contents}>
-        <Image
-          source={require("../../../assets/icons/simul_message/message_bg.png")}
-          style={SimulMainStyle.img_galaxy}
-        />
-        {/* 폰 화면 */}
-        <View style={msgDetailStyle.phone_div}>
+      <Image
+        source={require("../../../assets/icons/simul_message/message_bg.png")}
+        style={SimulMainStyle.img_galaxy}
+      />
+      {/* 폰 화면 */}
+      <View style={msgDetailStyle.phone_div}>
+        <View style={msgDetailStyle.phone_detail_div}>
           {/* 헤더 */}
           <View style={msgDetailStyle.header}>
             <Image
@@ -165,11 +165,8 @@ const MessageDetail = ({ route, navigation }: any) => {
             </ScrollView>
           </TouchableOpacity>
         </View>
-
-        {/* 이동버튼이 스크롤과 겹치는 문제 있음 */}
         <NavigateBtn navigation={navigation} />
       </View>
-      {/* 체험나가기 버튼 */}
       <ExitBtn navigation={navigation} />
     </SafeAreaView>
   );
