@@ -10,7 +10,7 @@ const msgDetailStyle = StyleSheet.create({
     height: SCREEN_HEIGHT - 100,
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 20
+    paddingTop: 20,
   },
   header: {
     justifyContent: "center",
@@ -19,7 +19,7 @@ const msgDetailStyle = StyleSheet.create({
   img_profile: {
     width: 50,
     height: 50,
-    marginTop: 40
+    marginTop: 40,
   },
   text_title: {
     fontSize: 22,
@@ -43,7 +43,7 @@ const msgDetailStyle = StyleSheet.create({
     marginBottom: 120,
     paddingTop: 10,
     paddingHorizontal: 40,
-    alignContent: 'center',
+    alignContent: "center",
   },
   choice_box: {
     width: SCREEN_WIDTH - 80,
@@ -53,7 +53,7 @@ const msgDetailStyle = StyleSheet.create({
   choice_box_child: {
     width: SCREEN_WIDTH - 90,
     marginTop: 10,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   text_choice: {
     wordWrap: "break-word",

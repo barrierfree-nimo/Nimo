@@ -28,6 +28,9 @@ const MessageDetail = ({ route, navigation }: any) => {
   const [commentary, setCommentary] = useState<string>();
   const [correct, setCorrect] = useState<string>();
   const [wrong, setWrong] = useState<string>();
+  const [visibleScripts, setVisibleScripts] = useState<any[]>([]);
+  const [visibleNum, setVisibleNum] = useState<number>(0);
+  const [showChoice, setShowChoice] = useState<boolean>(false);
 
   useEffect(() => {
     fetchSimulMsgDetail();
@@ -52,6 +55,8 @@ const MessageDetail = ({ route, navigation }: any) => {
   useEffect(() => {
     let arr = [];
     if (scripts) {
+      setVisibleScripts([...(visibleScripts || []), scripts[0]]);
+      setVisibleNum(0);
       for (let i = 0; i < scripts?.length; i++) {
         const text = scripts[i][0];
         const responseType = scripts[i][1];
@@ -66,6 +71,18 @@ const MessageDetail = ({ route, navigation }: any) => {
       setFilteredScripts(arr);
     }
   }, [scripts]);
+
+  const addScript = () => {
+    setVisibleNum((prev) => prev + 1);
+  };
+
+  useEffect(() => {
+    if (filteredScripts) {
+      visibleNum === filteredScripts.length
+        ? setShowChoice(true)
+        : setVisibleScripts([...visibleScripts, filteredScripts[visibleNum]]);
+    }
+  }, [visibleNum]);
 
   const handleClickCorrect = (isCorrect: boolean) => {
     navigation.navigate("CorrectPage", {
@@ -96,7 +113,10 @@ const MessageDetail = ({ route, navigation }: any) => {
           </View>
 
           {/* 대화창 */}
-          <View style={msgDetailStyle.text_container}>
+          <TouchableOpacity
+            style={msgDetailStyle.text_container}
+            onPress={() => addScript()}
+          >
             <ScrollView
               ref={scrollViewRef}
               onContentSizeChange={() =>
@@ -106,11 +126,12 @@ const MessageDetail = ({ route, navigation }: any) => {
               style={msgDetailStyle.scroll}
               persistentScrollbar={true}
             >
-              {filteredScripts?.map((data) => (
+              {visibleScripts?.map((data) => (
                 <View
                   style={[
                     {
-                      left: data[1] === 1 ? SCREEN_WIDTH / 30 : SCREEN_WIDTH / 4,
+                      left:
+                        data[1] === 1 ? SCREEN_WIDTH / 30 : SCREEN_WIDTH / 4,
                     },
                   ]}
                 >
@@ -122,7 +143,12 @@ const MessageDetail = ({ route, navigation }: any) => {
                   />
                 </View>
               ))}
-              <View style={msgDetailStyle.choice_box}>
+              <View
+                style={[
+                  msgDetailStyle.choice_box,
+                  showChoice ? { display: "flex" } : { display: "none" },
+                ]}
+              >
                 <TouchableOpacity
                   onPress={() => handleClickCorrect(true)}
                   style={msgDetailStyle.choice_box_child}
@@ -137,9 +163,8 @@ const MessageDetail = ({ route, navigation }: any) => {
                 </TouchableOpacity>
               </View>
             </ScrollView>
-          </View>
-      </View>
-      
+          </TouchableOpacity>
+        </View>
 
         {/* 이동버튼이 스크롤과 겹치는 문제 있음 */}
         <NavigateBtn navigation={navigation} />
