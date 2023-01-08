@@ -4,7 +4,7 @@ WORKDIR /app/node
 
 COPY ./node ./
 
-RUN apt-get update \
+RUN apt-get update && \
     apt-get install -yq tzdata && \
     ln -fs /usr/share/zoneinfo/Asia/Seoul /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata
