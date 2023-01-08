@@ -88,7 +88,10 @@ const Main = ({ navigation }: any) => {
       </View>
 
       <View style={MainStyle.container_menu}>
-        <TouchableOpacity style={MainStyle.btn_menu_tutorial}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("AppDoc")}
+          style={MainStyle.btn_menu_tutorial}
+        >
           <Text style={MainStyle.btnText_menu_tutorial}>어플 설명서 보기</Text>
         </TouchableOpacity>
         <TouchableOpacity
