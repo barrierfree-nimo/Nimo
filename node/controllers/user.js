@@ -29,14 +29,14 @@ const user = {
                 nickname: nickname,
                 password: hash,
               }).then(res.status(200).json({message: "Join Success!"}));
+            });
           });
-        });
+        }
       }
+    } catch (error) {
+      console.log(error);
     }
-    } catch(error) {
-    console.log(error);
-  }
-},
+  },
   createToken: async function (req, res) {
     try {
       const {nickname, password} = req.body;
@@ -92,28 +92,44 @@ const user = {
       console.log(error);
     }
   },
-setInfo: async function (req, res, next) {
-  try {
-    const user = await User.findOne({where: {id: req.user_id}});
-    const {birth, gender, job, interest, offspring, bank} = req.body;
+  checkNickname: async function (req, res, next) {
     try {
-      user.update({
-        birth: birth,
-        gender: gender,
-        job: job,
-        interest: interest,
-        offspring: offspring,
-        bank: bank
-      })
+      var nickname = req.params.nickname
+      try {const user = await User.findOne({where: {nickname: nickname}})} 
+      catch (error) {
+        return res.status(402).json(error)
+      }
+      if (!user.length==0) {
+        console.log(user)
+        return res.status(409).json({msg: "nickname exist"})
+      }
+      return res.status(200).json({msg: "nickname not exist"})
     } catch (error) {
-      console.log(error)
-      return res.status(401)
+      return res.status(400).json(error)
     }
-    return res.status(200).json("msg: success update userinfo")
-  } catch (error) {
-    return res.status(400)
+  },
+  setInfo: async function (req, res, next) {
+    try {
+      const user = await User.findOne({where: {id: req.user_id}});
+      const {birth, gender, job, interest, offspring, bank} = req.body;
+      try {
+        user.update({
+          birth: birth,
+          gender: gender,
+          job: job,
+          interest: interest,
+          offspring: offspring,
+          bank: bank
+        })
+      } catch (error) {
+        console.log(error)
+        return res.status(401)
+      }
+      return res.status(200).json("msg: success update userinfo")
+    } catch (error) {
+      return res.status(400)
+    }
   }
-}
 }
 
 module.exports = user;
