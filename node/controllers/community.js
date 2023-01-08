@@ -3,70 +3,93 @@ const {User, Post, Comment, sequelize} = require("../models");
 var Sequelize = require("sequelize");
 const {json, HasMany} = require("sequelize");
 
-function convertDate(date) {
-    var offset = date.getTimezoneOffset() / 60;
-    var hours = date.getHours();
-    var newDate = date.setHours(hours - offset);
-    return newDate;
+function convertDate(post) {
+    var cDate = post.createdAt
+    var offset = cDate.getTimezoneOffset() / 60;
+    var cHours = cDate.getHours();
+    var cNewDate = cDate.setHours(cHours - offset);
+    post.createdAt = cNewDate
+
+    var uDate = post.updatedAt
+    var uHours = uDate.getHours();
+    var uNewDate = uDate.setHours(uHours - offset);
+    post.updatedAt = uNewDate
+
+    return post;
 }
 
 function convertList(list) {
     for (i in list) {
-        list[ i ].date = convertDate(list[ i ].date)
+        list[ i ] = convertDate(list[ i ])
     }
 }
 
 const community = {
     readList: async function (req, res, next) {
         try {
-            const list = await Post.findAll({
+            var list = await Post.findAll({
                 order: [
                     [ 'id', 'DESC' ],
                 ]
             });
-
             if (!list.length == 0) {
                 convertList(list);
-                res.status(200).json(list);
+                return res.status(200).json(list);
             }
             else {
-                res.status(201).json({msg: "not exist"})
+                return res.status(201).json({msg: "not exist"})
             }
         } catch (error) {
-            res.status(500);
+            return res.status(500);
         }
     },
     readPost: async function (req, res, next) {
+        const user = await User.findOne({where: {id: req.user_id}});
         try {
-            const post = await Post.findOne({
+            var post = await Post.findOne({
                 where: {
                     id: req.params.id
-                }
-            });
-            const comment = await Comment.findAll({
-                where: {
-                    post_id: req.params.id
                 },
-                order: [
-                    [ 'date', 'ASC' ],
-                ]
+                raw: true,
             });
+            if (post) {
+                var comment = await Comment.findAll({
+                    where: {
+                        post_id: req.params.id
+                    },
+                    order: [
+                        [ 'created_at', 'ASC' ],
+                    ],
+                    raw: true,
+                });
+            }
+            post = convertDate(post)
 
-            post.date = convertDate(post.date)
-            try {
-                if (!comment.length == 0) {
-                    convertList(comment);
+            if (post[ 'user_nickname' ] == user.nickname) {
+                post[ 'is_writer' ] = 'true'
+            }
+
+            if (!comment.length == 0) {
+                for (const i of comment) {
+                    if (i[ 'user_nickname' ] == user.nickname) {
+                        i[ 'is_writer' ] = 'true'
+                    } else {
+                        i[ 'is_writer' ] = 'false'
+                    }
                 }
-            } catch (err) {
-                console.log(err)
+                list = {
+                    post: post,
+                    comment: comment
+                }
+            } else {
+                list = {
+                    post: post,
+                    comment: "not exist"
+                }
             }
-            const list = {
-                post: post,
-                comment: comment
-            }
-            res.status(200).json(list)
+            return res.status(200).json(list)
         } catch (error) {
-            res.status(500);
+            return res.status(500).json(error)
         }
     },
     writePost: async function (req, res, next) {
@@ -77,20 +100,53 @@ const community = {
                 return res.status(500).json({message: "Omit some params"});
             } else {
                 try {
-                    newPost = await Post.create({
+                    var newPost = await Post.create({
                         user_nickname: user.nickname,
                         title: title,
                         contents: contents,
                         tag: tag
                     })
                 } catch (error) {
-                    console.log(error)
+                    return res.status(401).json(error)
                 }
-                newPost.date = convertDate(newPost.date)
-                res.status(200).json(newPost);
+                newPost = convertDate(newPost)
+                return res.status(201).json(newPost);
             }
         } catch (error) {
-            res.status(500)
+            return res.status(400).json(error)
+        }
+    },
+    modifyPost: async function (req, res, next) {
+        try {
+            const user = await User.findOne({where: {id: req.user_id}});
+            const post = await Post.findOne({where: {id: req.params.id, user_nickname: user.nickname}})
+            try {
+                updatedPost = await post.update({
+                    title: req.body.title,
+                    contents: req.body.contents,
+                    updatedAt: sequelize.literal('CURRENT_TIMESTAMP')
+                })
+            } catch (error) {
+                return res.status(400).json({msg: "cannot update"})
+            }
+            updatedPost = convertDate(updatedPost)
+            return res.status(201).json(updatedPost)
+        } catch (error) {
+            return res.status(500).json(error)
+        }
+    },
+    deletePost: async function (req, res, next) {
+        try {
+            const user = await User.findOne({where: {id: req.user_id}});
+            const post = await Post.findOne({where: {id: req.params.id, user_nickname: user.nickname}})
+            if (post) {
+                await Post.destroy({where: {id: req.params.id, user_nickname: user.nickname}})
+                return res.status(204).send()
+            } else {
+                return res.status(404).json({msg: "not exist"})
+            }
+        } catch (error) {
+            return res.status(500).json(error)
         }
     },
     writeComment: async function (req, res, next) {
@@ -99,7 +155,7 @@ const community = {
             const {post_id, contents} = req.body;
             const post = await Post.findOne({where: {id: post_id}})
             if (!contents) {
-                return res.status(500).json({message: "no contents"});
+                return res.status(404).json({message: "no contents"});
             } else {
                 try {
                     var newComment = await Comment.create({
@@ -108,13 +164,45 @@ const community = {
                         contents: contents,
                     })
                 } catch (error) {
-                    res.status(500).json({message: "invalid request"})
+                    return res.status(500).json(error)
                 }
-                newComment.date = convertDate(newComment.date)
-                res.status(200).json(newComment);
+                newComment = convertDate(newComment)
+                return res.status(200).json(newComment);
             }
         } catch (error) {
-            res.status(500)
+            return res.status(500)
+        }
+    },
+    modifyComment: async function (req, res, next) {
+        try {
+            const user = await User.findOne({where: {id: req.user_id}});
+            const comment = await Comment.findOne({where: {id: req.params.id, user_nickname: user.nickname}})
+            try {
+                var updatedPost = await comment.update({
+                    contents: req.body.contents,
+                    updatedAt: sequelize.literal('CURRENT_TIMESTAMP')
+                })
+            } catch (error) {
+                return res.status(400).json(error)
+            }
+            updatedPost = convertDate(updatedPost)
+            return res.status(201).json(updatedPost)
+        } catch (error) {
+            return res.status(500).json(error)
+        }
+    },
+    deleteComment: async function (req, res, next) {
+        try {
+            const user = await User.findOne({where: {id: req.user_id}});
+            const comment = await Comment.findOne({where: {id: req.params.id, user_nickname: user.nickname}})
+            if (comment) {
+                await Comment.destroy({where: {id: req.params.id, user_nickname: user.nickname}})
+                return res.status(204).send()
+            } else {
+                return res.status(404).json({msg: "not exist"})
+            }
+        } catch (error) {
+            return res.status(500).json(error)
         }
     },
     findKeyword: async function (req, res, next) {
@@ -129,13 +217,13 @@ const community = {
             });
             if (!list.length == 0) {
                 convertList(list)
-                res.status(200).json(list);
+                return res.status(200).json(list);
             }
             else {
-                res.status(201).json({msg: "not exist"})
+                return res.status(201).json({msg: "not exist"})
             }
         } catch (error) {
-            res.status(500)
+            return res.status(500)
         }
     },
     findTag: async function (req, res, next) {
@@ -147,13 +235,13 @@ const community = {
             })
             if (!list.length == 0) {
                 convertList(list)
-                res.status(200).json(list);
+                return res.status(200).json(list);
             }
             else {
-                res.status(201).json({msg: "not exist"})
+                return res.status(201).json({msg: "not exist"})
             }
         } catch (error) {
-            res.status(500)
+            return res.status(500)
         }
     }
 }
