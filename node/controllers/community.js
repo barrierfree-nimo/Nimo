@@ -50,7 +50,6 @@ const community = {
                 where: {
                     id: req.params.id
                 },
-                raw: true,
             });
             if (post) {
                 var comment = await Comment.findAll({
@@ -60,23 +59,11 @@ const community = {
                     order: [
                         [ 'created_at', 'ASC' ],
                     ],
-                    raw: true,
                 });
             }
             post = convertDate(post)
 
-            if (post[ 'user_nickname' ] == user.nickname) {
-                post[ 'is_writer' ] = 'true'
-            }
-
             if (!comment.length == 0) {
-                for (const i of comment) {
-                    if (i[ 'user_nickname' ] == user.nickname) {
-                        i[ 'is_writer' ] = 'true'
-                    } else {
-                        i[ 'is_writer' ] = 'false'
-                    }
-                }
                 list = {
                     post: post,
                     comment: comment
@@ -109,7 +96,7 @@ const community = {
                 } catch (error) {
                     return res.status(401).json(error)
                 }
-                newPost = convertDate(newPost)
+                //newPost = convertDate(newPost)
                 return res.status(201).json(newPost);
             }
         } catch (error) {
