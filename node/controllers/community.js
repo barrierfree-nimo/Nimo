@@ -44,11 +44,13 @@ const community = {
         }
     },
     readPost: async function (req, res, next) {
+        const user = await User.findOne({where: {id: req.user_id}});
         try {
             var post = await Post.findOne({
                 where: {
                     id: req.params.id
-                }
+                },
+                raw: true,
             });
             if (post) {
                 var comment = await Comment.findAll({
@@ -57,17 +59,29 @@ const community = {
                     },
                     order: [
                         [ 'created_at', 'ASC' ],
-                    ]
+                    ],
+                    raw: true,
                 });
             }
             post = convertDate(post)
+
+            if (post[ 'user_nickname' ] == user.nickname) {
+                post[ 'is_writer' ] = 'true'
+            }
+
             if (!comment.length == 0) {
+                for (const i of comment) {
+                    if (i[ 'user_nickname' ] == user.nickname) {
+                        i[ 'is_writer' ] = 'true'
+                    } else {
+                        i[ 'is_writer' ] = 'false'
+                    }
+                }
                 list = {
                     post: post,
                     comment: comment
                 }
-            }
-            else {
+            } else {
                 list = {
                     post: post,
                     comment: "not exist"
