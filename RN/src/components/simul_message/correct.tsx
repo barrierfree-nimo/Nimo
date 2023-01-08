@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
-  TouchableOpacity,
   View,
   StyleSheet,
   Image,
@@ -12,6 +11,9 @@ import CommonStyle from "../common/common_style";
 import ExitBtn from "../simul_common/exit_btn";
 import NavigateBtn from "../simul_common/navigate_btn";
 import SimulMainStyle from "../simul_main/simul_main_style";
+import Axios from "axios";
+import baseURL from "../baseURL";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
@@ -21,9 +23,36 @@ const CorrectPage = ({ route, navigation }: any) => {
   const [isCorrect, setIsCorrect] = useState<boolean>();
   const [titleText, setTitleText] = useState<string>("");
 
+  const postDone = async () => {
+    const token = await AsyncStorage.getItem("user_Token");
+    try {
+      await Axios.post(
+        baseURL + "/simulation/done",
+        {
+          type: route.params.type,
+          simulNum: route.params.simulNum,
+        },
+        {
+          headers: { accessToken: `${token}` },
+        }
+      )
+        .then((res) => {
+          if (res.status == 200) {
+            navigation.navigate("CommunityMain");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     setCommentary(route.params.commentary);
     setIsCorrect(route.params.correct);
+    postDone();
   }, []);
 
   useEffect(() => {
