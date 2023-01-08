@@ -202,11 +202,6 @@ const simulation = {
             });
             const done = history.map((x) => Number(x.simulNum));
 
-            const data = {
-                simul: simul,
-                done: done,
-            };
-
             for (const i of simul) {
                 if (done.includes(i.simulNum)) {
                     i[ 'done' ] = 'true'
@@ -214,7 +209,7 @@ const simulation = {
                     i[ 'done' ] = 'false'
                 }
             }
-
+            console.log(simul)
             return res.status(200).json(simul);
         } catch (error) {
             return res.status(500);
