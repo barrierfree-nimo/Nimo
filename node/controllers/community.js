@@ -9,7 +9,8 @@ function convertDate(post) {
     var cHours = cDate.getHours();
     var cNewDate = cDate.setHours(cHours - offset);
     post.createdAt = cNewDate
-
+    console.log(cHours)
+    console.log(offset)
     var uDate = post.updatedAt
     var uHours = uDate.getHours();
     var uNewDate = uDate.setHours(uHours - offset);
@@ -64,6 +65,7 @@ const community = {
             post = convertDate(post)
 
             if (!comment.length == 0) {
+                convertList(comment)
                 list = {
                     post: post,
                     comment: comment
@@ -96,8 +98,7 @@ const community = {
                 } catch (error) {
                     return res.status(401).json(error)
                 }
-                newPost = convertDate(newPost)
-                return res.status(201).json(newPost);
+                return res.status(201).json({id: newPost.id});
             }
         } catch (error) {
             return res.status(400).json(error)
@@ -153,8 +154,7 @@ const community = {
                 } catch (error) {
                     return res.status(500).json(error)
                 }
-                newComment = convertDate(newComment)
-                return res.status(200).json(newComment);
+                return res.status(200).json({id: newComment});
             }
         } catch (error) {
             return res.status(500)
