@@ -1,9 +1,9 @@
-const { getStorage, ref, getDownloadURL, listAll } = require('firebase/storage')
+const {getStorage, ref, getDownloadURL, listAll} = require('firebase/storage')
 const express = require("express");
 const {User, History, Voice, Msg, Sns, SimulData} = require("../models");
 var Sequelize = require("sequelize");
 const {json, HasMany} = require("sequelize");
-const { async } = require('@firebase/util');
+const {async} = require('@firebase/util');
 
 const simulation = {
     randomApp: async function (req, res, next) {
@@ -63,9 +63,9 @@ const simulation = {
                 }
             }
 
-            res.status(200).json({type, num, red});
+            return res.status(200).json({type, num, red});
         } catch (error) {
-            res.status(400)
+            return res.status(400)
         }
     },
     voiceDoneList: async function (req, res, next) {
@@ -102,10 +102,10 @@ const simulation = {
                     i[ 'done' ] = 'false'
                 }
             }
-            res.status(200).json(simul);
+            return res.status(200).json(simul);
 
-        } catch(error) {
-            res.status(400)
+        } catch (error) {
+            return res.status(400)
         }
     },
     voiceSimul: async function (req, res, next) {
@@ -117,7 +117,7 @@ const simulation = {
                 attributes: [ "contents", "response" ],
                 raw: true,
             });
-            
+
             const comm = await SimulData.findOne({
                 where: {
                     type: "voice",
@@ -137,30 +137,30 @@ const simulation = {
                 response.items.forEach((itemRef) => {
                     getDownloadURL(itemRef).then((url) => {
                         urlList.push(String(url))
-                        
-                        if(urlList.length == (response.items).length) {
+
+                        if (urlList.length == (response.items).length) {
                             urlList.sort()
                             console.log(urlList)
 
                             const scrp = [];
-                            
-                            for(let i=0 ; i<scripts.length ; i++) {
+
+                            for (let i = 0; i < scripts.length; i++) {
                                 let item;
-                                if(i < urlList.length) {
+                                if (i < urlList.length) {
                                     item = {
-                                        contents : scripts[i].contents,
-                                        response : parseInt(scripts[i].response),
-                                        url : urlList[i]
+                                        contents: scripts[ i ].contents,
+                                        response: parseInt(scripts[ i ].response),
+                                        url: urlList[ i ]
                                     }
                                 }
                                 else {
                                     item = {
-                                        contents : scripts[i].contents,
-                                        response : parseInt(scripts[i].response),
-                                        url : ''
+                                        contents: scripts[ i ].contents,
+                                        response: parseInt(scripts[ i ].response),
+                                        url: ''
                                     }
                                 }
-                                
+
                                 scrp.push(item)
                             }
 
@@ -168,18 +168,18 @@ const simulation = {
                                 scripts: scrp,
                                 commentary: String(Object.values(comm))
                             };
-                
-                            res.status(200).json(data);
-                            
+
+                            return res.status(200).json(data);
+
                         }
                     })
                 })
             }).catch((e) => {
-                res.status(400);
+                return res.status(400);
             });
 
         } catch (error) {
-            res.status(400);
+            return res.status(400);
         }
     },
     msgDoneList: async function (req, res, next) {
@@ -214,10 +214,10 @@ const simulation = {
                     i[ 'done' ] = 'false'
                 }
             }
-            
-            res.status(200).json(simul);
+
+            return res.status(200).json(simul);
         } catch (error) {
-            res.status(500);
+            return res.status(500);
         }
     },
     msgSimul: async function (req, res, next) {
@@ -248,9 +248,9 @@ const simulation = {
                 commentary: String(Object.values(comm)),
             };
 
-            res.status(200).json(data);
+            return res.status(200).json(data);
         } catch (error) {
-            res.status(500);
+            return res.status(500);
         }
     },
     snsDoneList: async function (req, res, next) {
@@ -277,9 +277,9 @@ const simulation = {
                 simul: simul,
                 done: done,
             };
-            res.status(200).json(data);
+            return res.status(200).json(data);
         } catch (error) {
-            res.status(500);
+            return res.status(500);
         }
     },
     snsSimul: async function (req, res, next) {
@@ -310,9 +310,9 @@ const simulation = {
                 commentary: String(Object.values(comm)),
             };
 
-            res.status(200).json(data);
+            return res.status(200).json(data);
         } catch (error) {
-            res.status(500);
+            return res.status(500);
         }
     },
     addDoneList: async function (req, res, next) {
@@ -330,13 +330,13 @@ const simulation = {
 
             if (created) {
                 console.log("if")
-                res.status(200).json({message: "simulation done"})
+                return res.status(200).json({message: "simulation done"})
             } else {
                 console.log("else")
-                res.status(201).json({message: "already done"})
+                return res.status(201).json({message: "already done"})
             }
         } catch (error) {
-            res.status(400).json(error);
+            return res.status(400).json(error);
         }
     },
     showHistory: async function (req, res, next) {
@@ -349,9 +349,9 @@ const simulation = {
                 attributes: [ "type", "simulNum" ],
                 raw: true,
             });
-            res.status(200).json(history);
+            return res.status(200).json(history);
         } catch (error) {
-            res.status(500);
+            return res.status(500);
         }
     }
 }

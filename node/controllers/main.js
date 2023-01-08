@@ -15,9 +15,9 @@ const quiz = {
                 done: done
             }
 
-            res.status(200).json(info)
+            return res.status(200).json(info)
         } catch (err) {
-            res.status(400);
+            return res.status(400);
         }
     }
 }
