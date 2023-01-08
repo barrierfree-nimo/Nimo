@@ -114,12 +114,12 @@ const CommunityDetail = ({ route, navigation }: any) => {
               </Text>
             ) : (
               <View>
-                {comment.map(({ post_id, contents }, id) => (
+                {comment.map(({ user_id, contents, date }, id) => (
                   <CommunityCard
                     key={id}
                     contents={contents}
-                    date="0 분전"
-                    user_nickname="{user_nickname}"
+                    date={date}
+                    user_nickname={user_id}
                   />
                 ))}
               </View>
