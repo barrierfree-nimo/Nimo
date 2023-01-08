@@ -96,7 +96,7 @@ const community = {
                 } catch (error) {
                     return res.status(401).json(error)
                 }
-                //newPost = convertDate(newPost)
+                newPost = convertDate(newPost)
                 return res.status(201).json(newPost);
             }
         } catch (error) {
