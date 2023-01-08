@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -17,8 +17,8 @@ const CommunityWrite = ({ navigation }: any) => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [tag, setTag] = useState<string>("일반");
-  const [isTitle, setIsTitle] = useState<boolean>(false);
-  const [isContent, setIsContent] = useState<boolean>(false);
+  const [isTitle, setIsTitle] = useState<boolean>(true);
+  const [isContent, setIsContent] = useState<boolean>(true);
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([
     { label: "일반", value: "일반" },
@@ -28,7 +28,8 @@ const CommunityWrite = ({ navigation }: any) => {
 
   const handleEnroll = async () => {
     checkIsEmpty();
-    if (title !== "" && content !== "") {
+    if (isTitle && isContent) {
+      console.log(">>>>>>");
       const token = await AsyncStorage.getItem("user_Token");
       try {
         await Axios.post(
@@ -36,7 +37,7 @@ const CommunityWrite = ({ navigation }: any) => {
           {
             title: title,
             contents: content,
-            tag: "일반",
+            tag: tag,
           },
           {
             headers: { accessToken: `${token}` },
@@ -44,7 +45,7 @@ const CommunityWrite = ({ navigation }: any) => {
         )
           .then((res) => {
             if (res.status == 200) {
-              navigation.navigate("CommunityArchive");
+              navigation.navigate("CommunityMain");
             }
           })
           .catch((err) => {
@@ -60,6 +61,8 @@ const CommunityWrite = ({ navigation }: any) => {
     title === "" ? setIsTitle(false) : setIsTitle(true);
     content === "" ? setIsContent(false) : setIsContent(true);
   };
+
+  useEffect(() => {}, [title, content]);
 
   return (
     <SafeAreaView style={CommonStyle.container}>
@@ -90,8 +93,11 @@ const CommunityWrite = ({ navigation }: any) => {
         <TextInput
           value={title}
           onChangeText={(title) => setTitle(title)}
-          style={CommunityWriteStyle.title_input}
-          placeholder="제목"
+          style={[
+            CommunityWriteStyle.title_input,
+            !isTitle && { borderColor: "red" },
+          ]}
+          placeholder="제목을 입력하세요"
         />
       </View>
       <View style={CommunityWriteStyle.container_content}>
@@ -100,7 +106,10 @@ const CommunityWrite = ({ navigation }: any) => {
           value={content}
           onChangeText={(content) => setContent(content)}
           multiline={true}
-          style={CommunityWriteStyle.content_input}
+          style={[
+            CommunityWriteStyle.content_input,
+            !isContent && { borderColor: "red" },
+          ]}
           placeholder="내용을 입력하세요"
         />
       </View>
@@ -112,7 +121,7 @@ const CommunityWrite = ({ navigation }: any) => {
           <Text style={CommunityWriteStyle.btn_text}>글 등록하기</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Community")}
+          onPress={() => navigation.navigate("CommunityMain")}
           style={CommunityWriteStyle.btn}
         >
           <Text style={CommunityWriteStyle.btn_text}>글 취소하기</Text>
