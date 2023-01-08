@@ -35,15 +35,7 @@ const CorrectPage = ({ route, navigation }: any) => {
         {
           headers: { accessToken: `${token}` },
         }
-      )
-        .then((res) => {
-          if (res.status == 200) {
-            navigation.navigate("CommunityMain");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      );
     } catch (error) {
       console.log(error);
     }
