@@ -3,26 +3,62 @@ import { StyleSheet, Dimensions } from "react-native";
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const CommunityWriteStyle = StyleSheet.create({
-  title_input: {
+  title_text: {
+    fontSize: 20,
+    fontWeight: "700",
+    marginRight: 20,
+  },
+  container_tag: {
+    width: SCREEN_WIDTH - 60,
     flex: 1,
-    width: SCREEN_WIDTH - 100,
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  container_title: {
+    width: SCREEN_WIDTH - 60,
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 15,
+    marginBottom: 20,
+  },
+  container_content: {
+    width: SCREEN_WIDTH - 60,
+    flex: 7,
+  },
+  tag_input: {
+    width: SCREEN_WIDTH - 120,
+    minHeight: 40,
     justifyContent: "center",
     alignItems: "center",
     paddingLeft: 20,
-    marginTop: 20,
+    borderRadius: 10,
+    backgroundColor: "#D9D9D9",
+    fontSize: 24,
+  },
+  title_input: {
+    width: SCREEN_WIDTH - 120,
+    height: 40,
+    borderWidth: 1,
+
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 20,
     borderRadius: 10,
     backgroundColor: "#D9D9D9",
     fontSize: 24,
   },
   content_input: {
     flex: 6,
-    width: SCREEN_WIDTH - 100,
+    width: SCREEN_WIDTH - 60,
 
     padding: 20,
     marginTop: 20,
 
     borderRadius: 10,
     backgroundColor: "#D9D9D9",
+    borderWidth: 1,
 
     fontSize: 24,
     textAlignVertical: "top",

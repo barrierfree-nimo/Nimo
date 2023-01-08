@@ -161,7 +161,10 @@ const CommunityMain = ({ navigation }: any) => {
           )}
         </ScrollView>
       </View>
-      <TouchableOpacity style={CommunityMainStyle.write_container}>
+      <TouchableOpacity
+        style={CommunityMainStyle.write_container}
+        onPress={() => navigation.navigate("CommunityWrite")}
+      >
         <Text style={CommunityMainStyle.write_text}>글 작성하기</Text>
       </TouchableOpacity>
       <View style={CommonStyle.container_exit}>
