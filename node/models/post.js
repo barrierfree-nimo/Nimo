@@ -29,16 +29,18 @@ module.exports = class User extends Sequelize.Model {
           allowNull: false,
           unique: false,
         },
-        date: {
-          type: Sequelize.DATE(),
-          defaultValue: Sequelize.DataTypes.NOW,
-          allowNull: false,
-          unique: false,
+        createdAt: {
+          field: 'created_at',
+          type: "TIMESTAMP",
+        },
+        updatedAt: {
+          field: 'updated_at',
+          type: "TIMESTAMP",
         }
       },
       {
         sequelize,
-        timestamps: false,
+        timestamps: true,
         underscored: false,
         modelName: "Post",
         tableName: "posts",

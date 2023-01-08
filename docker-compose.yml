@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  backend-dev:
+    image: nimovaccine/nimo-server-dev:dev
+    container_name: backend-dev
+    hostname: backend-dev
+    env_file:
+      - .env
+    environment:
+      - TZ=Asia/Seoul
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+      
+    

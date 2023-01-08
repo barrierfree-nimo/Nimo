@@ -4,7 +4,7 @@
   "description": "app-init",
   "main": "app.js",
   "scripts": {
-    "start": "NODE_ENV=production PORT=3000 pm2 start app.js",
+    "start": "NODE_ENV=production PORT=3000 pm2-docker start app.js",
     "test": "node app.js"
   },
   "repository": {
@@ -36,7 +36,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
     "nunjucks": "^3.2.3",
-    "pm2": "^5.1.0",
+    "pm2": "^5.2.2",
     "sequelize": "^6.28.0",
     "sequelize-cli": "^6.5.2"
   },

@@ -33,7 +33,7 @@ const user = {
         });
 
         if (user) {
-          res.status(500).json({message: "Already exist nickname"});
+          return res.status(500).json({message: "Already exist nickname"});
         } else {
           bcrypt.genSalt(10, function (err, salt) {
             if (err) return;
@@ -64,11 +64,11 @@ const user = {
         });
 
         if (!user) {
-          res.status(500).json({message: "Retry (not exist or typeerror)"});
+          return res.status(500).json({message: "Retry (not exist or typeerror)"});
         } else {
           const valid = user.validPassword(req.body.password.toString());
           if (!valid) {
-            res.status(401).json({msg: "invalid pw"})
+            return res.status(401).json({msg: "invalid pw"})
           }
           else {
             const accessToken = jwt.sign(
@@ -95,7 +95,7 @@ const user = {
               accessToken: accessToken,
               refreshToken: refreshToken
             }
-            res.status(200).json({
+            return res.status(200).json({
               message: "Login Success!",
               token: token,
             });
@@ -104,6 +104,22 @@ const user = {
       }
     } catch (error) {
       console.log(error);
+    }
+  },
+  checkNickname: async function (req, res, next) {
+    try {
+      var nickname = req.params.nickname
+      try {const user = await User.findOne({where: {nickname: nickname}})} 
+      catch (error) {
+        return res.status(402).json(error)
+      }
+      if (!user.length==0) {
+        console.log(user)
+        return res.status(409).json({msg: "nickname exist"})
+      }
+      return res.status(200).json({msg: "nickname not exist"})
+    } catch (error) {
+      return res.status(400).json(error)
     }
   },
   setInfo: async function (req, res, next) {
@@ -121,11 +137,11 @@ const user = {
         })
       } catch (error) {
         console.log(error)
-        res.status(401)
+        return res.status(401)
       }
-      res.status(200).json("msg: success update userinfo")
+      return res.status(200).json("msg: success update userinfo")
     } catch (error) {
-      res.status(400)
+      return res.status(400)
     }
   }
 }
