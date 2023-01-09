@@ -1,7 +1,6 @@
 const express = require("express");
-const {User, Post, Comment, sequelize} = require("../models");
+const {User, Post, Comment, Admin, sequelize} = require("../models");
 var Sequelize = require("sequelize");
-const {json, HasMany} = require("sequelize");
 
 function convertDate(post) {
     var cDate = post.createdAt
@@ -27,7 +26,14 @@ const community = {
     readList: async function (req, res, next) {
         try {
             const user = await User.findOne({where: {id: req.user_id}});
-            const blacklistuser = await User.findAll({where: {user_nickname: user.nickname}})
+            const blacklistUser = await Admin.findAll({where: {user_nickname: user.nickname, type: "user"}})
+            const blacklistUserPost = await Post.findAll({where: {}})
+            const blacklistPost = await Admin.findAll({where: {user_nickname: user.nickname, type: "post"}})
+            let blockPost = []
+            for (i of blacklistUser){
+                blockPost.push(i.id)
+            }
+            //const block = await Post.findAll({where: {user_nickname: }})
             var list = await Post.findAll({
                 order: [
                     [ 'id', 'DESC' ],
@@ -97,10 +103,10 @@ const community = {
             const user = await User.findOne({where: {id: req.user_id}});
             const {title, contents, tag} = req.body;
             if (!title || !contents || !tag) {
-                return res.status(500).json({message: "Omit some params"});
+                return res.status(401).json({message: "Omit some params"});
             } else {
                 try {
-                    const newPost = await Post.create({
+                    var newPost = await Post.create({
                         user_nickname: user.nickname,
                         title: title,
                         contents: contents,
