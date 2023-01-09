@@ -14,7 +14,7 @@ module.exports = class BlackUser extends Sequelize.Model {
           type: Sequelize.STRING(45),
           allowNull: false,
         },
-        block_nickname: {
+        black_nickname: {
             type: Sequelize.STRING(45),
             allowNull: false,
         },
@@ -33,7 +33,7 @@ module.exports = class BlackUser extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.BlackPost.belongsTo(db.User, {foreignKey: "user_nickname", targetKey: "nickname"});
-    db.BlackPost.belongsTo(db.User, {foreignKey: "black_nickname", targetKey: "nickname"});
+    db.BlackUser.belongsTo(db.User, {foreignKey: "user_nickname", targetKey: "nickname"});
+    db.BlackUser.belongsTo(db.User, {foreignKey: "black_nickname", targetKey: "nickname"});
   }
 };

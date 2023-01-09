@@ -14,7 +14,7 @@ module.exports = class BlackComment extends Sequelize.Model {
           type: Sequelize.STRING(45),
           allowNull: false,
         },
-        block_id: {
+        black_id: {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
