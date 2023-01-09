@@ -1,7 +1,6 @@
 const express = require("express");
-const {User, Post, Comment, sequelize} = require("../models");
+const {User, Post, Comment, Admin, sequelize} = require("../models");
 var Sequelize = require("sequelize");
-const {json, HasMany} = require("sequelize");
 
 function convertDate(post) {
     var cDate = post.createdAt
@@ -9,8 +8,6 @@ function convertDate(post) {
     var cHours = cDate.getHours();
     var cNewDate = cDate.setHours(cHours - offset);
     post.createdAt = cNewDate
-    console.log(cHours)
-    console.log(offset)
     var uDate = post.updatedAt
     var uHours = uDate.getHours();
     var uNewDate = uDate.setHours(uHours - offset);
@@ -28,6 +25,15 @@ function convertList(list) {
 const community = {
     readList: async function (req, res, next) {
         try {
+            const user = await User.findOne({where: {id: req.user_id}});
+            const blacklistUser = await Admin.findAll({where: {user_nickname: user.nickname, type: "user"}})
+            const blacklistUserPost = await Post.findAll({where: {}})
+            const blacklistPost = await Admin.findAll({where: {user_nickname: user.nickname, type: "post"}})
+            let blockPost = []
+            for (i of blacklistUser){
+                blockPost.push(i.id)
+            }
+            //const block = await Post.findAll({where: {user_nickname: }})
             var list = await Post.findAll({
                 order: [
                     [ 'id', 'DESC' ],
@@ -47,10 +53,11 @@ const community = {
     readPost: async function (req, res, next) {
         const user = await User.findOne({where: {id: req.user_id}});
         try {
-            var post = await Post.findOne({
+            let post = await Post.findOne({
                 where: {
                     id: req.params.id
                 },
+                raw: true
             });
             if (post) {
                 var comment = await Comment.findAll({
@@ -60,19 +67,30 @@ const community = {
                     order: [
                         [ 'created_at', 'ASC' ],
                     ],
+                    raw: true
                 });
             }
-            post = convertDate(post)
+            
+            const writer = await User.findOne({where: {nickname: post.user_nickname}})
+            post[ 'user_id' ] = writer.id
 
             if (!comment.length == 0) {
                 convertList(comment)
+
+                for (const i of comment) {
+                    const commenter = await User.findOne({where: {nickname: i.user_nickname}})
+                    i[ 'user_id' ] = commenter.id
+                }
+
                 list = {
                     post: post,
                     comment: comment
                 }
             } else {
+                comment = []
                 list = {
-                    post: post
+                    post: post,
+                    comment: comment
                 }
             }
             return res.status(200).json(list)
@@ -85,10 +103,10 @@ const community = {
             const user = await User.findOne({where: {id: req.user_id}});
             const {title, contents, tag} = req.body;
             if (!title || !contents || !tag) {
-                return res.status(500).json({message: "Omit some params"});
+                return res.status(401).json({message: "Omit some params"});
             } else {
                 try {
-                    const newPost = await Post.create({
+                    var newPost = await Post.create({
                         user_nickname: user.nickname,
                         title: title,
                         contents: contents,
