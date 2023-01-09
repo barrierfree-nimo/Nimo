@@ -1,5 +1,5 @@
 const express = require("express");
-const {User, Post, Comment, Admin, sequelize, BlackUser, BlackPost} = require("../models");
+const {User, Post, Comment, Admin, sequelize, BlackUser, BlackPost, BlackComment} = require("../models");
 var Sequelize = require("sequelize");
 
 function convertDate(post) {
@@ -61,6 +61,20 @@ const community = {
     },
     readPost: async function (req, res, next) {
         const user = await User.findOne({where: {id: req.user_id}});
+        const blackUsers = await BlackUser.findAll({where: {user_nickname: user.nickname}});
+        const userList = []
+        for (i of blackUsers) {
+            userList.push(i.black_nickname)
+        }
+        const blackuserComments = await Comment.findAll({where: {user_nickname: {[ Sequelize.Op.in ]: userList}}})
+        const commentList = []
+        for (i of blackuserComments) {
+            commentList.push(i.id)
+        }
+        const blackcomtComts = await BlackComment.findAll({where: {user_nickname: user.nickname}})
+        for (i of blackcomtComts) {
+            commentList.push(i.black_id)
+        }
         try {
             let post = await Post.findOne({
                 where: {
@@ -71,13 +85,17 @@ const community = {
             if (post) {
                 var comment = await Comment.findAll({
                     where: {
-                        post_id: req.params.id
+                        id: {[ Sequelize.Op.notIn ]: commentList,
+                        },
+                        post_id: req.params.id,
                     },
                     order: [
                         [ 'created_at', 'ASC' ],
                     ],
                     raw: true
                 });
+            } else {
+                return res.status(404).json({msg: "post deleted"})
             }
 
             if (!comment.length == 0) {
