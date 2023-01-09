@@ -121,7 +121,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
           <Text style={communityDetailStyle.comment_title}>댓글 목록</Text>
           <View style={communityDetailStyle.lineStyle} />
           <View>
-            {comment.length === 0 ? (
+            {!comment || comment.length === 0 ? (
               <Text style={communityDetailStyle.comment_text}>
                 해당 게시물에 댓글이 없습니다. 첫번째 댓글이 되어주세요.
               </Text>
