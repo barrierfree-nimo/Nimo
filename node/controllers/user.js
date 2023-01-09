@@ -66,7 +66,7 @@ const user = {
         if (!user) {
           return res.status(500).json({message: "Retry (not exist or typeerror)"});
         } else {
-          const valid = user.validPassword(req.body.password.toString());
+          const valid = user.validPassword(req.body.password.toString())
           if (!valid) {
             return res.status(401).json({msg: "invalid pw"})
           }
