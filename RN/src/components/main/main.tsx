@@ -77,7 +77,6 @@ const Main = ({ navigation }: any) => {
             />
           </TouchableOpacity>
         </View>
-        
       </View>
 
       <View style={MainStyle.container_progress}>
