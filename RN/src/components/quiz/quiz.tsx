@@ -98,12 +98,14 @@ const Quiz = ({ navigation }: any) => {
   const move_next = async () => {
     const token = await AsyncStorage.getItem('user_Token')
 
-    console.log(idData)
-
     if(token != null) {
       await Axios.get(baseURL + "/quiz/" + String(idData), {
         headers: { 'accessToken': `${token}` }
       }).then((res) => {
+          if(Number(res.data[0]["id"]) == idData) {
+            showToast();
+            return;
+          }
           fetchQuiz();
         });
     }
