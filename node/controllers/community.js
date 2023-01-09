@@ -9,8 +9,6 @@ function convertDate(post) {
     var cHours = cDate.getHours();
     var cNewDate = cDate.setHours(cHours - offset);
     post.createdAt = cNewDate
-    console.log(cHours)
-    console.log(offset)
     var uDate = post.updatedAt
     var uHours = uDate.getHours();
     var uNewDate = uDate.setHours(uHours - offset);
@@ -28,6 +26,8 @@ function convertList(list) {
 const community = {
     readList: async function (req, res, next) {
         try {
+            const user = await User.findOne({where: {id: req.user_id}});
+            const blacklistuser = await User.findAll({where: {user_nickname: user.nickname}})
             var list = await Post.findAll({
                 order: [
                     [ 'id', 'DESC' ],
@@ -47,10 +47,11 @@ const community = {
     readPost: async function (req, res, next) {
         const user = await User.findOne({where: {id: req.user_id}});
         try {
-            var post = await Post.findOne({
+            let post = await Post.findOne({
                 where: {
                     id: req.params.id
                 },
+                raw: true
             });
             if (post) {
                 var comment = await Comment.findAll({
@@ -60,19 +61,30 @@ const community = {
                     order: [
                         [ 'created_at', 'ASC' ],
                     ],
+                    raw: true
                 });
             }
-            post = convertDate(post)
+            
+            const writer = await User.findOne({where: {nickname: post.user_nickname}})
+            post[ 'user_id' ] = writer.id
 
             if (!comment.length == 0) {
                 convertList(comment)
+
+                for (const i of comment) {
+                    const commenter = await User.findOne({where: {nickname: i.user_nickname}})
+                    i[ 'user_id' ] = commenter.id
+                }
+
                 list = {
                     post: post,
                     comment: comment
                 }
             } else {
+                comment = []
                 list = {
-                    post: post
+                    post: post,
+                    comment: comment
                 }
             }
             return res.status(200).json(list)
