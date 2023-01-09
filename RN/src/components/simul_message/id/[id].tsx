@@ -153,6 +153,7 @@ const MessageDetail = ({ route, navigation }: any) => {
                   showChoice ? { display: "flex" } : { display: "none" },
                 ]}
               >
+                <Text style={msgDetailStyle.text_notice_select}>대응 방법을 선택해주세요</Text>
                 <TouchableOpacity
                   onPress={() => handleClickCorrect(true)}
                   style={msgDetailStyle.choice_box_child}

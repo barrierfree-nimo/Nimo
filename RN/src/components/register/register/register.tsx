@@ -20,14 +20,14 @@ const Register = ({navigation}: any) => {
   // 닉네임 중복 체크
   const checkNickname = async () => {
     try {
+      console.log(nickname)
       if(nickname.length < 5) {
         showToast("5자 이상의 아이디를 설정해주세요.");
         return;
       }
 
-      await Axios.post(baseURL + '/user/join/check', {
-        nickname: nickname,
-      }).then(res => {
+      await Axios.get(baseURL + `/user/nickname/${nickname}`)
+      .then(res => {
           if(res.status == 200) setNicknameOk(true)
           else {
             setNicknameOk(false);
@@ -35,7 +35,8 @@ const Register = ({navigation}: any) => {
           } 
         })
     } catch(err) {
-      console.log(err)
+      setNicknameOk(false);
+      showToast("이미 존재하는 아이디입니다.");
     }
   }
 

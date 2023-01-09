@@ -16,11 +16,23 @@ const SimulVoiceStyle = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  voice_div_title: {
+    flexDirection: "row",
+    width: SCREEN_WIDTH - 40,
+    marginTop: 60,
+    marginLeft: 40,
+  },
   text_title: {
     alignSelf: "flex-start",
-    margin: 30,
+    marginBottom: 20,
     fontSize: 30,
     fontWeight: "900",
+  },
+  ic_phone: {
+    width: 30,
+    height: 30,
+    marginTop: 5,
+    marginLeft: 15,
   },
   msg_card_div: {
     flex: 10,

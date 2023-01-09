@@ -8,20 +8,20 @@ import {
   Image,
   Text,
 } from "react-native";
-import baseURL from "../baseURL";
-import CommonStyle from "../common/common_style";
-import SimulMainStyle from "../simul_main/simul_main_style";
+import baseURL from "../../baseURL";
+import CommonStyle from "../../common/common_style";
+import SimulMainStyle from "../../simul_main/simul_main_style";
 import SimulVoiceStyle from "./simul_voice_style";
-import NavigateBtn from "../simul_common/navigate_btn";
-import MessageCard from "./messageCard";
+import NavigateBtn from "../../simul_common/navigate_btn";
+import MessageCard from ".././messageCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ExitBtn from "../simul_common/exit_btn";
+import ExitBtn from "../../simul_common/exit_btn";
 
 interface VoiceContent {
   simulNum: number;
   title: string;
   commentary: string;
-  done: boolean;
+  done: string;
 }
 
 //   "simulNum": 1,
@@ -45,7 +45,6 @@ const VoiceSimul = ({ navigation }: any) => {
         },
       }).then((res) => {
         setSimulList(res.data);
-        console.log(res.data);
       });
     } catch (err) {
       console.log(err);
@@ -61,28 +60,24 @@ const VoiceSimul = ({ navigation }: any) => {
   return (
     <SafeAreaView style={CommonStyle.container}>
       <Image
-        source={require("../../assets/icons/simul_voice/voice_bg_white.png")}
+        source={require("../../../assets/icons/simul_voice/voice_bg_white.png")}
         style={SimulMainStyle.img_galaxy}
       />
       {/* 스마트폰 */}
       <View style={SimulVoiceStyle.phone_div}>
         <View style={SimulVoiceStyle.voice_div}>
-          <Text style={SimulVoiceStyle.text_title}>최근 통화</Text>
+          <View style={SimulVoiceStyle.voice_div_title}>
+            <Text style={SimulVoiceStyle.text_title}>최근 통화</Text>
+            <Image 
+              source={require("../../../assets/icons/simul_voice/ic_phone.png")} 
+              style={SimulVoiceStyle.ic_phone} />
+          </View>
+          
           <ScrollView>
             <View style={SimulVoiceStyle.msg_card_div}>
               {simulList?.map(({ simulNum, title, commentary, done }) => (
-                <TouchableOpacity
-                  key={simulNum}
-                  onPress={() => handleOnPress(simulNum)}
-                >
-                  <MessageCard
-                    key={simulNum}
-                    simulNum={simulNum}
-                    title={title}
-                    commentary={commentary}
-                    done={done}
-                    navigation={navigation}
-                  />
+                <TouchableOpacity onPress={() => handleOnPress(simulNum)}>
+                  <MessageCard key={simulNum} title={title} done={done} />
                 </TouchableOpacity>
               ))}
             </View>

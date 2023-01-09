@@ -71,12 +71,12 @@ const styles = StyleSheet.create({
   },
   content_container: {
     height: "80%",
+    justifyContent: 'center'
   },
   color_box: {
     width: SCREEN_WIDTH - 100,
     alignItems: "center",
     justifyContent: "center",
-
     marginTop: 50,
     padding: 30,
     paddingBottom: 50,

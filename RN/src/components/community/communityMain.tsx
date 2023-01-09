@@ -109,35 +109,50 @@ const CommunityMain = ({ navigation }: any) => {
             CommunityMainStyle.index_box,
             { marginRight: 20 },
             index === "일반"
-              ? { backgroundColor: "#D2ECFA" }
-              : { backgroundColor: "#E8E8E8" },
+              ? { backgroundColor: "#00284E" }
+              : { backgroundColor: "#FFFFFF" },
           ]}
           onPress={() => setIndex("일반")}
         >
-          <Text style={CommunityMainStyle.index_text}>일반</Text>
+          <Text style={[
+            CommunityMainStyle.index_text, 
+            index === "일반" 
+            ? { color: "#FFFFFF" } 
+            : { color: "#00284E" }
+            ]}>일반</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
             CommunityMainStyle.index_box,
             { marginRight: 20 },
             index === "질문"
-              ? { backgroundColor: "#D2ECFA" }
-              : { backgroundColor: "#E8E8E8" },
+              ? { backgroundColor: "#00284E" }
+              : { backgroundColor: "#FFFFFF" },
           ]}
           onPress={() => setIndex("질문")}
         >
-          <Text style={CommunityMainStyle.index_text}>질문</Text>
+          <Text style={[
+            CommunityMainStyle.index_text, 
+            index === "질문" 
+            ? { color: "#FFFFFF" } 
+            : { color: "#00284E" }
+            ]}>질문</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
             CommunityMainStyle.index_box,
             index === "정보"
-              ? { backgroundColor: "#D2ECFA" }
-              : { backgroundColor: "#E8E8E8" },
+              ? { backgroundColor: "#00284E" }
+              : { backgroundColor: "#FFFFFF" },
           ]}
           onPress={() => setIndex("정보")}
         >
-          <Text style={CommunityMainStyle.index_text}>정보</Text>
+          <Text style={[
+            CommunityMainStyle.index_text, 
+            index === "정보" 
+            ? { color: "#FFFFFF" } 
+            : { color: "#00284E" }
+            ]}>정보</Text>
         </TouchableOpacity>
       </View>
       <View style={CommunityMainStyle.content_container}>

@@ -36,9 +36,7 @@ const Quiz = ({ navigation }: any) => {
     try {
       const token = await AsyncStorage.getItem('user_Token')
 
-      if(token != null) {
-        //console.log("QUIZ TOKEN : " + token)
-        
+      if(token != null) {        
         try {
           Axios.get(baseURL + "/quiz", {
             headers: {
@@ -46,13 +44,16 @@ const Quiz = ({ navigation }: any) => {
             }
           }).then((res) => {
             if(res.status == 200) {
-              //console.log(res.data)
               setIdData(Number(res.data[0]["id"]));
               setQTextData(res.data[0]["qText"]);
               setATextData(res.data[0]["aText"].split(","));
               setAnswerData(res.data[0]["answer"]);
               setCommentaryData(res.data[0]["commentary"]);
               setShowCommentary(false);
+            }
+            else {
+              showToast();
+              return;
             }
           });
         } catch(err) {
@@ -79,6 +80,11 @@ const Quiz = ({ navigation }: any) => {
   const move_back = async () => {
     var backId = idData - 2;
     const token = await AsyncStorage.getItem('user_Token')
+    
+    if(backId < 0) {
+      showToast();
+      return;
+    }
 
     if(token != null) {
       await Axios.get(baseURL + "/quiz/" + String(backId), {
@@ -96,6 +102,10 @@ const Quiz = ({ navigation }: any) => {
       await Axios.get(baseURL + "/quiz/" + String(idData), {
         headers: { 'accessToken': `${token}` }
       }).then((res) => {
+          if(Number(res.data[0]["id"]) == idData) {
+            showToast();
+            return;
+          }
           fetchQuiz();
         });
     }
@@ -127,7 +137,8 @@ const Quiz = ({ navigation }: any) => {
         </View>
       ) : (
         <View style={QuizStyle.container_commentary}>
-          <Text style={QuizStyle.text_quizResult}>{quizResult}</Text>
+          <Text style={[QuizStyle.text_quizResult,
+            quizResult === "정답입니다!" ? {color: "blue"} : {color: "red"}]}>{quizResult}</Text>
           <Text style={QuizStyle.text_commentary}>{commentaryData}</Text>
         </View>
       )}
