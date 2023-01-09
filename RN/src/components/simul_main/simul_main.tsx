@@ -12,11 +12,19 @@ import SimulMainStyle from "./simul_main_style";
 import Axios from "axios";
 import baseURL from "../baseURL";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useIsFocused } from "@react-navigation/native";
 
 const SimulMain = ({ navigation }: any) => {
   const [type, setType] = useState<string>("");
   const [num, setNum] = useState<number>();
   const [red, setRed] = useState<string[]>();
+  const isFocused = useIsFocused(); // isFoucesd Define
+
+  useEffect(() => {
+    return () => {
+      fetchSimulMain();
+    };
+  }, [isFocused]);
 
   useEffect(() => {
     fetchSimulMain();
@@ -40,7 +48,7 @@ const SimulMain = ({ navigation }: any) => {
   };
 
   useEffect(() => {
-    console.log(type, num, red);
+    console.log(">>>>>", type, num, red);
   }, [red]);
 
   const isInRed = (appType: string) => {
@@ -71,7 +79,7 @@ const SimulMain = ({ navigation }: any) => {
               />
             </TouchableOpacity>
           )}
-          {type === "message" && (
+          {type === "msg" && (
             <TouchableOpacity
               onPress={() => navigation.navigate("MessageSimul")}
             >
@@ -81,7 +89,7 @@ const SimulMain = ({ navigation }: any) => {
               />
             </TouchableOpacity>
           )}
-          {type === "call" && (
+          {type === "voice" && (
             <TouchableOpacity>
               <Image
                 source={require("../../assets/icons/simul_main/call_push.png")}
@@ -160,7 +168,7 @@ const SimulMain = ({ navigation }: any) => {
         <View style={SimulMainStyle.phone_bottom_div}>
           {/*  CALL */}
           <TouchableOpacity onPress={() => navigation.navigate("VoiceSimul")}>
-            {type === "call" || isInRed("call") ? (
+            {type === "voice" || isInRed("voice") ? (
               <Image
                 source={require(`../../assets/icons/simul_main/call_red.png`)}
                 style={SimulMainStyle.img_bottom_app_icon}
@@ -183,7 +191,7 @@ const SimulMain = ({ navigation }: any) => {
 
           {/*  MSG */}
           <TouchableOpacity onPress={() => navigation.navigate("MessageSimul")}>
-            {type === "message" || isInRed("message") ? (
+            {type === "msg" || isInRed("msg") ? (
               <Image
                 source={require(`../../assets/icons/simul_main/message_red.png`)}
                 style={SimulMainStyle.img_bottom_app_icon}
