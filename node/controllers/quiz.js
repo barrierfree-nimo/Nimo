@@ -15,21 +15,51 @@ const quiz = {
       })
       const currentNum = quizNum.quizNum
 
-      // 이번에 풀 퀴즈 객체 1개
-      const nextQuiz = await Quiz.findAll({
-        attributes: [ 'id', 'qText', 'aText', 'answer', 'commentary' ],
-        limit: 1,
+      // 다음 퀴즈 객체 개수
+      const nextQuizNum = await Quiz.count({
+        attributes: [ 'id' ],
         where: {
           id: {[ Sequelize.Op.gt ]: currentNum},
         },
         raw: true
       })
 
-      if (nextQuiz != null) {
-        return res.status(200).json(nextQuiz);
+      if(nextQuizNum <= 0) {
+        // 이번에 풀 퀴즈 객체 1개
+        const nextQuiz = await Quiz.findAll({
+          attributes: [ 'id', 'qText', 'aText', 'answer', 'commentary' ],
+          limit: 1,
+          where: {
+            id: {[ Sequelize.Op.gt ]: currentNum - 1},
+          },
+          raw: true
+        })
+        
+        if (nextQuiz != null) {
+          return res.status(200).json(nextQuiz);
+        }
+        else {
+          return res.status(401);
+        }
       }
+
       else {
-        return res.status(401);
+        // 이번에 풀 퀴즈 객체 1개
+        const nextQuiz = await Quiz.findAll({
+          attributes: [ 'id', 'qText', 'aText', 'answer', 'commentary' ],
+          limit: 1,
+          where: {
+            id: {[ Sequelize.Op.gt ]: currentNum},
+          },
+          raw: true
+        })
+
+        if (nextQuiz != null) {
+          return res.status(200).json(nextQuiz);
+        }
+        else {
+          return res.status(401);
+        }
       }
 
     } catch (err) {
