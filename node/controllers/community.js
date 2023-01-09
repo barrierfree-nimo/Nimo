@@ -72,8 +72,7 @@ const community = {
                 }
             } else {
                 list = {
-                    post: post,
-                    comment: "not exist"
+                    post: post
                 }
             }
             return res.status(200).json(list)
@@ -154,7 +153,7 @@ const community = {
                 } catch (error) {
                     return res.status(500).json(error)
                 }
-                return res.status(200).json({id: newComment});
+                return res.status(200).json({id: newComment.id});
             }
         } catch (error) {
             return res.status(500)
