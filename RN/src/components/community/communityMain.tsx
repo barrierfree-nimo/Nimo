@@ -114,12 +114,14 @@ const CommunityMain = ({ navigation }: any) => {
           ]}
           onPress={() => setIndex("일반")}
         >
-          <Text style={[
-            CommunityMainStyle.index_text, 
-            index === "일반" 
-            ? { color: "#FFFFFF" } 
-            : { color: "#00284E" }
-            ]}>일반</Text>
+          <Text
+            style={[
+              CommunityMainStyle.index_text,
+              index === "일반" ? { color: "#FFFFFF" } : { color: "#00284E" },
+            ]}
+          >
+            일반
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
@@ -131,12 +133,14 @@ const CommunityMain = ({ navigation }: any) => {
           ]}
           onPress={() => setIndex("질문")}
         >
-          <Text style={[
-            CommunityMainStyle.index_text, 
-            index === "질문" 
-            ? { color: "#FFFFFF" } 
-            : { color: "#00284E" }
-            ]}>질문</Text>
+          <Text
+            style={[
+              CommunityMainStyle.index_text,
+              index === "질문" ? { color: "#FFFFFF" } : { color: "#00284E" },
+            ]}
+          >
+            질문
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
@@ -147,12 +151,14 @@ const CommunityMain = ({ navigation }: any) => {
           ]}
           onPress={() => setIndex("정보")}
         >
-          <Text style={[
-            CommunityMainStyle.index_text, 
-            index === "정보" 
-            ? { color: "#FFFFFF" } 
-            : { color: "#00284E" }
-            ]}>정보</Text>
+          <Text
+            style={[
+              CommunityMainStyle.index_text,
+              index === "정보" ? { color: "#FFFFFF" } : { color: "#00284E" },
+            ]}
+          >
+            정보
+          </Text>
         </TouchableOpacity>
       </View>
       <View style={CommunityMainStyle.content_container}>
@@ -166,10 +172,12 @@ const CommunityMain = ({ navigation }: any) => {
                 ) => (
                   <TouchableOpacity key={idx} onPress={() => handleOnPress(id)}>
                     <CommunityCard
+                      postId={id}
                       contents={contents}
                       createdAt={createdAt}
                       updatedAt={updatedAt}
                       user_nickname={user_nickname}
+                      isId={false}
                     />
                   </TouchableOpacity>
                 )
