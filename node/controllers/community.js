@@ -88,7 +88,7 @@ const community = {
                 return res.status(500).json({message: "Omit some params"});
             } else {
                 try {
-                    var newPost = await Post.create({
+                    const newPost = await Post.create({
                         user_nickname: user.nickname,
                         title: title,
                         contents: contents,
