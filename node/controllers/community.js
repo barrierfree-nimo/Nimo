@@ -27,7 +27,14 @@ const community = {
         try {
             const user = await User.findOne({where: {id: req.user_id}});
             const blacklistUser = await Admin.findAll({where: {user_nickname: user.nickname, type: "user"}})
-            const blacklistUserPost = await Post.findAll({where: {}})
+            const userList = []
+            for (i of blacklistUser){
+                const user = await User.findOne({where: {id: i.block_id}});
+                console.log(user.nickname)
+                userList.push(user.nickname)
+            }
+            console.log(userList)
+            const blacklistUserPost = await Post.findAll({where: {user_nickname: {[Sequelize.Op.in]: blackuser}}})
             const blacklistPost = await Admin.findAll({where: {user_nickname: user.nickname, type: "post"}})
             let blockPost = []
             for (i of blacklistUser){
@@ -70,9 +77,6 @@ const community = {
                     raw: true
                 });
             }
-            
-            const writer = await User.findOne({where: {nickname: post.user_nickname}})
-            post[ 'user_id' ] = writer.id
 
             if (!comment.length == 0) {
                 convertList(comment)
@@ -89,7 +93,7 @@ const community = {
             } else {
                 comment = []
                 list = {
-                    post: post,
+                    post: post, 
                     comment: comment
                 }
             }
