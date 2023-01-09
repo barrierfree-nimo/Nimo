@@ -80,6 +80,19 @@ const communityDetailStyle = StyleSheet.create({
     fontWeight: "600",
     color: "white",
   },
+  modal_btn: {
+    width: "auto",
+    backgroundColor: "#FFD542",
+    justifyContent: "center",
+    padding: 5,
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  modal_btn_text: {
+    color: "#000000",
+    fontSize: 20,
+    fontWeight: "400",
+  },
 });
 
 export default communityDetailStyle;

@@ -1,36 +1,60 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Image, Text, Dimensions } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
+
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export interface CommunityCardProps {
+  postId: number;
   contents: string;
   createdAt: string;
   updatedAt: string;
   user_nickname: string;
+  isId: boolean;
+  setFocusedType?: (focusedType: string) => void;
+  setPostName?: (postName: string) => void;
+  setPostId?: (postId: number) => void;
 }
 
 const CommunityCard = (props: CommunityCardProps) => {
-  const { contents, createdAt, updatedAt, user_nickname } = props;
+  const {
+    postId,
+    contents,
+    createdAt,
+    updatedAt,
+    user_nickname,
+    isId,
+    setFocusedType,
+    setPostName,
+    setPostId,
+  } = props;
   const [userTime, setUserTime] = useState<string | number>("");
   const [previewContent, setPreviewContent] = useState<string>("");
-  const [isUpdated, setIsUpdated] = useState<boolean>(false);
 
   useEffect(() => {
-    createdAt === updatedAt ? setIsUpdated(true) : setIsUpdated(true);
-  }, [createdAt, updatedAt]);
-
-  useEffect(() => {
+    let timeString;
     const now = new Date();
     const then = new Date(updatedAt);
     const diffMSec = now.getTime() - then.getTime() + 32400000;
     const diffMin = Math.floor(diffMSec / (60 * 1000));
-    if (diffMin < 60) {
-      setUserTime(`${diffMin}분 전`);
+    if (diffMin < 1) {
+      timeString = "방금 전";
+    } else if (1 <= diffMin && diffMin < 60) {
+      timeString = `${diffMin}분 전`;
     } else if (diffMin >= 60 && diffMin < 60 * 24) {
-      setUserTime(`${Math.floor(diffMin / 60)}시간 전`);
+      timeString = `${Math.floor(diffMin / 60)}시간 전`;
     } else {
-      setUserTime(updatedAt.substring(0, 10));
+      timeString = updatedAt.substring(0, 10);
     }
+    createdAt === updatedAt
+      ? setUserTime(timeString)
+      : setUserTime(timeString + "(수정됨)");
   }, [updatedAt]);
 
   useEffect(() => {
@@ -47,8 +71,22 @@ const CommunityCard = (props: CommunityCardProps) => {
             source={require("../../assets/icons/community/community_profile.png")}
             style={styles.img_profile}
           />
-          <Text style={styles.text_nickname}>{user_nickname}</Text>
-          <Text style={styles.text_time}>{userTime}</Text>
+          <View>
+            <Text style={styles.text_nickname}>{user_nickname}</Text>
+            <Text style={styles.text_time}>{userTime}</Text>
+          </View>
+          {isId && (
+            <TouchableOpacity
+              style={styles.modal_btn}
+              onPress={() => {
+                setFocusedType && setFocusedType("comment");
+                setPostId && setPostId(postId);
+                setPostName && setPostName(user_nickname);
+              }}
+            >
+              <Text style={styles.modal_btn_text}>수정/신고</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
       <View style={styles.contents_wrapper}>
@@ -76,20 +114,32 @@ const styles = StyleSheet.create({
   },
   text_nickname: {
     color: "#000000",
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: "700",
   },
   text_time: {
     color: "#000000",
-    fontSize: 15,
-    fontWeight: "400",
+    fontSize: 20,
+    fontWeight: "300",
+  },
+  modal_btn: {
     float: "right",
     position: "absolute",
-    marginLeft: SCREEN_WIDTH / 2 + 40,
+    width: "auto",
+    marginLeft: SCREEN_WIDTH / 2 + 20,
+    backgroundColor: "#FFD542",
+    justifyContent: "center",
+    padding: 5,
+    borderRadius: 5,
+  },
+  modal_btn_text: {
+    color: "#000000",
+    fontSize: 20,
+    fontWeight: "400",
   },
   text_contents: {
     color: "#000000",
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: "400",
   },
   contents_wrapper: {
