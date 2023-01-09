@@ -15,8 +15,8 @@ import MessageSimul from "../simul_message/simul_msg_main/simul_message";
 import MessageDetail from "../simul_message/id/[id]";
 import CorrectPage from "../simul_message/correct";
 
-import VoiceSimul from "../simul_voice/simul_voice";
-import VoiceDetail from "../simul_voice/[id]";
+import VoiceSimul from "../simul_voice/simul_voice_main/simul_voice";
+import VoiceDetail from "../simul_voice/id/[id]";
 import CorrectPageVoice from "../simul_voice/correct";
 
 import CommunityMain from "../community/communityMain";

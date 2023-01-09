@@ -18,7 +18,9 @@ const SimulMsgStyle = StyleSheet.create({
   },
   text_title: {
     alignSelf: "flex-start",
-    margin: 30,
+    marginTop: 60,
+    marginBottom: 20,
+    marginLeft: 30,
     fontSize: 32,
     fontWeight: "900",
   },

@@ -5,20 +5,6 @@ const bcrypt = require('bcrypt');
 const salt = 10;
 
 const user = {
-  checkNickname: async function(req, res, next) {
-    try {
-      const user = await User.findOne({
-        where: {
-          nickname: req.body.nickname,
-        }
-      })
-
-      if(user) res.status(201).json({message: "Already exist nickname"});
-      else res.status(200).json({message: "Possible Nickname"})
-    } catch (error) {
-      console.log(error);
-    }
-  },
   createNewUser: async function (req, res, next) {
     try {
       const {nickname, password} = req.body;
@@ -104,6 +90,22 @@ const user = {
       }
     } catch (error) {
       console.log(error);
+    }
+  },
+  checkNickname: async function (req, res, next) {
+    try {
+      var nickname = req.params.nickname
+      try {const user = await User.findOne({where: {nickname: nickname}})} 
+      catch (error) {
+        return res.status(402).json(error)
+      }
+      if (!user.length==0) {
+        console.log(user)
+        return res.status(409).json({msg: "nickname exist"})
+      }
+      return res.status(200).json({msg: "nickname not exist"})
+    } catch (error) {
+      return res.status(400).json(error)
     }
   },
   setInfo: async function (req, res, next) {

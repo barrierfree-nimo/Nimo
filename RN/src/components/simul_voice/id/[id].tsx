@@ -11,14 +11,14 @@ import {
   TouchableOpacity,
   ScrollViewComponent,
 } from "react-native";
-import CommonStyle from "../common/common_style";
-import SimulMainStyle from "../simul_main/simul_main_style";
-import SpeechBubble from "../simul_common/speech_bubble";
-import NavigateBtn from "../simul_common/navigate_btn";
+import CommonStyle from "../../common/common_style";
+import SimulMainStyle from "../../simul_main/simul_main_style";
+import SpeechBubble from "../../simul_common/speech_bubble";
+import NavigateBtn from "../../simul_common/navigate_btn";
 import { Audio } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import baseURL from "../baseURL";
-import ExitBtn from "../simul_common/exit_btn";
+import baseURL from "../../baseURL";
+import ExitBtn from "../../simul_common/exit_btn";
 
 const VoiceDetail = ({ route, navigation }: any) => {
   const [ok, setOk] = useState(false);
@@ -135,7 +135,7 @@ const VoiceDetail = ({ route, navigation }: any) => {
   return (
     <SafeAreaView style={CommonStyle.container}>
       <Image
-        source={require("../../assets/icons/simul_voice/voice_bg_purple.png")}
+        source={require("../../../assets/icons/simul_voice/voice_bg_purple.png")}
         style={SimulMainStyle.img_galaxy}
       />
       <View style={styles.phone_div}>
@@ -144,19 +144,19 @@ const VoiceDetail = ({ route, navigation }: any) => {
             <View style={styles.container_phone}>
               <Text style={styles.text_phoneNum}>010-1234-5678</Text>
               <Image
-                source={require("../../assets/icons/simul_voice/voice_profile.png")}
+                source={require("../../../assets/icons/simul_voice/voice_profile.png")}
                 style={styles.img_profile}
               />
 
               <View style={styles.container_btn_call}>
                 <TouchableOpacity onPress={() => start()}>
                   <Image
-                    source={require("../../assets/icons/simul_voice/ic_call.png")}
+                    source={require("../../../assets/icons/simul_voice/ic_call.png")}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                   <Image
-                    source={require("../../assets/icons/simul_voice/ic_call_red.png")}
+                    source={require("../../../assets/icons/simul_voice/ic_call_red.png")}
                   />
                 </TouchableOpacity>
               </View>
@@ -281,7 +281,6 @@ const styles = StyleSheet.create({
   container_bubble_voice: {
     width: SCREEN_WIDTH,
     marginTop: 20,
-    marginBottom: 120,
     paddingTop: 10,
     paddingHorizontal: 40,
     alignContent: "center",

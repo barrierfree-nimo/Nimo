@@ -120,12 +120,12 @@ const Main = ({ navigation }: any) => {
         >
           <Text style={MainStyle.btnText_menu}>소통하기</Text>
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => navigation.navigate("Info")}
           style={MainStyle.btn_menu}
         >
           <Text style={MainStyle.btnText_menu}>정보 얻기</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </SafeAreaView>
   );
