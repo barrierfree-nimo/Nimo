@@ -80,9 +80,9 @@ const community = {
                 where: {
                     id: req.params.id
                 },
-                raw: true
             });
             if (post) {
+                convertDate(post)
                 var comment = await Comment.findAll({
                     where: {
                         id: {[ Sequelize.Op.notIn ]: commentList,
@@ -92,7 +92,6 @@ const community = {
                     order: [
                         [ 'created_at', 'ASC' ],
                     ],
-                    raw: true
                 });
             } else {
                 return res.status(404).json({msg: "post deleted"})
@@ -100,12 +99,6 @@ const community = {
 
             if (!comment.length == 0) {
                 convertList(comment)
-
-                for (const i of comment) {
-                    const commenter = await User.findOne({where: {nickname: i.user_nickname}})
-                    i[ 'user_id' ] = commenter.id
-                }
-
                 list = {
                     post: post,
                     comment: comment
