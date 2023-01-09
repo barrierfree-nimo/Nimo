@@ -10,6 +10,7 @@ const SimulData = require('./simuldata');
 const History = require('./history');
 const Post = require('./post');
 const Comment = require('./comment');
+const Admin = require('./admin');
 
 const db = {};
 const sequelize = new Sequelize(
@@ -29,6 +30,7 @@ db.History = History;
 db.Quiz = Quiz;
 db.Post = Post;
 db.Comment = Comment;
+db.Admin = Admin;
 
 User.init(sequelize);
 Voice.init(sequelize);
@@ -39,9 +41,11 @@ History.init(sequelize);
 Quiz.init(sequelize);
 Post.init(sequelize);
 Comment.init(sequelize);
+Admin.init(sequelize);
 
 User.associate(db);
 Post.associate(db);
 Comment.associate(db);
+Admin.associate(db);
 
 module.exports = db;
