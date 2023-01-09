@@ -20,15 +20,17 @@ const MainStyle  = StyleSheet.create({
     elevation: 9,
   },
   text_header: {
-    position: "absolute",
     color: "#00284E",
     fontSize: 30,
-    fontWeight: "900",
+    fontWeight: "900",    
+  },
+  btn_setting: {
+    position: "absolute",
+    left: SCREEN_WIDTH - 55,
   },
   img_setting: {
     width: 30,
     marginHorizontal: 6,
-    left: SCREEN_WIDTH / 2 - 40
   },
   container_progress: {
     flex: 1,

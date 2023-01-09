@@ -26,7 +26,8 @@
       "package": "com.nimo.phishingvaccine",
       "permissions": [
         "RECORD_AUDIO"
-      ]
+      ],
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
