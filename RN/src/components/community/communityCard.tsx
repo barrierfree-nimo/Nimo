@@ -4,18 +4,26 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export interface CommunityCardProps {
   contents: string;
-  date: string;
+  createdAt: string;
+  updatedAt: string;
   user_nickname: string;
 }
 
 const CommunityCard = (props: CommunityCardProps) => {
-  const { contents, date, user_nickname } = props;
+  const { contents, createdAt, updatedAt, user_nickname } = props;
   const [userTime, setUserTime] = useState<string | number>("");
   const [previewContent, setPreviewContent] = useState<string>("");
+  const [isUpdated, setIsUpdated] = useState<boolean>(false);
+
+  useEffect(() => {
+    createdAt === updatedAt ? setIsUpdated(true) : setIsUpdated(true);
+  }, [createdAt, updatedAt]);
 
   useEffect(() => {
     const now = new Date();
-    const then = new Date(date);
+    let lastUpdatedDate;
+    isUpdated ? (lastUpdatedDate = createdAt) : (lastUpdatedDate = updatedAt);
+    const then = new Date(lastUpdatedDate);
 
     const diffMSec = now.getTime() - then.getTime();
     const diffMin = Math.floor(diffMSec / (60 * 1000));
@@ -24,9 +32,9 @@ const CommunityCard = (props: CommunityCardProps) => {
     } else if (diffMin >= 60 && diffMin < 60 * 24) {
       setUserTime(`${Math.floor(diffMin / 60)}시간 전`);
     } else {
-      setUserTime(date.substring(0, 10));
+      setUserTime(lastUpdatedDate.substring(0, 10));
     }
-  }, [date]);
+  }, [isUpdated]);
 
   useEffect(() => {
     contents.length < 20

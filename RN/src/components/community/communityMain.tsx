@@ -16,7 +16,8 @@ import CommunityMainStyle from "./communityMain_style";
 
 interface CommunityData {
   contents: string;
-  date: string;
+  createdAt: string;
+  updatedAt: string;
   id: number;
   tag: string;
   title: string;
@@ -143,11 +144,15 @@ const CommunityMain = ({ navigation }: any) => {
           {isExist ? (
             <View>
               {filteredList?.map(
-                ({ contents, date, id, user_nickname }, idx) => (
+                (
+                  { contents, createdAt, updatedAt, id, user_nickname },
+                  idx
+                ) => (
                   <TouchableOpacity key={idx} onPress={() => handleOnPress(id)}>
                     <CommunityCard
                       contents={contents}
-                      date={date}
+                      createdAt={createdAt}
+                      updatedAt={updatedAt}
                       user_nickname={user_nickname}
                     />
                   </TouchableOpacity>
