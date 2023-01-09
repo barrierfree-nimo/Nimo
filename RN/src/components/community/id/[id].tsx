@@ -20,7 +20,8 @@ interface PostContent {
   title: string;
   contents: string;
   tag: string;
-  date: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 const CommunityDetail = ({ route, navigation }: any) => {
@@ -28,6 +29,13 @@ const CommunityDetail = ({ route, navigation }: any) => {
   const [userTime, setUserTime] = useState<string | number>("");
   const [comment, setComment] = useState<any[]>([]);
   const [userComment, setUserComment] = useState<string>("");
+  const [isUpdated, setIsUpdated] = useState<boolean>(false);
+
+  useEffect(() => {
+    postContent?.createdAt === postContent?.updatedAt
+      ? setIsUpdated(true)
+      : setIsUpdated(true);
+  }, [postContent?.createdAt, postContent?.updatedAt]);
 
   useEffect(() => {
     fetchCommunityDetail();
@@ -50,9 +58,14 @@ const CommunityDetail = ({ route, navigation }: any) => {
   };
 
   useEffect(() => {
-    if (postContent?.date) {
-      const now = new Date();
-      const then = new Date(postContent.date);
+    const now = new Date();
+    if (postContent?.updatedAt) {
+      let lastUpdatedDate = postContent?.updatedAt;
+      isUpdated
+        ? (lastUpdatedDate = postContent?.createdAt)
+        : (lastUpdatedDate = postContent?.updatedAt);
+      const then = new Date(lastUpdatedDate);
+
       const diffMSec = now.getTime() - then.getTime();
       const diffMin = Math.floor(diffMSec / (60 * 1000));
       if (diffMin < 60) {
@@ -60,10 +73,10 @@ const CommunityDetail = ({ route, navigation }: any) => {
       } else if (diffMin >= 60 && diffMin < 60 * 24) {
         setUserTime(`${Math.floor(diffMin / 60)}시간 전`);
       } else {
-        setUserTime(postContent.date.substring(0, 10));
+        setUserTime(lastUpdatedDate.substring(0, 10));
       }
     }
-  }, [postContent, postContent?.date]);
+  }, [isUpdated]);
 
   const handleCommentPost = async () => {
     const token = await AsyncStorage.getItem("user_Token");
