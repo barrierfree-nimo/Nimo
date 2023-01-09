@@ -1,5 +1,5 @@
 const express = require("express");
-const {User, Post, Comment, Admin, sequelize} = require("../models");
+const {User, Post, Comment, Admin, sequelize, BlackUser, BlackPost} = require("../models");
 var Sequelize = require("sequelize");
 
 function convertDate(post) {
@@ -26,22 +26,24 @@ const community = {
     readList: async function (req, res, next) {
         try {
             const user = await User.findOne({where: {id: req.user_id}});
-            const blacklistUser = await Admin.findAll({where: {user_nickname: user.nickname, type: "user"}})
+            const blackUsers = await BlackUser.findAll({where: {user_nickname: user.nickname}});
             const userList = []
-            for (i of blacklistUser){
-                const user = await User.findOne({where: {id: i.block_id}});
-                console.log(user.nickname)
-                userList.push(user.nickname)
+            for (i of blackUsers) {
+                userList.push(i.black_nickname)
             }
-            console.log(userList)
-            const blacklistUserPost = await Post.findAll({where: {user_nickname: {[Sequelize.Op.in]: blackuser}}})
-            const blacklistPost = await Admin.findAll({where: {user_nickname: user.nickname, type: "post"}})
-            let blockPost = []
-            for (i of blacklistUser){
-                blockPost.push(i.id)
+            const blackuserPosts = await Post.findAll({where: {user_nickname: {[ Sequelize.Op.in ]: userList}}})
+            const postList = []
+            for (i of blackuserPosts) {
+                postList.push(i.id)
             }
-            //const block = await Post.findAll({where: {user_nickname: }})
+            const blackpostPosts = await BlackPost.findAll({where: {user_nickname: user.nickname}})
+            for (i of blackpostPosts) {
+                postList.push(i.black_id)
+            }
             var list = await Post.findAll({
+                where: {
+                    id: {[ Sequelize.Op.notIn ]: postList}
+                },
                 order: [
                     [ 'id', 'DESC' ],
                 ]
@@ -93,7 +95,7 @@ const community = {
             } else {
                 comment = []
                 list = {
-                    post: post, 
+                    post: post,
                     comment: comment
                 }
             }
