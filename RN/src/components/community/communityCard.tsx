@@ -25,7 +25,7 @@ const CommunityCard = (props: CommunityCardProps) => {
     isUpdated ? (lastUpdatedDate = createdAt) : (lastUpdatedDate = updatedAt);
     const then = new Date(lastUpdatedDate);
 
-    const diffMSec = now.getTime() - then.getTime();
+    const diffMSec = now.getTime() - then.getTime() + 32400000;
     const diffMin = Math.floor(diffMSec / (60 * 1000));
     if (diffMin < 60) {
       setUserTime(`${diffMin}분 전`);
