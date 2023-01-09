@@ -30,7 +30,7 @@ module.exports = class Sns extends Sequelize.Model {
 				timestamps:false,
 				underscored:false,
 				modelName:'Sns',
-				tableName:'scripts_msg',
+				tableName:'scripts_sns',
 				paranoid:false,
 				charset:'utf8',
 				collate:'utf8_general_ci',
