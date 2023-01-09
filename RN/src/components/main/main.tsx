@@ -13,14 +13,22 @@ import CommonStyle from "../common/common_style";
 import MainStyle from "./main_style";
 import baseURL from "../baseURL";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useIsFocused } from "@react-navigation/native";
 
 const Main = ({ navigation }: any) => {
   const [nickname, setNickname] = useState("니모");
   const [donePercent, setDonePercent] = useState(50);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    return () => {
+      setUserInfo();
+    };
+  }, [isFocused]);
 
   useEffect(() => {
     setUserInfo();
-  });
+  }, []);
 
   const setUserInfo = async () => {
     let token;
