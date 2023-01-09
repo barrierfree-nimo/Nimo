@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "피싱백신",
-    "slug": "nimo-client",
+    "slug": "phishing-vaccine",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/images/logo.png",
@@ -18,18 +18,24 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true
-    },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/logo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.nimo.phishingvaccine"
+      "package": "com.nimo.phishingvaccine",
+      "permissions": [
+        "RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e33da9a2-26f5-464e-8e2b-d476d8ebde6c"
+      }
+    },
+    "owner": "phishing-vaccine"
   }
 }
