@@ -21,10 +21,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 
   useEffect(() => {
     const now = new Date();
-    let lastUpdatedDate;
-    isUpdated ? (lastUpdatedDate = createdAt) : (lastUpdatedDate = updatedAt);
-    const then = new Date(lastUpdatedDate);
-
+    const then = new Date(updatedAt);
     const diffMSec = now.getTime() - then.getTime() + 32400000;
     const diffMin = Math.floor(diffMSec / (60 * 1000));
     if (diffMin < 60) {
@@ -32,9 +29,9 @@ const CommunityCard = (props: CommunityCardProps) => {
     } else if (diffMin >= 60 && diffMin < 60 * 24) {
       setUserTime(`${Math.floor(diffMin / 60)}시간 전`);
     } else {
-      setUserTime(lastUpdatedDate.substring(0, 10));
+      setUserTime(updatedAt.substring(0, 10));
     }
-  }, [isUpdated]);
+  }, [updatedAt]);
 
   useEffect(() => {
     contents.length < 20
