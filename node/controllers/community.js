@@ -28,6 +28,22 @@ function convertList(list) {
 const community = {
     readList: async function (req, res, next) {
         try {
+            const user = await User.findOne({where: {id: req.user_id}});
+            const blacklistUser = await Admin.findAll({where: {user_nickname: user.nickname, type: "user"}})
+            const userList = []
+            for (i of blacklistUser){
+                const user = await User.findOne({where: {id: i.block_id}});
+                console.log(user.nickname)
+                userList.push(user.nickname)
+            }
+            console.log(userList)
+            const blacklistUserPost = await Post.findAll({where: {user_nickname: {[Sequelize.Op.in]: blackuser}}})
+            const blacklistPost = await Admin.findAll({where: {user_nickname: user.nickname, type: "post"}})
+            let blockPost = []
+            for (i of blacklistUser){
+                blockPost.push(i.id)
+            }
+            //const block = await Post.findAll({where: {user_nickname: }})
             var list = await Post.findAll({
                 order: [
                     [ 'id', 'DESC' ],
@@ -62,7 +78,6 @@ const community = {
                     ],
                 });
             }
-            post = convertDate(post)
 
             if (!comment.length == 0) {
                 convertList(comment)
@@ -71,8 +86,10 @@ const community = {
                     comment: comment
                 }
             } else {
+                comment = []
                 list = {
-                    post: post
+                    post: post, 
+                    comment: comment
                 }
             }
             return res.status(200).json(list)
