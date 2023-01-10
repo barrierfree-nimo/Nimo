@@ -6,8 +6,14 @@ import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const CommunityModal = (props: any) => {
-  const { modalVisible, setModalVisible, setSelected, canUD, setFocusedType } =
-    props;
+  const {
+    modalVisible,
+    setModalVisible,
+    setSelected,
+    canUD,
+    setFocusedType,
+    navigation,
+  } = props;
 
   return (
     <SafeAreaView>
@@ -59,6 +65,7 @@ const CommunityModal = (props: any) => {
                 setSelected("delete");
                 setModalVisible(false);
                 setFocusedType("");
+                navigation.navigate("CommunityMain");
               }}
               style={styles.report_box}
             >
