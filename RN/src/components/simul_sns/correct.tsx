@@ -18,7 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 
-const CorrectPageMsg = ({ route, navigation }: any) => {
+const CorrectPageSns = ({ route, navigation }: any) => {
   const [commentary, setCommentary] = useState<string>("");
   const [isCorrect, setIsCorrect] = useState<boolean>();
   const [titleText, setTitleText] = useState<string>("");
@@ -109,4 +109,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CorrectPageMsg;
+export default CorrectPageSns;

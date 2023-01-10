@@ -11,7 +11,7 @@ import {
 import CommonStyle from "../../common/common_style";
 import SpeechBubble from "../../simul_common/speech_bubble";
 import SimulMainStyle from "../../simul_main/simul_main_style";
-import msgDetailStyle from "./[id]_style";
+import snsDetailStyle from "./[id]_style";
 import Axios from "axios";
 import baseURL from "../../baseURL";
 import ExitBtn from "../../simul_common/exit_btn";
@@ -21,7 +21,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 //response 1은 발신자, 2는 수신자, 3은 정답, 4는 오답
-const MessageDetail = ({ route, navigation }: any) => {
+const SnsDetail = ({ route, navigation }: any) => {
   const scrollViewRef = useRef<ScrollView | null>(null);
   const [scripts, setScripts] = useState<any[]>();
   const [filteredScripts, setFilteredScripts] = useState<any[]>();
@@ -85,9 +85,9 @@ const MessageDetail = ({ route, navigation }: any) => {
   }, [visibleNum]);
 
   const handleClickCorrect = (isCorrect: boolean) => {
-    navigation.navigate("CorrectPageMsg", {
+    navigation.navigate("CorrectPageSns", {
       commentary: commentary,
-      type: "msg",
+      type: "sns",
       simulNum: route.params.simulNum,
       correct: isCorrect,
     });
@@ -100,25 +100,25 @@ const MessageDetail = ({ route, navigation }: any) => {
         style={SimulMainStyle.img_galaxy}
       />
       {/* 폰 화면 */}
-      <View style={msgDetailStyle.phone_div}>
-        <View style={msgDetailStyle.phone_detail_div}>
+      <View style={snsDetailStyle.phone_div}>
+        <View style={snsDetailStyle.phone_detail_div}>
           {/* 헤더 */}
-          <View style={msgDetailStyle.header}>
+          <View style={snsDetailStyle.header}>
             <Image
               source={require("../../../assets/icons/simul_message/ic_profile.png")}
-              style={msgDetailStyle.img_profile}
+              style={snsDetailStyle.img_profile}
             />
             <View>
-              <Text style={msgDetailStyle.text_title}>지인 사칭형 피싱</Text>
+              <Text style={snsDetailStyle.text_title}>지인 사칭형 피싱</Text>
             </View>
-            <View style={msgDetailStyle.lineStyle} />
+            <View style={snsDetailStyle.lineStyle} />
           </View>
           {/* 대화창 */}
           <TouchableOpacity
-            style={msgDetailStyle.text_container}
+            style={snsDetailStyle.text_container}
             onPress={() => addScript()}
           >
-            <Text style={msgDetailStyle.press_msg_text}>
+            <Text style={snsDetailStyle.press_msg_text}>
               화면을 클릭하면 메세지가 나옵니다
             </Text>
             <ScrollView
@@ -127,7 +127,7 @@ const MessageDetail = ({ route, navigation }: any) => {
                 scrollViewRef.current &&
                 scrollViewRef.current.scrollToEnd({ animated: true })
               }
-              style={msgDetailStyle.scroll}
+              style={snsDetailStyle.scroll}
               persistentScrollbar={true}
             >
               {visibleScripts?.map((data) => (
@@ -149,24 +149,24 @@ const MessageDetail = ({ route, navigation }: any) => {
               ))}
               <View
                 style={[
-                  msgDetailStyle.choice_box,
+                  snsDetailStyle.choice_box,
                   showChoice ? { display: "flex" } : { display: "none" },
                 ]}
               >
-                <Text style={msgDetailStyle.text_notice_select}>
+                <Text style={snsDetailStyle.text_notice_select}>
                   대응 방법을 선택해주세요
                 </Text>
                 <TouchableOpacity
                   onPress={() => handleClickCorrect(true)}
-                  style={msgDetailStyle.choice_box_child}
+                  style={snsDetailStyle.choice_box_child}
                 >
-                  <Text style={msgDetailStyle.text_choice}>{correct}</Text>
+                  <Text style={snsDetailStyle.text_choice}>{correct}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => handleClickCorrect(false)}
-                  style={msgDetailStyle.choice_box_child}
+                  style={snsDetailStyle.choice_box_child}
                 >
-                  <Text style={msgDetailStyle.text_choice}>{wrong}</Text>
+                  <Text style={snsDetailStyle.text_choice}>{wrong}</Text>
                 </TouchableOpacity>
               </View>
             </ScrollView>
@@ -179,4 +179,4 @@ const MessageDetail = ({ route, navigation }: any) => {
   );
 };
 
-export default MessageDetail;
+export default SnsDetail;

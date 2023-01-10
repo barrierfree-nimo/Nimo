@@ -81,7 +81,11 @@ const SimulMain = ({ navigation }: any) => {
           )}
           {type === "msg" && (
             <TouchableOpacity
-              onPress={() => navigation.navigate("MessageSimul")}
+              onPress={() =>
+                navigation.navigate("MessageDetail", {
+                  simulNum: num,
+                })
+              }
             >
               <Image
                 source={require("../../assets/icons/simul_main/message_push.png")}
@@ -149,7 +153,7 @@ const SimulMain = ({ navigation }: any) => {
           </>
 
           {/*  SNS */}
-          <TouchableOpacity onPress={() => navigation.navigate("MessageSimul")}>
+          <TouchableOpacity onPress={() => navigation.navigate("SnsSimul")}>
             {type === "sns" || isInRed("sns") ? (
               <Image
                 source={require(`../../assets/icons/simul_main/sns_red.png`)}
