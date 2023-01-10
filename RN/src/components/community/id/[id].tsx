@@ -13,6 +13,7 @@ import baseURL from "../../baseURL";
 import CommonStyle from "../../common/common_style";
 import communityDetailStyle from "./[id]_style";
 import CommunityCard from "../communityCard";
+import CommunityModal from "../communityModal";
 
 interface PostContent {
   id: number;
@@ -30,6 +31,18 @@ const CommunityDetail = ({ route, navigation }: any) => {
   const [comment, setComment] = useState<any[]>([]);
   const [userComment, setUserComment] = useState<string>("");
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
+  // 모달
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [selected, setSelected] = useState<string>("");
+  const [focusedType, setFocusedType] = useState<string>("");
+  const [postName, setPostName] = useState<string>("");
+  const [postId, setPostId] = useState<number>(-1);
+  const [localName, setLocalName] = useState<string | null>("");
+
+  const getLocalName = async () => {
+    const local_nickname = await AsyncStorage.getItem("user_nickname");
+    await setLocalName(local_nickname);
+  };
 
   useEffect(() => {
     postContent?.createdAt === postContent?.updatedAt
@@ -39,6 +52,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
 
   useEffect(() => {
     fetchCommunityDetail();
+    getLocalName();
   }, []);
 
   const fetchCommunityDetail = async () => {
@@ -60,23 +74,19 @@ const CommunityDetail = ({ route, navigation }: any) => {
   useEffect(() => {
     const now = new Date();
     if (postContent?.updatedAt) {
-      let lastUpdatedDate = postContent?.updatedAt;
-      isUpdated
-        ? (lastUpdatedDate = postContent?.createdAt)
-        : (lastUpdatedDate = postContent?.updatedAt);
-      const then = new Date(lastUpdatedDate);
+      const then = new Date(postContent?.updatedAt);
 
-      const diffMSec = now.getTime() - then.getTime();
+      const diffMSec = now.getTime() - then.getTime() + 32400000;
       const diffMin = Math.floor(diffMSec / (60 * 1000));
       if (diffMin < 60) {
         setUserTime(`${diffMin}분 전`);
       } else if (diffMin >= 60 && diffMin < 60 * 24) {
         setUserTime(`${Math.floor(diffMin / 60)}시간 전`);
       } else {
-        setUserTime(lastUpdatedDate.substring(0, 10));
+        setUserTime(postContent?.updatedAt.substring(0, 10));
       }
     }
-  }, [isUpdated]);
+  }, [postContent?.updatedAt]);
 
   const handleCommentPost = async () => {
     const token = await AsyncStorage.getItem("user_Token");
@@ -105,13 +115,137 @@ const CommunityDetail = ({ route, navigation }: any) => {
     }
   };
 
+  useEffect(() => {
+    if (focusedType === "comment" || focusedType === "post") {
+      setModalVisible(true);
+    } else {
+      setModalVisible(false);
+    }
+  }, [focusedType]);
+
+  useEffect(() => {
+    switch (selected) {
+      case "user-report":
+        fetchCommunityUserReport();
+        break;
+      case "post-report":
+        focusedType === "post" && fetchCommunityPostReport();
+        focusedType === "comment" && fetchCommunityCommentReport();
+        break;
+      case "modify":
+        // 수정 >>  댓글이면 -> input으로 바꾸고, 글이면 write로 보내줌(변동 없는지도 확인)
+        break;
+      case "delete":
+        focusedType === "post" && fetchPostDelete();
+        focusedType === "comment" && fetchCommentDelete();
+        break;
+    }
+  }, [selected]);
+
+  const fetchCommunityUserReport = async () => {
+    const token = await AsyncStorage.getItem("user_Token");
+    try {
+      Axios.get(baseURL + `/admin/user/${postName}`, {
+        headers: {
+          accessToken: `${token}`,
+        },
+      }).then((res) => {
+        setPostContent(res.data.post);
+        setComment(res.data.comment);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchCommunityPostReport = async () => {
+    const token = await AsyncStorage.getItem("user_Token");
+    try {
+      Axios.get(baseURL + `/admin/post/${postId}`, {
+        headers: {
+          accessToken: `${token}`,
+        },
+      }).then((res) => {
+        setPostContent(res.data.post);
+        setComment(res.data.comment);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchCommunityCommentReport = async () => {
+    const token = await AsyncStorage.getItem("user_Token");
+    try {
+      Axios.get(baseURL + `/admin/comment/${postId}`, {
+        headers: {
+          accessToken: `${token}`,
+        },
+      }).then((res) => {
+        setPostContent(res.data.post);
+        setComment(res.data.comment);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchPostDelete = async () => {
+    const token = await AsyncStorage.getItem("user_Token");
+    try {
+      await Axios.delete(baseURL + `/admin/post/${postId}`, {
+        headers: { accessToken: `${token}` },
+      })
+        .then((res) => {
+          if (res.status === 204) {
+            navigation.navigate("CommunityMain");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchCommentDelete = async () => {
+    const token = await AsyncStorage.getItem("user_Token");
+    try {
+      Axios.delete(baseURL + `/admin/comment/${postId}`, {
+        headers: {
+          accessToken: `${token}`,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <CommunityModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        setSelected={setSelected}
+        setFocusedType={setFocusedType}
+        canUD={postName === localName}
+      />
       <View style={communityDetailStyle.community_container}>
         <Text style={communityDetailStyle.title_text}>
           글제목 : {postContent?.title}
         </Text>
         <Text style={communityDetailStyle.time_text}>{userTime}</Text>
+        <TouchableOpacity
+          style={communityDetailStyle.modal_btn}
+          onPress={() => {
+            setFocusedType("post");
+            postContent && setPostId(postContent.id);
+            postContent && setPostName(postContent.user_nickname);
+          }}
+        >
+          <Text style={communityDetailStyle.modal_btn_text}>수정/신고</Text>
+        </TouchableOpacity>
         <View style={communityDetailStyle.content_container}>
           <Text style={communityDetailStyle.content_text}>
             {postContent?.contents}
@@ -121,20 +255,28 @@ const CommunityDetail = ({ route, navigation }: any) => {
           <Text style={communityDetailStyle.comment_title}>댓글 목록</Text>
           <View style={communityDetailStyle.lineStyle} />
           <View>
-            {comment.length === 0 ? (
+            {!comment || comment.length === 0 ? (
               <Text style={communityDetailStyle.comment_text}>
                 해당 게시물에 댓글이 없습니다. 첫번째 댓글이 되어주세요.
               </Text>
             ) : (
               <View>
                 {comment.map(
-                  ({ user_id, createdAt, updatedAt, contents }, id) => (
+                  (
+                    { user_nickname, createdAt, updatedAt, contents, id },
+                    idx
+                  ) => (
                     <CommunityCard
-                      key={id}
+                      key={idx}
+                      postId={id}
                       contents={contents}
                       createdAt={createdAt}
                       updatedAt={updatedAt}
-                      user_nickname={user_id}
+                      user_nickname={user_nickname}
+                      isId={true}
+                      setFocusedType={setFocusedType}
+                      setPostName={setPostName}
+                      setPostId={setPostId}
                     />
                   )
                 )}
