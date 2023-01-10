@@ -92,7 +92,7 @@ const communityDetailStyle = StyleSheet.create({
     width: SCREEN_WIDTH - 40,
     paddingHorizontal: 10,
     flexDirection: "row",
-    marginTop: 10,
+    paddingVertical: 10,
   },
   user_comment_input: {
     flex: 6,

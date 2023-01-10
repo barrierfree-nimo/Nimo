@@ -6,6 +6,7 @@ import {
   Text,
   TextInput,
   ScrollView,
+  KeyboardAvoidingView
 } from "react-native";
 import Axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -309,7 +310,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
             </ScrollView>
           </View>
 
-          <View style={communityDetailStyle.user_comment_container}>
+          <KeyboardAvoidingView style={communityDetailStyle.user_comment_container}>
             <TextInput
               value={userComment}
               onChangeText={(userComment) => setUserComment(userComment)}
@@ -322,7 +323,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
             >
               <Text style={communityDetailStyle.user_comment_apply_text}>등록</Text>
             </TouchableOpacity>
-          </View>
+          </KeyboardAvoidingView>
         </View>
       </View>
       

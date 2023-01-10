@@ -11,14 +11,14 @@ const AppDocStyle = StyleSheet.create({
   },
   index_box: {
     flex: 1,
-
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 8,
   },
   index_text: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "700",
+    color: "#00284E"
   },
   banner_wrapper: {
     flex: 15,
