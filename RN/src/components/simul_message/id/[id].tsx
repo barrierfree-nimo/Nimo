@@ -85,7 +85,7 @@ const MessageDetail = ({ route, navigation }: any) => {
   }, [visibleNum]);
 
   const handleClickCorrect = (isCorrect: boolean) => {
-    navigation.navigate("CorrectPageMsg", {
+    navigation.navigate("CorrectPage", {
       commentary: commentary,
       type: "msg",
       simulNum: route.params.simulNum,

@@ -39,7 +39,7 @@ const SnsDetail = ({ route, navigation }: any) => {
   const fetchSimulMsgDetail = async () => {
     const token = await AsyncStorage.getItem("user_Token");
     try {
-      Axios.get(baseURL + `/simulation/msg/${route.params.simulNum}`, {
+      Axios.get(baseURL + `/simulation/sns/${route.params.simulNum}`, {
         headers: {
           accessToken: `${token}`,
         },
@@ -85,7 +85,7 @@ const SnsDetail = ({ route, navigation }: any) => {
   }, [visibleNum]);
 
   const handleClickCorrect = (isCorrect: boolean) => {
-    navigation.navigate("CorrectPageSns", {
+    navigation.navigate("CorrectPage", {
       commentary: commentary,
       type: "sns",
       simulNum: route.params.simulNum,

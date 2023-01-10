@@ -8,8 +8,8 @@ import {
   Dimensions,
 } from "react-native";
 import CommonStyle from "../common/common_style";
-import ExitBtn from "../simul_common/exit_btn";
-import NavigateBtn from "../simul_common/navigate_btn";
+import ExitBtn from "./exit_btn";
+import NavigateBtn from "./navigate_btn";
 import SimulMainStyle from "../simul_main/simul_main_style";
 import Axios from "axios";
 import baseURL from "../baseURL";
@@ -18,7 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 
-const CorrectPageSns = ({ route, navigation }: any) => {
+const CorrectPage = ({ route, navigation }: any) => {
   const [commentary, setCommentary] = useState<string>("");
   const [isCorrect, setIsCorrect] = useState<boolean>();
   const [titleText, setTitleText] = useState<string>("");
@@ -109,4 +109,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CorrectPageSns;
+export default CorrectPage;
