@@ -14,6 +14,7 @@ import CommonStyle from "../../common/common_style";
 import communityDetailStyle from "./[id]_style";
 import CommunityCard from "../communityCard";
 import CommunityModal from "../communityModal";
+import { useIsFocused } from "@react-navigation/native";
 
 interface PostContent {
   id: number;
@@ -38,6 +39,14 @@ const CommunityDetail = ({ route, navigation }: any) => {
   const [postName, setPostName] = useState<string>("");
   const [postId, setPostId] = useState<number>(-1);
   const [localName, setLocalName] = useState<string | null>("");
+
+  //render
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    return () => {
+      fetchCommunityDetail();
+    };
+  }, [isFocused]);
 
   const getLocalName = async () => {
     const local_nickname = await AsyncStorage.getItem("user_nickname");
@@ -140,7 +149,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
         focusedType === "comment" && fetchCommentDelete();
         break;
     }
-  }, [selected]);
+  }, [selected, focusedType]);
 
   const fetchCommunityUserReport = async () => {
     const token = await AsyncStorage.getItem("user_Token");
@@ -193,11 +202,12 @@ const CommunityDetail = ({ route, navigation }: any) => {
   const fetchPostDelete = async () => {
     const token = await AsyncStorage.getItem("user_Token");
     try {
-      await Axios.delete(baseURL + `/admin/post/${postId}`, {
+      await Axios.delete(baseURL + `/community/post/${postId}`, {
         headers: { accessToken: `${token}` },
       })
         .then((res) => {
           if (res.status === 204) {
+            fetchCommunityDetail();
             navigation.navigate("CommunityMain");
           }
         })
@@ -210,12 +220,17 @@ const CommunityDetail = ({ route, navigation }: any) => {
   };
 
   const fetchCommentDelete = async () => {
+    console.log("post id>>>>", postId);
     const token = await AsyncStorage.getItem("user_Token");
     try {
-      Axios.delete(baseURL + `/admin/comment/${postId}`, {
+      Axios.delete(baseURL + `/community/comment/${postId}`, {
         headers: {
           accessToken: `${token}`,
         },
+      }).then((res) => {
+        if (res.status === 204) {
+          fetchCommunityDetail();
+        }
       });
     } catch (err) {
       console.log(err);

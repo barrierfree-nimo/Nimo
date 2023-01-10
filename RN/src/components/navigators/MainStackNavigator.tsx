@@ -13,11 +13,10 @@ import AppDoc from "../application_doc/AppDoc";
 import SimulMain from "../simul_main/simul_main";
 import MessageSimul from "../simul_message/simul_msg_main/simul_message";
 import MessageDetail from "../simul_message/id/[id]";
-import CorrectPageMsg from "../simul_message/correct";
 
 import SnsDetail from "../simul_sns/id/[id]";
 import SnsSimul from "../simul_sns/simul_sns_main/simul_sns";
-import CorrectPageSns from "../simul_sns/correct";
+import CorrectPage from "../simul_common/correct";
 
 import VoiceSimul from "../simul_voice/simul_voice_main/simul_voice";
 import VoiceDetail from "../simul_voice/id/[id]";
@@ -49,8 +48,7 @@ const MainStackNavigator = () => {
         <Stack.Screen name="MessageDetail" component={MessageDetail} />
         <Stack.Screen name="SnsSimul" component={SnsSimul} />
         <Stack.Screen name="SnsDetail" component={SnsDetail} />
-        <Stack.Screen name="CorrectPageMsg" component={CorrectPageMsg} />
-        <Stack.Screen name="CorrectPageSns" component={CorrectPageSns} />
+        <Stack.Screen name="CorrectPage" component={CorrectPage} />
         <Stack.Screen name="VoiceSimul" component={VoiceSimul} />
         <Stack.Screen name="VoiceDetail" component={VoiceDetail} />
         <Stack.Screen name="CorrectPageVoice" component={CorrectPageVoice} />
