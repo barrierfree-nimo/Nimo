@@ -38,7 +38,7 @@ const MessageDetail = ({ route, navigation }: any) => {
   const fetchData = async () => {
     const token = await AsyncStorage.getItem("user_Token");
 
-    if(token != null) {
+    if (token != null) {
       try {
         Axios.get(baseURL + `/simulation/msg/${route.params.simulNum}`, {
           headers: {
@@ -118,7 +118,6 @@ const MessageDetail = ({ route, navigation }: any) => {
     }
   };
 
-
   return (
     <SafeAreaView style={CommonStyle.container}>
       <Image
@@ -128,7 +127,6 @@ const MessageDetail = ({ route, navigation }: any) => {
       {/* 폰 화면 */}
       <View style={msgDetailStyle.phone_div}>
         <View style={msgDetailStyle.phone_detail_div}>
-
           {/* 헤더 */}
           <View style={msgDetailStyle.header}>
             <Image
@@ -136,9 +134,13 @@ const MessageDetail = ({ route, navigation }: any) => {
               style={msgDetailStyle.img_profile}
             />
             <View>
-              <Text style={msgDetailStyle.text_title}>{route.params.title}</Text>
+              <Text style={msgDetailStyle.text_title}>
+                {route.params.title}
+              </Text>
               {showOptions === false ? (
-                <Text style={msgDetailStyle.press_msg_text}>화면을 터치하면 대화가 나옵니다</Text>
+                <Text style={msgDetailStyle.press_msg_text}>
+                  화면을 터치하면 대화가 나옵니다
+                </Text>
               ) : (
                 <Text></Text>
               )}
@@ -157,24 +159,21 @@ const MessageDetail = ({ route, navigation }: any) => {
             persistentScrollbar={true}
             onTouchStart={() => showScriptItem()}
           >
-            {visibleScripts?.map((data) => (
-              <View
-                key={data[0]}
-                style={[
-                  {
-                    left:
-                      data[1] === 1 ? SCREEN_WIDTH / 30 : SCREEN_WIDTH / 4,
-                  },
-                ]}
-              >
-                <SpeechBubble
-                  bubbleColor={data[1] === 1 ? "#f2f2f2" : "#00284E"}
-                  bubbleDirection={data[1] === 1 ? "left" : "right"}
-                  textColor={data[1] === 1 ? "#000000" : "#ffffff"}
-                  textContent={data[0]}
-                />
-              </View>
-            ))}
+            <View style={msgDetailStyle.scroll_div}>
+              {visibleScripts?.map((data, index) => (
+                <View
+                  key={index}
+                  style={data[1] === 2 && { left: SCREEN_WIDTH / 4 }}
+                >
+                  <SpeechBubble
+                    bubbleColor={data[1] === 1 ? "#f2f2f2" : "#00284E"}
+                    bubbleDirection={data[1] === 1 ? "left" : "right"}
+                    textColor={data[1] === 1 ? "#000000" : "#ffffff"}
+                    textContent={data[0]}
+                  />
+                </View>
+              ))}
+            </View>
             {showOptions === false ? (
               <Text></Text>
             ) : (
@@ -186,7 +185,8 @@ const MessageDetail = ({ route, navigation }: any) => {
                   <View key={item}>
                     <TouchableOpacity
                       onPress={() => handleClickCorrect(item[1])}
-                      style={msgDetailStyle.choice_box_child}>
+                      style={msgDetailStyle.choice_box_child}
+                    >
                       <Text style={msgDetailStyle.text_choice}>{item[0]}</Text>
                     </TouchableOpacity>
                   </View>
