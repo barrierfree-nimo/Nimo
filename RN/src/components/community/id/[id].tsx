@@ -42,10 +42,14 @@ const CommunityDetail = ({ route, navigation }: any) => {
   const [commentId, setCommentId] = useState<number>(-1);
   const [localName, setLocalName] = useState<string | null>("");
   const [commentModify, setCommentModify] = useState<string>("");
+  const [selectedProps, setSelectedProps] = useState<string>("");
 
   useEffect(() => {
     return () => {
-      fetchCommunityDetail();
+      if (commentModify !== "") {
+        fetchCommunityDetail();
+      }
+      setCommentModify("");
     };
   }, [commentModify]);
 
@@ -158,6 +162,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
         break;
       case "modify":
         // 수정 >>  댓글이면 -> input으로 바꾸고, 글이면 write로 보내줌(변동 없는지도 확인)
+        focusedType === "comment" && setSelectedProps("modify");
         setSelected("");
         break;
       case "delete":
@@ -298,7 +303,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
             <View style={communityDetailStyle.lineStyle} />
             <ScrollView style={communityDetailStyle.comment_scroll}>
               <View>
-                {comment.length === 0 ? (
+                {commentModify === "" && comment.length === 0 ? (
                   <Text style={communityDetailStyle.comment_text}>
                     해당 게시물에 댓글이 없습니다.
                   </Text>
@@ -318,6 +323,8 @@ const CommunityDetail = ({ route, navigation }: any) => {
                           updatedAt={updatedAt}
                           user_nickname={user_nickname}
                           commentModify={commentId === id}
+                          selectedProps={selectedProps}
+                          setSelectedProps={setSelectedProps}
                           setCommentModify={setCommentModify}
                           setFocusedType={setFocusedType}
                           setPostName={setPostName}

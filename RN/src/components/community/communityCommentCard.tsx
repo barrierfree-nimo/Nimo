@@ -21,7 +21,9 @@ export interface CommunityCardProps {
   createdAt: string;
   updatedAt: string;
   user_nickname: string;
+  selectedProps: string;
   commentModify: boolean;
+  setSelectedProps: (selectedProps: string) => void;
   setCommentModify: (modify: string) => void;
   setFocusedType: (focusedType: string) => void;
   setPostName: (postName: string) => void;
@@ -37,6 +39,8 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
     updatedAt,
     user_nickname,
     commentModify,
+    selectedProps,
+    setSelectedProps,
     setCommentModify,
     setFocusedType,
     setPostName,
@@ -49,12 +53,14 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
   useEffect(() => {
     console.log(render);
     render === "cancel" && setCommentModify("false"),
+      setSelectedProps(""),
       setFocusedType(""),
       setCommentId(-1),
       setRender(""),
       setNewComment(contents);
 
     render === "apply" && setCommentModify("true"),
+      setSelectedProps(""),
       setFocusedType(""),
       setCommentId(-1),
       setRender(""),
@@ -134,7 +140,7 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
         </View>
       </View>
       <View style={styles.contents_wrapper}>
-        {render === "" && commentModify ? (
+        {render === "" && commentModify && selectedProps === "modify" ? (
           <>
             <TextInput
               value={newComment}
