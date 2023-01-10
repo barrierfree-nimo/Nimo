@@ -16,13 +16,23 @@ const SimulMsgStyle = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  message_div_title: {
+    flexDirection: "row",
+    width: SCREEN_WIDTH - 40,
+    marginTop: 60,
+    marginLeft: 40,
+  },
   text_title: {
     alignSelf: "flex-start",
-    marginTop: 60,
     marginBottom: 20,
-    marginLeft: 30,
     fontSize: 32,
     fontWeight: "900",
+  },
+  ic_msg: {
+    width: 30,
+    height: 30,
+    marginTop: 5,
+    marginLeft: 15,
   },
   msg_card_div: {
     flex: 10,

@@ -141,6 +141,7 @@ const VoiceDetail = ({ route, navigation }: any) => {
       <View style={styles.phone_div}>
         <View style={styles.content_container}>
           {ok === false ? (
+            // 전화 오는 화면
             <View style={styles.container_phone}>
               <Text style={styles.text_phoneNum}>010-1234-5678</Text>
               <Image
@@ -149,7 +150,8 @@ const VoiceDetail = ({ route, navigation }: any) => {
               />
 
               <View style={styles.container_btn_call}>
-                <TouchableOpacity onPress={() => start()}>
+                <TouchableOpacity onPress={() => start()}
+                  style={styles.btn_call_start}>
                   <Image
                     source={require("../../../assets/icons/simul_voice/ic_call.png")}
                   />
@@ -162,14 +164,15 @@ const VoiceDetail = ({ route, navigation }: any) => {
               </View>
             </View>
           ) : (
+            // 전화 받은 후 화면
             <View style={styles.container_phone}>
               <Text style={styles.text_phoneNum}>010-1234-5678</Text>
               {showOptions === false ? (
-                <Text style={styles.text_callTime}>화면을 클릭하시면 대화가 나옵니다</Text>
+                <Text style={styles.text_callTime}>화면을 터치하면 대화가 나옵니다</Text>
               ) : (
                 <Text></Text>
               )}
-
+              {/* 대화창 */}
               <ScrollView
                 ref={scrollViewRef}
                 onContentSizeChange={() =>
@@ -277,6 +280,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 60,
     marginTop: 120,
+  },
+  btn_call_start: {
+    
   },
   container_bubble_voice: {
     width: SCREEN_WIDTH,

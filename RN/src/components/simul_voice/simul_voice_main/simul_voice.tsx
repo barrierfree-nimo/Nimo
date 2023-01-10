@@ -70,7 +70,8 @@ const VoiceSimul = ({ navigation }: any) => {
             <Text style={SimulVoiceStyle.text_title}>최근 통화</Text>
             <Image 
               source={require("../../../assets/icons/simul_voice/ic_phone.png")} 
-              style={SimulVoiceStyle.ic_phone} />
+              style={SimulVoiceStyle.ic_phone}
+              resizeMode="contain" />
           </View>
           
           <ScrollView>

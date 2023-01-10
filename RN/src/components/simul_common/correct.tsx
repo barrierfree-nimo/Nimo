@@ -64,6 +64,11 @@ const CorrectPage = ({ route, navigation }: any) => {
               styles.color_box
             }
           >
+            <Image
+              source={require("../../assets/icons/simul_common/ic_correct.png")}
+              style={styles.img}
+              resizeMode="contain"
+            />
             <Text style={[
               styles.text_title,
               { color: isCorrect ? "blue" : "red" },
@@ -97,7 +102,11 @@ const styles = StyleSheet.create({
     padding: 30,
     paddingBottom: 50,
     borderRadius: 15,
-    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
+  },
+  img: {
+    height: 60,
+    marginBottom: 10,
   },
   text_title: {
     color: "#ffffff",
@@ -106,7 +115,7 @@ const styles = StyleSheet.create({
   },
   text_content: {
     color: "gray",
-    fontSize: 20,
+    fontSize: 19,
     fontWeight: "600",
     top: 20,
     lineHeight: 30,

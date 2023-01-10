@@ -46,27 +46,34 @@ const MessageSimul = ({ navigation }: any) => {
     }
   };
 
-  const handleOnPress = (simulNum: number) => {
+  const handleOnPress = (simulNum: number, title: string) => {
     navigation.navigate("MessageDetail", {
       simulNum: simulNum,
+      title: title
     });
   };
 
   return (
     <SafeAreaView style={CommonStyle.container}>
       <Image
-        source={require("../../../assets/icons/simul_message/message_bg.png")}
+        source={require("../../../assets/icons/simul_message/msg_bg_white.png")}
         style={SimulMainStyle.img_galaxy}
       />
 
       {/* 스마트폰 */}
       <View style={SimulMsgStyle.phone_div}>
         <View style={SimulMsgStyle.message_div}>
-          <Text style={SimulMsgStyle.text_title}>메세지</Text>
+          <View style={SimulMsgStyle.message_div_title}>
+            <Text style={SimulMsgStyle.text_title}>메시지</Text>
+            <Image 
+              source={require("../../../assets/icons/simul_message/ic_msg.png")} 
+              style={SimulMsgStyle.ic_msg}
+              resizeMode="contain" />
+          </View>
           <ScrollView>
             <View style={SimulMsgStyle.msg_card_div}>
               {simulList?.map(({ simulNum, title, commentary, done }) => (
-                <TouchableOpacity onPress={() => handleOnPress(simulNum)}>
+                <TouchableOpacity onPress={() => handleOnPress(simulNum, title)}>
                   <MessageCard key={simulNum} title={title} done={done} />
                 </TouchableOpacity>
               ))}

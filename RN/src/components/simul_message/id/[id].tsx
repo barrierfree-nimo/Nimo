@@ -23,75 +23,101 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 //response 1은 발신자, 2는 수신자, 3은 정답, 4는 오답
 const MessageDetail = ({ route, navigation }: any) => {
   const scrollViewRef = useRef<ScrollView | null>(null);
-  const [scripts, setScripts] = useState<any[]>();
-  const [filteredScripts, setFilteredScripts] = useState<any[]>();
-  const [commentary, setCommentary] = useState<string>();
-  const [correct, setCorrect] = useState<string>();
-  const [wrong, setWrong] = useState<string>();
-  const [visibleScripts, setVisibleScripts] = useState<any[]>([]);
-  const [visibleNum, setVisibleNum] = useState<number>(0);
-  const [showChoice, setShowChoice] = useState<boolean>(false);
+  const [data, setData] = useState<any[]>();
+  const [scripts, setScripts] = useState<any[]>([]);
+  const [visibleScripts, setVisibleScripts] = useState<any[]>();
+  const [options, setOptions] = useState<any[]>([]);
+  const [commentary, setCommentary] = useState<string>("");
+  const [showOptions, setShowOptions] = useState(false);
+  const nextId = useRef<number>(0);
 
   useEffect(() => {
-    fetchSimulMsgDetail();
+    fetchData();
   }, []);
 
-  const fetchSimulMsgDetail = async () => {
+  const fetchData = async () => {
     const token = await AsyncStorage.getItem("user_Token");
-    try {
-      Axios.get(baseURL + `/simulation/msg/${route.params.simulNum}`, {
-        headers: {
-          accessToken: `${token}`,
-        },
-      }).then((res) => {
-        setScripts(res.data.scripts);
-        setCommentary(res.data.commentary);
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
-  useEffect(() => {
-    let arr = [];
-    if (scripts) {
-      setVisibleScripts([...(visibleScripts || []), scripts[0]]);
-      setVisibleNum(0);
-      for (let i = 0; i < scripts?.length; i++) {
-        const text = scripts[i][0];
-        const responseType = scripts[i][1];
-        if (responseType === 1 || responseType === 2) {
-          arr.push(scripts[i]);
-        } else if (responseType === 3) {
-          setCorrect(text);
-        } else if (responseType === 4) {
-          setWrong(text);
-        }
+    if(token != null) {
+      try {
+        Axios.get(baseURL + `/simulation/msg/${route.params.simulNum}`, {
+          headers: {
+            accessToken: `${token}`,
+          },
+        }).then((res) => {
+          setData(res.data.scripts);
+          setCommentary(String(res.data.commentary));
+        });
+      } catch (err) {
+        console.log(err);
       }
-      setFilteredScripts(arr);
     }
-  }, [scripts]);
-
-  const addScript = () => {
-    setVisibleNum((prev) => prev + 1);
   };
 
   useEffect(() => {
-    if (filteredScripts) {
-      visibleNum === filteredScripts.length
-        ? setShowChoice(true)
-        : setVisibleScripts([...visibleScripts, filteredScripts[visibleNum]]);
-    }
-  }, [visibleNum]);
+    setScriptItem();
+  }, [data]);
 
-  const handleClickCorrect = (isCorrect: boolean) => {
-    navigation.navigate("CorrectPage", {
-      commentary: commentary,
-      type: "msg",
-      simulNum: route.params.simulNum,
-      correct: isCorrect,
-    });
+  // Data to [Scripts or Options]
+  const setScriptItem = async () => {
+    let temp_scripts = [];
+    let temp_options = [];
+
+    if (data) {
+      for (let i = 0; i < data.length; i++) {
+        const contents = String(data[i][0]);
+        const response = Number(data[i][1]);
+
+        if (response == 1 || response == 2)
+          temp_scripts.push([contents, response]);
+        else temp_options.push([contents, response]);
+      }
+      setScripts(temp_scripts);
+      setOptions(temp_options);
+    }
   };
+
+  // 화면 터치 시 말풍선 보이게
+  const showScriptItem = async () => {
+    if (scripts.length == nextId.current) {
+      setShowOptions(true);
+      return;
+    }
+
+    const item = scripts[nextId.current];
+
+    setVisibleScripts([...(visibleScripts || []), item]);
+    nextId.current += 1;
+  };
+
+  // 대응방법 선택 시 >> 완료 처리
+  const handleClickCorrect = async (response: number) => {
+    const isCorrect = response === 3 ? true : false;
+    const token = await AsyncStorage.getItem("user_Token");
+
+    if (token != null) {
+      const data = {
+        type: "msg",
+        simulNum: Number(route.params.simulNum),
+      };
+
+      try {
+        Axios.post(baseURL + `/simulation/done`, data, {
+          headers: { accessToken: `${token}` },
+        }).then(() => {
+          navigation.navigate("CorrectPage", {
+            commentary: commentary,
+            type: "msg",
+            simulNum: route.params.simulNum,
+            correct: isCorrect,
+          });
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
 
   return (
     <SafeAreaView style={CommonStyle.container}>
@@ -102,6 +128,7 @@ const MessageDetail = ({ route, navigation }: any) => {
       {/* 폰 화면 */}
       <View style={msgDetailStyle.phone_div}>
         <View style={msgDetailStyle.phone_detail_div}>
+
           {/* 헤더 */}
           <View style={msgDetailStyle.header}>
             <Image
@@ -109,68 +136,64 @@ const MessageDetail = ({ route, navigation }: any) => {
               style={msgDetailStyle.img_profile}
             />
             <View>
-              <Text style={msgDetailStyle.text_title}>지인 사칭형 피싱</Text>
+              <Text style={msgDetailStyle.text_title}>{route.params.title}</Text>
+              {showOptions === false ? (
+                <Text style={msgDetailStyle.press_msg_text}>화면을 터치하면 대화가 나옵니다</Text>
+              ) : (
+                <Text></Text>
+              )}
             </View>
             <View style={msgDetailStyle.lineStyle} />
           </View>
+
           {/* 대화창 */}
-          <TouchableOpacity
-            style={msgDetailStyle.text_container}
-            onPress={() => addScript()}
+          <ScrollView
+            ref={scrollViewRef}
+            onContentSizeChange={() =>
+              scrollViewRef.current &&
+              scrollViewRef.current.scrollToEnd({ animated: true })
+            }
+            style={msgDetailStyle.scroll}
+            persistentScrollbar={true}
+            onTouchStart={() => showScriptItem()}
           >
-            <Text style={msgDetailStyle.press_msg_text}>
-              화면을 클릭하시면 메세지가 나옵니다
-            </Text>
-            <ScrollView
-              ref={scrollViewRef}
-              onContentSizeChange={() =>
-                scrollViewRef.current &&
-                scrollViewRef.current.scrollToEnd({ animated: true })
-              }
-              style={msgDetailStyle.scroll}
-              persistentScrollbar={true}
-            >
-              {visibleScripts?.map((data) => (
-                <View
-                  style={[
-                    {
-                      left:
-                        data[1] === 1 ? SCREEN_WIDTH / 30 : SCREEN_WIDTH / 4,
-                    },
-                  ]}
-                >
-                  <SpeechBubble
-                    bubbleColor={data[1] === 1 ? "#f2f2f2" : "#00284E"}
-                    bubbleDirection={data[1] === 1 ? "left" : "right"}
-                    textColor={data[1] === 1 ? "#000000" : "#ffffff"}
-                    textContent={data[0]}
-                  />
-                </View>
-              ))}
+            {visibleScripts?.map((data) => (
               <View
+                key={data[0]}
                 style={[
-                  msgDetailStyle.choice_box,
-                  showChoice ? { display: "flex" } : { display: "none" },
+                  {
+                    left:
+                      data[1] === 1 ? SCREEN_WIDTH / 30 : SCREEN_WIDTH / 4,
+                  },
                 ]}
               >
+                <SpeechBubble
+                  bubbleColor={data[1] === 1 ? "#f2f2f2" : "#00284E"}
+                  bubbleDirection={data[1] === 1 ? "left" : "right"}
+                  textColor={data[1] === 1 ? "#000000" : "#ffffff"}
+                  textContent={data[0]}
+                />
+              </View>
+            ))}
+            {showOptions === false ? (
+              <Text></Text>
+            ) : (
+              <View style={msgDetailStyle.choice_box}>
                 <Text style={msgDetailStyle.text_notice_select}>
                   대응 방법을 선택해주세요
                 </Text>
-                <TouchableOpacity
-                  onPress={() => handleClickCorrect(true)}
-                  style={msgDetailStyle.choice_box_child}
-                >
-                  <Text style={msgDetailStyle.text_choice}>{correct}</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => handleClickCorrect(false)}
-                  style={msgDetailStyle.choice_box_child}
-                >
-                  <Text style={msgDetailStyle.text_choice}>{wrong}</Text>
-                </TouchableOpacity>
+                {options?.map((item) => (
+                  <View key={item}>
+                    <TouchableOpacity
+                      onPress={() => handleClickCorrect(item[1])}
+                      style={msgDetailStyle.choice_box_child}>
+                      <Text style={msgDetailStyle.text_choice}>{item[0]}</Text>
+                    </TouchableOpacity>
+                  </View>
+                ))}
               </View>
-            </ScrollView>
-          </TouchableOpacity>
+            )}
+          </ScrollView>
         </View>
         <NavigateBtn navigation={navigation} />
       </View>

@@ -46,27 +46,36 @@ const SnsSimul = ({ navigation }: any) => {
     }
   };
 
-  const handleOnPress = (simulNum: number) => {
+  const handleOnPress = (simulNum: number, title: string) => {
     navigation.navigate("SnsDetail", {
       simulNum: simulNum,
+      title: title
     });
   };
 
   return (
     <SafeAreaView style={CommonStyle.container}>
       <Image
-        source={require("../../../assets/icons/simul_message/message_bg.png")}
+        source={require("../../../assets/icons/simul_sns/sns_bg_white.png")}
         style={SimulMainStyle.img_galaxy}
       />
 
       {/* 스마트폰 */}
       <View style={SimulSnsStyle.phone_div}>
-        <View style={SimulSnsStyle.message_div}>
-          <Text style={SimulSnsStyle.text_title}>SNS</Text>
+        <View style={SimulSnsStyle.sns_div}>
+          <View style={SimulSnsStyle.sns_div_title}>
+            <Image 
+              source={require("../../../assets/icons/simul_sns/ic_sns.png")} 
+              style={SimulSnsStyle.ic_sns}
+              resizeMode="contain" />
+            <Text style={SimulSnsStyle.text_title}>Talk</Text>
+          </View>
+          
+
           <ScrollView>
             <View style={SimulSnsStyle.msg_card_div}>
               {simulList?.map(({ simulNum, title, commentary, done }) => (
-                <TouchableOpacity onPress={() => handleOnPress(simulNum)}>
+                <TouchableOpacity onPress={() => handleOnPress(simulNum, title)}>
                   <MessageCard key={simulNum} title={title} done={done} />
                 </TouchableOpacity>
               ))}

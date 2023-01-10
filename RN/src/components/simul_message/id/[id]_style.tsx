@@ -23,6 +23,7 @@ const msgDetailStyle = StyleSheet.create({
     marginTop: 40,
   },
   text_title: {
+    textAlign: 'center',
     fontSize: 22,
     fontWeight: "700",
     marginTop: 5,
@@ -34,10 +35,11 @@ const msgDetailStyle = StyleSheet.create({
     width: SCREEN_WIDTH - 80,
   },
   press_msg_text: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 17,
     fontWeight: "500",
     marginTop: 5,
+    color: "#828282"
   },
   text_container: {
     width: SCREEN_WIDTH,
@@ -46,8 +48,8 @@ const msgDetailStyle = StyleSheet.create({
   },
   scroll: {
     marginTop: 20,
-    paddingTop: 10,
-    paddingHorizontal: 40,
+    paddingTop: 5,
+    paddingHorizontal: 10,
     alignContent: "center",
   },
   choice_box: {
