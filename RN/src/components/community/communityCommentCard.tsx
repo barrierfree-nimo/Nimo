@@ -6,34 +6,51 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
+import Axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import baseURL from "../baseURL";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export interface CommunityCardProps {
-  postId: number;
+  commentId: number;
   contents: string;
   createdAt: string;
   updatedAt: string;
   user_nickname: string;
-  isId: boolean;
-  setFocusedType?: (focusedType: string) => void;
-  setPostName?: (postName: string) => void;
-  setPostId?: (postId: number) => void;
+  commentModify: boolean;
+  setCommentModify: React.Dispatch<React.SetStateAction<boolean>>;
+  setFocusedType: (focusedType: string) => void;
+  setPostName: (postName: string) => void;
+  setCommentId: (postId: number) => void;
 }
 
 const CommunityCommentCard = (props: CommunityCardProps) => {
   const {
-    postId,
+    commentId,
     contents,
     createdAt,
     updatedAt,
     user_nickname,
+    commentModify,
+    setCommentModify,
     setFocusedType,
     setPostName,
-    setPostId,
+    setCommentId,
   } = props;
   const [userTime, setUserTime] = useState<string | number>("");
+  const [newComment, setNewComment] = useState<string>(contents);
+  const [modify, setModify] = useState<string>("");
+
+  useEffect(() => {
+    modify === "cancel" && setModify(""),
+      setCommentModify(false),
+      setFocusedType(""),
+      setCommentId(-1),
+      setNewComment(contents);
+  }, [modify]);
 
   useEffect(() => {
     let timeString;
@@ -55,6 +72,25 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
       : setUserTime(timeString + "(수정됨)");
   }, [updatedAt]);
 
+  const fetchCommentPatch = async () => {
+    const token = await AsyncStorage.getItem("user_Token");
+    try {
+      await Axios.delete(baseURL + `/community/post/${commentId}`, {
+        headers: { accessToken: `${token}` },
+      })
+        .then((res) => {
+          if (res.status === 201) {
+            console.log("success");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <View style={styles.card_container}>
@@ -72,18 +108,43 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
           <TouchableOpacity
             style={styles.modal_btn}
             onPress={() => {
-              setFocusedType && setFocusedType("comment");
-              setPostId && setPostId(postId);
-              setPostName && setPostName(user_nickname);
+              setFocusedType("comment");
+              setCommentId(commentId);
+              setPostName(user_nickname);
             }}
           >
             <Text style={styles.modal_btn_text}>수정 / 신고</Text>
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.contents_wrapper}>
-        <Text style={styles.text_contents}>{contents}</Text>
-      </View>
+      {modify === "" && commentModify ? (
+        <View style={styles.contents_wrapper}>
+          <TextInput
+            value={newComment}
+            onChangeText={(comment) => setNewComment(comment)}
+            style={styles.text_input}
+            placeholder="댓글을 수정해주세요"
+          />
+          <View style={styles.btn_wrapper}>
+            <TouchableOpacity
+              style={styles.btn_div}
+              onPress={() => fetchCommentPatch()}
+            >
+              <Text style={styles.btn_text}>등록</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.btn_div, { marginLeft: 20 }]}
+              onPress={() => setModify("cancel")}
+            >
+              <Text style={styles.btn_text}>취소</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      ) : (
+        <View style={styles.contents_wrapper}>
+          <Text style={styles.text_contents}>{contents}</Text>
+        </View>
+      )}
       <View style={styles.lineStyle} />
     </>
   );
@@ -136,16 +197,47 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "400",
   },
+  text_input: {
+    backgroundColor: "#E6E6E6",
+    padding: 10,
+    borderRadius: 5,
+    color: "#000000",
+    fontSize: 18,
+    fontWeight: "400",
+    flex: 5,
+  },
   contents_wrapper: {
     marginTop: 10,
     marginLeft: 40,
-    marginRight: 20,
+    marginRight: 10,
   },
   lineStyle: {
     marginTop: 10,
     borderWidth: 0.5,
     borderColor: "gray",
     marginBottom: 20,
+  },
+  btn_wrapper: {
+    flex: 2,
+    flexDirection: "row",
+    width: SCREEN_WIDTH - 120,
+    justifyContent: "space-around",
+    paddingTop: 10,
+    paddingLeft: "60%",
+  },
+  btn_div: {
+    width: 40,
+    height: 30,
+    backgroundColor: "#00284E",
+    padding: 5,
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  btn_text: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "500",
   },
 });
 

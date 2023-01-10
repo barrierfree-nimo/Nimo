@@ -39,7 +39,9 @@ const CommunityDetail = ({ route, navigation }: any) => {
   const [focusedType, setFocusedType] = useState<string>("");
   const [postName, setPostName] = useState<string>("");
   const [postId, setPostId] = useState<number>(-1);
+  const [commentId, setCommentId] = useState<number>(-1);
   const [localName, setLocalName] = useState<string | null>("");
+  const [commentModify, setCommentModify] = useState<boolean>(false);
 
   //render
   const isFocused = useIsFocused();
@@ -144,6 +146,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
         break;
       case "modify":
         // 수정 >>  댓글이면 -> input으로 바꾸고, 글이면 write로 보내줌(변동 없는지도 확인)
+        focusedType === "comment" && setCommentModify(true);
         break;
       case "delete":
         focusedType === "post" && fetchPostDelete();
@@ -221,10 +224,9 @@ const CommunityDetail = ({ route, navigation }: any) => {
   };
 
   const fetchCommentDelete = async () => {
-    console.log("post id>>>>", postId);
     const token = await AsyncStorage.getItem("user_Token");
     try {
-      Axios.delete(baseURL + `/community/comment/${postId}`, {
+      Axios.delete(baseURL + `/community/comment/${commentId}`, {
         headers: {
           accessToken: `${token}`,
         },
@@ -296,15 +298,16 @@ const CommunityDetail = ({ route, navigation }: any) => {
                       ) => (
                         <CommunityCommentCard
                           key={idx}
-                          postId={id}
+                          commentId={id}
                           contents={contents}
                           createdAt={createdAt}
                           updatedAt={updatedAt}
                           user_nickname={user_nickname}
-                          isId={true}
+                          commentModify={commentId === id}
+                          setCommentModify={() => setCommentModify}
                           setFocusedType={setFocusedType}
                           setPostName={setPostName}
-                          setPostId={setPostId}
+                          setCommentId={setCommentId}
                         />
                       )
                     )}

@@ -181,12 +181,10 @@ const CommunityMain = ({ navigation }: any) => {
                 ) => (
                   <TouchableOpacity key={idx} onPress={() => handleOnPress(id)}>
                     <CommunityCard
-                      postId={id}
                       contents={contents}
                       createdAt={createdAt}
                       updatedAt={updatedAt}
                       user_nickname={user_nickname}
-                      isId={false}
                     />
                   </TouchableOpacity>
                 )

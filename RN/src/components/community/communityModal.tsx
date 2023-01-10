@@ -54,7 +54,6 @@ const CommunityModal = (props: CommunityModalProps) => {
               onPress={() => {
                 setSelected("modify");
                 setModalVisible(false);
-                setFocusedType("");
               }}
               style={styles.report_box}
             >
@@ -83,7 +82,7 @@ const CommunityModal = (props: CommunityModalProps) => {
           </TouchableOpacity>
         </View>
       </Modal>
-      <Modal
+      {/* <Modal
         isVisible={delModalVisible}
         useNativeDriver={true}
         hideModalContentWhileAnimating={true}
@@ -116,7 +115,7 @@ const CommunityModal = (props: CommunityModalProps) => {
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
+      </Modal> */}
     </SafeAreaView>
   );
 };
@@ -130,12 +129,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: "black",
     borderWidth: 1,
-    borderRadius: 5
+    borderRadius: 5,
   },
   report_text_white: {
     fontSize: 20,
     fontWeight: "600",
-    color: "#FFFFFF"
+    color: "#FFFFFF",
   },
   report_text: {
     fontSize: 20,
