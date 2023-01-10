@@ -60,12 +60,14 @@ const CorrectPage = ({ route, navigation }: any) => {
       <View style={styles.phone_div}>
         <View style={styles.content_container}>
           <View
-            style={[
-              styles.color_box,
-              { backgroundColor: isCorrect ? "blue" : "red" },
-            ]}
+            style={
+              styles.color_box
+            }
           >
-            <Text style={styles.text_title}>{titleText}</Text>
+            <Text style={[
+              styles.text_title,
+              { color: isCorrect ? "blue" : "red" },
+            ]}>{titleText}</Text>
             <Text style={styles.text_content}>{commentary}</Text>
           </View>
         </View>
@@ -85,27 +87,29 @@ const styles = StyleSheet.create({
   },
   content_container: {
     height: "80%",
+    justifyContent: 'center'
   },
   color_box: {
     width: SCREEN_WIDTH - 100,
     alignItems: "center",
     justifyContent: "center",
-
     marginTop: 50,
     padding: 30,
-    paddingBottom: 90,
+    paddingBottom: 50,
     borderRadius: 15,
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
   },
   text_title: {
     color: "#ffffff",
-    fontSize: 40,
+    fontSize: 32,
     fontWeight: "900",
   },
   text_content: {
-    color: "#ffffff",
-    fontSize: 25,
+    color: "gray",
+    fontSize: 20,
     fontWeight: "600",
-    top: 40,
+    top: 20,
+    lineHeight: 30,
   },
 });
 

@@ -81,7 +81,11 @@ const SimulMain = ({ navigation }: any) => {
           )}
           {type === "msg" && (
             <TouchableOpacity
-              onPress={() => navigation.navigate("MessageSimul")}
+              onPress={() =>
+                navigation.navigate("MessageDetail", {
+                  simulNum: num,
+                })
+              }
             >
               <Image
                 source={require("../../assets/icons/simul_main/message_push.png")}
@@ -90,7 +94,12 @@ const SimulMain = ({ navigation }: any) => {
             </TouchableOpacity>
           )}
           {type === "voice" && (
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("VoiceDetail", {
+                  simulNum: num,
+                })
+              }>
               <Image
                 source={require("../../assets/icons/simul_main/call_push.png")}
                 style={SimulMainStyle.img_push}

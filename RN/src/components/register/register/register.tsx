@@ -20,7 +20,6 @@ const Register = ({navigation}: any) => {
   // 닉네임 중복 체크
   const checkNickname = async () => {
     try {
-      console.log(nickname)
       if(nickname.length < 5) {
         showToast("5자 이상의 아이디를 설정해주세요.");
         return;
@@ -53,6 +52,11 @@ const Register = ({navigation}: any) => {
   
   // 회원가입
   const addUser = () => {
+    if(password.length < 8) {
+      showToast("8자 이상의 비밀번호를 설정해주세요.");
+      return;
+    }
+
     if(nicknameOk && passwordOk && termsOk) {
       Axios.post(baseURL + '/user/join', {
         nickname: nickname,

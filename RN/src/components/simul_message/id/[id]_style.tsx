@@ -34,10 +34,10 @@ const msgDetailStyle = StyleSheet.create({
     width: SCREEN_WIDTH - 80,
   },
   press_msg_text: {
-    fontSize: 20,
+    textAlign: "center",
+    fontSize: 17,
     fontWeight: "500",
     marginTop: 5,
-    marginLeft: 40,
   },
   text_container: {
     width: SCREEN_WIDTH,
