@@ -26,8 +26,8 @@ const CommunityModal = (props: CommunityModalProps) => {
         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
       >
         <View>
-          <View style={[styles.report_box, { backgroundColor: "lightgray" }]}>
-            <Text style={styles.report_text}>메뉴</Text>
+          <View style={[styles.report_box, { backgroundColor: "#00284E" }]}>
+            <Text style={styles.report_text_white}>메뉴</Text>
           </View>
           <TouchableOpacity
             onPress={() => {
@@ -47,7 +47,7 @@ const CommunityModal = (props: CommunityModalProps) => {
             }}
             style={styles.report_box}
           >
-            <Text style={styles.report_text}>게시물/댓글 신고</Text>
+            <Text style={styles.report_text}>게시물 / 댓글 신고</Text>
           </TouchableOpacity>
           {canUD === true && (
             <TouchableOpacity
@@ -77,9 +77,9 @@ const CommunityModal = (props: CommunityModalProps) => {
               setModalVisible(false);
               setFocusedType("");
             }}
-            style={[styles.report_box, { backgroundColor: "lightgray" }]}
+            style={[styles.report_box, { backgroundColor: "#00284E" }]}
           >
-            <Text style={styles.report_text}>취소</Text>
+            <Text style={styles.report_text_white}>취소</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -123,13 +123,19 @@ const CommunityModal = (props: CommunityModalProps) => {
 
 const styles = StyleSheet.create({
   report_box: {
-    width: "SCREEN_WIDTH - 80",
+    width: SCREEN_WIDTH - 80,
     height: SCREEN_WIDTH / 6,
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
     borderColor: "black",
-    borderWidth: 3,
+    borderWidth: 1,
+    borderRadius: 5
+  },
+  report_text_white: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: "#FFFFFF"
   },
   report_text: {
     fontSize: 20,

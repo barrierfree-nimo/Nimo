@@ -22,7 +22,7 @@ export interface CommunityCardProps {
   setPostId?: (postId: number) => void;
 }
 
-const CommunityCard = (props: CommunityCardProps) => {
+const CommunityCommentCard = (props: CommunityCardProps) => {
   const {
     postId,
     contents,
@@ -127,11 +127,12 @@ const styles = StyleSheet.create({
   modal_btn: {
     float: "right",
     position: "absolute",
-    marginLeft: SCREEN_WIDTH / 2 + 40,
+    width: "auto",
+    marginLeft: SCREEN_WIDTH / 2 + 60,
     borderWidth: 1,
     borderColor: "#C3C3C3",
     justifyContent: "center",
-    paddingHorizontal: 5,
+    paddingHorizontal: 4,
     borderRadius: 5,
   },
   modal_btn_text: {
@@ -141,13 +142,12 @@ const styles = StyleSheet.create({
   },
   text_contents: {
     color: "#000000",
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: "400",
   },
   contents_wrapper: {
     marginTop: 10,
     marginLeft: 40,
-    height: 30,
   },
   lineStyle: {
     marginTop: 10,
@@ -157,4 +157,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CommunityCard;
+export default CommunityCommentCard;

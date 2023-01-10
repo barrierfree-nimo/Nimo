@@ -12,7 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import baseURL from "../../baseURL";
 import CommonStyle from "../../common/common_style";
 import communityDetailStyle from "./[id]_style";
-import CommunityCard from "../communityCard";
+import CommunityCommentCard from "../communityCommentCard";
 import CommunityModal from "../communityModal";
 import { useIsFocused } from "@react-navigation/native";
 
@@ -246,75 +246,86 @@ const CommunityDetail = ({ route, navigation }: any) => {
         setFocusedType={setFocusedType}
         canUD={postName === localName}
       />
-      <View style={communityDetailStyle.community_container}>
-        <Text style={communityDetailStyle.title_text}>
-          글제목 : {postContent?.title}
-        </Text>
-        <Text style={communityDetailStyle.time_text}>{userTime}</Text>
-        <TouchableOpacity
-          style={communityDetailStyle.modal_btn}
-          onPress={() => {
-            setFocusedType("post");
-            postContent && setPostId(postContent.id);
-            postContent && setPostName(postContent.user_nickname);
-          }}
-        >
-          <Text style={communityDetailStyle.modal_btn_text}>수정/신고</Text>
-        </TouchableOpacity>
-        <View style={communityDetailStyle.content_container}>
-          <Text style={communityDetailStyle.content_text}>
-            {postContent?.contents}
-          </Text>
-        </View>
-        <ScrollView style={communityDetailStyle.comment_container}>
-          <Text style={communityDetailStyle.comment_title}>댓글 목록</Text>
-          <View style={communityDetailStyle.lineStyle} />
-          <View>
-            {!comment || comment.length === 0 ? (
-              <Text style={communityDetailStyle.comment_text}>
-                해당 게시물에 댓글이 없습니다. 첫번째 댓글이 되어주세요.
+      <View style={CommonStyle.container_contents}>
+        <View style={communityDetailStyle.community_container}>
+          <View style={communityDetailStyle.title_container}>
+            <Text style={communityDetailStyle.title_text}>{postContent?.title}</Text>
+            <View style={communityDetailStyle.title_container_sub}>
+              <Text style={communityDetailStyle.time_text}>{userTime}</Text>
+              <TouchableOpacity
+                style={communityDetailStyle.modal_btn}
+                onPress={() => {
+                  setFocusedType("post");
+                  postContent && setPostId(postContent.id);
+                  postContent && setPostName(postContent.user_nickname);
+                }}>
+                <Text style={communityDetailStyle.modal_btn_text}>수정 / 신고</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          
+          <View style={communityDetailStyle.content_container}>
+            <ScrollView style={communityDetailStyle.content_scroll}>
+              <Text style={communityDetailStyle.content_text}>
+                {postContent?.contents}
               </Text>
-            ) : (
+            </ScrollView>
+          </View>
+          
+
+          <View style={communityDetailStyle.comment_container}>
+            <Text style={communityDetailStyle.comment_title}>댓글 목록</Text>
+            <View style={communityDetailStyle.lineStyle} />
+            <ScrollView style={communityDetailStyle.comment_scroll}>
               <View>
-                {comment.map(
-                  (
-                    { user_nickname, createdAt, updatedAt, contents, id },
-                    idx
-                  ) => (
-                    <CommunityCard
-                      key={idx}
-                      postId={id}
-                      contents={contents}
-                      createdAt={createdAt}
-                      updatedAt={updatedAt}
-                      user_nickname={user_nickname}
-                      isId={true}
-                      setFocusedType={setFocusedType}
-                      setPostName={setPostName}
-                      setPostId={setPostId}
-                    />
-                  )
+                {!comment || comment.length === 0 ? (
+                  <Text style={communityDetailStyle.comment_text}>
+                    해당 게시물에 댓글이 없습니다.
+                  </Text>
+                ) : (
+                  <View>
+                    {comment.map(
+                      (
+                        { user_nickname, createdAt, updatedAt, contents, id },
+                        idx
+                      ) => (
+                        <CommunityCommentCard
+                          key={idx}
+                          postId={id}
+                          contents={contents}
+                          createdAt={createdAt}
+                          updatedAt={updatedAt}
+                          user_nickname={user_nickname}
+                          isId={true}
+                          setFocusedType={setFocusedType}
+                          setPostName={setPostName}
+                          setPostId={setPostId}
+                        />
+                      )
+                    )}
+                  </View>
                 )}
               </View>
-            )}
+            </ScrollView>
           </View>
-        </ScrollView>
-      </View>
 
-      <View style={communityDetailStyle.user_comment_container}>
-        <TextInput
-          value={userComment}
-          onChangeText={(userComment) => setUserComment(userComment)}
-          style={communityDetailStyle.user_comment_input}
-          placeholder="댓글을 입력해주세요"
-        />
-        <TouchableOpacity
-          onPress={() => handleCommentPost()}
-          style={communityDetailStyle.user_comment_apply}
-        >
-          <Text style={communityDetailStyle.user_comment_apply_text}>등록</Text>
-        </TouchableOpacity>
+          <View style={communityDetailStyle.user_comment_container}>
+            <TextInput
+              value={userComment}
+              onChangeText={(userComment) => setUserComment(userComment)}
+              style={communityDetailStyle.user_comment_input}
+              placeholder="댓글을 입력해주세요"
+            />
+            <TouchableOpacity
+              onPress={() => handleCommentPost()}
+              style={communityDetailStyle.user_comment_apply}
+            >
+              <Text style={communityDetailStyle.user_comment_apply_text}>등록</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
+      
 
       <View style={CommonStyle.container_exit}>
         <TouchableOpacity onPress={() => navigation.navigate("Main")}>
