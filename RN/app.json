@@ -27,7 +27,7 @@
       "permissions": [
         "RECORD_AUDIO"
       ],
-      "versionCode": 1
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

@@ -180,7 +180,7 @@ const VoiceDetail = ({ route, navigation }: any) => {
               >
                 {visibleScripts?.map((item) => (
                   <View
-                    key={item}
+                    key={item[0]}
                     style={[
                       {
                         left:

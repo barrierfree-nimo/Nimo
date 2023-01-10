@@ -41,14 +41,20 @@ const Banner = (props: BannerProps) => {
         activeDotColor={"#00284E"}
         nextButton={
           <>
-            <Text style={styles.button_arrow_text}>{">"}</Text>
-            <Text style={styles.buttonText}>다음</Text>
+            <View style={styles.container_move}>
+              <Image style={styles.img_move} resizeMode="contain" 
+                source={require("../../assets/icons/quiz/ic_quiz_move_next.png")} />
+              <Text style={styles.buttonText}>다음</Text>
+            </View>
           </>
         }
         prevButton={
           <>
-            <Text style={styles.button_arrow_text}>{"<"}</Text>
-            <Text style={styles.buttonText}>이전</Text>
+            <View style={styles.container_move}>
+              <Image style={styles.img_move} resizeMode="contain"
+                source={require("../../assets/icons/quiz/ic_quiz_move_back.png")} />
+              <Text style={styles.buttonText}>이전</Text>
+            </View>
           </>
         }
       >
@@ -90,20 +96,22 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   text: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "700",
     marginTop: 20,
   },
+  container_move: {
+    paddingHorizontal: 10,
+  },
+  img_move: {
+    width: 50,
+  },
   buttonText: {
-    fontSize: 25,
+    textAlign: 'center',
+    fontSize: 17,
     fontWeight: "600",
     color: "#00284E",
-  },
-  button_arrow_text: {
-    fontSize: 60,
-    fontWeight: "700",
-    color: "#00284E",
-  },
+  }
 });
 
 export default Banner;

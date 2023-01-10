@@ -15,15 +15,15 @@ const AppDoc = ({ navigation }: any) => {
     {
       imgSrc: require("../../assets/images/banner/simul1.png"),
       imgText:
-        "앱을 누르면 시뮬레이션 기록으로, 상단의 알림을 클릭하면 체험으로 바로 이동해요",
+        "앱을 누르면 체험 목록으로, 상단의 알림을 클릭하면 체험으로 바로 이동해요",
     },
     {
       imgSrc: require("../../assets/images/banner/simul2.png"),
-      imgText: "해당 부분을 누르면 체험으로 이동해요.",
+      imgText: "해당 부분을 누르면 체험이 시작됩니다.",
     },
     {
       imgSrc: require("../../assets/images/banner/simul3.png"),
-      imgText: "오른쪽 체크박스로 학습 여부를 알 수 있어요",
+      imgText: "오른쪽 체크박스로 학습 완료 여부를 알 수 있어요",
     },
     {
       imgSrc: require("../../assets/images/banner/simul4.png"),
@@ -32,12 +32,12 @@ const AppDoc = ({ navigation }: any) => {
     {
       imgSrc: require("../../assets/images/banner/simul5.png"),
       imgText:
-        "보이스피싱 체험은 초록색(왼쪽) 버튼을 클릭하면 체험을 시작할 수 있어요",
+        "보이스피싱 체험은 좌측의 전화받기 버튼을 클릭하면 체험을 시작할 수 있어요",
     },
     {
       imgSrc: require("../../assets/images/banner/simul6.png"),
       imgText:
-        "화면을 터치하면 메세지가 나와요. 마지막에는 대응 선택지를 볼 수 있어요",
+        "화면을 터치하면 대화가 나타나요. 마지막에는 대응 방법을 선택할 수 있어요",
     },
   ];
 

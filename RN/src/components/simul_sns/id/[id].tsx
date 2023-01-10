@@ -132,6 +132,7 @@ const SnsDetail = ({ route, navigation }: any) => {
             >
               {visibleScripts?.map((data) => (
                 <View
+                  key={data[0]}
                   style={[
                     {
                       left:
