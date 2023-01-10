@@ -25,6 +25,7 @@ const communityDetailStyle = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: 'center',
+    marginTop: 7
   },
   time_text: {
     textAlign: "right",
@@ -62,7 +63,6 @@ const communityDetailStyle = StyleSheet.create({
   },
   content_scroll: {
     paddingHorizontal: 20,
-    paddingVertical: 10
   },
   content_text: {
     fontSize: 19,

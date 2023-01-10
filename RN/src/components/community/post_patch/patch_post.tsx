@@ -94,10 +94,10 @@ const PatchPost = ({ route, navigation }: any) => {
           setValue={setTag}
           setItems={setItems}
           placeholder="일반/질문/정보"
-          listMode="MODAL"
           modalProps={{
             animationType: "fade",
           }}
+          containerStyle={{ width: 150, height: 40 }}
           modalTitle="분류를 선택해주세요."
           style={PostPatchStyle.tag_input}
         />
