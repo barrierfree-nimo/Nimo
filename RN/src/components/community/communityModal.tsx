@@ -15,7 +15,7 @@ interface CommunityModalProps {
 const CommunityModal = (props: CommunityModalProps) => {
   const { modalVisible, canUD, setModalVisible, setSelected, setFocusedType } =
     props;
-  const [delModalVisible, setDelModalVisible] = useState<boolean>(false);
+  const [delModalVisible, setDelModalVisible] = useState<string>("");
 
   return (
     <SafeAreaView>
@@ -64,7 +64,7 @@ const CommunityModal = (props: CommunityModalProps) => {
             <TouchableOpacity
               onPress={() => {
                 setModalVisible(false);
-                setDelModalVisible(true);
+                setDelModalVisible("true");
               }}
               style={styles.report_box}
             >
@@ -82,8 +82,8 @@ const CommunityModal = (props: CommunityModalProps) => {
           </TouchableOpacity>
         </View>
       </Modal>
-      {/* <Modal
-        isVisible={delModalVisible}
+      <Modal
+        isVisible={delModalVisible === "true"}
         useNativeDriver={true}
         hideModalContentWhileAnimating={true}
         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -96,7 +96,7 @@ const CommunityModal = (props: CommunityModalProps) => {
             <TouchableOpacity
               onPress={() => {
                 setSelected("delete");
-                setDelModalVisible(false);
+                setDelModalVisible("false");
               }}
               style={[
                 styles.del_each,
@@ -107,7 +107,7 @@ const CommunityModal = (props: CommunityModalProps) => {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                setDelModalVisible(false);
+                setDelModalVisible("false");
               }}
               style={styles.del_each}
             >
@@ -115,7 +115,7 @@ const CommunityModal = (props: CommunityModalProps) => {
             </TouchableOpacity>
           </View>
         </View>
-      </Modal> */}
+      </Modal>
     </SafeAreaView>
   );
 };

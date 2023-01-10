@@ -41,7 +41,13 @@ const CommunityDetail = ({ route, navigation }: any) => {
   const [postId, setPostId] = useState<number>(-1);
   const [commentId, setCommentId] = useState<number>(-1);
   const [localName, setLocalName] = useState<string | null>("");
-  const [commentModify, setCommentModify] = useState<boolean>(false);
+  const [commentModify, setCommentModify] = useState<string>("");
+
+  useEffect(() => {
+    return () => {
+      fetchCommunityDetail();
+    };
+  }, [commentModify]);
 
   //render
   const isFocused = useIsFocused();
@@ -63,6 +69,27 @@ const CommunityDetail = ({ route, navigation }: any) => {
   }, [postContent?.createdAt, postContent?.updatedAt]);
 
   useEffect(() => {
+    const now = new Date();
+    if (postContent?.updatedAt) {
+      const then = new Date(postContent?.updatedAt);
+
+      const diffMSec = now.getTime() - then.getTime() + 32400000;
+      const diffMin = Math.floor(diffMSec / (60 * 1000));
+      if (diffMin < 60) {
+        setUserTime(`${diffMin}분 전`);
+      } else if (diffMin >= 60 && diffMin < 60 * 24) {
+        setUserTime(`${Math.floor(diffMin / 60)}시간 전`);
+      } else {
+        setUserTime(postContent?.updatedAt.substring(0, 10));
+      }
+    }
+  }, [postContent?.updatedAt]);
+
+  useEffect(() => {
+    postContent && setPostId(postContent.id);
+  }, [postContent?.id]);
+
+  useEffect(() => {
     fetchCommunityDetail();
     getLocalName();
   }, []);
@@ -82,23 +109,6 @@ const CommunityDetail = ({ route, navigation }: any) => {
       console.log(err);
     }
   };
-
-  useEffect(() => {
-    const now = new Date();
-    if (postContent?.updatedAt) {
-      const then = new Date(postContent?.updatedAt);
-
-      const diffMSec = now.getTime() - then.getTime() + 32400000;
-      const diffMin = Math.floor(diffMSec / (60 * 1000));
-      if (diffMin < 60) {
-        setUserTime(`${diffMin}분 전`);
-      } else if (diffMin >= 60 && diffMin < 60 * 24) {
-        setUserTime(`${Math.floor(diffMin / 60)}시간 전`);
-      } else {
-        setUserTime(postContent?.updatedAt.substring(0, 10));
-      }
-    }
-  }, [postContent?.updatedAt]);
 
   const handleCommentPost = async () => {
     const token = await AsyncStorage.getItem("user_Token");
@@ -139,18 +149,21 @@ const CommunityDetail = ({ route, navigation }: any) => {
     switch (selected) {
       case "user-report":
         fetchCommunityUserReport();
+        setSelected("");
         break;
       case "post-report":
         focusedType === "post" && fetchCommunityPostReport();
         focusedType === "comment" && fetchCommunityCommentReport();
+        setSelected("");
         break;
       case "modify":
         // 수정 >>  댓글이면 -> input으로 바꾸고, 글이면 write로 보내줌(변동 없는지도 확인)
-        focusedType === "comment" && setCommentModify(true);
+        setSelected("");
         break;
       case "delete":
         focusedType === "post" && fetchPostDelete();
         focusedType === "comment" && fetchCommentDelete();
+        setSelected("");
         break;
     }
   }, [selected, focusedType]);
@@ -298,13 +311,14 @@ const CommunityDetail = ({ route, navigation }: any) => {
                       ) => (
                         <CommunityCommentCard
                           key={idx}
+                          postId={postId}
                           commentId={id}
                           contents={contents}
                           createdAt={createdAt}
                           updatedAt={updatedAt}
                           user_nickname={user_nickname}
                           commentModify={commentId === id}
-                          setCommentModify={() => setCommentModify}
+                          setCommentModify={setCommentModify}
                           setFocusedType={setFocusedType}
                           setPostName={setPostName}
                           setCommentId={setCommentId}

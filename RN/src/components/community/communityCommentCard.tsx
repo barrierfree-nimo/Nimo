@@ -15,13 +15,14 @@ import baseURL from "../baseURL";
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export interface CommunityCardProps {
+  postId?: number;
   commentId: number;
   contents: string;
   createdAt: string;
   updatedAt: string;
   user_nickname: string;
   commentModify: boolean;
-  setCommentModify: React.Dispatch<React.SetStateAction<boolean>>;
+  setCommentModify: (modify: string) => void;
   setFocusedType: (focusedType: string) => void;
   setPostName: (postName: string) => void;
   setCommentId: (postId: number) => void;
@@ -29,6 +30,7 @@ export interface CommunityCardProps {
 
 const CommunityCommentCard = (props: CommunityCardProps) => {
   const {
+    postId,
     commentId,
     contents,
     createdAt,
@@ -42,15 +44,22 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
   } = props;
   const [userTime, setUserTime] = useState<string | number>("");
   const [newComment, setNewComment] = useState<string>(contents);
-  const [modify, setModify] = useState<string>("");
+  const [render, setRender] = useState<string>("");
 
   useEffect(() => {
-    modify === "cancel" && setModify(""),
-      setCommentModify(false),
+    console.log(render);
+    render === "cancel" && setCommentModify("false"),
       setFocusedType(""),
       setCommentId(-1),
+      setRender(""),
       setNewComment(contents);
-  }, [modify]);
+
+    render === "apply" && setCommentModify("true"),
+      setFocusedType(""),
+      setCommentId(-1),
+      setRender(""),
+      setNewComment(newComment);
+  }, [render]);
 
   useEffect(() => {
     let timeString;
@@ -75,12 +84,19 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
   const fetchCommentPatch = async () => {
     const token = await AsyncStorage.getItem("user_Token");
     try {
-      await Axios.delete(baseURL + `/community/post/${commentId}`, {
-        headers: { accessToken: `${token}` },
-      })
+      await Axios.patch(
+        baseURL + `/community/comment/${commentId}`,
+        {
+          post_id: postId,
+          contents: newComment,
+        },
+        {
+          headers: { accessToken: `${token}` },
+        }
+      )
         .then((res) => {
           if (res.status === 201) {
-            console.log("success");
+            setRender("apply");
           }
         })
         .catch((err) => {
@@ -117,34 +133,34 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
           </TouchableOpacity>
         </View>
       </View>
-      {modify === "" && commentModify ? (
-        <View style={styles.contents_wrapper}>
-          <TextInput
-            value={newComment}
-            onChangeText={(comment) => setNewComment(comment)}
-            style={styles.text_input}
-            placeholder="댓글을 수정해주세요"
-          />
-          <View style={styles.btn_wrapper}>
-            <TouchableOpacity
-              style={styles.btn_div}
-              onPress={() => fetchCommentPatch()}
-            >
-              <Text style={styles.btn_text}>등록</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.btn_div, { marginLeft: 20 }]}
-              onPress={() => setModify("cancel")}
-            >
-              <Text style={styles.btn_text}>취소</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      ) : (
-        <View style={styles.contents_wrapper}>
+      <View style={styles.contents_wrapper}>
+        {render === "" && commentModify ? (
+          <>
+            <TextInput
+              value={newComment}
+              onChangeText={(comment) => setNewComment(comment)}
+              style={styles.text_input}
+              placeholder="댓글을 수정해주세요"
+            />
+            <View style={styles.btn_wrapper}>
+              <TouchableOpacity
+                style={styles.btn_div}
+                onPress={() => fetchCommentPatch()}
+              >
+                <Text style={styles.btn_text}>등록</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.btn_div, { marginLeft: 20 }]}
+                onPress={() => setRender("cancel")}
+              >
+                <Text style={styles.btn_text}>취소</Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        ) : (
           <Text style={styles.text_contents}>{contents}</Text>
-        </View>
-      )}
+        )}
+      </View>
       <View style={styles.lineStyle} />
     </>
   );
