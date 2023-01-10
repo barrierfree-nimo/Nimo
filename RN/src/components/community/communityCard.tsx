@@ -11,29 +11,14 @@ import {
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export interface CommunityCardProps {
-  postId: number;
   contents: string;
   createdAt: string;
   updatedAt: string;
   user_nickname: string;
-  isId: boolean;
-  setFocusedType?: (focusedType: string) => void;
-  setPostName?: (postName: string) => void;
-  setPostId?: (postId: number) => void;
 }
 
 const CommunityCard = (props: CommunityCardProps) => {
-  const {
-    postId,
-    contents,
-    createdAt,
-    updatedAt,
-    user_nickname,
-    isId,
-    setFocusedType,
-    setPostName,
-    setPostId,
-  } = props;
+  const { contents, createdAt, updatedAt, user_nickname } = props;
   const [userTime, setUserTime] = useState<string | number>("");
   const [previewContent, setPreviewContent] = useState<string>("");
 
@@ -60,7 +45,7 @@ const CommunityCard = (props: CommunityCardProps) => {
   useEffect(() => {
     contents.length < 20
       ? setPreviewContent(contents)
-      : setPreviewContent(`${contents.slice(0, 20)}...`);
+      : setPreviewContent(`${contents.slice(0, 15)}...`);
   }, [contents]);
 
   return (
@@ -76,18 +61,6 @@ const CommunityCard = (props: CommunityCardProps) => {
             <Text style={styles.text_nickname}>{user_nickname}</Text>
             <Text style={styles.text_time}>{userTime}</Text>
           </View>
-          {isId && (
-            <TouchableOpacity
-              style={styles.modal_btn}
-              onPress={() => {
-                setFocusedType && setFocusedType("comment");
-                setPostId && setPostId(postId);
-                setPostName && setPostName(user_nickname);
-              }}
-            >
-              <Text style={styles.modal_btn_text}>수정 / 신고</Text>
-            </TouchableOpacity>
-          )}
         </View>
       </View>
       <View style={styles.contents_wrapper}>
@@ -112,7 +85,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     marginRight: 8,
-    marginTop: 5
+    marginTop: 5,
   },
   text_nickname: {
     color: "#000000",

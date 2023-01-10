@@ -29,13 +29,11 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
     createdAt,
     updatedAt,
     user_nickname,
-    isId,
     setFocusedType,
     setPostName,
     setPostId,
   } = props;
   const [userTime, setUserTime] = useState<string | number>("");
-  const [previewContent, setPreviewContent] = useState<string>("");
 
   useEffect(() => {
     let timeString;
@@ -57,12 +55,6 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
       : setUserTime(timeString + "(수정됨)");
   }, [updatedAt]);
 
-  useEffect(() => {
-    contents.length < 20
-      ? setPreviewContent(contents)
-      : setPreviewContent(`${contents.slice(0, 20)}...`);
-  }, [contents]);
-
   return (
     <>
       <View style={styles.card_container}>
@@ -76,22 +68,21 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
             <Text style={styles.text_nickname}>{user_nickname}</Text>
             <Text style={styles.text_time}>{userTime}</Text>
           </View>
-          {isId && (
-            <TouchableOpacity
-              style={styles.modal_btn}
-              onPress={() => {
-                setFocusedType && setFocusedType("comment");
-                setPostId && setPostId(postId);
-                setPostName && setPostName(user_nickname);
-              }}
-            >
-              <Text style={styles.modal_btn_text}>수정 / 신고</Text>
-            </TouchableOpacity>
-          )}
+
+          <TouchableOpacity
+            style={styles.modal_btn}
+            onPress={() => {
+              setFocusedType && setFocusedType("comment");
+              setPostId && setPostId(postId);
+              setPostName && setPostName(user_nickname);
+            }}
+          >
+            <Text style={styles.modal_btn_text}>수정 / 신고</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.contents_wrapper}>
-        <Text style={styles.text_contents}>{previewContent}</Text>
+        <Text style={styles.text_contents}>{contents}</Text>
       </View>
       <View style={styles.lineStyle} />
     </>
@@ -112,7 +103,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     marginRight: 8,
-    marginTop: 5
+    marginTop: 5,
   },
   text_nickname: {
     color: "#000000",
@@ -128,7 +119,7 @@ const styles = StyleSheet.create({
     float: "right",
     position: "absolute",
     width: "auto",
-    marginLeft: SCREEN_WIDTH / 2 + 60,
+    right: 0,
     borderWidth: 1,
     borderColor: "#C3C3C3",
     justifyContent: "center",
@@ -148,6 +139,7 @@ const styles = StyleSheet.create({
   contents_wrapper: {
     marginTop: 10,
     marginLeft: 40,
+    marginRight: 20,
   },
   lineStyle: {
     marginTop: 10,
