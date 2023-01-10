@@ -15,7 +15,7 @@ interface CommunityModalProps {
 const CommunityModal = (props: CommunityModalProps) => {
   const { modalVisible, canUD, setModalVisible, setSelected, setFocusedType } =
     props;
-  const [delModalVisible, setDelModalVisible] = useState<string>("");
+  // const [delModalVisible, setDelModalVisible] = useState<string>("");
 
   return (
     <SafeAreaView>
@@ -64,7 +64,8 @@ const CommunityModal = (props: CommunityModalProps) => {
             <TouchableOpacity
               onPress={() => {
                 setModalVisible(false);
-                setDelModalVisible("true");
+                setSelected("delete");
+                // setDelModalVisible("true");
               }}
               style={styles.report_box}
             >
@@ -82,40 +83,42 @@ const CommunityModal = (props: CommunityModalProps) => {
           </TouchableOpacity>
         </View>
       </Modal>
-      <Modal
-        isVisible={delModalVisible === "true"}
-        useNativeDriver={true}
-        hideModalContentWhileAnimating={true}
-        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-      >
-        <View style={styles.del_div}>
-          <View style={styles.del_confirm_div}>
-            <Text style={styles.report_text}>삭제하시겠습니까?</Text>
+      {/* {delModalVisible === "true" && (
+        <Modal
+          isVisible={delModalVisible === "true"}
+          useNativeDriver={true}
+          hideModalContentWhileAnimating={true}
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <View style={styles.del_div}>
+            <View style={styles.del_confirm_div}>
+              <Text style={styles.report_text}>삭제하시겠습니까?</Text>
+            </View>
+            <View style={styles.del_row_div}>
+              <TouchableOpacity
+                onPress={() => {
+                  setSelected("delete");
+                  setDelModalVisible("false");
+                }}
+                style={[
+                  styles.del_each,
+                  { borderRightWidth: 4, borderColor: "black" },
+                ]}
+              >
+                <Text style={styles.report_text}>예</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  setDelModalVisible("false");
+                }}
+                style={styles.del_each}
+              >
+                <Text style={styles.report_text}>아니오</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.del_row_div}>
-            <TouchableOpacity
-              onPress={() => {
-                setSelected("delete");
-                setDelModalVisible("false");
-              }}
-              style={[
-                styles.del_each,
-                { borderRightWidth: 4, borderColor: "black" },
-              ]}
-            >
-              <Text style={styles.report_text}>예</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setDelModalVisible("false");
-              }}
-              style={styles.del_each}
-            >
-              <Text style={styles.report_text}>아니오</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+        </Modal>
+      )} */}
     </SafeAreaView>
   );
 };
@@ -140,39 +143,39 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
   },
-  del_div: {
-    width: SCREEN_WIDTH - 80,
-    height: SCREEN_WIDTH / 3,
-    backgroundColor: "white",
-    justifyContent: "center",
-    alignItems: "center",
-    borderColor: "black",
-    borderWidth: 2,
-  },
-  del_confirm_div: {
-    width: "100%",
-    flex: 3,
-    backgroundColor: "white",
-    justifyContent: "center",
-    alignItems: "center",
-    borderColor: "black",
-    borderWidth: 3,
-  },
-  del_row_div: {
-    width: "100%",
-    flexDirection: "row",
+  // del_div: {
+  //   width: SCREEN_WIDTH - 80,
+  //   height: SCREEN_WIDTH / 3,
+  //   backgroundColor: "white",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   borderColor: "black",
+  //   borderWidth: 2,
+  // },
+  // del_confirm_div: {
+  //   width: "100%",
+  //   flex: 3,
+  //   backgroundColor: "white",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   borderColor: "black",
+  //   borderWidth: 3,
+  // },
+  // del_row_div: {
+  //   width: "100%",
+  //   flexDirection: "row",
 
-    backgroundColor: "white",
-    justifyContent: "space-around",
-    alignItems: "center",
-    borderColor: "black",
-    borderWidth: 3,
-  },
-  del_each: {
-    width: "50%",
-    borderColor: "black",
-    alignItems: "center",
-  },
+  //   backgroundColor: "white",
+  //   justifyContent: "space-around",
+  //   alignItems: "center",
+  //   borderColor: "black",
+  //   borderWidth: 3,
+  // },
+  // del_each: {
+  //   width: "50%",
+  //   borderColor: "black",
+  //   alignItems: "center",
+  // },
 });
 
 export default CommunityModal;
