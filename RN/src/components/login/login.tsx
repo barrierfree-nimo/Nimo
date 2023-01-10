@@ -59,7 +59,7 @@ const Login = ({ navigation }: any) => {
           <Text style={LoginStyle.text_login}>로그인</Text>
         </View>
 
-        <View style={LoginStyle.container}>
+        <KeyboardAvoidingView style={LoginStyle.container}>
           <View style={LoginStyle.container_login_input}>
             <TextInput
               value={nickname}
@@ -94,7 +94,7 @@ const Login = ({ navigation }: any) => {
               <Text style={LoginStyle.btnText_login}>회원가입하기</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );

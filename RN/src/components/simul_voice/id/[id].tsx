@@ -150,16 +150,17 @@ const VoiceDetail = ({ route, navigation }: any) => {
               />
 
               <View style={styles.container_btn_call}>
-                <TouchableOpacity onPress={() => start()}
-                  style={styles.btn_call_start}>
+                <TouchableOpacity onPress={() => start()}>
                   <Image
                     source={require("../../../assets/icons/simul_voice/ic_call.png")}
                   />
+                  <Text style={styles.text_call}>전화 받기</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                   <Image
                     source={require("../../../assets/icons/simul_voice/ic_call_red.png")}
                   />
+                  <Text style={styles.text_call}>전화 끊기</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -279,10 +280,14 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "space-between",
     paddingHorizontal: 60,
-    marginTop: 120,
+    marginTop: 110,
   },
-  btn_call_start: {
-    
+  text_call: {
+    textAlign: 'center',
+    color: "#FFFFFF",
+    fontSize: 13,
+    fontWeight: "600",
+    marginTop: 5
   },
   container_bubble_voice: {
     width: SCREEN_WIDTH,

@@ -27,6 +27,7 @@
       "permissions": [
         "RECORD_AUDIO"
       ],
+      "softwareKeyboardLayoutMode": "pan",
       "versionCode": 3
     },
     "web": {

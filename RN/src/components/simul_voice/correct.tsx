@@ -41,8 +41,9 @@ const CorrectPageVoice = ({ route, navigation }: any) => {
         <View style={styles.content_container}>
           <View style={styles.color_box}>
             <Image
-              source={require("../../assets/images/main_progress.png")}
+              source={require("../../assets/icons/simul_common/ic_correct.png")}
               style={styles.img}
+              resizeMode="contain"
             />
             <Text
               style={[
@@ -84,10 +85,8 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.26)",
   },
   img: {
-    alignSelf: "center",
-    width: 15,
-    height: 50,
-    marginBottom: 5,
+    height: 60,
+    marginBottom: 10,
   },
   text_title: {
     alignSelf: "center",
