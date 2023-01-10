@@ -136,7 +136,8 @@ const CommunityDetail = ({ route, navigation }: any) => {
         // 수정 >>  댓글이면 -> input으로 바꾸고, 글이면 write로 보내줌(변동 없는지도 확인)
         break;
       case "delete":
-        // 삭제 >>  댓글인지 post인지 구분해서 post의 id 삭제 api
+        focusedType === "post" && fetchPostDelete();
+        focusedType === "comment" && fetchCommentDelete();
         break;
     }
   }, [selected]);
@@ -183,6 +184,38 @@ const CommunityDetail = ({ route, navigation }: any) => {
       }).then((res) => {
         setPostContent(res.data.post);
         setComment(res.data.comment);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchPostDelete = async () => {
+    const token = await AsyncStorage.getItem("user_Token");
+    try {
+      await Axios.delete(baseURL + `/admin/post/${postId}`, {
+        headers: { accessToken: `${token}` },
+      })
+        .then((res) => {
+          if (res.status === 204) {
+            navigation.navigate("CommunityMain");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchCommentDelete = async () => {
+    const token = await AsyncStorage.getItem("user_Token");
+    try {
+      Axios.delete(baseURL + `/admin/comment/${postId}`, {
+        headers: {
+          accessToken: `${token}`,
+        },
       });
     } catch (err) {
       console.log(err);
