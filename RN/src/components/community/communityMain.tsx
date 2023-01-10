@@ -13,6 +13,7 @@ import baseURL from "../baseURL";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CommunityCard from "./communityCard";
 import CommunityMainStyle from "./communityMain_style";
+import { useIsFocused } from "@react-navigation/native";
 
 interface CommunityData {
   contents: string;
@@ -30,6 +31,14 @@ const CommunityMain = ({ navigation }: any) => {
   const [filteredList, setFilteredList] = useState<CommunityData[]>([]);
   const [isExist, setIsExsist] = useState<boolean>(true);
   const [index, setIndex] = useState<string>("일반");
+
+  //render
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    return () => {
+      fetchCommunityArchive();
+    };
+  }, [isFocused]);
 
   useEffect(() => {
     fetchCommunityArchive();
