@@ -158,7 +158,7 @@ const SimulMain = ({ navigation }: any) => {
           </>
 
           {/*  SNS */}
-          <TouchableOpacity onPress={() => navigation.navigate("MessageSimul")}>
+          <TouchableOpacity onPress={() => navigation.navigate("SnsSimul")}>
             {type === "sns" || isInRed("sns") ? (
               <Image
                 source={require(`../../assets/icons/simul_main/sns_red.png`)}
