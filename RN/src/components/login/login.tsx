@@ -37,8 +37,7 @@ const Login = ({ navigation }: any) => {
           if (res.status == 200) {
             const token = String(res.data["token"]["accessToken"]);
             AsyncStorage.setItem("user_Token", token);
-            const user_nickname = String(res.data["nickname"]);
-            AsyncStorage.setItem("user_nickname", user_nickname);
+            AsyncStorage.setItem("user_nickname", nickname);
             navigation.replace("MainStackNavigator");
           }
         })

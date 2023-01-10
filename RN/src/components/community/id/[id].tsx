@@ -41,7 +41,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
 
   const getLocalName = async () => {
     const local_nickname = await AsyncStorage.getItem("user_nickname");
-    setLocalName(local_nickname);
+    await setLocalName(local_nickname);
   };
 
   useEffect(() => {
@@ -52,6 +52,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
 
   useEffect(() => {
     fetchCommunityDetail();
+    getLocalName();
   }, []);
 
   const fetchCommunityDetail = async () => {
@@ -194,6 +195,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
         setSelected={setSelected}
+        setFocusedType={setFocusedType}
         canUD={postName === localName}
       />
       <View style={communityDetailStyle.community_container}>
