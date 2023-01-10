@@ -6,7 +6,7 @@ import {
   Text,
   TextInput,
   ScrollView,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from "react-native";
 import Axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -250,7 +250,9 @@ const CommunityDetail = ({ route, navigation }: any) => {
       <View style={CommonStyle.container_contents}>
         <View style={communityDetailStyle.community_container}>
           <View style={communityDetailStyle.title_container}>
-            <Text style={communityDetailStyle.title_text}>{postContent?.title}</Text>
+            <Text style={communityDetailStyle.title_text}>
+              {postContent?.title}
+            </Text>
             <View style={communityDetailStyle.title_container_sub}>
               <Text style={communityDetailStyle.time_text}>{userTime}</Text>
               <TouchableOpacity
@@ -259,12 +261,15 @@ const CommunityDetail = ({ route, navigation }: any) => {
                   setFocusedType("post");
                   postContent && setPostId(postContent.id);
                   postContent && setPostName(postContent.user_nickname);
-                }}>
-                <Text style={communityDetailStyle.modal_btn_text}>수정 / 신고</Text>
+                }}
+              >
+                <Text style={communityDetailStyle.modal_btn_text}>
+                  수정 / 신고
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
-          
+
           <View style={communityDetailStyle.content_container}>
             <ScrollView style={communityDetailStyle.content_scroll}>
               <Text style={communityDetailStyle.content_text}>
@@ -272,14 +277,13 @@ const CommunityDetail = ({ route, navigation }: any) => {
               </Text>
             </ScrollView>
           </View>
-          
 
           <View style={communityDetailStyle.comment_container}>
             <Text style={communityDetailStyle.comment_title}>댓글 목록</Text>
             <View style={communityDetailStyle.lineStyle} />
             <ScrollView style={communityDetailStyle.comment_scroll}>
               <View>
-                {!comment || comment.length === 0 ? (
+                {comment.length === 0 ? (
                   <Text style={communityDetailStyle.comment_text}>
                     해당 게시물에 댓글이 없습니다.
                   </Text>
@@ -310,7 +314,9 @@ const CommunityDetail = ({ route, navigation }: any) => {
             </ScrollView>
           </View>
 
-          <KeyboardAvoidingView style={communityDetailStyle.user_comment_container}>
+          <KeyboardAvoidingView
+            style={communityDetailStyle.user_comment_container}
+          >
             <TextInput
               value={userComment}
               onChangeText={(userComment) => setUserComment(userComment)}
@@ -321,12 +327,13 @@ const CommunityDetail = ({ route, navigation }: any) => {
               onPress={() => handleCommentPost()}
               style={communityDetailStyle.user_comment_apply}
             >
-              <Text style={communityDetailStyle.user_comment_apply_text}>등록</Text>
+              <Text style={communityDetailStyle.user_comment_apply_text}>
+                등록
+              </Text>
             </TouchableOpacity>
           </KeyboardAvoidingView>
         </View>
       </View>
-      
 
       <View style={CommonStyle.container_exit}>
         <TouchableOpacity onPress={() => navigation.navigate("Main")}>
