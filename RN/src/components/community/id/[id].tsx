@@ -43,6 +43,10 @@ const CommunityDetail = ({ route, navigation }: any) => {
   const [localName, setLocalName] = useState<string | null>("");
   const [commentModify, setCommentModify] = useState<string>("");
   const [selectedProps, setSelectedProps] = useState<string>("");
+  // 글 수정
+  const [postTitle, setPostTitle] = useState<string>("");
+  const [postContents, setPostContents] = useState<string>("");
+  const [postTag, setPostTag] = useState<string>("");
 
   useEffect(() => {
     return () => {
@@ -173,6 +177,23 @@ const CommunityDetail = ({ route, navigation }: any) => {
     }
   }, [selected, focusedType]);
 
+  useEffect(() => {
+    if (
+      postContents &&
+      postTag &&
+      postTitle &&
+      selected === "modify" &&
+      focusedType === "post"
+    ) {
+      navigation.navigate("CommunityPostPatch", {
+        postId: postId,
+        title: postTitle,
+        contents: postContents,
+        tag: postTag,
+      });
+    }
+  }, [postTag, postTitle, postContents, selected, focusedType]);
+
   const fetchCommunityUserReport = async () => {
     const token = await AsyncStorage.getItem("user_Token");
     try {
@@ -281,6 +302,9 @@ const CommunityDetail = ({ route, navigation }: any) => {
                   setFocusedType("post");
                   postContent && setPostId(postContent.id);
                   postContent && setPostName(postContent.user_nickname);
+                  postContent && setPostTitle(postContent.title);
+                  postContent && setPostTag(postContent.tag);
+                  postContent && setPostContents(postContent.contents);
                 }}
               >
                 <Text style={communityDetailStyle.modal_btn_text}>

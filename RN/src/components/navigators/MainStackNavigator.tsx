@@ -25,6 +25,7 @@ import CorrectPageVoice from "../simul_voice/correct";
 import CommunityMain from "../community/communityMain";
 import CommunityWrite from "../community/community_write/write";
 import CommunityDetail from "../community/id/[id]";
+import PatchPost from "../community/post_patch/patch_post";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +43,7 @@ const MainStackNavigator = () => {
         <Stack.Screen name="CommunityMain" component={CommunityMain} />
         <Stack.Screen name="CommunityWrite" component={CommunityWrite} />
         <Stack.Screen name="CommunityDetail" component={CommunityDetail} />
+        <Stack.Screen name="CommunityPostPatch" component={PatchPost} />
         <Stack.Screen name="Info" component={Info} />
         <Stack.Screen name="SimulMain" component={SimulMain} />
         <Stack.Screen name="MessageSimul" component={MessageSimul} />
