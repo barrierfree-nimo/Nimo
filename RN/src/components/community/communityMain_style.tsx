@@ -59,7 +59,7 @@ const CommunityMainStyle = StyleSheet.create({
   },
   search_clear_text: {
     fontSize: 17,
-    color: "#00284E",
+    color: "gray",
     fontWeight: "500",
   },
   search_text: {
@@ -91,8 +91,11 @@ const CommunityMainStyle = StyleSheet.create({
     color: "white",
   },
   exist_text: {
+    textAlign: "center",
+    marginTop: 15,
     fontSize: 20,
-    fontWeight: "600",
+    fontWeight: "500",
+    color: "gray"
   },
 });
 
