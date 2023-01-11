@@ -33,7 +33,6 @@ const CommunityModal = (props: CommunityModalProps) => {
             onPress={() => {
               setSelected("user-report");
               setModalVisible(false);
-              setFocusedType("");
             }}
             style={styles.report_box}
           >
@@ -43,7 +42,6 @@ const CommunityModal = (props: CommunityModalProps) => {
             onPress={() => {
               setSelected("post-report");
               setModalVisible(false);
-              setFocusedType("");
             }}
             style={styles.report_box}
           >
@@ -76,6 +74,7 @@ const CommunityModal = (props: CommunityModalProps) => {
             onPress={() => {
               setModalVisible(false);
               setFocusedType("");
+              setSelected("");
             }}
             style={[styles.report_box, { backgroundColor: "#00284E" }]}
           >

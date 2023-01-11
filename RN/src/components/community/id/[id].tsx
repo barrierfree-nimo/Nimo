@@ -161,7 +161,6 @@ const CommunityDetail = ({ route, navigation }: any) => {
       case "post-report":
         focusedType === "post" && fetchCommunityPostReport();
         focusedType === "comment" && fetchCommunityCommentReport();
-        setSelected("");
         break;
       case "modify":
         focusedType === "comment" && setSelectedProps("modify");
@@ -215,9 +214,8 @@ const CommunityDetail = ({ route, navigation }: any) => {
         headers: {
           accessToken: `${token}`,
         },
-      }).then((res) => {
-        setPostContent(res.data.post);
-        setComment(res.data.comment);
+      }).then(() => {
+        navigation.navigate("CommunityMain");
       });
     } catch (err) {
       console.log(err);
@@ -226,14 +224,16 @@ const CommunityDetail = ({ route, navigation }: any) => {
 
   const fetchCommunityCommentReport = async () => {
     const token = await AsyncStorage.getItem("user_Token");
+    console.log("commentId>>>>", commentId);
     try {
-      Axios.get(baseURL + `/admin/comment/${postId}`, {
+      Axios.get(baseURL + `/admin/comment/${commentId}`, {
         headers: {
           accessToken: `${token}`,
         },
-      }).then((res) => {
-        setPostContent(res.data.post);
-        setComment(res.data.comment);
+      }).then(() => {
+        setSelected("");
+        setFocusedType("");
+        setCommentModify("comment modify");
       });
     } catch (err) {
       console.log(err);
@@ -325,13 +325,13 @@ const CommunityDetail = ({ route, navigation }: any) => {
             <View style={communityDetailStyle.lineStyle} />
             <ScrollView style={communityDetailStyle.comment_scroll}>
               <View>
-                {commentModify === "" && comment.length === 0 ? (
+                {commentModify === "" && comment?.length === 0 ? (
                   <Text style={communityDetailStyle.comment_text}>
                     해당 게시물에 댓글이 없습니다.
                   </Text>
                 ) : (
                   <View>
-                    {comment.map(
+                    {comment?.map(
                       (
                         { user_nickname, createdAt, updatedAt, contents, id },
                         idx
