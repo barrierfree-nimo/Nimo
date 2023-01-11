@@ -250,6 +250,8 @@ const CommunityDetail = ({ route, navigation }: any) => {
           if (res.status === 204) {
             fetchCommunityDetail();
             navigation.navigate("CommunityMain");
+            setSelected("");
+            setFocusedType("");
           }
         })
         .catch((err) => {
@@ -270,6 +272,8 @@ const CommunityDetail = ({ route, navigation }: any) => {
       }).then((res) => {
         if (res.status === 204) {
           fetchCommunityDetail();
+          setSelected("");
+          setFocusedType("");
         }
       });
     } catch (err) {
