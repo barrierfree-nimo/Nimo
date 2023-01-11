@@ -150,7 +150,10 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
             <View style={styles.btn_wrapper}>
               <TouchableOpacity
                 style={styles.btn_div}
-                onPress={() => fetchCommentPatch()}
+                onPress={() => {
+                  fetchCommentPatch();
+                  setRender("apply");
+                }}
               >
                 <Text style={styles.btn_text}>등록</Text>
               </TouchableOpacity>
