@@ -77,19 +77,24 @@ const CommunityDetail = ({ route, navigation }: any) => {
   }, [postContent?.createdAt, postContent?.updatedAt]);
 
   useEffect(() => {
+    let timeString;
     const now = new Date();
-    if (postContent?.updatedAt) {
-      const then = new Date(postContent?.updatedAt);
-
+    if (postContent) {
+      const then = new Date(postContent.updatedAt);
       const diffMSec = now.getTime() - then.getTime() + 32400000;
       const diffMin = Math.floor(diffMSec / (60 * 1000));
-      if (diffMin < 60) {
-        setUserTime(`${diffMin}분 전`);
+      if (diffMin < 1) {
+        timeString = "방금 전";
+      } else if (1 <= diffMin && diffMin < 60) {
+        timeString = `${diffMin}분 전`;
       } else if (diffMin >= 60 && diffMin < 60 * 24) {
-        setUserTime(`${Math.floor(diffMin / 60)}시간 전`);
+        timeString = `${Math.floor(diffMin / 60)}시간 전`;
       } else {
-        setUserTime(postContent?.updatedAt.substring(0, 10));
+        timeString = postContent.updatedAt.substring(0, 10);
       }
+      postContent.createdAt === postContent.updatedAt
+        ? setUserTime(timeString)
+        : setUserTime(timeString + " (수정됨)");
     }
   }, [postContent?.updatedAt]);
 
@@ -164,6 +169,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
         break;
       case "modify":
         focusedType === "comment" && setSelectedProps("modify");
+        focusedType === "post" && setFocusedType("");
         setSelected("");
         break;
       case "delete":

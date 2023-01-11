@@ -62,7 +62,7 @@ const PatchPost = ({ route, navigation }: any) => {
         )
           .then((res) => {
             if (res.status === 201) {
-              navigation.navigate("CommunityMain");
+              navigation.goBack();
             }
           })
           .catch((err) => {
