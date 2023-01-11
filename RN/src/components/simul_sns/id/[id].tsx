@@ -14,7 +14,7 @@ import SimulMainStyle from "../../simul_main/simul_main_style";
 import snsDetailStyle from "./[id]_style";
 import Axios from "axios";
 import baseURL from "../../baseURL";
-import ExitBtn from "../../simul_common/exit_btn";
+import ExitBtn from "../../common/exit_btn";
 import NavigateBtn from "../../simul_common/navigate_btn";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -197,7 +197,7 @@ const SnsDetail = ({ route, navigation }: any) => {
         </View>
         <NavigateBtn navigation={navigation} />
       </View>
-      <ExitBtn navigation={navigation} />
+      <ExitBtn navigation={navigation} content={"피싱 체험 나가기"} />
     </SafeAreaView>
   );
 };

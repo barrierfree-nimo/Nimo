@@ -10,7 +10,7 @@ import {
   Dimensions,
 } from "react-native";
 import CommonStyle from "../common/common_style";
-import ExitBtn from "../simul_common/exit_btn";
+import ExitBtn from "../common/exit_btn";
 import NavigateBtn from "../simul_common/navigate_btn";
 import SimulMainStyle from "../simul_main/simul_main_style";
 
@@ -58,7 +58,7 @@ const CorrectPageVoice = ({ route, navigation }: any) => {
         </View>
         <NavigateBtn navigation={navigation} />
       </View>
-      <ExitBtn navigation={navigation} />
+      <ExitBtn navigation={navigation} content={"피싱 체험 나가기"} />
     </SafeAreaView>
   );
 };
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   content_container: {
     height: "80%",
-    justifyContent: 'center'
+    justifyContent: "center",
   },
   color_box: {
     width: SCREEN_WIDTH - 100,

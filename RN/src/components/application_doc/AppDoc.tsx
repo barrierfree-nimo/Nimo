@@ -3,6 +3,7 @@ import { SafeAreaView, TouchableOpacity, View, Text } from "react-native";
 import CommonStyle from "../common/common_style";
 import Banner from "../application_doc/banner";
 import AppDocStyle from "../application_doc/appDoc_style";
+import ExitBtn from "../common/exit_btn";
 
 const AppDoc = ({ navigation }: any) => {
   const [docIndex, setDocIndex] = useState<string>("simul");
@@ -140,11 +141,7 @@ const AppDoc = ({ navigation }: any) => {
           <Banner docList={communityDoc} />
         </View>
       </View>
-      <View style={CommonStyle.container_exit}>
-        <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-          <Text style={CommonStyle.btnText_exit}>사용설명서 나가기</Text>
-        </TouchableOpacity>
-      </View>
+      <ExitBtn navigation={navigation} content={"사용설명서 나가기"} />
     </SafeAreaView>
   );
 };

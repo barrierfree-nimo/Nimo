@@ -11,7 +11,7 @@ import {
 import baseURL from "../../baseURL";
 import CommonStyle from "../../common/common_style";
 import SimulMainStyle from "../../simul_main/simul_main_style";
-import ExitBtn from "../../simul_common/exit_btn";
+import ExitBtn from "../../common/exit_btn";
 import NavigateBtn from "../../simul_common/navigate_btn";
 import MessageCard from "../../simul_message/messageCard";
 import SimulSnsStyle from "./simul_sns_style";
@@ -49,7 +49,7 @@ const SnsSimul = ({ navigation }: any) => {
   const handleOnPress = (simulNum: number, title: string) => {
     navigation.navigate("SnsDetail", {
       simulNum: simulNum,
-      title: title
+      title: title,
     });
   };
 
@@ -64,18 +64,20 @@ const SnsSimul = ({ navigation }: any) => {
       <View style={SimulSnsStyle.phone_div}>
         <View style={SimulSnsStyle.sns_div}>
           <View style={SimulSnsStyle.sns_div_title}>
-            <Image 
-              source={require("../../../assets/icons/simul_sns/ic_sns.png")} 
+            <Image
+              source={require("../../../assets/icons/simul_sns/ic_sns.png")}
               style={SimulSnsStyle.ic_sns}
-              resizeMode="contain" />
+              resizeMode="contain"
+            />
             <Text style={SimulSnsStyle.text_title}>Talk</Text>
           </View>
-          
 
           <ScrollView>
             <View style={SimulSnsStyle.msg_card_div}>
               {simulList?.map(({ simulNum, title, commentary, done }) => (
-                <TouchableOpacity onPress={() => handleOnPress(simulNum, title)}>
+                <TouchableOpacity
+                  onPress={() => handleOnPress(simulNum, title)}
+                >
                   <MessageCard key={simulNum} title={title} done={done} />
                 </TouchableOpacity>
               ))}
@@ -86,7 +88,7 @@ const SnsSimul = ({ navigation }: any) => {
         {/* 이동버튼 */}
         <NavigateBtn navigation={navigation} />
       </View>
-      <ExitBtn navigation={navigation} />
+      <ExitBtn navigation={navigation} content={"피싱 체험 나가기"} />
     </SafeAreaView>
   );
 };

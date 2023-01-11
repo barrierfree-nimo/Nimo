@@ -12,6 +12,7 @@ import Axios from "axios";
 import baseURL from "../../baseURL";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DropDownPicker from "react-native-dropdown-picker";
+import ExitBtn from "../../common/exit_btn";
 
 const CommunityWrite = ({ navigation }: any) => {
   const [title, setTitle] = useState<string>("");
@@ -125,11 +126,7 @@ const CommunityWrite = ({ navigation }: any) => {
         </TouchableOpacity>
       </View>
 
-      <View style={CommonStyle.container_exit}>
-        <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-          <Text style={CommonStyle.btnText_exit}>소통하기 나가기</Text>
-        </TouchableOpacity>
-      </View>
+      <ExitBtn navigation={navigation} content={"소통하기 나가기"} />
     </SafeAreaView>
   );
 };

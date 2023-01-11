@@ -15,7 +15,7 @@ import SimulVoiceStyle from "./simul_voice_style";
 import NavigateBtn from "../../simul_common/navigate_btn";
 import MessageCard from ".././messageCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ExitBtn from "../../simul_common/exit_btn";
+import ExitBtn from "../../common/exit_btn";
 
 interface VoiceContent {
   simulNum: number;
@@ -68,12 +68,13 @@ const VoiceSimul = ({ navigation }: any) => {
         <View style={SimulVoiceStyle.voice_div}>
           <View style={SimulVoiceStyle.voice_div_title}>
             <Text style={SimulVoiceStyle.text_title}>최근 통화</Text>
-            <Image 
-              source={require("../../../assets/icons/simul_voice/ic_phone.png")} 
+            <Image
+              source={require("../../../assets/icons/simul_voice/ic_phone.png")}
               style={SimulVoiceStyle.ic_phone}
-              resizeMode="contain" />
+              resizeMode="contain"
+            />
           </View>
-          
+
           <ScrollView>
             <View style={SimulVoiceStyle.msg_card_div}>
               {simulList?.map(({ simulNum, title, commentary, done }) => (
@@ -86,7 +87,7 @@ const VoiceSimul = ({ navigation }: any) => {
         </View>
         <NavigateBtn navigation={navigation} />
       </View>
-      <ExitBtn navigation={navigation} />
+      <ExitBtn navigation={navigation} content={"피싱 체험 나가기"} />
     </SafeAreaView>
   );
 };

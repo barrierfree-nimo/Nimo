@@ -7,7 +7,7 @@ import {
   Text,
 } from "react-native";
 import CommonStyle from "../common/common_style";
-import ExitBtn from "../simul_common/exit_btn";
+import ExitBtn from "../common/exit_btn";
 import SimulMainStyle from "./simul_main_style";
 import Axios from "axios";
 import baseURL from "../baseURL";
@@ -99,7 +99,8 @@ const SimulMain = ({ navigation }: any) => {
                 navigation.navigate("VoiceDetail", {
                   simulNum: num,
                 })
-              }>
+              }
+            >
               <Image
                 source={require("../../assets/icons/simul_main/call_push.png")}
                 style={SimulMainStyle.img_push}
@@ -214,9 +215,7 @@ const SimulMain = ({ navigation }: any) => {
           </TouchableOpacity>
         </View>
       </View>
-
-      {/* 이동버튼 */}
-      <ExitBtn navigation={navigation} />
+      <ExitBtn navigation={navigation} content={"피싱 체험 나가기"} />
     </SafeAreaView>
   );
 };

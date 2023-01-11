@@ -18,7 +18,7 @@ import NavigateBtn from "../../simul_common/navigate_btn";
 import { Audio } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import baseURL from "../../baseURL";
-import ExitBtn from "../../simul_common/exit_btn";
+import ExitBtn from "../../common/exit_btn";
 
 const VoiceDetail = ({ route, navigation }: any) => {
   const [ok, setOk] = useState(false);
@@ -169,7 +169,9 @@ const VoiceDetail = ({ route, navigation }: any) => {
             <View style={styles.container_phone}>
               <Text style={styles.text_phoneNum}>010-1234-5678</Text>
               {showOptions === false ? (
-                <Text style={styles.text_callTime}>화면을 터치하면 대화가 나옵니다</Text>
+                <Text style={styles.text_callTime}>
+                  화면을 터치하면 대화가 나옵니다
+                </Text>
               ) : (
                 <Text></Text>
               )}
@@ -227,7 +229,7 @@ const VoiceDetail = ({ route, navigation }: any) => {
         {/* 이동버튼 */}
         <NavigateBtn navigation={navigation} />
       </View>
-      <ExitBtn navigation={navigation} />
+      <ExitBtn navigation={navigation} content={"피싱 체험 나가기"} />
     </SafeAreaView>
   );
 };
@@ -283,11 +285,11 @@ const styles = StyleSheet.create({
     marginTop: 110,
   },
   text_call: {
-    textAlign: 'center',
+    textAlign: "center",
     color: "#FFFFFF",
     fontSize: 13,
     fontWeight: "600",
-    marginTop: 5
+    marginTop: 5,
   },
   container_bubble_voice: {
     width: SCREEN_WIDTH,

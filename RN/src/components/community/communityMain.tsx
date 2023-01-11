@@ -14,6 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import CommunityCard from "./communityCard";
 import CommunityMainStyle from "./communityMain_style";
 import { useIsFocused } from "@react-navigation/native";
+import ExitBtn from "../common/exit_btn";
 
 interface CommunityData {
   contents: string;
@@ -203,11 +204,7 @@ const CommunityMain = ({ navigation }: any) => {
       >
         <Text style={CommunityMainStyle.write_text}>글 작성하기</Text>
       </TouchableOpacity>
-      <View style={CommonStyle.container_exit}>
-        <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-          <Text style={CommonStyle.btnText_exit}>소통하기 나가기</Text>
-        </TouchableOpacity>
-      </View>
+      <ExitBtn navigation={navigation} content={"소통하기 나가기"} />
     </SafeAreaView>
   );
 };
