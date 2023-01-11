@@ -235,6 +235,9 @@ const community = {
                         [ Op.like ]: '%' + req.params.keyword + '%'
                     },
                 },
+                order: [
+                    [ 'id', 'DESC' ],
+                ]
             });
             if (!list.length == 0) {
                 convertList(list)
@@ -252,7 +255,10 @@ const community = {
             const list = await Post.findAll({
                 where: {
                     tag: req.params.tag
-                }
+                },
+                order: [
+                    [ 'id', 'DESC' ],
+                ]
             })
             if (!list.length == 0) {
                 convertList(list)
