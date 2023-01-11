@@ -156,7 +156,10 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.btn_div, { marginLeft: 20 }]}
-                onPress={() => setRender("cancel")}
+                onPress={() => {
+                  setRender("cancel");
+                  setNewComment(contents);
+                }}
               >
                 <Text style={styles.btn_text}>취소</Text>
               </TouchableOpacity>
