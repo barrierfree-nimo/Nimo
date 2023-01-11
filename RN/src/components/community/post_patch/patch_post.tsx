@@ -136,7 +136,7 @@ const PatchPost = ({ route, navigation }: any) => {
           <Text style={PostPatchStyle.btn_text}>글 수정하기</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate("CommunityMain")}
+          onPress={() => navigation.goBack()}
           style={PostPatchStyle.btn}
         >
           <Text style={PostPatchStyle.btn_text}>글 취소하기</Text>
