@@ -157,7 +157,6 @@ const CommunityDetail = ({ route, navigation }: any) => {
     switch (selected) {
       case "user-report":
         fetchCommunityUserReport();
-        setSelected("");
         break;
       case "post-report":
         focusedType === "post" && fetchCommunityPostReport();
@@ -200,9 +199,9 @@ const CommunityDetail = ({ route, navigation }: any) => {
         headers: {
           accessToken: `${token}`,
         },
-      }).then((res) => {
-        setPostContent(res.data.post);
-        setComment(res.data.comment);
+      }).then(() => {
+        navigation.navigate("CommunityMain");
+        setSelected("");
       });
     } catch (err) {
       console.log(err);
