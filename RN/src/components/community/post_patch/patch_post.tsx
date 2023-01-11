@@ -46,10 +46,11 @@ const PatchPost = ({ route, navigation }: any) => {
     checkIsEmpty();
 
     if (isTitle && isContent && isModified()) {
+      console.log(title, contents, tag);
       const token = await AsyncStorage.getItem("user_Token");
       try {
         await Axios.patch(
-          baseURL + `/community/post/${route.postId}`,
+          baseURL + `/community/post/${route.params.postId}`,
           {
             title: title,
             contents: contents,
@@ -60,6 +61,7 @@ const PatchPost = ({ route, navigation }: any) => {
           }
         )
           .then((res) => {
+            console.log(">>>>res");
             if (res.status === 201) {
               navigation.navigate("CommunityMain");
             }
