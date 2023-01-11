@@ -20,7 +20,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
-//response 1은 발신자, 2는 수신자, 3은 정답, 4는 오답
 const SnsDetail = ({ route, navigation }: any) => {
   const scrollViewRef = useRef<ScrollView | null>(null);
   const [data, setData] = useState<any[]>();
@@ -58,7 +57,6 @@ const SnsDetail = ({ route, navigation }: any) => {
     setScriptItem();
   }, [data]);
 
-  // Data to [Scripts or Options]
   const setScriptItem = async () => {
     let temp_scripts = [];
     let temp_options = [];
@@ -77,7 +75,6 @@ const SnsDetail = ({ route, navigation }: any) => {
     }
   };
 
-  // 화면 터치 시 말풍선 보이게
   const showScriptItem = async () => {
     if (scripts.length == nextId.current) {
       setShowOptions(true);
@@ -90,7 +87,6 @@ const SnsDetail = ({ route, navigation }: any) => {
     nextId.current += 1;
   };
 
-  // 대응방법 선택 시 >> 완료 처리
   const handleClickCorrect = async (response: number) => {
     const isCorrect = response === 3 ? true : false;
     const token = await AsyncStorage.getItem("user_Token");
@@ -124,10 +120,8 @@ const SnsDetail = ({ route, navigation }: any) => {
         source={require("../../../assets/icons/simul_message/message_bg.png")}
         style={SimulMainStyle.img_galaxy}
       />
-      {/* 폰 화면 */}
       <View style={snsDetailStyle.phone_div}>
         <View style={snsDetailStyle.phone_detail_div}>
-          {/* 헤더 */}
           <View style={snsDetailStyle.header}>
             <Image
               source={require("../../../assets/icons/simul_message/ic_profile.png")}
@@ -148,7 +142,6 @@ const SnsDetail = ({ route, navigation }: any) => {
             <View style={snsDetailStyle.lineStyle} />
           </View>
 
-          {/* 대화창 */}
           <ScrollView
             ref={scrollViewRef}
             onContentSizeChange={() =>

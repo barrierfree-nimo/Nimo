@@ -60,7 +60,6 @@ const MessageSimul = ({ navigation }: any) => {
         style={SimulMainStyle.img_galaxy}
       />
 
-      {/* 스마트폰 */}
       <View style={SimulMsgStyle.phone_div}>
         <View style={SimulMsgStyle.message_div}>
           <View style={SimulMsgStyle.message_div_title}>
@@ -84,7 +83,6 @@ const MessageSimul = ({ navigation }: any) => {
           </ScrollView>
         </View>
 
-        {/* 이동버튼 */}
         <NavigateBtn navigation={navigation} />
       </View>
       <ExitBtn navigation={navigation} content={"피싱 체험 나가기"} />

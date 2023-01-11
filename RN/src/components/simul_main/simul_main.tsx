@@ -18,7 +18,7 @@ const SimulMain = ({ navigation }: any) => {
   const [type, setType] = useState<string>("");
   const [num, setNum] = useState<number>();
   const [red, setRed] = useState<string[]>();
-  const isFocused = useIsFocused(); // isFoucesd Define
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     return () => {
@@ -57,9 +57,7 @@ const SimulMain = ({ navigation }: any) => {
         source={require("../../assets/icons/simul_main/galaxy.png")}
         style={SimulMainStyle.img_galaxy}
       />
-      {/* 스마트폰 */}
       <View style={SimulMainStyle.phone_div}>
-        {/* 앱 푸시 바 */}
         <View style={SimulMainStyle.phone_push_div}>
           {type === "sns" && (
             <TouchableOpacity
@@ -105,7 +103,6 @@ const SimulMain = ({ navigation }: any) => {
           )}
         </View>
 
-        {/*  앱 바탕 */}
         <View style={SimulMainStyle.phone_app_div}>
           <>
             <Image
@@ -154,7 +151,6 @@ const SimulMain = ({ navigation }: any) => {
             />
           </>
 
-          {/*  SNS */}
           <TouchableOpacity onPress={() => navigation.navigate("SnsSimul")}>
             {type === "sns" || isInRed("sns") ? (
               <Image
@@ -170,9 +166,7 @@ const SimulMain = ({ navigation }: any) => {
           </TouchableOpacity>
         </View>
 
-        {/*  앱 하단바 */}
         <View style={SimulMainStyle.phone_bottom_div}>
-          {/*  CALL */}
           <TouchableOpacity onPress={() => navigation.navigate("VoiceSimul")}>
             {type === "voice" || isInRed("voice") ? (
               <Image
@@ -187,7 +181,6 @@ const SimulMain = ({ navigation }: any) => {
             )}
           </TouchableOpacity>
 
-          {/*  앱 서랍장 */}
           <TouchableOpacity>
             <Image
               source={require("../../assets/icons/simul_main/app_container.png")}
@@ -195,7 +188,6 @@ const SimulMain = ({ navigation }: any) => {
             />
           </TouchableOpacity>
 
-          {/*  MSG */}
           <TouchableOpacity onPress={() => navigation.navigate("MessageSimul")}>
             {type === "msg" || isInRed("msg") ? (
               <Image

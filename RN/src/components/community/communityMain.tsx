@@ -33,7 +33,6 @@ const CommunityMain = ({ navigation }: any) => {
   const [isExist, setIsExsist] = useState<boolean>(true);
   const [index, setIndex] = useState<string>("일반");
 
-  //render
   const isFocused = useIsFocused();
   useEffect(() => {
     return () => {

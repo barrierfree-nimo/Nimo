@@ -24,11 +24,6 @@ interface VoiceContent {
   done: string;
 }
 
-//   "simulNum": 1,
-//   "title": "지인 사칭형 - 핸드폰 수리",
-//   "commentary": "이렇게 지인을 사칭하며 악성 링크의 클릭을 유도하는 문자는 메신저 피싱의 전형적인 수법입니다! 주의하세요!"
-//   "done" : true
-
 const VoiceSimul = ({ navigation }: any) => {
   const [simulList, setSimulList] = useState<VoiceContent[]>([]);
 
@@ -63,7 +58,6 @@ const VoiceSimul = ({ navigation }: any) => {
         source={require("../../../assets/icons/simul_voice/voice_bg_white.png")}
         style={SimulMainStyle.img_galaxy}
       />
-      {/* 스마트폰 */}
       <View style={SimulVoiceStyle.phone_div}>
         <View style={SimulVoiceStyle.voice_div}>
           <View style={SimulVoiceStyle.voice_div_title}>

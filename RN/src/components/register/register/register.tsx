@@ -28,7 +28,6 @@ const Register = ({ navigation }: any) => {
   const termsURL =
     "https://sugary-cuticle-b44.notion.site/ef5867bd9c6a4696bb6b3eecca1bc266";
 
-  // 닉네임 중복 체크
   const checkNickname = async () => {
     try {
       if (nickname.length < 5) {
@@ -49,18 +48,15 @@ const Register = ({ navigation }: any) => {
     }
   };
 
-  // 비밀번호 재확인
   const checkPassword = (passwordAgain: string) => {
     if (password == passwordAgain) setPasswordOk(true);
     else setPasswordOk(false);
   };
 
-  // 토스트 띄우기
   const showToast = (notice: string) => {
     ToastAndroid.show(notice, ToastAndroid.SHORT);
   };
 
-  // 회원가입
   const addUser = () => {
     if (password.length < 8) {
       showToast("8자 이상의 비밀번호를 설정해주세요.");

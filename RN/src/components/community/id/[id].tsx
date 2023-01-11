@@ -34,7 +34,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
   const [comment, setComment] = useState<any[]>([]);
   const [userComment, setUserComment] = useState<string>("");
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
-  // 모달
+
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selected, setSelected] = useState<string>("");
   const [focusedType, setFocusedType] = useState<string>("");
@@ -44,7 +44,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
   const [localName, setLocalName] = useState<string | null>("");
   const [commentModify, setCommentModify] = useState<string>("");
   const [selectedProps, setSelectedProps] = useState<string>("");
-  // 글 수정
+
   const [postTitle, setPostTitle] = useState<string>("");
   const [postContents, setPostContents] = useState<string>("");
   const [postTag, setPostTag] = useState<string>("");
@@ -58,7 +58,6 @@ const CommunityDetail = ({ route, navigation }: any) => {
     };
   }, [commentModify]);
 
-  //render
   const isFocused = useIsFocused();
   useEffect(() => {
     return () => {
@@ -166,7 +165,6 @@ const CommunityDetail = ({ route, navigation }: any) => {
         setSelected("");
         break;
       case "modify":
-        // 수정 >>  댓글이면 -> input으로 바꾸고, 글이면 write로 보내줌(변동 없는지도 확인)
         focusedType === "comment" && setSelectedProps("modify");
         setSelected("");
         break;

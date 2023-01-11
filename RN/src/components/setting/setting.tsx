@@ -53,7 +53,6 @@ const Setting = ({ route, navigation }: any) => {
         </View>
 
         <View style={styles.container_setting}>
-          {/* 로그아웃 */}
           <TouchableOpacity
             style={styles.btn_setting}
             onPress={() => setModalVisible(!modalVisible)}
@@ -92,7 +91,6 @@ const Setting = ({ route, navigation }: any) => {
             </View>
           </Modal>
 
-          {/* 공지사항 */}
           <TouchableOpacity
             style={styles.btn_setting}
             onPress={() => Linking.openURL(notice)}
@@ -100,7 +98,6 @@ const Setting = ({ route, navigation }: any) => {
             <Text style={styles.title_setting}>공지사항</Text>
           </TouchableOpacity>
 
-          {/* 문의하기 */}
           <TouchableOpacity
             style={styles.btn_setting}
             onPress={() => Linking.openURL(contact)}

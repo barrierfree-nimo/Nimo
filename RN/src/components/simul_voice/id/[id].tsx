@@ -32,7 +32,6 @@ const VoiceDetail = ({ route, navigation }: any) => {
   const sound = useRef(new Audio.Sound());
   const scrollViewRef = useRef<ScrollView>(null);
 
-  // 통화 버튼 클릭 시
   const start = async () => {
     setOk(true);
   };
@@ -41,7 +40,6 @@ const VoiceDetail = ({ route, navigation }: any) => {
     fetchData();
   }, []);
 
-  // Fetch JSON Data
   const fetchData = async () => {
     const token = await AsyncStorage.getItem("user_Token");
 
@@ -65,7 +63,6 @@ const VoiceDetail = ({ route, navigation }: any) => {
     setScriptItem();
   }, [data]);
 
-  // Data to [Scripts or Options]
   const setScriptItem = async () => {
     let temp_scripts = [];
     let temp_options = [];
@@ -86,7 +83,6 @@ const VoiceDetail = ({ route, navigation }: any) => {
     }
   };
 
-  // 화면 터치 시 말풍선 보이게
   const showScriptItem = async () => {
     if (scripts.length == nextId.current) {
       setShowOptions(true);
@@ -95,7 +91,6 @@ const VoiceDetail = ({ route, navigation }: any) => {
 
     const item = scripts[nextId.current];
 
-    // 음성 재생
     await sound.current.unloadAsync();
     await sound.current.loadAsync({
       uri: item[2],
@@ -106,7 +101,6 @@ const VoiceDetail = ({ route, navigation }: any) => {
     nextId.current += 1;
   };
 
-  // 대응방법 선택 시 >> 완료 처리
   const handleClickCorrect = async (response: number) => {
     const isCorrect = response === 3 ? true : false;
     const token = await AsyncStorage.getItem("user_Token");
@@ -141,7 +135,6 @@ const VoiceDetail = ({ route, navigation }: any) => {
       <View style={styles.phone_div}>
         <View style={styles.content_container}>
           {ok === false ? (
-            // 전화 오는 화면
             <View style={styles.container_phone}>
               <Text style={styles.text_phoneNum}>010-1234-5678</Text>
               <Image
@@ -165,7 +158,6 @@ const VoiceDetail = ({ route, navigation }: any) => {
               </View>
             </View>
           ) : (
-            // 전화 받은 후 화면
             <View style={styles.container_phone}>
               <Text style={styles.text_phoneNum}>010-1234-5678</Text>
               {showOptions === false ? (
@@ -175,7 +167,6 @@ const VoiceDetail = ({ route, navigation }: any) => {
               ) : (
                 <Text></Text>
               )}
-              {/* 대화창 */}
               <ScrollView
                 ref={scrollViewRef}
                 onContentSizeChange={() =>
@@ -226,7 +217,6 @@ const VoiceDetail = ({ route, navigation }: any) => {
           )}
         </View>
 
-        {/* 이동버튼 */}
         <NavigateBtn navigation={navigation} />
       </View>
       <ExitBtn navigation={navigation} content={"피싱 체험 나가기"} />

@@ -60,7 +60,6 @@ const SnsSimul = ({ navigation }: any) => {
         style={SimulMainStyle.img_galaxy}
       />
 
-      {/* 스마트폰 */}
       <View style={SimulSnsStyle.phone_div}>
         <View style={SimulSnsStyle.sns_div}>
           <View style={SimulSnsStyle.sns_div_title}>
@@ -85,7 +84,6 @@ const SnsSimul = ({ navigation }: any) => {
           </ScrollView>
         </View>
 
-        {/* 이동버튼 */}
         <NavigateBtn navigation={navigation} />
       </View>
       <ExitBtn navigation={navigation} content={"피싱 체험 나가기"} />
