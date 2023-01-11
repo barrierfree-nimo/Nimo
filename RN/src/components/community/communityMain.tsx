@@ -194,13 +194,10 @@ const CommunityMain = ({ navigation }: any) => {
           {render === "" && isExist ? (
             <View>
               {filteredList?.map(
-                (
-                  { contents, createdAt, updatedAt, id, user_nickname },
-                  idx
-                ) => (
+                ({ title, createdAt, updatedAt, id, user_nickname }, idx) => (
                   <TouchableOpacity key={idx} onPress={() => handleOnPress(id)}>
                     <CommunityCard
-                      contents={contents}
+                      contents={title}
                       createdAt={createdAt}
                       updatedAt={updatedAt}
                       user_nickname={user_nickname}

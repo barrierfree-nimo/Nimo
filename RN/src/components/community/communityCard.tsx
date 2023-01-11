@@ -43,7 +43,7 @@ const CommunityCard = (props: CommunityCardProps) => {
   }, [updatedAt]);
 
   useEffect(() => {
-    contents.length < 20
+    contents.length < 15
       ? setPreviewContent(contents)
       : setPreviewContent(`${contents.slice(0, 15)}...`);
   }, [contents]);
