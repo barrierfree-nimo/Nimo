@@ -35,9 +35,19 @@ const CommunityMainStyle = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingLeft: 15,
-    borderRadius: 8,
+    borderBottomLeftRadius: 8,
+    borderTopLeftRadius: 8,
     backgroundColor: "#ECECEC",
     fontSize: 17,
+  },
+  search_clear: {
+    flex: 1,
+    paddingRight: 3,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ECECEC",
+    borderBottomRightRadius: 8,
+    borderTopRightRadius: 8,
   },
   search_btn: {
     flex: 2,
@@ -47,9 +57,14 @@ const CommunityMainStyle = StyleSheet.create({
     backgroundColor: "#747474",
     marginLeft: 20,
   },
+  search_clear_text: {
+    fontSize: 17,
+    color: "#00284E",
+    fontWeight: "500",
+  },
   search_text: {
     fontSize: 17,
-    color: "#FFFFFF"
+    color: "#FFFFFF",
   },
   content_container: {
     flex: 10,

@@ -30,8 +30,14 @@ const CommunityMain = ({ navigation }: any) => {
   const [search, setSearch] = useState<string>("");
   const [communityList, setCommunityList] = useState<CommunityData[]>([]);
   const [filteredList, setFilteredList] = useState<CommunityData[]>([]);
-  const [isExist, setIsExsist] = useState<boolean>(true);
+  const [isExist, setIsExist] = useState<boolean>(true);
   const [index, setIndex] = useState<string>("일반");
+  const [render, setRender] = useState<string>("");
+
+  useEffect(() => {
+    render === "true" && setRender("");
+    setIsExist(true);
+  }, [render]);
 
   const isFocused = useIsFocused();
   useEffect(() => {
@@ -53,6 +59,7 @@ const CommunityMain = ({ navigation }: any) => {
         },
       }).then((res) => {
         setCommunityList(res.data);
+        setRender("true");
       });
     } catch (err) {
       console.log(err);
@@ -69,6 +76,11 @@ const CommunityMain = ({ navigation }: any) => {
     search === "" ? fetchCommunityArchive() : fetchCommunitySearch();
   };
 
+  const handleSearchClear = async () => {
+    setSearch("");
+    fetchCommunityArchive();
+  };
+
   const fetchCommunitySearch = async () => {
     try {
       const token = await AsyncStorage.getItem("user_Token");
@@ -77,7 +89,9 @@ const CommunityMain = ({ navigation }: any) => {
           accessToken: `${token}`,
         },
       }).then((res) => {
-        res.data.msg ? setIsExsist(false) : setIsExsist(true),
+        res.data.msg
+          ? (setIsExist(false), setCommunityList([]))
+          : setIsExist(true),
           setCommunityList(res.data);
       });
     } catch (err) {
@@ -104,6 +118,12 @@ const CommunityMain = ({ navigation }: any) => {
           style={CommunityMainStyle.search_input}
           placeholder="찾으시는 단어를 입력해주세요"
         />
+        <TouchableOpacity
+          onPress={() => handleSearchClear()}
+          style={CommunityMainStyle.search_clear}
+        >
+          <Text style={CommunityMainStyle.search_clear_text}>X</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => handleSearch()}
           style={CommunityMainStyle.search_btn}
@@ -171,7 +191,7 @@ const CommunityMain = ({ navigation }: any) => {
       </View>
       <View style={CommunityMainStyle.content_container}>
         <ScrollView>
-          {isExist ? (
+          {render === "" && isExist ? (
             <View>
               {filteredList?.map(
                 (
