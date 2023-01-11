@@ -8,7 +8,7 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./src/assets/images/logo.png",
+      "image": "./src/assets/images/img_logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -28,7 +28,7 @@
         "RECORD_AUDIO"
       ],
       "softwareKeyboardLayoutMode": "pan",
-      "versionCode": 4
+      "versionCode": 5
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
