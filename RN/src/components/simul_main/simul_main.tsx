@@ -47,10 +47,6 @@ const SimulMain = ({ navigation }: any) => {
     }
   };
 
-  useEffect(() => {
-    console.log(">>>>>", type, num, red);
-  }, [red]);
-
   const isInRed = (appType: string) => {
     if (red?.includes(appType)) return true;
   };

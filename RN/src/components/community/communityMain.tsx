@@ -78,7 +78,6 @@ const CommunityMain = ({ navigation }: any) => {
           accessToken: `${token}`,
         },
       }).then((res) => {
-        console.log(res);
         res.data.msg ? setIsExsist(false) : setIsExsist(true),
           setCommunityList(res.data);
       });

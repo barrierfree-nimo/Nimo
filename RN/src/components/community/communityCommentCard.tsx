@@ -51,7 +51,6 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
   const [render, setRender] = useState<string>("");
 
   useEffect(() => {
-    console.log(render);
     render === "cancel" && setCommentModify("false"),
       setSelectedProps(""),
       setFocusedType(""),
