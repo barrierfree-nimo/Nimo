@@ -28,7 +28,7 @@
         "RECORD_AUDIO"
       ],
       "softwareKeyboardLayoutMode": "pan",
-      "versionCode": 3
+      "versionCode": 4
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

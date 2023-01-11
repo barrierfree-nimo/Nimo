@@ -84,7 +84,7 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
     }
     createdAt === updatedAt
       ? setUserTime(timeString)
-      : setUserTime(timeString + "(수정됨)");
+      : setUserTime(timeString + " (수정됨)");
   }, [updatedAt]);
 
   const fetchCommentPatch = async () => {
