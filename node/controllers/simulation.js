@@ -295,7 +295,7 @@ const simulation = {
   },
   snsSimul: async function (req, res, next) {
     try {
-      const scripts = await Msg.findAll({
+      const scripts = await Sns.findAll({
         where: {
           num: req.params.num,
         },
