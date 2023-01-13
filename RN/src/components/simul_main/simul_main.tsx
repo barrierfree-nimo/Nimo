@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Dimensions } from "react-native";
 import {
   SafeAreaView,
   TouchableOpacity,
@@ -13,6 +14,8 @@ import Axios from "axios";
 import baseURL from "../baseURL";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
+
+const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const SimulMain = ({ navigation }: any) => {
   const [type, setType] = useState<string>("");
@@ -159,7 +162,7 @@ const SimulMain = ({ navigation }: any) => {
             {type === "sns" || isInRed("sns") ? (
               <Image
                 source={require(`../../assets/icons/simul_main/sns_red.png`)}
-                style={SimulMainStyle.img_app_icon}
+                style={[{ width: SCREEN_WIDTH / 5, height: SCREEN_WIDTH / 5 }]}
               />
             ) : (
               <Image
