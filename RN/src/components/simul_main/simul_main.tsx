@@ -206,7 +206,13 @@ const SimulMain = ({ navigation }: any) => {
             )}
           </TouchableOpacity>
         </View>
-        <Text style={SimulMainStyle.text_notice}>체험하려는 어플이나 알림을 클릭해주세요</Text>
+        <View style={SimulMainStyle.text_notice_div}>
+          <View style={SimulMainStyle.text_div}>
+            <Text style={SimulMainStyle.text_notice}>
+              체험하려는 어플이나 알림을 클릭해주세요
+            </Text>
+          </View>
+        </View>
       </View>
       <ExitBtn navigation={navigation} content={"피싱 체험 나가기"} />
     </SafeAreaView>
