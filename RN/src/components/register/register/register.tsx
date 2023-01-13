@@ -12,6 +12,7 @@ import {
   Keyboard,
   ToastAndroid,
   Linking,
+  StatusBar
 } from "react-native";
 import Checkbox from "expo-checkbox";
 import CommonStyle from "../../common/common_style";
@@ -85,6 +86,7 @@ const Register = ({ navigation }: any) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={CommonStyle.container}>
+        <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
         <View style={CommonStyle.container_header}>
           <Text style={CommonStyle.text_header}>회원가입</Text>
         </View>

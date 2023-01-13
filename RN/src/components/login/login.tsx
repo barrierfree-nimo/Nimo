@@ -54,6 +54,7 @@ const Login = ({ navigation }: any) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={CommonStyle.container}>
+        <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
         <View style={LoginStyle.container_login_title}>
           <Text style={LoginStyle.text_title}>피싱백신</Text>
           <Text style={LoginStyle.text_login}>로그인</Text>

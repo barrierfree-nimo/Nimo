@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
+  StatusBar
 } from "react-native";
 import CommonStyle from "../../common/common_style";
 import CommunityWriteStyle from "./write_style";
@@ -64,6 +65,7 @@ const CommunityWrite = ({ navigation }: any) => {
 
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <View style={CommonStyle.container_header}>
         <Text style={CommonStyle.text_header}>소통하기</Text>
       </View>

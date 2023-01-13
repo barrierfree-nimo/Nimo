@@ -7,6 +7,7 @@ import {
   Text,
   Dimensions,
   ScrollView,
+  StatusBar
 } from "react-native";
 import CommonStyle from "../../common/common_style";
 import SpeechBubble from "../../simul_common/speech_bubble";
@@ -116,6 +117,7 @@ const SnsDetail = ({ route, navigation }: any) => {
 
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <Image
         source={require("../../../assets/icons/simul_message/message_bg.png")}
         style={SimulMainStyle.img_galaxy}

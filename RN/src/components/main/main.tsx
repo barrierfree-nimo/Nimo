@@ -58,7 +58,7 @@ const Main = ({ navigation }: any) => {
   };
   return (
     <SafeAreaView style={CommonStyle.container}>
-      <StatusBar />
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <View style={MainStyle.container_header}>
         <Text style={MainStyle.text_header}>피싱백신</Text>
         <View style={MainStyle.btn_setting}>

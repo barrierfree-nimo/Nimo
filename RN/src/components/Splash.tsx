@@ -36,7 +36,7 @@ const Splash = ({navigation}: any) => {
 
   return (
     <SafeAreaView style={CommonStyle.container}>
-      <StatusBar />
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <View>
         <View style={styles.container}>
           <Image source={require('../assets/icons/simul_common/ic_correct.png')} 

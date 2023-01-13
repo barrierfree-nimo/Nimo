@@ -8,6 +8,7 @@ import {
   Button,
   Image,
   ToastAndroid,
+  StatusBar
 } from "react-native";
 import CommonStyle from "../common/common_style";
 import QuizStyle from "./quiz_style";
@@ -113,6 +114,7 @@ const Quiz = ({ navigation }: any) => {
 
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <View style={CommonStyle.container_header}>
         <Text style={CommonStyle.text_header}>피싱 문제 풀기</Text>
       </View>

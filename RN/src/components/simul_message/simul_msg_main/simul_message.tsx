@@ -7,6 +7,7 @@ import {
   View,
   Image,
   Text,
+  StatusBar
 } from "react-native";
 import baseURL from "../../baseURL";
 import CommonStyle from "../../common/common_style";
@@ -55,6 +56,7 @@ const MessageSimul = ({ navigation }: any) => {
 
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <Image
         source={require("../../../assets/icons/simul_message/msg_bg_white.png")}
         style={SimulMainStyle.img_galaxy}

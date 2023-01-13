@@ -44,7 +44,7 @@ const QuizStyle = StyleSheet.create({
   },
   btn_container_option: {
     width: SCREEN_WIDTH - 100,
-    height: 50,
+    paddingVertical: 12,
     backgroundColor: '#DADADA',
     alignItems: 'center',
     justifyContent: 'center',

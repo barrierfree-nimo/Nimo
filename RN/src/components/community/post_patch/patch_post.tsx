@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
+  StatusBar
 } from "react-native";
 import CommonStyle from "../../common/common_style";
 import PostPatchStyle from "./patch_post_style";
@@ -81,6 +82,7 @@ const PatchPost = ({ route, navigation }: any) => {
 
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <View style={CommonStyle.container_header}>
         <Text style={CommonStyle.text_header}>소통하기</Text>
       </View>

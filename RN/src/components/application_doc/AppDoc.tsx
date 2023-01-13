@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, TouchableOpacity, View, Text } from "react-native";
+import { SafeAreaView, TouchableOpacity, View, Text, StatusBar } from "react-native";
 import CommonStyle from "../common/common_style";
 import Banner from "../application_doc/banner";
 import AppDocStyle from "../application_doc/appDoc_style";
@@ -81,6 +81,7 @@ const AppDoc = ({ navigation }: any) => {
 
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <View style={AppDocStyle.index_container}>
         <TouchableOpacity
           style={[

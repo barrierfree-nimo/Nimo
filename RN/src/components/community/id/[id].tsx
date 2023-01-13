@@ -7,6 +7,7 @@ import {
   TextInput,
   ScrollView,
   KeyboardAvoidingView,
+  StatusBar
 } from "react-native";
 import Axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -289,6 +290,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
 
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <CommunityModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}

@@ -8,6 +8,7 @@ import {
   Image,
   Text,
   Dimensions,
+  StatusBar
 } from "react-native";
 import CommonStyle from "../common/common_style";
 import ExitBtn from "../common/exit_btn";
@@ -33,6 +34,7 @@ const CorrectPageVoice = ({ route, navigation }: any) => {
 
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <Image
         source={require("../../assets/icons/simul_voice/voice_bg_purple.png")}
         style={SimulMainStyle.img_galaxy}

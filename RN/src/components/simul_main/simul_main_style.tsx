@@ -29,7 +29,8 @@ const SimulMainStyle = StyleSheet.create({
     width: SCREEN_WIDTH - 80,
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: 30,
+    marginTop: 40,
+    marginBottom: 30
   },
   phone_app_div: {
     flex: 8,

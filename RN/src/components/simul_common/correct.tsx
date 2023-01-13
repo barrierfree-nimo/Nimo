@@ -6,6 +6,7 @@ import {
   Image,
   Text,
   Dimensions,
+  StatusBar
 } from "react-native";
 import CommonStyle from "../common/common_style";
 import ExitBtn from "../common/exit_btn";
@@ -53,6 +54,7 @@ const CorrectPage = ({ route, navigation }: any) => {
 
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <Image
         source={require("../../assets/icons/simul_message/message_bg.png")}
         style={SimulMainStyle.img_galaxy}

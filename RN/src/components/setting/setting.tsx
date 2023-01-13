@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Dimensions,
   Linking,
+  StatusBar
 } from "react-native";
 import CommonStyle from "../common/common_style";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -33,6 +34,7 @@ const Setting = ({ route, navigation }: any) => {
 
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <View style={CommonStyle.container_header}>
         <Text style={CommonStyle.text_header}>설정</Text>
       </View>
