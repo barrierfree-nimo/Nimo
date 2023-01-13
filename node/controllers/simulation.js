@@ -66,6 +66,18 @@ const simulation = {
         if (notDone.length !== 0) {
           console.log("not zero")
           var num = notDone[ 0 ].num;
+
+          var titleList = await SimulData.findAll({
+            limit: 1,
+            where: {
+              type: type,
+              simulNum: num
+            },
+            attributes: [ "title" ],
+            raw: true,
+          })
+          var title = titleList[ 0 ].title;
+          
           break;
         } else {
           console.log("not")
@@ -77,7 +89,7 @@ const simulation = {
           return res.status(200).json({red})
         }
       }
-      return res.status(200).json({type, num, red});
+      return res.status(200).json({type, num, title, red});
     } catch (error) {
       return res.status(400)
     }
