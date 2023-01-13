@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
   },
   btn_text: {
     color: "white",
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "500",
   },
 });

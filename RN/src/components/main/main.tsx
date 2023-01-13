@@ -102,7 +102,7 @@ const Main = ({ navigation }: any) => {
           onPress={() => navigation.navigate("AppDoc")}
           style={MainStyle.btn_menu_tutorial}
         >
-          <Text style={MainStyle.btnText_menu_tutorial}>어플 설명서 보기</Text>
+          <Text style={MainStyle.btnText_menu_tutorial}>사용 설명서 보기</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("SimulMain")}

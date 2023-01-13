@@ -15,7 +15,7 @@ const NavigateBtn = ({ navigation }: any) => {
         onPress={() => navigation.navigate("SimulMain")}
         style={CommonStyle.navigate_btn}
       >
-        <Text style={CommonStyle.navigate_btn_text}>체험 첫화면</Text>
+        <Text style={CommonStyle.navigate_btn_text}>체험 홈화면</Text>
       </TouchableOpacity>
     </View>
   );

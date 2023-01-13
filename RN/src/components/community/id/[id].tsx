@@ -16,7 +16,7 @@ import communityDetailStyle from "./[id]_style";
 import CommunityCommentCard from "../communityCommentCard";
 import CommunityModal from "../communityModal";
 import { useIsFocused } from "@react-navigation/native";
-import ExitBtn from "../../common/exit_btn";
+import BackBtn from "../../common/back_btn";
 
 interface PostContent {
   id: number;
@@ -390,7 +390,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
           </KeyboardAvoidingView>
         </View>
       </View>
-      <ExitBtn navigation={navigation} content={"소통하기 나가기"} />
+      <BackBtn navigation={navigation} content={"뒤로 가기"} />
     </SafeAreaView>
   );
 };

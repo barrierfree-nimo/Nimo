@@ -17,6 +17,7 @@ import { useIsFocused } from "@react-navigation/native";
 const SimulMain = ({ navigation }: any) => {
   const [type, setType] = useState<string>("");
   const [num, setNum] = useState<number>();
+  const [title, setTitle] = useState<string>("");
   const [red, setRed] = useState<string[]>();
   const isFocused = useIsFocused();
 
@@ -40,6 +41,7 @@ const SimulMain = ({ navigation }: any) => {
       }).then((res) => {
         setTimeout(() => setType(res.data.type), 2000);
         setNum(res.data.num);
+        setTitle(res.data.title);
         setRed(res.data.red);
       });
     } catch (err) {
@@ -62,8 +64,9 @@ const SimulMain = ({ navigation }: any) => {
           {type === "sns" && (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("MessageDetail", {
+                navigation.navigate("SnsDetail", {
                   simulNum: num,
+                  title: title,
                 })
               }
             >
@@ -78,6 +81,7 @@ const SimulMain = ({ navigation }: any) => {
               onPress={() =>
                 navigation.navigate("MessageDetail", {
                   simulNum: num,
+                  title: title,
                 })
               }
             >
@@ -202,6 +206,7 @@ const SimulMain = ({ navigation }: any) => {
             )}
           </TouchableOpacity>
         </View>
+        <Text style={SimulMainStyle.text_notice}>체험하려는 어플이나 알림을 클릭해주세요</Text>
       </View>
       <ExitBtn navigation={navigation} content={"피싱 체험 나가기"} />
     </SafeAreaView>

@@ -43,11 +43,21 @@ const SimulMainStyle = StyleSheet.create({
     marginTop: 20,
   },
   phone_bottom_div: {
-    flex: 5,
+    flex: 4,
     width: SCREEN_WIDTH - 80,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  text_notice: {
+    fontSize: 17,
+    fontWeight: "200",
+    color: "gray",
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    paddingVertical: 7,
+    paddingHorizontal: 15,
+    marginBottom: 5,
+    borderRadius: 20,
   },
   img_bottom_app_icon: {
     width: SCREEN_WIDTH / 5,
