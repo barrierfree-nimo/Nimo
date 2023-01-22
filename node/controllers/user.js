@@ -109,13 +109,11 @@ const user = {
   checkNickname: async function (req, res, next) {
     try {
       var nickname = req.params.nickname
-      try {
-        var is_user = await User.count({where: {nickname: nickname}})
-      }
+      try {const user = await User.findOne({where: {nickname: nickname}})}
       catch (error) {
         return res.status(402).json(error)
       }
-      if (is_user === 1) {
+      if (!user.length == 0) {
         return res.status(409).json({msg: "nickname exist"})
       } else if (is_user === 0) {
         return res.status(200).json({msg: "nickname not exist"})
@@ -125,6 +123,38 @@ const user = {
     } catch (error) {
       return res.status(400).json(error)
     }
+  },
+  changePassword: async function (req, res, next) {
+
+    const user = await User.findOne({where: {id: req.user_id}});
+    const password = req.body.password;
+    const newPassword1 = req.body.newPassword1;
+    const newPassword2 = req.body.newPassword2;
+
+    if (!user) {
+      return res.status(404).json({message: "Retry (not exist or typeerror)"});
+    } else {
+      const valid = user.validPassword(password.toString())
+      if (!valid) {
+        return res.status(401).json({msg: "invalid pw"})
+      }
+      else {
+        if (!newPassword1 == newPassword2) {
+          return res.status(401).json({msg: "not equal"})
+        } else {
+          bcrypt.genSalt(10, function (err, salt) {
+            if (err) return;
+            bcrypt.hash(newPassword1, salt, function (err, hash) {
+              if (err) return;
+              user.update({
+                password: hash,
+              }).then(res.status(200).json({message: "Success!"}));
+            });
+          });
+        }
+      }
+    }
+
   },
   setInfo: async function (req, res, next) {
     try {
