@@ -21,25 +21,25 @@ const user = {
   },
   createNewUser: async function (req, res, next) {
     try {
-      const {nickname, password} = req.body;
+      const {userId, nickname, password} = req.body;
 
-      if (!nickname || !password) {
+      if (!userId || !nickname || !password) {
         return res.status(500).json({message: "Omit some params"});
       } else {
         const user = await User.findOne({
           where: {
-            nickname: req.body.nickname,
+            userId: req.body.userId,
           },
         });
-
         if (user) {
-          return res.status(500).json({message: "Already exist nickname"});
+          return res.status(400).json({message: "Already exist userId"});
         } else {
           bcrypt.genSalt(10, function (err, salt) {
             if (err) return;
             bcrypt.hash(password, salt, function (err, hash) {
               if (err) return;
               User.create({
+                userId: userId,
                 nickname: nickname,
                 password: hash,
               }).then(res.status(200).json({message: "Join Success!"}));
@@ -53,18 +53,18 @@ const user = {
   },
   createToken: async function (req, res) {
     try {
-      const {nickname, password} = req.body;
-      if (!nickname || !password) {
+      const {userId, nickname, password} = req.body;
+      if (!userId || !password) {
         return res.status(500).json({message: "Omit some params"});
       } else {
         const user = await User.findOne({
           where: {
-            nickname: nickname,
+            userId: userId
           }
         });
 
         if (!user) {
-          return res.status(500).json({message: "Retry (not exist or typeerror)"});
+          return res.status(500).json({message: "Retry (not exist userId"});
         } else {
           const valid = user.validPassword(req.body.password.toString())
           if (!valid) {
