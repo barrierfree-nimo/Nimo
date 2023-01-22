@@ -1,5 +1,5 @@
 const express = require("express");
-const {User} = require("../models");
+const {User, UserInfo} = require("../models");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const salt = 10;
@@ -158,26 +158,56 @@ const user = {
   },
   setInfo: async function (req, res, next) {
     try {
-      const user = await User.findOne({where: {id: req.user_id}});
       const {birth, gender, job, interest, offspring, bank} = req.body;
-      try {
-        user.update({
-          birth: birth,
-          gender: gender,
-          job: job,
-          interest: interest,
-          offspring: offspring,
-          bank: bank
-        })
-      } catch (error) {
-        console.log(error)
-        return res.status(401)
+
+      const [userInfo, check] = await UserInfo.upsert({
+        userId: req.user_id,
+        birth: birth,
+        gender: gender,
+        job: job,
+        interest: interest,
+        offspring: offspring,
+        bank: bank
+      }, {
+        userId: req.user_id
+      })
+
+      if(check) {
+        return res.status(200).json({msg: "Create userInfo"})
+      } else {
+        return res.status(201).json({msg: "Update userInfo"})
       }
-      return res.status(200).json("msg: success update userinfo")
     } catch (error) {
       return res.status(400)
     }
-  }
+  },
+  getInfo: async function (req, res, next) {
+
+    const userInfo = await UserInfo.findOne({where: {userId: req.user_id}});
+
+    if (!userInfo) {
+      return res.status(404).json({msg: "not exist"});
+    }
+
+    const {birth, gender, job, interest, offspring, bank} = userInfo;
+    const json = {birth, gender, job, interest, offspring, bank}
+    return res.status(200).json(json)
+  },
+  deleteInfo: async function (req, res, next) {
+    try {
+      const userInfo = await UserInfo.findOne({where: {userId: req.user_id}});
+      
+      if(userInfo) {
+        await UserInfo.destroy({where: {userId: req.user_id}});
+
+        return res.status(204).json();
+      } else {
+        return res.status(404).json({msg: "Not exist"});
+      }
+    } catch (error) {
+      return res.status(400)
+    }
+  },
 }
 
 module.exports = user;
