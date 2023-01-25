@@ -53,13 +53,16 @@ const user = {
   },
   createToken: async function (req, res) {
     try {
-      const {userId, nickname, password} = req.body;
-      if (!userId || !password) {
+      //const {userId, nickname, password} = req.body;
+      const {nickname, password} = req.body;
+      //if (!userId || !password) {
+      if (!nickname || !password) {
         return res.status(500).json({message: "Omit some params"});
       } else {
         const user = await User.findOne({
           where: {
-            userId: userId
+            //userId: userId
+            nickname: nickname
           }
         });
 
@@ -73,7 +76,8 @@ const user = {
           else {
             const accessToken = jwt.sign(
               {
-                user_id: user.id,
+                //user_id: user.id
+                nickname: nickname
               },
               process.env.JWT_SECRET,
               // {
