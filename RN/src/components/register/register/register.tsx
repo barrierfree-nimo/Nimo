@@ -20,14 +20,20 @@ import RegisterStyle from "./register_style";
 import baseURL from "../../baseURL";
 
 const Register = ({ navigation }: any) => {
+  const [id, setId] = useState("");
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [passwordAgain, setPasswordAgain] = useState("");
+  const [passwordAnswer, setPasswordAnswer] = useState("");
+  //const [idOk, setIdOk] = useState(false);
   const [nicknameOk, setNicknameOk] = useState(false);
   const [passwordOk, setPasswordOk] = useState(false);
-  const [termsOk, setTermsOk] = useState(false);
-  const termsURL =
-    "https://sugary-cuticle-b44.notion.site/ef5867bd9c6a4696bb6b3eecca1bc266";
+  //const [passwordAnswerOk, setPasswordAnswerOk] = useState(false);
+  const [terms1Ok, setTerms1Ok] = useState(false);
+  const [terms2Ok, setTerms2Ok] = useState(false);
+  const terms1URL = "https://sugary-cuticle-b44.notion.site/ef5867bd9c6a4696bb6b3eecca1bc266";
+  const terms2URL = "https://sugary-cuticle-b44.notion.site/e8163ea69f81486aa5f8f1fa8857cb27";
+
 
   const checkNickname = async () => {
     try {
@@ -59,28 +65,32 @@ const Register = ({ navigation }: any) => {
   };
 
   const addUser = () => {
-    if (password.length < 8) {
-      showToast("8자 이상의 비밀번호를 설정해주세요.");
-      return;
-    }
+    navigation.navigate("RegisterCheck");
 
-    if (nicknameOk && passwordOk && termsOk) {
-      Axios.post(baseURL + "/user/join", {
-        nickname: nickname,
-        password: password,
-      })
-        .then((res) => {
-          showToast("회원가입이 완료되었습니다.");
-          navigation.navigate("Login");
-        })
-        .catch((err) => console.log(err));
-    } else if (!nicknameOk) {
-      showToast("아이디 중복 여부를 확인해주세요.");
-    } else if (!passwordOk) {
-      showToast("비밀번호를 다시 확인해주세요");
-    } else {
-      showToast("이용약관에 동의하셔야 가입이 가능합니다.");
-    }
+    // if (password.length < 8) {
+    //   showToast("8자 이상의 비밀번호를 설정해주세요.");
+    //   return;
+    // }
+
+    // if(nickname != null )
+
+    // if (nicknameOk && passwordOk && termsOk) {
+    //   Axios.post(baseURL + "/user/join", {
+    //     nickname: nickname,
+    //     password: password,
+    //   })
+    //     .then((res) => {
+    //       showToast("회원가입이 완료되었습니다.");
+    //       navigation.navigate("Login");
+    //     })
+    //     .catch((err) => console.log(err));
+    // } else if (!nicknameOk) {
+    //   showToast("아이디 중복 여부를 확인해주세요.");
+    // } else if (!passwordOk) {
+    //   showToast("비밀번호를 다시 확인해주세요");
+    // } else {
+    //   showToast("이용약관에 동의하셔야 가입이 가능합니다.");
+    // }
   };
 
   return (
@@ -97,11 +107,11 @@ const Register = ({ navigation }: any) => {
               <Text style={RegisterStyle.title_item}>아이디</Text>
               <View style={RegisterStyle.container_item_input}>
                 <TextInput
-                  value={nickname}
-                  onChangeText={(nickname) => {
-                    setNickname(nickname), setNicknameOk(false);
-                  }}
-                  style={RegisterStyle.textInput_item}
+                  // value={id}
+                  // onChangeText={(id) => {
+                  //   setId(id), setIdOk(false);
+                  // }}
+                  style={RegisterStyle.textInput_item_id}
                   placeholder="아이디"
                 />
                 <TouchableOpacity
@@ -123,13 +133,28 @@ const Register = ({ navigation }: any) => {
             </View>
 
             <View style={RegisterStyle.container_item}>
+              <Text style={RegisterStyle.title_item}>닉네임</Text>
+              <View style={RegisterStyle.container_item_input}>
+                <TextInput
+                  value={nickname}
+                  onChangeText={(nickname) => {
+                    setNickname(nickname), 
+                    setNicknameOk(false);
+                  }}
+                  style={RegisterStyle.textInput_item}
+                  placeholder="닉네임"
+                />
+              </View>
+            </View>
+
+            <View style={RegisterStyle.container_item}>
               <Text style={RegisterStyle.title_item}>비밀번호</Text>
               <View style={RegisterStyle.container_item_input}>
                 <TextInput
                   value={password}
                   onChangeText={(password) => setPassword(password)}
                   secureTextEntry={true}
-                  style={RegisterStyle.textInput_item_pw}
+                  style={RegisterStyle.textInput_item}
                   placeholder="비밀번호"
                 />
               </View>
@@ -144,7 +169,7 @@ const Register = ({ navigation }: any) => {
                     setPasswordAgain(passwordAgain);
                     checkPassword(passwordAgain);
                   }}
-                  style={RegisterStyle.textInput_item_pw}
+                  style={RegisterStyle.textInput_item}
                   secureTextEntry={true}
                   placeholder="비밀번호를 한번 더 입력해주세요"
                 />
@@ -159,20 +184,53 @@ const Register = ({ navigation }: any) => {
             </View>
 
             <View style={RegisterStyle.container_item}>
+              <Text style={RegisterStyle.title_item}>비밀번호 찾기 질문</Text>
+              <View style={RegisterStyle.container_item_input}>
+                <TextInput
+                  // value={passwordAnswer}
+                  // onChangeText={(passwordAnswer) => {
+                  //   setPasswordAnswer(passwordAnswer),
+                  //   setPasswordAnswerOk(false)
+                  // }}
+                  style={RegisterStyle.textInput_item}
+                  placeholder="가장 아끼는 보물 1호는?"
+                />
+              </View>
+            </View>
+
+            <View style={RegisterStyle.container_item}>
               <Text style={RegisterStyle.title_item}>약관 동의</Text>
               <View style={RegisterStyle.container_checkbox}>
                 <Checkbox
                   style={RegisterStyle.checkbox}
-                  value={termsOk}
-                  onValueChange={(termsOk) => setTermsOk(termsOk)}
-                  color={termsOk ? "#FFD542" : undefined}
+                  value={terms1Ok}
+                  onValueChange={(terms1Ok) => setTerms1Ok(terms1Ok)}
+                  color={terms1Ok ? "#FFD542" : undefined}
                 />
                 <Text style={RegisterStyle.text_checkbox_title}>
                   (필수) 이용약관 동의{" "}
                 </Text>
                 <TouchableOpacity
                   style={RegisterStyle.btn_checkbox_link}
-                  onPress={() => Linking.openURL(termsURL)}
+                  onPress={() => Linking.openURL(terms1URL)}
+                >
+                  <Text style={RegisterStyle.text_checkbox_link}>보기</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={RegisterStyle.container_checkbox}>
+                <Checkbox
+                  style={RegisterStyle.checkbox}
+                  value={terms2Ok}
+                  onValueChange={(terms2Ok) => setTerms2Ok(terms2Ok)}
+                  color={terms2Ok ? "#FFD542" : undefined}
+                />
+                <Text style={RegisterStyle.text_checkbox_title}>
+                  (필수) 개인정보처리방침 동의{" "}
+                </Text>
+                <TouchableOpacity
+                  style={RegisterStyle.btn_checkbox_link}
+                  onPress={() => Linking.openURL(terms2URL)}
                 >
                   <Text style={RegisterStyle.text_checkbox_link}>보기</Text>
                 </TouchableOpacity>
