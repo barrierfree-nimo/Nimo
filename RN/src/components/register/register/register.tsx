@@ -83,51 +83,54 @@ const Register = ({ navigation }: any) => {
   };
 
   const addUser = () => {
-    if(userId == "") {
-      showToast("아이디를 입력해주세요");
-      return;
-    }
 
-    if(nickname == "") {
-      showToast("닉네임을 입력해주세요");
-      return;
-    }
+    navigation.navigate("RegisterCheck");
 
-    if (password.length < 8) {
-      showToast("8자 이상의 비밀번호를 설정해주세요.");
-      return;
-    }
+    // if(userId == "") {
+    //   showToast("아이디를 입력해주세요");
+    //   return;
+    // }
 
-    if (!passwordOk) {
-      showToast("비밀번호를 다시 확인해주세요");
-      return;
-    }
+    // if(nickname == "") {
+    //   showToast("닉네임을 입력해주세요");
+    //   return;
+    // }
 
-    if(!(terms1Ok && terms2Ok)) {
-      showToast("모든 약관에 동의하셔야 가입이 가능합니다.");
-      return;
-    }
+    // if (password.length < 8) {
+    //   showToast("8자 이상의 비밀번호를 설정해주세요.");
+    //   return;
+    // }
 
-    if (userIdOk && nicknameOk && passwordOk && terms1Ok && terms2Ok) {
-      Axios.post(baseURL + "/user/join", {
-        user_id: userId,
-        nickname: nickname,
-        password: password,
-      })
-        .then((res) => {
-          showToast("회원가입이 완료되었습니다.");
-          navigation.navigate("RegisterCheck");
-        })
-        .catch((err) => console.log(err));
-    } else if (!userId) {
-      showToast("아이디 중복 여부를 확인해주세요.");
-    } else if (!nicknameOk) {
-      showToast("닉네임 중복 여부를 확인해주세요.");
-    } else if (!passwordOk) {
-      showToast("비밀번호를 다시 확인해주세요");
-    } else {
-      showToast("이용약관에 동의하셔야 가입이 가능합니다.");
-    }
+    // if (!passwordOk) {
+    //   showToast("비밀번호를 다시 확인해주세요");
+    //   return;
+    // }
+
+    // if(!(terms1Ok && terms2Ok)) {
+    //   showToast("모든 약관에 동의하셔야 가입이 가능합니다.");
+    //   return;
+    // }
+
+    // if (userIdOk && nicknameOk && passwordOk && terms1Ok && terms2Ok) {
+    //   Axios.post(baseURL + "/user/join", {
+    //     user_id: userId,
+    //     nickname: nickname,
+    //     password: password,
+    //   })
+    //     .then((res) => {
+    //       showToast("회원가입이 완료되었습니다.");
+    //       navigation.navigate("RegisterCheck");
+    //     })
+    //     .catch((err) => console.log(err));
+    // } else if (!userId) {
+    //   showToast("아이디 중복 여부를 확인해주세요.");
+    // } else if (!nicknameOk) {
+    //   showToast("닉네임 중복 여부를 확인해주세요.");
+    // } else if (!passwordOk) {
+    //   showToast("비밀번호를 다시 확인해주세요");
+    // } else {
+    //   showToast("이용약관에 동의하셔야 가입이 가능합니다.");
+    // }
   };
 
   return (

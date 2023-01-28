@@ -6,7 +6,6 @@ const RegisterInfoStyle = StyleSheet.create({
   container: {
     flex: 1,
     width: SCREEN_WIDTH,
-    paddingHorizontal: 20,
     justifyContent: 'center',
     alignItems: "center",
   },
@@ -14,6 +13,7 @@ const RegisterInfoStyle = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     paddingVertical: 17,
+    paddingHorizontal: 20,
   },
   text_notice: {
     fontSize: 18,
@@ -22,21 +22,19 @@ const RegisterInfoStyle = StyleSheet.create({
   },
   container_info: {
     width: "100%",
-    paddingHorizontal: 10,
-    marginTop: 10
-    //borderWidth: 1
+    paddingHorizontal: 30,
   },
   container_info_row: {
     flexDirection: "row",
     alignContent: "center",
     alignItems: "center",
-    marginVertical: 10
+    marginVertical: 6,
   },
   container_info_col: {
-    marginVertical: 10,
+
   },
   text_input_title: {
-    marginRight: 20,
+    minWidth: 130,
     paddingVertical: 15,
     textAlign: "left",
     textAlignVertical: "center",
@@ -45,7 +43,7 @@ const RegisterInfoStyle = StyleSheet.create({
     fontWeight: 'bold',
   },
   textInput_name: {
-    width: SCREEN_WIDTH - 170,
+    width: SCREEN_WIDTH - 200,
     paddingVertical: 15,
     paddingLeft: 20,
     borderRadius: 10,
@@ -53,37 +51,42 @@ const RegisterInfoStyle = StyleSheet.create({
     fontSize: 20,
   },
   textInput_bank: {
-    width: "100%",
+    width: SCREEN_WIDTH - 200,
     paddingVertical: 15,
     paddingLeft: 20,
     borderRadius: 10,
     backgroundColor: '#ebebeb',
     fontSize: 20,
   },
-  container_radio: {
+  container_checkbox_row: {
     flexDirection: "row",
     alignItems: "center",
   },
-  container_radio_item: {
+  container_checkbox: {
     flexDirection: "row",
-    alignItems: "center",
-    marginRight: 20
+    marginRight: 35,
   },
-  text_radio_item: {
+  container_checkbox_interest_main: {
+    paddingHorizontal: 20
+  },
+  container_checkbox_interest_sub: {
+    flexDirection: "row",
+  },
+  container_checkbox_interest: {
+    flex: 1,
+    flexDirection: "row",
+    marginVertical: 8,
+  },
+  checkbox: {
+    width: 25,
+    height: 25
+  },
+  text_checkbox_title: {
+    textAlign: 'center',
+    textAlignVertical: "center",
+    marginLeft: 10,
     fontSize: 20,
-    color: "#000000"
-  },
-  dropdown: {
-    width: 150,
-    minHeight: 40,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingLeft: 15,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#E6E6E6",
-    backgroundColor: "#E6E6E6",
-    fontSize: 24,
+    fontWeight: "500"
   },
   container_btn: {
     justifyContent: 'center',
