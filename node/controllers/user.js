@@ -179,13 +179,13 @@ const user = {
       
       const user = await User.upsert({
         id: req.user_id,
-        value: req.body.value
+        custom: req.body.custom
       })
 
-      if (!check.value) {
-        return res.status(200).json({msg: "Create userInfo Value"})
+      if (!check.custom) {
+        return res.status(200).json({msg: "Create userInfo Custom"})
       } else {
-        return res.status(201).json({msg: "Update userInfo Value"})
+        return res.status(201).json({msg: "Update userInfo Custom"})
       }
     } catch (error) {
       return res.status(400).json(error)
@@ -199,13 +199,13 @@ const user = {
       return res.status(404).json({msg: "not exist"});
     }
 
-    const value = user.value;
-    return res.status(200).json(value)
+    const custom = user.custom;
+    return res.status(200).json(custom)
   },
   deleteInfo: async function (req, res, next) {
     try {
       const user = await User.findOne({where: {id: req.user_id}});
-      user.update({value: null});
+      user.update({custom: null});
 
       return res.status(204).json();
     } catch (error) {
