@@ -14,7 +14,6 @@ const BlackUser = require('./blackUser');
 const BlackPost = require('./blackPost');
 const BlackComment = require('./blackComment');
 const Admin = require('./admin');
-const UserInfo = require('./userInfo');
 
 const db = {};
 const sequelize = new Sequelize(
@@ -38,7 +37,6 @@ db.BlackUser = BlackUser;
 db.BlackPost = BlackPost;
 db.BlackComment = BlackComment;
 db.Admin = Admin;
-db.UserInfo = UserInfo;
 
 User.init(sequelize);
 Voice.init(sequelize);
@@ -53,7 +51,6 @@ BlackUser.init(sequelize);
 BlackPost.init(sequelize);
 BlackComment.init(sequelize);
 Admin.init(sequelize);
-UserInfo.init(sequelize);
 
 User.associate(db);
 Post.associate(db);
@@ -62,6 +59,5 @@ BlackUser.associate(db);
 BlackPost.associate(db);
 BlackComment.associate(db);
 Admin.associate(db);
-UserInfo.associate(db);
 
 module.exports = db;

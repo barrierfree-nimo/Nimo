@@ -10,6 +10,7 @@ module.exports = class User extends Sequelize.Model {
     return super.init(
       {
         id: {
+          field: "id",
           type: Sequelize.INTEGER,
           allowNull: false,
           primaryKey: true,
@@ -39,6 +40,10 @@ module.exports = class User extends Sequelize.Model {
         refresh_token: {
           type: Sequelize.STRING(100),
           allowNull: true,
+        },
+        value: {
+          type: Sequelize.STRING(100),
+          allowNull: true,
         }
       },
       {
@@ -60,6 +65,5 @@ module.exports = class User extends Sequelize.Model {
     db.User.hasMany(db.BlackUser, {foreignKey: "user_nickname", sourceKey: "nickname"});
     db.User.hasMany(db.BlackComment, {foreignKey: "user_nickname", sourceKey: "nickname"});
     db.User.hasMany(db.Admin, {foreignKey: "user_nickname", sourceKey: "nickname"});
-    db.User.hasOne(db.UserInfo, {foreignKey: "userId", sourceKey: "id"});
   }
 };

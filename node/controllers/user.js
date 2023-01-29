@@ -5,20 +5,6 @@ const bcrypt = require('bcrypt');
 const salt = 10;
 
 const user = {
-  checkNickname: async function (req, res, next) {
-    try {
-      const user = await User.findOne({
-        where: {
-          nickname: req.body.nickname,
-        }
-      })
-
-      if (user) res.status(201).json({message: "Already exist nickname"});
-      else res.status(200).json({message: "Possible Nickname"})
-    } catch (error) {
-      console.log(error);
-    }
-  },
   createNewUser: async function (req, res, next) {
     try {
       const {userId, nickname, password} = req.body;
@@ -110,104 +96,118 @@ const user = {
       console.log(error);
     }
   },
+  checkId: async function (req, res, next) {
+    try {
+      const user = await User.findOne({
+        where: {
+          user_id: req.params.userId,
+        }
+      })
+      if (user) res.status(201).json({message: "Already exist id"});
+      else res.status(200).json({message: "Possible Id"})
+    } catch (error) {
+      console.log(error);
+    }
+  },
   checkNickname: async function (req, res, next) {
     try {
-      var nickname = req.params.nickname
-      try {const user = await User.findOne({where: {nickname: nickname}})}
-      catch (error) {
-        return res.status(402).json(error)
-      }
-      if (!user.length == 0) {
-        return res.status(409).json({msg: "nickname exist"})
-      } else if (is_user === 0) {
-        return res.status(200).json({msg: "nickname not exist"})
-      } else {
-        return res.status(405).json({msg: "multiple value exist"})
-      }
+      const user = await User.findOne({
+        where: {
+          nickname: req.params.nickname,
+        }
+      })
+      if (user) res.status(201).json({message: "Already exist nickname"});
+      else res.status(200).json({message: "Possible Nickname"})
     } catch (error) {
-      return res.status(400).json(error)
+      console.log(error);
+    }
+  },
+  validatePassword: async function (req, res, next) {
+    const user = await User.findOne({where: {id: req.user_id}});
+    const password = req.body.password;
+
+    const valid = user.validPassword(password.toString())
+    if (!valid) {
+      return res.status(401).json({msg: "invalid pw"})
+    }
+    else {
+      return res.status(200).json({msg: "valid pw"})
+    }
+  },
+  changeNickname: async function (req, res, next) {
+    const user = await User.findOne({where: {id: req.user_id}});
+    const nickname = req.body.nickname;
+
+    if (!user) {
+      return res.status(404).json({message: "Retry (not exist or typeerror)"});
+    } else {
+      user.update({nickname: nickname})
+      return res.status(200).json({message: "Success!"});
     }
   },
   changePassword: async function (req, res, next) {
-
     const user = await User.findOne({where: {id: req.user_id}});
-    const password = req.body.password;
     const newPassword1 = req.body.newPassword1;
     const newPassword2 = req.body.newPassword2;
 
     if (!user) {
       return res.status(404).json({message: "Retry (not exist or typeerror)"});
     } else {
-      const valid = user.validPassword(password.toString())
-      if (!valid) {
-        return res.status(401).json({msg: "invalid pw"})
-      }
-      else {
-        if (!newPassword1 == newPassword2) {
-          return res.status(401).json({msg: "not equal"})
-        } else {
-          bcrypt.genSalt(10, function (err, salt) {
+      if (!newPassword1 == newPassword2) {
+        return res.status(401).json({msg: "not equal"})
+      } else {
+        bcrypt.genSalt(10, function (err, salt) {
+          if (err) return;
+          bcrypt.hash(newPassword1, salt, function (err, hash) {
             if (err) return;
-            bcrypt.hash(newPassword1, salt, function (err, hash) {
-              if (err) return;
-              user.update({
-                password: hash,
-              }).then(res.status(200).json({message: "Success!"}));
-            });
+            user.update({
+              password: hash,
+            }).then(res.status(200).json({message: "Success!"}));
           });
-        }
+        });
       }
     }
 
   },
   setInfo: async function (req, res, next) {
-    try {
-      const {birth, gender, job, interest, offspring, bank} = req.body;
-
-      const [userInfo, check] = await UserInfo.upsert({
-        userId: req.user_id,
-        birth: birth,
-        gender: gender,
-        job: job,
-        interest: interest,
-        offspring: offspring,
-        bank: bank
-      }, {
-        userId: req.user_id
+      try {
+      const check = await User.findOne({
+        where: {
+          id: req.user_id
+        }
+      });
+      
+      const user = await User.upsert({
+        id: req.user_id,
+        value: req.body.value
       })
 
-      if(check) {
-        return res.status(200).json({msg: "Create userInfo"})
+      if (!check.value) {
+        return res.status(200).json({msg: "Create userInfo Value"})
       } else {
-        return res.status(201).json({msg: "Update userInfo"})
+        return res.status(201).json({msg: "Update userInfo Value"})
       }
     } catch (error) {
-      return res.status(400)
+      return res.status(400).json(error)
     }
   },
   getInfo: async function (req, res, next) {
 
-    const userInfo = await UserInfo.findOne({where: {userId: req.user_id}});
+    const user = await User.findOne({where: {id: req.user_id}});
 
-    if (!userInfo) {
+    if (!user) {
       return res.status(404).json({msg: "not exist"});
     }
 
-    const {birth, gender, job, interest, offspring, bank} = userInfo;
-    const json = {birth, gender, job, interest, offspring, bank}
-    return res.status(200).json(json)
+    const value = user.value;
+    return res.status(200).json(value)
   },
   deleteInfo: async function (req, res, next) {
     try {
-      const userInfo = await UserInfo.findOne({where: {userId: req.user_id}});
-      
-      if(userInfo) {
-        await UserInfo.destroy({where: {userId: req.user_id}});
+      const user = await User.findOne({where: {id: req.user_id}});
+      user.update({value: null});
 
-        return res.status(204).json();
-      } else {
-        return res.status(404).json({msg: "Not exist"});
-      }
+      return res.status(204).json();
     } catch (error) {
       return res.status(400)
     }
