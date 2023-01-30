@@ -41,7 +41,7 @@ module.exports = class User extends Sequelize.Model {
           type: Sequelize.STRING(100),
           allowNull: true,
         },
-        value: {
+        custom: {
           type: Sequelize.STRING(100),
           allowNull: true,
         }
