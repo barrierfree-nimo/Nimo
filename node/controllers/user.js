@@ -8,15 +8,14 @@ const user = {
   createNewUser: async function (req, res, next) {
     try {
       //      const {userId, nickname, password} = req.body;
-      const {userId, password} = req.body;
-
+      const {nickname, password} = req.body;
       //if (!userId || !nickname || !password) {
-      if (!userId || !password) {
+      if (!nickname || !password) {
         return res.status(500).json({message: "Omit some params"});
       } else {
         const user = await User.findOne({
           where: {
-            userId: req.body.userId,
+            userId: nickname,
           },
         });
         if (user) {
@@ -42,15 +41,15 @@ const user = {
   createToken: async function (req, res) {
     try {
       //const {userId, nickname, password} = req.body;
-      const {userId, password} = req.body;
-      if (!userId || !password) {
-        //if (!nickname || !password) {
+      const {nickname, password} = req.body;
+      //if (!userId || !password) {
+      if (!nickname || !password) {
         return res.status(500).json({message: "Omit some params"});
       } else {
         const user = await User.findOne({
           where: {
-            userId: userId
-            //id: nickname
+            //userId: userId
+            id: nickname
           }
         });
 
