@@ -3,7 +3,7 @@ import { SafeAreaView, View, Text, TouchableOpacity } from "react-native";
 import CommonStyle from "../../common/common_style";
 import RegisterCheckStyle from "./registercheck_style";
 
-const RegisterCheck = ({navigation}: any) => {
+const RegisterCheck = ({route, navigation}: any) => {
   return (
     <SafeAreaView style={CommonStyle.container}>
       <View style={RegisterCheckStyle.container}>
@@ -24,7 +24,7 @@ const RegisterCheck = ({navigation}: any) => {
         </View>
 
         <View style={RegisterCheckStyle.container_btn}>
-          <TouchableOpacity onPress={() => navigation.navigate("RegisterInfo")} style={RegisterCheckStyle.btn_yes}>
+          <TouchableOpacity onPress={() => navigation.navigate("RegisterInfo", {id : route.params.id})} style={RegisterCheckStyle.btn_yes}>
             <Text style={RegisterCheckStyle.btn_text_yes}>추가정보 입력하기</Text>
           </TouchableOpacity>
 

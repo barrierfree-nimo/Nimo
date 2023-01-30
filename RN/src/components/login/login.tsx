@@ -20,7 +20,7 @@ import LoginStyle from "./login_style";
 import baseURL from "../baseURL";
 
 const Login = ({ navigation }: any) => {
-  const [nickname, setNickname] = useState("");
+  const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
 
   const showToast = () => {
@@ -29,15 +29,14 @@ const Login = ({ navigation }: any) => {
 
   const userLogin = async () => {
     try {
-      await Axios.post(baseURL + "/user/login", {
-        nickname: nickname,
+      await Axios.post(baseURL+ "/user/login", {
+        userId: userId,
         password: password,
       })
         .then((res) => {
           if (res.status == 200) {
             const token = String(res.data["token"]["accessToken"]);
             AsyncStorage.setItem("user_Token", token);
-            AsyncStorage.setItem("user_nickname", nickname);
             navigation.replace("MainStackNavigator");
           }
         })
@@ -63,9 +62,9 @@ const Login = ({ navigation }: any) => {
         <KeyboardAvoidingView style={LoginStyle.container}>
           <View style={LoginStyle.container_login_input}>
             <TextInput
-              value={nickname}
+              value={userId}
               style={LoginStyle.textInput_login}
-              onChangeText={(nickname) => setNickname(nickname)}
+              onChangeText={(userId) => setUserId(userId)}
               placeholder="아이디"
             />
             <TextInput
