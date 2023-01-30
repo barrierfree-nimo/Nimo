@@ -7,9 +7,11 @@ const salt = 10;
 const user = {
   createNewUser: async function (req, res, next) {
     try {
-      const {userId, nickname, password} = req.body;
+      //      const {userId, nickname, password} = req.body;
+      const {userId, password} = req.body;
 
-      if (!userId || !nickname || !password) {
+      //if (!userId || !nickname || !password) {
+      if (!userId || !password) {
         return res.status(500).json({message: "Omit some params"});
       } else {
         const user = await User.findOne({
@@ -26,7 +28,7 @@ const user = {
               if (err) return;
               User.create({
                 userId: userId,
-                nickname: nickname,
+                nickname: userId,
                 password: hash,
               }).then(res.status(200).json({message: "Join Success!"}));
             });
@@ -40,15 +42,15 @@ const user = {
   createToken: async function (req, res) {
     try {
       //const {userId, nickname, password} = req.body;
-      const {nickname, password} = req.body;
-      //if (!userId || !password) {
-      if (!nickname || !password) {
+      const {userId, password} = req.body;
+      if (!userId || !password) {
+        //if (!nickname || !password) {
         return res.status(500).json({message: "Omit some params"});
       } else {
         const user = await User.findOne({
           where: {
-            //userId: userId
-            nickname: nickname
+            userId: userId
+            //id: nickname
           }
         });
 
@@ -170,13 +172,13 @@ const user = {
 
   },
   setInfo: async function (req, res, next) {
-      try {
+    try {
       const check = await User.findOne({
         where: {
           id: req.user_id
         }
       });
-      
+
       const user = await User.upsert({
         id: req.user_id,
         custom: req.body.custom
