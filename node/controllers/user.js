@@ -7,15 +7,13 @@ const salt = 10;
 const user = {
   createNewUser: async function (req, res, next) {
     try {
-      //      const {userId, nickname, password} = req.body;
-      const {nickname, password} = req.body;
-      //if (!userId || !nickname || !password) {
-      if (!nickname || !password) {
+      const {userId, nickname, password} = req.body;
+      if (!userId || !nickname || !password) {
         return res.status(500).json({message: "Omit some params"});
       } else {
         const user = await User.findOne({
           where: {
-            userId: nickname,
+            userId: userId,
           },
         });
         if (user) {
@@ -26,10 +24,13 @@ const user = {
             bcrypt.hash(password, salt, function (err, hash) {
               if (err) return;
               User.create({
-                userId: nickname,
+                userId: userId,
                 nickname: nickname,
                 password: hash,
-              }).then(res.status(200).json({message: "Join Success!"}));
+              }).then(function (newUser) {
+                res.status(200).json({id: newUser.id});
+              }
+              );
             });
           });
         }
@@ -40,16 +41,13 @@ const user = {
   },
   createToken: async function (req, res) {
     try {
-      //const {userId, nickname, password} = req.body;
-      const {nickname, password} = req.body;
-      //if (!userId || !password) {
-      if (!nickname || !password) {
+      const {userId, password} = req.body;
+      if (!userId || !password) {
         return res.status(500).json({message: "Omit some params"});
       } else {
         const user = await User.findOne({
           where: {
-            //userId: userId
-            userId: nickname
+            userId: userId
           }
         });
 
@@ -169,24 +167,33 @@ const user = {
     }
 
   },
-  setInfo: async function (req, res, next) {
+  setInfo: async function (req, res) {
     try {
-      const check = await User.findOne({
+      const user = await User.findOne({
+        where: {
+          id: req.body.id
+        }
+      });
+      user.update({custom: req.body.custom});
+
+      return res.status(200).json({msg: "Create userInfo Custom"})
+
+    } catch (error) {
+      return res.status(400).json(error)
+    }
+  },
+  updateInfo: async function (req, res, next) {
+    try {
+      const user = await User.findOne({
         where: {
           id: req.user_id
         }
       });
 
-      const user = await User.upsert({
-        id: req.user_id,
-        custom: req.body.custom
-      })
+      user.update({custom: req.body.custom});
 
-      if (!check.custom) {
-        return res.status(200).json({msg: "Create userInfo Custom"})
-      } else {
-        return res.status(201).json({msg: "Update userInfo Custom"})
-      }
+      return res.status(201).json({msg: "Update userInfo Custom"})
+
     } catch (error) {
       return res.status(400).json(error)
     }
