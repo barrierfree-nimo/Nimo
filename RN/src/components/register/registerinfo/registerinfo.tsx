@@ -4,6 +4,7 @@ import { SafeAreaView, View, ScrollView, Text, TextInput, TouchableOpacity, Toas
 import Checkbox from "expo-checkbox";
 import CommonStyle from "../../common/common_style";
 import RegisterInfoStyle from "./registerInfo_style";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import baseURL from "../../baseURL";
 
 const RegisterInfo = ({route, navigation}: any) => {
@@ -11,20 +12,20 @@ const RegisterInfo = ({route, navigation}: any) => {
     name: "",
     bank: "",
     gender: {
-      남: false,
-      여: false
+      male: false,
+      female: false
     },
     
-    offspring: {
-      딸: false,
-      아들: false
+    child: {
+      daughter: false,
+      son: false
     },
 
     interest: {
-      대출: false,
-      투자: false,
-      지원금: false,
-      쇼핑: false
+      loan: false,
+      invest: false,
+      money: false,
+      shopping: false
     }
   })
 
@@ -45,11 +46,11 @@ const RegisterInfo = ({route, navigation}: any) => {
     })
   }
 
-  const onChangeOffspring = (name: string, value: boolean) => {
+  const onChangechild = (name: string, value: boolean) => {
     setInputs({
       ...inputs,
-      offspring: {
-        ...inputs.offspring,
+      child: {
+        ...inputs.child,
         [name] : value
       }
     })
@@ -69,31 +70,64 @@ const RegisterInfo = ({route, navigation}: any) => {
     ToastAndroid.show(notice, ToastAndroid.SHORT);
   };
 
-  const setInfo = (inputs : any) => {
-    const name = String(inputs.name);
-    const bank = String(inputs.bank);
-    let info = name + "," + bank + ",";
-
-    for(let item in inputs.gender) {
-      if(inputs.gender[item]) info += String(item) + ",";
-    }
-
-    if(info.includes("남") && info.includes("여")) {
+  const setInfo = async (inputs : any) => {
+    if(inputs.gender["male"] && inputs.gender["female"]) {
       showToast("성별은 하나만 선택해주세요")
       return;
     }
 
-    for(let item in inputs.offspring) {
-      if(inputs.offspring[item]) info += String(item) + ",";
+    let custom = "";
+
+    const name = String(inputs.name);
+    if(name != "") {
+      await AsyncStorage.setItem("name", name);
+      custom += "name,";
     }
 
+    const bank = String(inputs.bank);
+    if(bank != "") {
+      await AsyncStorage.setItem("bank", name);
+      custom += "bank,";
+    }
+
+    let gender = "";
+    for(let item in inputs.gender) {
+      if(inputs.gender[item]) {
+        gender = String(item);
+        await AsyncStorage.setItem("gender", gender);
+        custom += "gender,";
+      }
+    }    
+
+    let child = "";
+    for(let item in inputs.child) {
+      if(inputs.child[item]) {
+        child += String(item) + ",";
+      }
+    }
+    if(child != "") {
+      await AsyncStorage.setItem("child", child);
+      custom += "child,";
+    }
+
+    let interest = [];
     for(let item in inputs.interest) {
-      if(inputs.interest[item]) info += String(item) + ",";
+      if(inputs.interest[item]) {
+        interest.push(String(item));
+      }
+    }
+    if(interest.length > 0) {
+      let interest_str = "";
+      for(let i=0 ; i<interest.length ; i++) {
+        interest_str += String(interest[i]) + ",";
+        custom += String(interest[i]) + ",";
+      }
+      await AsyncStorage.setItem("interest", interest_str);
     }
     
     Axios.post(baseURL + "/user/info", {
         id: route.params.id,
-        custom: info
+        custom: custom
       })
         .then((res) => {
           if(res.status == 200) {
@@ -145,9 +179,9 @@ const RegisterInfo = ({route, navigation}: any) => {
               <View style={RegisterInfoStyle.container_checkbox}>
                 <Checkbox
                   style={RegisterInfoStyle.checkbox}
-                  value={inputs.gender.남}
-                  onValueChange={(value) => {onChangeGender("남", value)}}
-                  color={inputs.gender.남 ? "#FFD542" : undefined}
+                  value={inputs.gender.male}
+                  onValueChange={(value) => {onChangeGender("male", value)}}
+                  color={inputs.gender.male ? "#FFD542" : undefined}
                 />
                 <Text style={RegisterInfoStyle.text_checkbox_title}>
                   남
@@ -156,9 +190,9 @@ const RegisterInfo = ({route, navigation}: any) => {
               <View style={RegisterInfoStyle.container_checkbox}>
                 <Checkbox
                   style={RegisterInfoStyle.checkbox}
-                  value={inputs.gender.여}
-                  onValueChange={(value) => {onChangeGender("여", value)}}
-                  color={inputs.gender.여 ? "#FFD542" : undefined}
+                  value={inputs.gender.female}
+                  onValueChange={(value) => {onChangeGender("female", value)}}
+                  color={inputs.gender.female ? "#FFD542" : undefined}
                 />
                 <Text style={RegisterInfoStyle.text_checkbox_title}>
                   여
@@ -173,9 +207,9 @@ const RegisterInfo = ({route, navigation}: any) => {
               <View style={RegisterInfoStyle.container_checkbox}>
                 <Checkbox
                   style={RegisterInfoStyle.checkbox}
-                  value={inputs.offspring.딸}
-                  onValueChange={(value) => {onChangeOffspring("딸", value)}}
-                  color={inputs.offspring.딸 ? "#FFD542" : undefined}
+                  value={inputs.child.daughter}
+                  onValueChange={(value) => {onChangechild("daughter", value)}}
+                  color={inputs.child.daughter ? "#FFD542" : undefined}
                 />
                 <Text style={RegisterInfoStyle.text_checkbox_title}>
                   딸
@@ -184,9 +218,9 @@ const RegisterInfo = ({route, navigation}: any) => {
               <View style={RegisterInfoStyle.container_checkbox}>
                 <Checkbox
                   style={RegisterInfoStyle.checkbox}
-                  value={inputs.offspring.아들}
-                  onValueChange={(value) => {onChangeOffspring("아들", value)}}
-                  color={inputs.offspring.아들 ? "#FFD542" : undefined}
+                  value={inputs.child.son}
+                  onValueChange={(value) => {onChangechild("son", value)}}
+                  color={inputs.child.son ? "#FFD542" : undefined}
                 />
                 <Text style={RegisterInfoStyle.text_checkbox_title}>
                   아들
@@ -202,9 +236,9 @@ const RegisterInfo = ({route, navigation}: any) => {
                 <View style={RegisterInfoStyle.container_checkbox_interest}>
                   <Checkbox
                     style={RegisterInfoStyle.checkbox}
-                    value={inputs.interest.대출}
-                    onValueChange={(value) => {onChangeInterest("대출", value)}}
-                    color={inputs.interest.대출 ? "#FFD542" : undefined}
+                    value={inputs.interest.loan}
+                    onValueChange={(value) => {onChangeInterest("loan", value)}}
+                    color={inputs.interest.loan ? "#FFD542" : undefined}
                   />
                   <Text style={RegisterInfoStyle.text_checkbox_title}>
                     대출
@@ -213,9 +247,9 @@ const RegisterInfo = ({route, navigation}: any) => {
                 <View style={RegisterInfoStyle.container_checkbox_interest}>
                   <Checkbox
                     style={RegisterInfoStyle.checkbox}
-                    value={inputs.interest.투자}
-                    onValueChange={(value) => {onChangeInterest("투자", value)}}
-                    color={inputs.interest.투자 ? "#FFD542" : undefined}
+                    value={inputs.interest.invest}
+                    onValueChange={(value) => {onChangeInterest("invest", value)}}
+                    color={inputs.interest.invest ? "#FFD542" : undefined}
                   />
                   <Text style={RegisterInfoStyle.text_checkbox_title}>
                     투자
@@ -226,9 +260,9 @@ const RegisterInfo = ({route, navigation}: any) => {
                 <View style={RegisterInfoStyle.container_checkbox_interest}>
                   <Checkbox
                     style={RegisterInfoStyle.checkbox}
-                    value={inputs.interest.지원금}
-                    onValueChange={(value) => {onChangeInterest("지원금", value)}}
-                    color={inputs.interest.지원금 ? "#FFD542" : undefined}
+                    value={inputs.interest.money}
+                    onValueChange={(value) => {onChangeInterest("money", value)}}
+                    color={inputs.interest.money ? "#FFD542" : undefined}
                   />
                   <Text style={RegisterInfoStyle.text_checkbox_title}>
                     지원금
@@ -237,9 +271,9 @@ const RegisterInfo = ({route, navigation}: any) => {
                 <View style={RegisterInfoStyle.container_checkbox_interest}>
                   <Checkbox
                     style={RegisterInfoStyle.checkbox}
-                    value={inputs.interest.쇼핑}
-                    onValueChange={(value) => {onChangeInterest("쇼핑", value)}}
-                    color={inputs.interest.쇼핑 ? "#FFD542" : undefined}
+                    value={inputs.interest.shopping}
+                    onValueChange={(value) => {onChangeInterest("shopping", value)}}
+                    color={inputs.interest.shopping ? "#FFD542" : undefined}
                   />
                   <Text style={RegisterInfoStyle.text_checkbox_title}>
                     온라인 쇼핑

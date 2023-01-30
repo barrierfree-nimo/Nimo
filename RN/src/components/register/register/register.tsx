@@ -129,7 +129,7 @@ const Register = ({ navigation }: any) => {
           
         })
         .catch((err) => console.log(err));
-    } else if (!userId) {
+    } else if (!userIdOk) {
       showToast("아이디 중복 여부를 확인해주세요.");
     } else if (!nicknameOk) {
       showToast("닉네임 중복 여부를 확인해주세요.");
