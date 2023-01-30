@@ -77,7 +77,7 @@ const simulation = {
             raw: true,
           })
           var title = titleList[ 0 ].title;
-          
+
           break;
         } else {
           console.log("not")
@@ -373,6 +373,32 @@ const simulation = {
         raw: true,
       });
       return res.status(200).json(history);
+    } catch (error) {
+      return res.status(500);
+    }
+  },
+  customSimulation: async function (req, res, next) {
+    try {
+      const user = await User.findOne({where: {id: req.user_id}});
+      const userCustom = (user.custom).split(',');
+
+      let simulNum = [];
+      for (let i = 0; i < userCustom.length; i++) {
+        var simul = await SimulData.findAll({
+          where: {
+            type: req.body.type,
+            custom: {
+              [ Sequelize.Op.like ]: '%' + userCustom[i] + '%'
+            }
+          },
+          attributes: [ "simulNum" ],
+          raw: true,
+        });
+        const list = simul.map((x) => Number(x.simulNum));
+        simulNum = simulNum.concat(list.filter((x) => simulNum.indexOf(x) < 0))
+      };
+      simulNum.sort()
+      return res.status(200).json({isCustom: simulNum})
     } catch (error) {
       return res.status(500);
     }
