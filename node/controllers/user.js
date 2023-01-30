@@ -26,8 +26,8 @@ const user = {
             bcrypt.hash(password, salt, function (err, hash) {
               if (err) return;
               User.create({
-                userId: userId,
-                nickname: userId,
+                userId: nickname,
+                nickname: nickname,
                 password: hash,
               }).then(res.status(200).json({message: "Join Success!"}));
             });
