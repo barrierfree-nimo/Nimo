@@ -49,7 +49,7 @@ const user = {
         const user = await User.findOne({
           where: {
             //userId: userId
-            id: nickname
+            userId: nickname
           }
         });
 
