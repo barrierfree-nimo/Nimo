@@ -14,7 +14,8 @@ router.post("/password/valid", auth, userController.validatePassword);
 router.post("/nickname", auth, userController.changeNickname);
 router.post("/password", auth, userController.changePassword);
 
-router.post("/info", auth, userController.setInfo);
+router.post("/info", userController.setInfo);
+router.put("/info", auth, userController.updateInfo);
 router.get("/info", auth, userController.getInfo);
 router.delete("/info", auth, userController.deleteInfo);
 

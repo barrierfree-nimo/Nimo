@@ -29,7 +29,10 @@ const user = {
                 userId: nickname,
                 nickname: nickname,
                 password: hash,
-              }).then(res.status(200).json({message: "Join Success!"}));
+              }).then(function (newUser) {
+                res.status(200).json({id: newUser.id});
+              }
+              );
             });
           });
         }
@@ -170,24 +173,33 @@ const user = {
     }
 
   },
-  setInfo: async function (req, res, next) {
+  setInfo: async function (req, res) {
     try {
-      const check = await User.findOne({
+      const user = await User.findOne({
+        where: {
+          id: req.body.id
+        }
+      });
+      user.update({custom: req.body.custom});
+
+      return res.status(200).json({msg: "Create userInfo Custom"})
+
+    } catch (error) {
+      return res.status(400).json(error)
+    }
+  },
+  updateInfo: async function (req, res, next) {
+    try {
+      const user = await User.findOne({
         where: {
           id: req.user_id
         }
       });
 
-      const user = await User.upsert({
-        id: req.user_id,
-        custom: req.body.custom
-      })
+      user.update({custom: req.body.custom});
 
-      if (!check.custom) {
-        return res.status(200).json({msg: "Create userInfo Custom"})
-      } else {
-        return res.status(201).json({msg: "Update userInfo Custom"})
-      }
+      return res.status(201).json({msg: "Update userInfo Custom"})
+
     } catch (error) {
       return res.status(400).json(error)
     }
