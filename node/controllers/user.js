@@ -7,15 +7,13 @@ const salt = 10;
 const user = {
   createNewUser: async function (req, res, next) {
     try {
-      //      const {userId, nickname, password} = req.body;
-      const {nickname, password} = req.body;
-      //if (!userId || !nickname || !password) {
-      if (!nickname || !password) {
+      const {userId, nickname, password} = req.body;
+      if (!userId || !nickname || !password) {
         return res.status(500).json({message: "Omit some params"});
       } else {
         const user = await User.findOne({
           where: {
-            userId: nickname,
+            userId: userId,
           },
         });
         if (user) {
@@ -26,7 +24,7 @@ const user = {
             bcrypt.hash(password, salt, function (err, hash) {
               if (err) return;
               User.create({
-                userId: nickname,
+                userId: userId,
                 nickname: nickname,
                 password: hash,
               }).then(function (newUser) {
@@ -43,16 +41,13 @@ const user = {
   },
   createToken: async function (req, res) {
     try {
-      //const {userId, nickname, password} = req.body;
-      const {nickname, password} = req.body;
-      //if (!userId || !password) {
-      if (!nickname || !password) {
+      const {userId, password} = req.body;
+      if (!userId || !password) {
         return res.status(500).json({message: "Omit some params"});
       } else {
         const user = await User.findOne({
           where: {
-            //userId: userId
-            userId: nickname
+            userId: userId
           }
         });
 
@@ -66,8 +61,7 @@ const user = {
           else {
             const accessToken = jwt.sign(
               {
-                //user_id: user.id
-                nickname: nickname
+                user_id: user.id
               },
               process.env.JWT_SECRET,
               // {
