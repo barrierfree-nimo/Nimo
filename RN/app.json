@@ -28,6 +28,7 @@
         "RECORD_AUDIO"
       ],
       "softwareKeyboardLayoutMode": "pan",
+      "googleServicesFile": "./google-services.json",
       "versionCode": 8
     },
     "web": {
