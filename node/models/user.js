@@ -44,6 +44,10 @@ module.exports = class User extends Sequelize.Model {
         custom: {
           type: Sequelize.STRING(100),
           allowNull: true,
+        },
+        push_token: {
+          type: Sequelize.STRING(100),
+          allowNull: true,
         }
       },
       {

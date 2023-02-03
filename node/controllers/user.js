@@ -120,6 +120,23 @@ const user = {
       console.log(error);
     }
   },
+  checkAdmin: async function(req, res, next) {
+    try {
+      const user = await User.findOne({
+        where: {
+          id: req.user_id,
+          user_id: "admin"
+        }
+      })
+
+      console.log(user)
+
+      if(!user) res.status(403).json({message: "Invalid Admin"})
+      else res.status(200).json({message: "Admin Ok"})
+    } catch(err) {
+      console.log(err)
+    }
+  },
   validatePassword: async function (req, res, next) {
     const user = await User.findOne({where: {id: req.user_id}});
     const password = req.body.password;

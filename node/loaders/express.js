@@ -15,6 +15,7 @@ const quizRouter = require('../api/routes/quiz')
 const simulRouter = require('../api/routes/simulation')
 const commRouter = require('../api/routes/community')
 const adminRouter = require('../api/routes/admin')
+const notificationRouter = require('../api/routes/notification')
 
 module.exports = (app) => {
     dotenv.config();
@@ -63,4 +64,5 @@ module.exports = (app) => {
     app.use("/simulation", simulRouter);
     app.use("/community", commRouter);
     app.use("/admin", adminRouter);
+    app.use("/notification", notificationRouter);
 };
