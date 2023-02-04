@@ -34,11 +34,11 @@ const simulation = {
   randomApp: async function (req, res, next) {
     try {
       const user = await User.findOne({where: {id: req.user_id}});
-      var arr = [ "sns", "msg", "voice" ];
+      const arr = [ "sns", "msg", "voice" ];
       let check = [];
       const red = []
       for (t of [ "sns", "msg", "voice" ]) {
-        const calc = await SimulData.count({where: {type: t}}) - await History.count({where: {type: t, user_nickname: user.nickname}})
+        const calc = await SimulData.count({where: {type: t}}) - await History.count({where: {type: t, user_id: user.id}})
         if (calc > 0) {
           red.push(t)
         }
@@ -50,7 +50,7 @@ const simulation = {
 
         const doneNum = await History.findAll({
           where: {
-            user_nickname: user.nickname,
+            user_id: user.id,
             type: type,
           },
           attributes: [ "simulNum" ],
@@ -58,7 +58,7 @@ const simulation = {
         });
 
         const done = doneNum.map((x) => Number(x.simulNum));
-        console.log(done)
+
         if (type == "voice") {
           var notDone = await Voice.findAll({
             limit: 1,
@@ -89,7 +89,6 @@ const simulation = {
         }
 
         if (notDone.length !== 0) {
-          console.log("not zero")
           var num = notDone[ 0 ].num;
 
           var titleList = await SimulData.findAll({
@@ -105,8 +104,6 @@ const simulation = {
 
           break;
         } else {
-          console.log("not")
-          console.log(type)
           check[ rand ] = true
         }
 
@@ -134,7 +131,7 @@ const simulation = {
 
       const history = await History.findAll({
         where: {
-          user_nickname: user.nickname,
+          user_id: user.id,
           type: "voice",
         },
         attributes: [ "simulNum" ],
@@ -192,7 +189,6 @@ const simulation = {
 
             if (urlList.length == (response.items).length) {
               urlList.sort()
-              console.log(urlList)
 
               const scrp = [];
 
@@ -249,7 +245,7 @@ const simulation = {
       });
       const history = await History.findAll({
         where: {
-          user_nickname: user.nickname,
+          user_id: user.id,
           type: "msg",
         },
         attributes: [ "simulNum" ],
@@ -322,15 +318,13 @@ const simulation = {
       });
       const history = await History.findAll({
         where: {
-          user_nickname: user.nickname,
+          user_id: user.id,
           type: "sns",
         },
         attributes: [ "simulNum" ],
         raw: true,
       });
       const done = history.map((x) => Number(x.simulNum));
-      console.log(done)
-      console.log(simulCustom)
       for (const i of simul) {
         if (done.includes(i.simulNum)) {
           i[ 'done' ] = 'true'
@@ -390,7 +384,7 @@ const simulation = {
 
       const [ history, created ] = await History.findOrCreate({
         where: {
-          user_nickname: user.nickname,
+          user_id: user.id,
           type: type,
           simulNum: simulNum
         }
@@ -410,7 +404,7 @@ const simulation = {
       const user = await User.findOne({where: {id: req.user_id}});
       const history = await History.findAll({
         where: {
-          user_nickname: user.nickname,
+          user_id: user.id,
         },
         attributes: [ "type", "simulNum" ],
         raw: true,

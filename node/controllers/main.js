@@ -7,7 +7,7 @@ const quiz = {
         try {
             const user = await User.findOne({where: {id: req.user_id}});
             let all = await SimulData.count()
-            let done = await History.count({where: {user_nickname: user.nickname}})
+            let done = await History.count({where: {user_id: user.id}})
 
             info = {
                 nickname: user.nickname,

@@ -10,12 +10,12 @@ module.exports = class BlackUser extends Sequelize.Model {
           primaryKey: true,
           autoIncrement: true,
         },
-        user_nickname: {
-          type: Sequelize.STRING(45),
+        user_id: {
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
-        black_nickname: {
-            type: Sequelize.STRING(45),
+        black_id: {
+            type: Sequelize.INTEGER,
             allowNull: false,
         },
       },
@@ -33,7 +33,7 @@ module.exports = class BlackUser extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.BlackUser.belongsTo(db.User, {foreignKey: "user_nickname", targetKey: "nickname"});
-    db.BlackUser.belongsTo(db.User, {foreignKey: "black_nickname", targetKey: "nickname"});
+    db.BlackUser.belongsTo(db.User, {foreignKey: "user_id", targetKey: "id"});
+    db.BlackUser.belongsTo(db.User, {foreignKey: "black_id", targetKey: "id"});
   }
 };
