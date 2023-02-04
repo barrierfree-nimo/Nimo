@@ -7,7 +7,7 @@ import {
   View,
   Image,
   Text,
-  StatusBar
+  StatusBar,
 } from "react-native";
 import baseURL from "../../baseURL";
 import CommonStyle from "../../common/common_style";
@@ -23,6 +23,7 @@ interface VoiceContent {
   title: string;
   commentary: string;
   done: string;
+  isCustom: string;
 }
 
 const VoiceSimul = ({ navigation }: any) => {
@@ -73,9 +74,14 @@ const VoiceSimul = ({ navigation }: any) => {
 
           <ScrollView>
             <View style={SimulVoiceStyle.msg_card_div}>
-              {simulList?.map(({ simulNum, title, commentary, done }) => (
+              {simulList?.map(({ simulNum, title, done, isCustom }) => (
                 <TouchableOpacity onPress={() => handleOnPress(simulNum)}>
-                  <MessageCard key={simulNum} title={title} done={done} />
+                  <MessageCard
+                    key={simulNum}
+                    title={title}
+                    done={done}
+                    isCustom={isCustom}
+                  />
                 </TouchableOpacity>
               ))}
             </View>

@@ -7,7 +7,7 @@ import {
   View,
   Image,
   Text,
-  StatusBar
+  StatusBar,
 } from "react-native";
 import baseURL from "../../baseURL";
 import CommonStyle from "../../common/common_style";
@@ -23,6 +23,7 @@ interface MsgContent {
   title: string;
   commentary: string;
   done: string;
+  isCustom: string;
 }
 
 const MessageSimul = ({ navigation }: any) => {
@@ -74,11 +75,16 @@ const MessageSimul = ({ navigation }: any) => {
           </View>
           <ScrollView>
             <View style={SimulMsgStyle.msg_card_div}>
-              {simulList?.map(({ simulNum, title, commentary, done }) => (
+              {simulList?.map(({ simulNum, title, done, isCustom }) => (
                 <TouchableOpacity
                   onPress={() => handleOnPress(simulNum, title)}
                 >
-                  <MessageCard key={simulNum} title={title} done={done} />
+                  <MessageCard
+                    key={simulNum}
+                    title={title}
+                    done={done}
+                    isCustom={isCustom}
+                  />
                 </TouchableOpacity>
               ))}
             </View>

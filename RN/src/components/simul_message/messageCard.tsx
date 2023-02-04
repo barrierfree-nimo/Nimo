@@ -5,15 +5,11 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 export interface MessageCardProps {
   title: string;
   done: string;
+  isCustom: string;
 }
 
 const MessageCard = (props: MessageCardProps) => {
-  const { title, done } = props;
-  const [check, setCheck] = useState<boolean>(false);
-
-  useEffect(() => {
-    done === "false" ? setCheck(false) : setCheck(true);
-  }, [done]);
+  const { title, done, isCustom } = props;
 
   return (
     <View>
@@ -24,10 +20,18 @@ const MessageCard = (props: MessageCardProps) => {
             style={styles.img_profile}
           />
           <Text style={styles.text_title}>{title}</Text>
+          {isCustom === "true" && (
+            <View>
+              <Image
+                source={require("../../assets/icons/simul_common/star.png")}
+                style={styles.img_star}
+              />
+            </View>
+          )}
         </View>
 
         <View style={styles.card_container_child_checkbox}>
-          {check === true ? (
+          {done === "true" ? (
             <Image
               source={require("../../assets/icons/simul_message/checkbox_true.png")}
               style={styles.img_checkbox}
@@ -61,9 +65,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   img_profile: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     marginRight: 8,
+  },
+  img_star: {
+    width: 25,
+    height: 25,
   },
   img_checkbox: {
     position: "absolute",
