@@ -190,8 +190,8 @@ const user = {
   },
   setInfo: async function (req, res, next) {
     try {
-      const user = await User.findOne({ where: { id: req.user_id } });
-      user.update({ custom: null });
+      const user = await User.findOne({ where: { id: req.body.userId } });
+      user.update({ custom: req.body.custom });
 
       return res.status(204).json();
     } catch (error) {

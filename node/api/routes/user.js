@@ -17,7 +17,7 @@ router.post("/password", auth, userController.changePassword);
 router.post("/join", userController.createNewUser);
 router.post("/login", userController.createToken);
 router.get("/nickname/:nickname", userController.checkNickname);
-router.post("/info", auth, userController.setInfo);
+router.post("/info", userController.setInfo);
 router.put("/push", auth, userController.updatePushOk);
 
 module.exports = router;
