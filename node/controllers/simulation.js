@@ -5,6 +5,31 @@ var Sequelize = require("sequelize");
 const {json, HasMany} = require("sequelize");
 const {async} = require('@firebase/util');
 
+async function isCustom(user, type) {
+  try {
+    const userCustom = (user.custom).split(',');
+    let simulNum = [];
+    for (let i = 0; i < userCustom.length; i++) {
+      var simul = await SimulData.findAll({
+        where: {
+          type: type,
+          custom: {
+            [ Sequelize.Op.like ]: '%' + userCustom[ i ] + '%'
+          }
+        },
+        attributes: [ "simulNum" ],
+        raw: true,
+      });
+      const list = simul.map((x) => Number(x.simulNum));
+      simulNum = simulNum.concat(list.filter((x) => simulNum.indexOf(x) < 0))
+    };
+    simulNum.sort()
+    return simulNum;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 const simulation = {
   randomApp: async function (req, res, next) {
     try {
@@ -96,8 +121,9 @@ const simulation = {
   },
   voiceDoneList: async function (req, res, next) {
     try {
+      const type = "voice";
       const user = await User.findOne({where: {id: req.user_id}});
-
+      const simulCustom = await isCustom(user, type);
       const simul = await SimulData.findAll({
         where: {
           type: "voice",
@@ -116,16 +142,16 @@ const simulation = {
       });
       const done = history.map((x) => Number(x.simulNum));
 
-      const data = {
-        simul: simul,
-        done: done,
-      };
-
       for (const i of simul) {
         if (done.includes(i.simulNum)) {
           i[ 'done' ] = 'true'
         } else {
           i[ 'done' ] = 'false'
+        }
+        if (simulCustom.includes(i.simulNum)) {
+          i[ 'isCustom' ] = 'true'
+        } else {
+          i[ 'isCustom' ] = 'false'
         }
       }
       return res.status(200).json(simul);
@@ -144,12 +170,12 @@ const simulation = {
         raw: true,
       });
 
-      const comm = await SimulData.findOne({
+      const simul = await SimulData.findOne({
         where: {
           type: "voice",
           simulNum: req.params.num,
         },
-        attributes: [ "commentary" ],
+        attributes: [ "commentary", "custom" ],
         raw: true,
       });
 
@@ -192,7 +218,8 @@ const simulation = {
 
               const data = {
                 scripts: scrp,
-                commentary: String(Object.values(comm))
+                commentary: simul.commentary,
+                custom: simul.custom
               };
 
               return res.status(200).json(data);
@@ -210,10 +237,12 @@ const simulation = {
   },
   msgDoneList: async function (req, res, next) {
     try {
+      const type = "msg";
       const user = await User.findOne({where: {id: req.user_id}});
+      const simulCustom = await isCustom(user, type);
       const simul = await SimulData.findAll({
         where: {
-          type: "msg",
+          type: type,
         },
         attributes: [ "simulNum", "title", "commentary" ],
         raw: true,
@@ -233,6 +262,11 @@ const simulation = {
           i[ 'done' ] = 'true'
         } else {
           i[ 'done' ] = 'false'
+        }
+        if (simulCustom.includes(i.simulNum)) {
+          i[ 'isCustom' ] = 'true'
+        } else {
+          i[ 'isCustom' ] = 'false'
         }
       }
       return res.status(200).json(simul);
@@ -254,18 +288,19 @@ const simulation = {
         scrp.push([ x.contents, parseInt(x.response) ]);
       });
 
-      const comm = await SimulData.findOne({
+      const simul = await SimulData.findOne({
         where: {
           type: "msg",
           simulNum: req.params.num,
         },
-        attributes: [ "commentary" ],
+        attributes: [ "commentary", "custom" ],
         raw: true,
       });
 
       const data = {
         scripts: scrp,
-        commentary: String(Object.values(comm)),
+        commentary: simul.commentary,
+        custom: simul.custom
       };
 
       return res.status(200).json(data);
@@ -275,10 +310,12 @@ const simulation = {
   },
   snsDoneList: async function (req, res, next) {
     try {
+      const type = "sns";
       const user = await User.findOne({where: {id: req.user_id}});
+      const simulCustom = await isCustom(user, type);
       const simul = await SimulData.findAll({
         where: {
-          type: "sns",
+          type: type,
         },
         attributes: [ "simulNum", "title", "commentary" ],
         raw: true,
@@ -292,14 +329,21 @@ const simulation = {
         raw: true,
       });
       const done = history.map((x) => Number(x.simulNum));
-
+      console.log(done)
+      console.log(simulCustom)
       for (const i of simul) {
         if (done.includes(i.simulNum)) {
           i[ 'done' ] = 'true'
         } else {
           i[ 'done' ] = 'false'
         }
+        if (simulCustom.includes(i.simulNum)) {
+          i[ 'isCustom' ] = 'true'
+        } else {
+          i[ 'isCustom' ] = 'false'
+        }
       }
+
       return res.status(200).json(simul);
     } catch (error) {
       return res.status(500);
@@ -319,18 +363,19 @@ const simulation = {
         scrp.push([ x.contents, parseInt(x.response) ]);
       });
 
-      const comm = await SimulData.findOne({
+      const simul = await SimulData.findOne({
         where: {
           type: "sns",
           simulNum: req.params.num,
         },
-        attributes: [ "commentary" ],
+        attributes: [ "commentary", "custom" ],
         raw: true,
       });
 
       const data = {
         scripts: scrp,
-        commentary: String(Object.values(comm)),
+        commentary: simul.commentary,
+        custom: simul.custom
       };
 
       return res.status(200).json(data);
@@ -352,10 +397,8 @@ const simulation = {
       })
 
       if (created) {
-        console.log("if")
         return res.status(200).json({message: "simulation done"})
       } else {
-        console.log("else")
         return res.status(201).json({message: "already done"})
       }
     } catch (error) {
@@ -373,32 +416,6 @@ const simulation = {
         raw: true,
       });
       return res.status(200).json(history);
-    } catch (error) {
-      return res.status(500);
-    }
-  },
-  customSimulation: async function (req, res, next) {
-    try {
-      const user = await User.findOne({where: {id: req.user_id}});
-      const userCustom = (user.custom).split(',');
-
-      let simulNum = [];
-      for (let i = 0; i < userCustom.length; i++) {
-        var simul = await SimulData.findAll({
-          where: {
-            type: req.body.type,
-            custom: {
-              [ Sequelize.Op.like ]: '%' + userCustom[i] + '%'
-            }
-          },
-          attributes: [ "simulNum" ],
-          raw: true,
-        });
-        const list = simul.map((x) => Number(x.simulNum));
-        simulNum = simulNum.concat(list.filter((x) => simulNum.indexOf(x) < 0))
-      };
-      simulNum.sort()
-      return res.status(200).json({isCustom: simulNum})
     } catch (error) {
       return res.status(500);
     }
