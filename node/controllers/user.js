@@ -95,19 +95,83 @@ const user = {
   },
   checkNickname: async function (req, res, next) {
     try {
-      var nickname = req.params.nickname;
-      try {
-        const user = await User.findOne({ where: { nickname: nickname } });
-      } catch (error) {
-        return res.status(402).json(error);
+      const user = await User.findOne({
+        where: {
+          nickname: req.params.nickname,
+        }
+      })
+      if (user) res.status(201).json({message: "Already exist nickname"});
+      else res.status(200).json({message: "Possible Nickname"})
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  checkAdmin: async function(req, res, next) {
+    try {
+      const user = await User.findOne({
+        where: {
+          id: req.user_id,
+          user_id: "admin"
+        }
+      })
+
+      console.log(user)
+
+      if(!user) res.status(403).json({message: "Invalid Admin"})
+      else res.status(200).json({message: "Admin Ok"})
+    } catch(err) {
+      console.log(err)
+    }
+  },
+  validatePassword: async function (req, res, next) {
+    const user = await User.findOne({where: {id: req.user_id}});
+    const password = req.body.password;
+
+    const valid = user.validPassword(password.toString())
+    if (!valid) {
+      return res.status(401).json({msg: "invalid pw"})
+    }
+    else {
+      return res.status(200).json({msg: "valid pw"})
+    }
+  },
+  changeNickname: async function (req, res, next) {
+    const user = await User.findOne({where: {id: req.user_id}});
+    const nickname = req.body.nickname;
+
+    if (!user) {
+      return res.status(404).json({message: "Retry (not exist or typeerror)"});
+    } else {
+      user.update({nickname: nickname})
+      return res.status(200).json({message: "Success!"});
+    }
+  },
+  changePassword: async function (req, res, next) {
+    const user = await User.findOne({where: {id: req.user_id}});
+    const newPassword1 = req.body.newPassword1;
+    const newPassword2 = req.body.newPassword2;
+
+    if (!user) {
+      return res.status(404).json({message: "Retry (not exist or typeerror)"});
+    } else {
+      if (!newPassword1 == newPassword2) {
+        return res.status(401).json({msg: "not equal"})
+      } else {
+        bcrypt.genSalt(10, function (err, salt) {
+          if (err) return;
+          bcrypt.hash(newPassword1, salt, function (err, hash) {
+            if (err) return;
+            user.update({
+              password: hash,
+            }).then(res.status(200).json({message: "Success!"}));
+          });
+        });
       }
       if (!user.length == 0) {
         console.log(user);
         return res.status(409).json({ msg: "nickname exist" });
       }
       return res.status(200).json({ msg: "nickname not exist" });
-    } catch (error) {
-      return res.status(400).json(error);
     }
   },
   setInfo: async function (req, res, next) {
@@ -120,6 +184,21 @@ const user = {
       return res.status(400);
     }
   },
-};
+  updatePushOk: async function (req, res, next) {
+    try {
+      const user = await User.findOne({
+        where: {
+          id: req.user_id
+        }
+      });
+
+      user.update({push_ok: req.body.pushOk});
+      return res.status(200).json({msg: "PushOk Updated"})
+
+    } catch (error) {
+      return res.status(400).json(error)
+    }
+  },
+}
 
 module.exports = user;
