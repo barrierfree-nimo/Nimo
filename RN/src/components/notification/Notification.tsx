@@ -3,6 +3,7 @@ import { View, Text, Button, Platform } from "react-native";
 import Axios from "axios";
 import baseURL from "../baseURL";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useIsFocused } from "@react-navigation/native";
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 import { Subscription } from 'expo-modules-core';
@@ -14,26 +15,6 @@ Notifications.setNotificationHandler({
     shouldSetBadge: false
   })
 })
-
-async function sendPushNotification(expoPushToken : any) {
-  const message = {
-    to: expoPushToken,
-    sound: 'default',
-    title: 'Original Title',
-    body: 'And here is the body!',
-    data: { someData: 'goes here' },
-  };
-
-  await fetch('https://exp.host/--/api/v2/push/send', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Accept-encoding': 'gzip, deflate',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(message),
-  });
-}
 
 async function registerForPushNotificationsAsync() {
   let pushToken;
@@ -51,21 +32,6 @@ async function registerForPushNotificationsAsync() {
     }
     pushToken = (await Notifications.getExpoPushTokenAsync()).data;
     console.log(pushToken);
-
-    let localPushToken;
-    localPushToken = await AsyncStorage.getItem("push_token");
-
-    const accessToken = await AsyncStorage.getItem("user_Token");
-
-    if(!localPushToken) {
-      AsyncStorage.setItem("push_token", pushToken);
-      await Axios.post(`http://172.30.1.85:5000` + "/notification/save", 
-        { pushToken : `${pushToken}` },
-        { headers: { accessToken: `${accessToken}`} }        
-      ).then((res) => {
-        console.log(res)
-      });
-    } 
 
   } else {
     alert('Must use physical device for Push Notifications');
@@ -88,6 +54,7 @@ const Notification = () => {
   const [notification, setNotification] = useState<Notifications.Notification>();
   const notificationListener = useRef<Subscription>();
   const responseListener = useRef<Subscription>();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
@@ -106,7 +73,7 @@ const Notification = () => {
         Notifications.removeNotificationSubscription(responseListener.current);
       }
     };
-  }, []);
+  }, [isFocused]);
 
   return (
     <View></View>

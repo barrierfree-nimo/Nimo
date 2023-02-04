@@ -14,20 +14,32 @@ import CommonStyle from "../common/common_style";
 import SettingStyle from "./setting_style";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ExitBtn from "../common/exit_btn";
+import Axios from "axios";
+import baseURL from "../baseURL";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const Setting = ({ route, navigation }: any) => {
   const [modalVisible, setModalVisible] = useState(false);
   const modalRef = useRef<Modal>(null);
-  const notice =
-    "https://sugary-cuticle-b44.notion.site/9669f75d847248a99f7c727cf0cd423b";
+  const notice = "https://sugary-cuticle-b44.notion.site/9669f75d847248a99f7c727cf0cd423b";
   const contact = "https://forms.gle/xdjSQYDyKP1NtJ7z8";
 
   const logout = async () => {
     try {
+      const accessToken = await AsyncStorage.getItem("user_Token");
+      console.log(accessToken)
+      await Axios.get(`http://172.30.1.85:5000` + "/notification/remove", 
+        { headers: { accessToken: `${accessToken}`} }        
+      ).then((res) => {
+        console.log(res)
+      });
+
       await AsyncStorage.clear();
-      navigation.navigate("AuthStackNavigator");
+      navigation.reset({
+        index: 0,
+        routes: [{name: "AuthStackNavigator"}],
+      });
     } catch (err) {
       console.log(err);
     }

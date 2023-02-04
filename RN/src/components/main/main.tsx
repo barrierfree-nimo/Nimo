@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import CommonStyle from "../common/common_style";
 import MainStyle from "./main_style";
+import Notification from "../notification/Notification";
 import baseURL from "../baseURL";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
@@ -58,7 +59,8 @@ const Main = ({ navigation }: any) => {
   };
   return (
     <SafeAreaView style={CommonStyle.container}>
-      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
+      <Notification />
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />      
       <View style={MainStyle.container_header}>
         <Text style={MainStyle.text_header}>피싱백신</Text>
         <View style={MainStyle.btn_setting}>

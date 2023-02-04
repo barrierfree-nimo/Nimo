@@ -7,15 +7,11 @@ import Splash from "./src/components/Splash";
 import MainStackNavigator from "./src/components/navigators/MainStackNavigator";
 import AuthStackNavigator from "./src/components/navigators/AuthStackNavigator";
 
-import Notification from "./src/components/notification/Notification";
-
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Notification />
-      
+    <NavigationContainer>      
       <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <Stack.Navigator
         initialRouteName="Splash"
