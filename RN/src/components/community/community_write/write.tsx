@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
+  StatusBar
 } from "react-native";
 import CommonStyle from "../../common/common_style";
 import CommunityWriteStyle from "./write_style";
@@ -12,10 +13,11 @@ import Axios from "axios";
 import baseURL from "../../baseURL";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DropDownPicker from "react-native-dropdown-picker";
+import ExitBtn from "../../common/exit_btn";
 
 const CommunityWrite = ({ navigation }: any) => {
   const [title, setTitle] = useState<string>("");
-  const [content, setContent] = useState<string>("");
+  const [contents, setContents] = useState<string>("");
   const [tag, setTag] = useState<string>("일반");
   const [isTitle, setIsTitle] = useState<boolean>(true);
   const [isContent, setIsContent] = useState<boolean>(true);
@@ -29,14 +31,13 @@ const CommunityWrite = ({ navigation }: any) => {
   const handleEnroll = async () => {
     checkIsEmpty();
     if (isTitle && isContent) {
-      console.log(">>>>>>");
       const token = await AsyncStorage.getItem("user_Token");
       try {
         await Axios.post(
-          baseURL + "/community/write",
+          baseURL + "/community/post",
           {
             title: title,
-            contents: content,
+            contents: contents,
             tag: tag,
           },
           {
@@ -44,7 +45,7 @@ const CommunityWrite = ({ navigation }: any) => {
           }
         )
           .then((res) => {
-            if (res.status == 200) {
+            if (res.status === 201) {
               navigation.navigate("CommunityMain");
             }
           })
@@ -59,13 +60,12 @@ const CommunityWrite = ({ navigation }: any) => {
 
   const checkIsEmpty = () => {
     title === "" ? setIsTitle(false) : setIsTitle(true);
-    content === "" ? setIsContent(false) : setIsContent(true);
+    contents === "" ? setIsContent(false) : setIsContent(true);
   };
-
-  useEffect(() => {}, [title, content]);
 
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <View style={CommonStyle.container_header}>
         <Text style={CommonStyle.text_header}>소통하기</Text>
       </View>
@@ -80,10 +80,10 @@ const CommunityWrite = ({ navigation }: any) => {
           setValue={setTag}
           setItems={setItems}
           placeholder="일반/질문/정보"
-          listMode="MODAL"
           modalProps={{
             animationType: "fade",
           }}
+          containerStyle={{ width: 150, height: 40 }}
           modalTitle="분류를 선택해주세요."
           style={CommunityWriteStyle.tag_input}
         />
@@ -103,8 +103,8 @@ const CommunityWrite = ({ navigation }: any) => {
       <View style={CommunityWriteStyle.container_content}>
         <Text style={CommunityWriteStyle.title_text}>본문 *</Text>
         <TextInput
-          value={content}
-          onChangeText={(content) => setContent(content)}
+          value={contents}
+          onChangeText={(contents) => setContents(contents)}
           multiline={true}
           style={[
             CommunityWriteStyle.content_input,
@@ -128,11 +128,7 @@ const CommunityWrite = ({ navigation }: any) => {
         </TouchableOpacity>
       </View>
 
-      <View style={CommonStyle.container_exit}>
-        <TouchableOpacity onPress={() => navigation.navigate("Main")}>
-          <Text style={CommonStyle.btnText_exit}>소통하기 나가기</Text>
-        </TouchableOpacity>
-      </View>
+      <ExitBtn navigation={navigation} content={"소통하기 나가기"} />
     </SafeAreaView>
   );
 };

@@ -1,12 +1,12 @@
 const Sequelize = require('sequelize');
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || 'test';
 const config = require('../config/config')[ env ];
 const User = require('./user');
 const Quiz = require('./quiz');
 const Voice = require('./voice')
 const Msg = require('./msg');
 const Sns = require('./sns');
-const SimulData = require('./simuldata');
+const SimulData = require('./simulData');
 const History = require('./history');
 const Post = require('./post');
 const Comment = require('./comment');

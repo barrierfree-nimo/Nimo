@@ -7,11 +7,12 @@ import {
   View,
   Image,
   Text,
+  StatusBar
 } from "react-native";
 import baseURL from "../../baseURL";
 import CommonStyle from "../../common/common_style";
 import SimulMainStyle from "../../simul_main/simul_main_style";
-import ExitBtn from "../../simul_common/exit_btn";
+import ExitBtn from "../../common/exit_btn";
 import NavigateBtn from "../../simul_common/navigate_btn";
 import MessageCard from "../messageCard";
 import SimulMsgStyle from "./simul_message_style";
@@ -46,27 +47,37 @@ const MessageSimul = ({ navigation }: any) => {
     }
   };
 
-  const handleOnPress = (simulNum: number) => {
+  const handleOnPress = (simulNum: number, title: string) => {
     navigation.navigate("MessageDetail", {
       simulNum: simulNum,
+      title: title,
     });
   };
 
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <Image
-        source={require("../../../assets/icons/simul_message/message_bg.png")}
+        source={require("../../../assets/icons/simul_message/msg_bg_white.png")}
         style={SimulMainStyle.img_galaxy}
       />
 
-      {/* 스마트폰 */}
       <View style={SimulMsgStyle.phone_div}>
         <View style={SimulMsgStyle.message_div}>
-          <Text style={SimulMsgStyle.text_title}>메세지</Text>
+          <View style={SimulMsgStyle.message_div_title}>
+            <Text style={SimulMsgStyle.text_title}>메시지</Text>
+            <Image
+              source={require("../../../assets/icons/simul_message/ic_msg.png")}
+              style={SimulMsgStyle.ic_msg}
+              resizeMode="contain"
+            />
+          </View>
           <ScrollView>
             <View style={SimulMsgStyle.msg_card_div}>
               {simulList?.map(({ simulNum, title, commentary, done }) => (
-                <TouchableOpacity onPress={() => handleOnPress(simulNum)}>
+                <TouchableOpacity
+                  onPress={() => handleOnPress(simulNum, title)}
+                >
                   <MessageCard key={simulNum} title={title} done={done} />
                 </TouchableOpacity>
               ))}
@@ -74,10 +85,9 @@ const MessageSimul = ({ navigation }: any) => {
           </ScrollView>
         </View>
 
-        {/* 이동버튼 */}
         <NavigateBtn navigation={navigation} />
       </View>
-      <ExitBtn navigation={navigation} />
+      <ExitBtn navigation={navigation} content={"피싱 체험 나가기"} />
     </SafeAreaView>
   );
 };

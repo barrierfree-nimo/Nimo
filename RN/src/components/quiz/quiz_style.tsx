@@ -23,26 +23,28 @@ const QuizStyle = StyleSheet.create({
     
   },
   container_commentary: {
-    backgroundColor: '#D8EBF9',
+    backgroundColor: '#E9E9E9',
     marginVertical: 5,
-    marginHorizontal: 20,
-    paddingVertical: 40,
+    marginHorizontal: 27,
+    paddingVertical: 30,
     paddingHorizontal: 27,
     borderRadius: 15,
     alignItems: 'center'
   },
   text_quizResult: {
     marginBottom: 10,
-    fontSize: 38,
+    fontSize: 32,
     fontWeight: 'bold',
     color: "coral"
   },
   text_commentary: {
-    fontSize: 20
+    fontSize: 17,
+    fontWeight: "900",
+    lineHeight: 25,
   },
   btn_container_option: {
     width: SCREEN_WIDTH - 100,
-    height: 50,
+    paddingVertical: 12,
     backgroundColor: '#DADADA',
     alignItems: 'center',
     justifyContent: 'center',

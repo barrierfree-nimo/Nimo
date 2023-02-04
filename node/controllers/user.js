@@ -1,15 +1,15 @@
 const express = require("express");
-const {User, UserInfo} = require("../models");
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const { User, UserInfo } = require("../models");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const salt = 10;
 
 const user = {
   createNewUser: async function (req, res, next) {
     try {
-      const {userId, nickname, password} = req.body;
+      const { userId, nickname, password } = req.body;
       if (!userId || !nickname || !password) {
-        return res.status(500).json({message: "Omit some params"});
+        return res.status(500).json({ message: "Omit some params" });
       } else {
         const user = await User.findOne({
           where: {
@@ -17,7 +17,7 @@ const user = {
           },
         });
         if (user) {
-          return res.status(400).json({message: "Already exist userId"});
+          return res.status(400).json({ message: "Already exist userId" });
         } else {
           bcrypt.genSalt(10, function (err, salt) {
             if (err) return;
@@ -28,9 +28,8 @@ const user = {
                 nickname: nickname,
                 password: hash,
               }).then(function (newUser) {
-                res.status(200).json({id: newUser.id});
-              }
-              );
+                res.status(200).json({ id: newUser.id });
+              });
             });
           });
         }
@@ -41,48 +40,48 @@ const user = {
   },
   createToken: async function (req, res) {
     try {
-      const {userId, password} = req.body;
+      const { userId, password } = req.body;
       if (!userId || !password) {
-        return res.status(500).json({message: "Omit some params"});
+        return res.status(500).json({ message: "Omit some params" });
       } else {
         const user = await User.findOne({
           where: {
-            userId: userId
-          }
+            userId: userId,
+          },
         });
 
         if (!user) {
-          return res.status(500).json({message: "Retry (not exist userId"});
+          return res.status(500).json({ message: "Retry (not exist userId" });
         } else {
-          const valid = user.validPassword(req.body.password.toString())
+          const valid = user.validPassword(req.body.password.toString());
           if (!valid) {
-            return res.status(401).json({msg: "invalid pw"})
-          }
-          else {
+            return res.status(401).json({ msg: "invalid pw" });
+          } else {
             const accessToken = jwt.sign(
               {
-                user_id: user.id
+                user_id: user.id,
               },
-              process.env.JWT_SECRET,
+              process.env.JWT_SECRET
               // {
               //   expiresIn: '1d'
               // }
             );
-            const refreshToken = jwt.sign({},
-              process.env.JWT_SECRET,
+            const refreshToken = jwt.sign(
+              {},
+              process.env.JWT_SECRET
               // {
               //   expiresIn: '14d'
               // }
             );
 
             user.update({
-              refresh_token: refreshToken
-            })
+              refresh_token: refreshToken,
+            });
 
             const token = {
               accessToken: accessToken,
-              refreshToken: refreshToken
-            }
+              refreshToken: refreshToken,
+            };
             return res.status(200).json({
               message: "Login Success!",
               token: token,
@@ -90,19 +89,6 @@ const user = {
           }
         }
       }
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  checkId: async function (req, res, next) {
-    try {
-      const user = await User.findOne({
-        where: {
-          user_id: req.params.userId,
-        }
-      })
-      if (user) res.status(201).json({message: "Already exist id"});
-      else res.status(200).json({message: "Possible Id"})
     } catch (error) {
       console.log(error);
     }
@@ -181,59 +167,21 @@ const user = {
           });
         });
       }
+      if (!user.length == 0) {
+        console.log(user);
+        return res.status(409).json({ msg: "nickname exist" });
+      }
+      return res.status(200).json({ msg: "nickname not exist" });
     }
-
   },
-  setInfo: async function (req, res) {
+  setInfo: async function (req, res, next) {
     try {
-      const user = await User.findOne({
-        where: {
-          id: req.body.id
-        }
-      });
-      user.update({custom: req.body.custom});
-
-      return res.status(200).json({msg: "Create userInfo Custom"})
-
-    } catch (error) {
-      return res.status(400).json(error)
-    }
-  },
-  updateInfo: async function (req, res, next) {
-    try {
-      const user = await User.findOne({
-        where: {
-          id: req.user_id
-        }
-      });
-
-      user.update({custom: req.body.custom});
-
-      return res.status(201).json({msg: "Update userInfo Custom"})
-
-    } catch (error) {
-      return res.status(400).json(error)
-    }
-  },
-  getInfo: async function (req, res, next) {
-
-    const user = await User.findOne({where: {id: req.user_id}});
-
-    if (!user) {
-      return res.status(404).json({msg: "not exist"});
-    }
-
-    const custom = user.custom;
-    return res.status(200).json(custom)
-  },
-  deleteInfo: async function (req, res, next) {
-    try {
-      const user = await User.findOne({where: {id: req.user_id}});
-      user.update({custom: null});
+      const user = await User.findOne({ where: { id: req.user_id } });
+      user.update({ custom: null });
 
       return res.status(204).json();
     } catch (error) {
-      return res.status(400)
+      return res.status(400);
     }
   },
   updatePushOk: async function (req, res, next) {
@@ -254,4 +202,3 @@ const user = {
 }
 
 module.exports = user;
-

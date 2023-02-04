@@ -23,6 +23,7 @@ const msgDetailStyle = StyleSheet.create({
     marginTop: 40,
   },
   text_title: {
+    textAlign: "center",
     fontSize: 22,
     fontWeight: "700",
     marginTop: 5,
@@ -34,10 +35,11 @@ const msgDetailStyle = StyleSheet.create({
     width: SCREEN_WIDTH - 80,
   },
   press_msg_text: {
-    fontSize: 20,
+    textAlign: "center",
+    fontSize: 17,
     fontWeight: "500",
     marginTop: 5,
-    marginLeft: 40,
+    color: "#828282",
   },
   text_container: {
     width: SCREEN_WIDTH,
@@ -46,32 +48,40 @@ const msgDetailStyle = StyleSheet.create({
   },
   scroll: {
     marginTop: 20,
-    paddingTop: 10,
-    paddingHorizontal: 40,
-    alignContent: "center",
+    paddingHorizontal: 20,
+  },
+  scroll_div: {
+    width: SCREEN_WIDTH - 90,
   },
   choice_box: {
     width: SCREEN_WIDTH - 80,
+    marginVertical: 10,
     paddingVertical: 20,
-    marginBottom: 10,
+    alignContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    borderRadius: 20,
   },
   choice_box_child: {
-    width: SCREEN_WIDTH - 90,
-    marginTop: 10,
+    width: SCREEN_WIDTH - 120,
+    backgroundColor: "#00284E",
     justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 15,
+    marginBottom: 15,
+    padding: 15,
+  },
+  text_notice_select: {
+    color: "#00284E",
+    fontSize: 20,
+    fontWeight: "700",
+    marginBottom: 10,
   },
   text_choice: {
     wordWrap: "break-word",
-
-    marginLeft: 20,
-    marginRight: 10,
-    padding: 15,
-
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: "700",
-
-    backgroundColor: "orange",
-    borderRadius: 15,
+    color: "#FFFFFF",
     overflow: "hidden",
   },
 });

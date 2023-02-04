@@ -29,6 +29,10 @@ module.exports = class SimulData extends Sequelize.Model {
 					type: Sequelize.STRING(200),
 					allowNull: false,
 					unique: false,
+				},
+				custom: {
+					type: Sequelize.STRING(100),
+					unique: false,
 				}
 			},
 			{

@@ -8,9 +8,10 @@ import {
   Image,
   Text,
   Dimensions,
+  StatusBar
 } from "react-native";
 import CommonStyle from "../common/common_style";
-import ExitBtn from "../simul_common/exit_btn";
+import ExitBtn from "../common/exit_btn";
 import NavigateBtn from "../simul_common/navigate_btn";
 import SimulMainStyle from "../simul_main/simul_main_style";
 
@@ -33,6 +34,7 @@ const CorrectPageVoice = ({ route, navigation }: any) => {
 
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <Image
         source={require("../../assets/icons/simul_voice/voice_bg_purple.png")}
         style={SimulMainStyle.img_galaxy}
@@ -41,8 +43,9 @@ const CorrectPageVoice = ({ route, navigation }: any) => {
         <View style={styles.content_container}>
           <View style={styles.color_box}>
             <Image
-              source={require("../../assets/images/main_progress.png")}
+              source={require("../../assets/icons/simul_common/ic_correct.png")}
               style={styles.img}
+              resizeMode="contain"
             />
             <Text
               style={[
@@ -57,7 +60,7 @@ const CorrectPageVoice = ({ route, navigation }: any) => {
         </View>
         <NavigateBtn navigation={navigation} />
       </View>
-      <ExitBtn navigation={navigation} />
+      <ExitBtn navigation={navigation} content={"피싱 체험 나가기"} />
     </SafeAreaView>
   );
 };
@@ -71,12 +74,12 @@ const styles = StyleSheet.create({
   },
   content_container: {
     height: "80%",
+    justifyContent: "center",
   },
   color_box: {
     width: SCREEN_WIDTH - 100,
     alignItems: "center",
     justifyContent: "center",
-
     marginTop: 50,
     padding: 30,
     paddingBottom: 50,
@@ -84,10 +87,8 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.26)",
   },
   img: {
-    alignSelf: "center",
-    width: 15,
-    height: 50,
-    marginBottom: 5,
+    height: 60,
+    marginBottom: 10,
   },
   text_title: {
     alignSelf: "center",

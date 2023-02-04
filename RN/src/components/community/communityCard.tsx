@@ -1,37 +1,51 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Image, Text, Dimensions } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
+
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export interface CommunityCardProps {
   contents: string;
-  date: string;
+  createdAt: string;
+  updatedAt: string;
   user_nickname: string;
 }
 
 const CommunityCard = (props: CommunityCardProps) => {
-  const { contents, date, user_nickname } = props;
+  const { contents, createdAt, updatedAt, user_nickname } = props;
   const [userTime, setUserTime] = useState<string | number>("");
   const [previewContent, setPreviewContent] = useState<string>("");
 
   useEffect(() => {
+    let timeString;
     const now = new Date();
-    const then = new Date(date);
-
-    const diffMSec = now.getTime() - then.getTime();
+    const then = new Date(updatedAt);
+    const diffMSec = now.getTime() - then.getTime() + 32400000;
     const diffMin = Math.floor(diffMSec / (60 * 1000));
-    if (diffMin < 60) {
-      setUserTime(`${diffMin}분 전`);
+    if (diffMin < 1) {
+      timeString = "방금 전";
+    } else if (1 <= diffMin && diffMin < 60) {
+      timeString = `${diffMin}분 전`;
     } else if (diffMin >= 60 && diffMin < 60 * 24) {
-      setUserTime(`${Math.floor(diffMin / 60)}시간 전`);
+      timeString = `${Math.floor(diffMin / 60)}시간 전`;
     } else {
-      setUserTime(date.substring(0, 10));
+      timeString = updatedAt.substring(0, 10);
     }
-  }, [date]);
+    createdAt === updatedAt
+      ? setUserTime(timeString)
+      : setUserTime(timeString + "(수정됨)");
+  }, [updatedAt]);
 
   useEffect(() => {
-    contents.length < 20
+    contents.length < 15
       ? setPreviewContent(contents)
-      : setPreviewContent(`${contents.slice(0, 20)}...`);
+      : setPreviewContent(`${contents.slice(0, 15)}...`);
   }, [contents]);
 
   return (
@@ -39,11 +53,14 @@ const CommunityCard = (props: CommunityCardProps) => {
       <View style={styles.card_container}>
         <View style={styles.card_header}>
           <Image
-            source={require("../../assets/icons/community/community_profile.png")}
+            source={require("../../assets/icons/community/ic_profile.png")}
             style={styles.img_profile}
+            resizeMode="contain"
           />
-          <Text style={styles.text_nickname}>{user_nickname}</Text>
-          <Text style={styles.text_time}>{userTime}</Text>
+          <View>
+            <Text style={styles.text_nickname}>{user_nickname}</Text>
+            <Text style={styles.text_time}>{userTime}</Text>
+          </View>
         </View>
       </View>
       <View style={styles.contents_wrapper}>
@@ -68,23 +85,36 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     marginRight: 8,
+    marginTop: 5,
   },
   text_nickname: {
     color: "#000000",
-    fontSize: 20,
+    fontSize: 23,
     fontWeight: "700",
   },
   text_time: {
-    color: "#000000",
-    fontSize: 15,
-    fontWeight: "400",
+    color: "#878787",
+    fontSize: 16,
+    fontWeight: "300",
+  },
+  modal_btn: {
     float: "right",
     position: "absolute",
     marginLeft: SCREEN_WIDTH / 2 + 40,
+    borderWidth: 1,
+    borderColor: "#C3C3C3",
+    justifyContent: "center",
+    paddingHorizontal: 5,
+    borderRadius: 5,
+  },
+  modal_btn_text: {
+    color: "#C3C3C3",
+    fontSize: 13,
+    fontWeight: "400",
   },
   text_contents: {
     color: "#000000",
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "400",
   },
   contents_wrapper: {
