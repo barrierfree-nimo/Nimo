@@ -10,8 +10,8 @@ module.exports = class User extends Sequelize.Model {
           primaryKey: true,
           autoIncrement: true,
         },
-        user_nickname: {
-          type: Sequelize.STRING(45),
+        user_id: {
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
         type: {
@@ -39,6 +39,6 @@ module.exports = class User extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.Comment.belongsTo(db.User, {foreignKey: "user_nickname", targetKey: "nickname"});
+    db.Comment.belongsTo(db.User, {foreignKey: "user_id", targetKey: "id"});
 }
 };

@@ -15,6 +15,10 @@ module.exports = class User extends Sequelize.Model {
           allowNull: false,
           unique: false,
         },
+        user_id: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+        },
         user_nickname: {
           type: Sequelize.STRING(45),
           allowNull: false,
@@ -48,7 +52,7 @@ module.exports = class User extends Sequelize.Model {
 
   static associate(db) {
     db.Comment.belongsTo(db.Post, { foreignKey: "post_id", targetKey: "id"});
-    db.Comment.belongsTo(db.User, {foreignKey: "user_nickname", targetKey: "nickname"});
+    db.Comment.belongsTo(db.User, {foreignKey: "user_id", targetKey: "id"});
     db.Comment.hasMany(db.BlackComment, {foreignKey: "black_id", sourceKey: "id"});
   }
 };
