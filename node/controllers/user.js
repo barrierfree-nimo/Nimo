@@ -93,6 +93,19 @@ const user = {
       console.log(error);
     }
   },
+  checkId: async function (req, res, next) {
+    try {
+      const user = await User.findOne({
+        where: {
+          user_id: req.params.userid,
+        }
+      })
+      if (user) res.status(201).json({message: "Already exist id"});
+      else res.status(200).json({message: "Possible id"})
+    } catch (error) {
+      console.log(error);
+    }
+  },
   checkNickname: async function (req, res, next) {
     try {
       const user = await User.findOne({

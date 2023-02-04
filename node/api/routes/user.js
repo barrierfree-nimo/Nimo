@@ -5,7 +5,7 @@ const auth = require("../middlewares/auth").checkTokens;
 
 router.post("/join", userController.createNewUser);
 router.post("/login", userController.createToken);
-router.get("/nickname/:nickname", userController.checkNickname);
+router.get("/userid/:userid", userController.checkId);
 
 router.get("/checkAdmin", auth, userController.checkAdmin);
 
