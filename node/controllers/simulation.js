@@ -123,6 +123,8 @@ const simulation = {
 
       if (user.custom != null || user.custom != undefined) {
         var simulCustom = await isCustom(user, type);
+      }  else {
+        var simulCustom = [];
       }
       const simul = await SimulData.findAll({
         where: {
@@ -240,6 +242,8 @@ const simulation = {
       const user = await User.findOne({where: {id: req.user_id}});
       if (user.custom != null || user.custom != undefined) {
         var simulCustom = await isCustom(user, type);
+      }  else {
+        var simulCustom = [];
       }
       const simul = await SimulData.findAll({
         where: {
@@ -315,6 +319,8 @@ const simulation = {
       const user = await User.findOne({where: {id: req.user_id}});
       if (user.custom != null || user.custom != undefined) {
         var simulCustom = await isCustom(user, type);
+      } else {
+        var simulCustom = [];
       }
       const simul = await SimulData.findAll({
         where: {
