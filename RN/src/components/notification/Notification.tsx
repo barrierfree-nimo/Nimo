@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, Button, Platform } from "react-native";
-
+import Axios from "axios";
+import baseURL from "../baseURL";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 import { Subscription } from 'expo-modules-core';
@@ -34,10 +36,11 @@ async function sendPushNotification(expoPushToken : any) {
 }
 
 async function registerForPushNotificationsAsync() {
-  let token;
+  let pushToken;
   if (Device.isDevice) {
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
+    console.log('statue : ' + existingStatus)
     if (existingStatus !== 'granted') {
       const { status } = await Notifications.requestPermissionsAsync();
       finalStatus = status;
@@ -46,8 +49,24 @@ async function registerForPushNotificationsAsync() {
       alert('Failed to get push token for push notification!');
       return;
     }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
+    pushToken = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(pushToken);
+
+    let localPushToken;
+    localPushToken = await AsyncStorage.getItem("push_token");
+
+    const accessToken = await AsyncStorage.getItem("user_Token");
+
+    if(!localPushToken) {
+      AsyncStorage.setItem("push_token", pushToken);
+      await Axios.post(`http://172.30.1.85:5000` + "/notification/save", 
+        { pushToken : `${pushToken}` },
+        { headers: { accessToken: `${accessToken}`} }        
+      ).then((res) => {
+        console.log(res)
+      });
+    } 
+
   } else {
     alert('Must use physical device for Push Notifications');
   }
@@ -61,7 +80,7 @@ async function registerForPushNotificationsAsync() {
     });
   }
 
-  return token;
+  return pushToken;
 }
 
 const Notification = () => {
@@ -90,20 +109,7 @@ const Notification = () => {
   }, []);
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
-      <Text>Your expo push token: {expoPushToken}</Text>
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Title: {notification && notification.request.content.title} </Text>
-        <Text>Body: {notification && notification.request.content.body}</Text>
-        <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
-      </View>
-      <Button
-        title="Press to Send Notification"
-        onPress={async () => {
-          await sendPushNotification(expoPushToken);
-        }}
-      />
-    </View>
+    <View></View>
   );
 };
 
