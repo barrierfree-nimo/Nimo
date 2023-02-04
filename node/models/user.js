@@ -52,7 +52,7 @@ module.exports = class User extends Sequelize.Model {
         push_ok: {
           type: Sequelize.TINYINT(1),
           allowNull: false,
-          default: 0,
+          default: false,
         }
       },
       {
