@@ -11,6 +11,7 @@ const quiz = {
 
             info = {
                 nickname: user.nickname,
+                pushOk: user.push_ok,
                 all: all,
                 done: done
             }

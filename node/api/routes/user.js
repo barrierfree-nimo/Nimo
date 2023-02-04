@@ -20,5 +20,6 @@ router.post("/info", userController.setInfo);
 router.put("/info", auth, userController.updateInfo);
 router.get("/info", auth, userController.getInfo);
 router.delete("/info", auth, userController.deleteInfo);
+router.put("/push", auth, userController.updatePushOk);
 
 module.exports = router;

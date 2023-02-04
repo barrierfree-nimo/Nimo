@@ -236,6 +236,21 @@ const user = {
       return res.status(400)
     }
   },
+  updatePushOk: async function (req, res, next) {
+    try {
+      const user = await User.findOne({
+        where: {
+          id: req.user_id
+        }
+      });
+
+      user.update({push_ok: req.body.pushOk});
+      return res.status(200).json({msg: "PushOk Updated"})
+
+    } catch (error) {
+      return res.status(400).json(error)
+    }
+  },
 }
 
 module.exports = user;
