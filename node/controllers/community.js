@@ -7,11 +7,14 @@ function convertDate(post) {
     var offset = cDate.getTimezoneOffset() / 60;
     var cHours = cDate.getHours();
     var cNewDate = cDate.setHours(cHours - offset);
-    post.createdAt = cNewDate
+    var cdateFormat = new Date(cNewDate)
+    post.createdAt = cdateFormat
+
     var uDate = post.updatedAt
     var uHours = uDate.getHours();
     var uNewDate = uDate.setHours(uHours - offset);
-    post.updatedAt = uNewDate
+    var udateFormat = new Date(uNewDate)
+    post.updatedAt = udateFormat
 
     return post;
 }
@@ -105,11 +108,17 @@ const community = {
                     ],
                     raw: true
                 });
-                if(post.user_id==user.id){
+                try{
+                   if(post.user_id==user.id){
+                    p
                     post[ 'isMine' ] = 'true'
                 } else {
                     post[ 'isMine' ] = 'false'
+                } 
+                }catch(err){
+                    console.log(err)
                 }
+                
             } else {
                 return res.status(404).json({msg: "post deleted"})
             }
