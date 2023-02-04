@@ -13,14 +13,22 @@ import CommonStyle from "../common/common_style";
 import MainStyle from "./main_style";
 import baseURL from "../baseURL";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useIsFocused } from "@react-navigation/native";
 
 const Main = ({ navigation }: any) => {
   const [nickname, setNickname] = useState("니모");
   const [donePercent, setDonePercent] = useState(50);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    return () => {
+      setUserInfo();
+    };
+  }, [isFocused]);
 
   useEffect(() => {
     setUserInfo();
-  });
+  }, []);
 
   const setUserInfo = async () => {
     let token;
@@ -50,23 +58,25 @@ const Main = ({ navigation }: any) => {
   };
   return (
     <SafeAreaView style={CommonStyle.container}>
-      <StatusBar />
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <View style={MainStyle.container_header}>
         <Text style={MainStyle.text_header}>피싱백신</Text>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Setting", {
-              nickname: nickname,
-              donePercent: donePercent,
-            });
-          }}
-        >
-          <Image
-            source={require("../../assets/icons/setting/setting.png")}
-            style={MainStyle.img_setting}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
+        <View style={MainStyle.btn_setting}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Setting", {
+                nickname: nickname,
+                donePercent: donePercent,
+              });
+            }}
+          >
+            <Image
+              source={require("../../assets/icons/setting/setting.png")}
+              style={MainStyle.img_setting}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View style={MainStyle.container_progress}>
@@ -92,7 +102,7 @@ const Main = ({ navigation }: any) => {
           onPress={() => navigation.navigate("AppDoc")}
           style={MainStyle.btn_menu_tutorial}
         >
-          <Text style={MainStyle.btnText_menu_tutorial}>어플 설명서 보기</Text>
+          <Text style={MainStyle.btnText_menu_tutorial}>사용 설명서 보기</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("SimulMain")}
@@ -112,12 +122,12 @@ const Main = ({ navigation }: any) => {
         >
           <Text style={MainStyle.btnText_menu}>소통하기</Text>
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => navigation.navigate("Info")}
           style={MainStyle.btn_menu}
         >
           <Text style={MainStyle.btnText_menu}>정보 얻기</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </SafeAreaView>
   );

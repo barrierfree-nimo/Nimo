@@ -13,15 +13,19 @@ import AppDoc from "../application_doc/AppDoc";
 import SimulMain from "../simul_main/simul_main";
 import MessageSimul from "../simul_message/simul_msg_main/simul_message";
 import MessageDetail from "../simul_message/id/[id]";
-import CorrectPage from "../simul_message/correct";
 
-import VoiceSimul from "../simul_voice/simul_voice";
-import VoiceDetail from "../simul_voice/[id]";
+import SnsDetail from "../simul_sns/id/[id]";
+import SnsSimul from "../simul_sns/simul_sns_main/simul_sns";
+import CorrectPage from "../simul_common/correct";
+
+import VoiceSimul from "../simul_voice/simul_voice_main/simul_voice";
+import VoiceDetail from "../simul_voice/id/[id]";
 import CorrectPageVoice from "../simul_voice/correct";
 
 import CommunityMain from "../community/communityMain";
 import CommunityWrite from "../community/community_write/write";
 import CommunityDetail from "../community/id/[id]";
+import PatchPost from "../community/post_patch/patch_post";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,10 +43,13 @@ const MainStackNavigator = () => {
         <Stack.Screen name="CommunityMain" component={CommunityMain} />
         <Stack.Screen name="CommunityWrite" component={CommunityWrite} />
         <Stack.Screen name="CommunityDetail" component={CommunityDetail} />
+        <Stack.Screen name="CommunityPostPatch" component={PatchPost} />
         <Stack.Screen name="Info" component={Info} />
         <Stack.Screen name="SimulMain" component={SimulMain} />
         <Stack.Screen name="MessageSimul" component={MessageSimul} />
         <Stack.Screen name="MessageDetail" component={MessageDetail} />
+        <Stack.Screen name="SnsSimul" component={SnsSimul} />
+        <Stack.Screen name="SnsDetail" component={SnsDetail} />
         <Stack.Screen name="CorrectPage" component={CorrectPage} />
         <Stack.Screen name="VoiceSimul" component={VoiceSimul} />
         <Stack.Screen name="VoiceDetail" component={VoiceDetail} />
