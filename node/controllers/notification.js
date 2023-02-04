@@ -1,77 +1,85 @@
 const express = require("express")
 const Sequelize = require("sequelize");
-const {User} = require("../models")
+const { Expo } = require('expo-server-sdk');
+const axios = require('axios');
+const { User } = require("../models");
+
 
 const notification = {
   sendNotification: async function(req, res, next) {
     try {
       const { title, content } = req.body;
-      const tokenList = await User.findAll({
+
+      const pushUserList = await User.findAll({
         attributes: ['push_token'],
         where: {push_token: {[ Sequelize.Op.ne ]: null}},
+        raw: true,
       })
 
-      if(tokenList) console.log("ok")
+      let pushTokenList = []
+      for(const i of pushUserList) {
+        pushTokenList.push(i['push_token']);
+      }
 
-      console.log(tokenList)
+      console.log(pushTokenList);
+      
 
-      //console.log(tokenList)
-      // let pushList = [];
-      // const totalLength = tokenList.length;
-      // const tokenListLengthForPush100Limit = parseInt(totalLength / 100);
-      // const expectedOutput = totalLength % 100;
+      let pushList = [];
+      const totalLength = pushTokenList.length;
+      const tokenListLengthForPush100Limit = parseInt(totalLength / 100);
+      const expectedOutput = totalLength % 100; 
 
-      // for (let i = 0; i < tokenListLengthForPush100Limit; i++) {
-      //   let limit = 100 * i;
-      //   for (let j = 0 + limit; j < 100 + limit; j++) {
-      //     pushList.push(tokenList[j].push_token);
-      //   }
+      for (let i = 0; i < tokenListLengthForPush100Limit; i++) {
+        let limit = 100 * i;
+        for (let j = 0 + limit; j < 100 + limit; j++) {
+          pushList.push(pushTokenList[j].push_token);
+        }
 
-      //   console.log(pushList)
+        console.log(pushList)
 
-      //   const message = {
-      //     to: pushList,
-      //     sound: 'default',
-      //     title: title,
-      //     body: content,
-      //     data: { someData: 'goes here' },
-      //   };
+        const message = {
+          to: pushList,
+          sound: 'default',
+          title: title,
+          body: content,
+          data: { someData: 'goes here' },
+        };
   
-      //   await axios('https://exp.host/--/api/v2/push/send', {
-      //     method: 'POST',
-      //     headers: {
-      //       Accept: 'application/json',
-      //       'Accept-encoding': 'gzip, deflate',
-      //       'Content-Type': 'application/json',
-      //     },
-      //     data: JSON.stringify(message),
-      //   });
+        await axios('https://exp.host/--/api/v2/push/send', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Accept-encoding': 'gzip, deflate',
+            'Content-Type': 'application/json',
+          },
+          data: JSON.stringify(message),
+        });
   
-      //   pushList = [];
-      // }
+        pushList = [];
+      }
 
-      // // 100 나누기 나머지 보내기
-      // for (let i = tokenListLengthForPush100Limit * 100; i < tokenListLengthForPush100Limit * 100 + expectedOutput; i++) {
-      //   pushList.push(tokenList[i].push_token);
-      // }
+      // 100 나누기 나머지 보내기
+      for (let i = tokenListLengthForPush100Limit * 100; i < tokenListLengthForPush100Limit * 100 + expectedOutput; i++) {
+        pushList.push(pushTokenList[i].push_token);
+      }
   
-      // const message = {
-      //   to: pushList,
-      //   sound: 'default',
-      //   title: title,
-      //   body: content,
-      //   data: { someData: 'goes here' },
-      // };
+      const message = {
+        to: pushList,
+        sound: 'default',
+        title: title,
+        body: content,
+        data: { someData: 'goes here' },
+      };
   
-      // await axios('https://exp.host/--/api/v2/push/send', {
-      //   method: 'POST',
-      //   headers: {
-      //     Accept: 'application/json',
-      //     'Accept-encoding': 'gzip, deflate',
-      //     'Content-Type': 'application/json',
-      //   },
-      //   data: JSON.stringify(message),
-      // });
+      await axios('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Accept-encoding': 'gzip, deflate',
+          'Content-Type': 'application/json',
+        },
+        data: JSON.stringify(message),
+      });
   
       return res.status(200).json({ msg: 'Notification Success' });
     
