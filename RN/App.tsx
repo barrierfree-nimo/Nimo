@@ -1,17 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
-import { View, Text, Button, StatusBar, Platform } from "react-native";
+import React from "react";
+import { StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Splash from "./src/components/Splash";
 import MainStackNavigator from "./src/components/navigators/MainStackNavigator";
 import AuthStackNavigator from "./src/components/navigators/AuthStackNavigator";
+import Notification from "./src/components/notification/Notification";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>      
+    <NavigationContainer>  
+      <Notification />    
       <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <Stack.Navigator
         initialRouteName="Splash"

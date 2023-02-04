@@ -6,6 +6,7 @@ import AuthStackNavigator from "./AuthStackNavigator";
 
 import Main from "../main/main";
 import Setting from "../setting/setting";
+import AdminNotification from "../setting/admin_notification";
 import Quiz from "../quiz/quiz";
 import Info from "../info/info";
 import AppDoc from "../application_doc/AppDoc";
@@ -38,6 +39,7 @@ const MainStackNavigator = () => {
       >
         <Stack.Screen name="Main" component={Main} />
         <Stack.Screen name="Setting" component={Setting} />
+        <Stack.Screen name="AdminNotification" component={AdminNotification} />
         <Stack.Screen name="AppDoc" component={AppDoc} />
         <Stack.Screen name="Quiz" component={Quiz} />
         <Stack.Screen name="CommunityMain" component={CommunityMain} />

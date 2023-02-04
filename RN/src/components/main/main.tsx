@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import CommonStyle from "../common/common_style";
 import MainStyle from "./main_style";
-import Notification from "../notification/Notification";
 import baseURL from "../baseURL";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
@@ -19,6 +18,8 @@ import { useIsFocused } from "@react-navigation/native";
 const Main = ({ navigation }: any) => {
   const [nickname, setNickname] = useState("니모");
   const [donePercent, setDonePercent] = useState(50);
+  const [pushOk, setPushOk] = useState(false);
+  const [pushString, setPushString] = useState("알림 끄기");
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -43,6 +44,8 @@ const Main = ({ navigation }: any) => {
         }).then((res) => {
           setNickname(String(res.data["nickname"]));
           setDonePercent(Number((100 * res.data["done"]) / res.data["all"]));
+          res.data["pushOk"] == 0  ? setPushOk(false) : setPushOk(true);
+          console.log(res.data)
         });
       }
     } catch (err) {
@@ -59,7 +62,6 @@ const Main = ({ navigation }: any) => {
   };
   return (
     <SafeAreaView style={CommonStyle.container}>
-      <Notification />
       <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />      
       <View style={MainStyle.container_header}>
         <Text style={MainStyle.text_header}>피싱백신</Text>
@@ -69,6 +71,7 @@ const Main = ({ navigation }: any) => {
               navigation.navigate("Setting", {
                 nickname: nickname,
                 donePercent: donePercent,
+                pushOk: pushOk
               });
             }}
           >

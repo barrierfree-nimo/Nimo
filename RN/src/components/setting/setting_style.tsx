@@ -27,7 +27,17 @@ const SettingStyle = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignContent: "center",
+    alignItems: 'center',
     marginVertical: 10,
+  },
+  container_info_item_setting: {
+    flexDirection: "row",
+    alignContent: "center",
+    alignItems: 'center',
+  },
+  container_switch: {
+    marginLeft: 8,
+    alignContent: "center",
   },
   text_info_title: {
     fontSize: 15,
@@ -50,10 +60,26 @@ const SettingStyle = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: "#00284E",
   },
+  btn_setting_admin: {
+    width: SCREEN_WIDTH - 70,
+    height: 50,
+    marginBottom: 15,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 20,
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: "#00284E"
+  },
   title_setting: {
     fontSize: 20,
     fontWeight: "700",
     color: "#FFFFFF",
+  },
+  title_setting_admin: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#00284E",
   },
   container_modal: {
     flex: 1,

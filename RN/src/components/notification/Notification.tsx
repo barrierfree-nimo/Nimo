@@ -1,9 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, Button, Platform } from "react-native";
-import Axios from "axios";
-import baseURL from "../baseURL";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useIsFocused } from "@react-navigation/native";
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 import { Subscription } from 'expo-modules-core';
@@ -12,7 +8,7 @@ Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
     shouldPlaySound: false,
-    shouldSetBadge: false
+    shouldSetBadge: false,
   })
 })
 
@@ -49,12 +45,12 @@ async function registerForPushNotificationsAsync() {
   return pushToken;
 }
 
-const Notification = () => {
+const Notification = ({navigation}: any) => {
   const [expoPushToken, setExpoPushToken] = useState<String | undefined>('');
   const [notification, setNotification] = useState<Notifications.Notification>();
   const notificationListener = useRef<Subscription>();
   const responseListener = useRef<Subscription>();
-  const isFocused = useIsFocused();
+
 
   useEffect(() => {
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
@@ -73,7 +69,7 @@ const Notification = () => {
         Notifications.removeNotificationSubscription(responseListener.current);
       }
     };
-  }, [isFocused]);
+  }, []);
 
   return (
     <View></View>

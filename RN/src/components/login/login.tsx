@@ -44,7 +44,7 @@ const Login = ({ navigation }: any) => {
       pushToken = (await Notifications.getExpoPushTokenAsync()).data;
       console.log(pushToken);
 
-      await Axios.post(`http://172.30.1.85:5000` + "/notification/save", 
+      await Axios.post(baseURL + "/notification/save", 
         { pushToken : `${pushToken}` },
         { headers: { accessToken: `${accessToken}`} }        
       ).then((res) => {

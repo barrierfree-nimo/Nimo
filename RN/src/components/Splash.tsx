@@ -12,14 +12,15 @@ const Splash = ({navigation}: any) => {
     let token;
     try {
       token = await AsyncStorage.getItem('user_Token')
+      console.log(token)
 
       if(token != null) { 
         setHasLocalToken(true) 
-        navigation.replace("MainStackNavigator")
+        navigation.navigate("MainStackNavigator")
       }
       else { 
         setHasLocalToken(true) 
-        navigation.replace("AuthStackNavigator")
+        navigation.navigate("AuthStackNavigator")
       }
 
     } catch(error) {
