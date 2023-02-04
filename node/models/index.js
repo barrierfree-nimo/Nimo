@@ -53,6 +53,7 @@ BlackComment.init(sequelize);
 Admin.init(sequelize);
 
 User.associate(db);
+History.associate(db);
 Post.associate(db);
 Comment.associate(db);
 BlackUser.associate(db);

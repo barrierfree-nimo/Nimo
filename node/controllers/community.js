@@ -22,21 +22,29 @@ function convertList(list) {
     }
 }
 
+function myPost(user) {
+
+}
+
+function myComment(user) {
+
+}
+
 const community = {
     readList: async function (req, res, next) {
         try {
             const user = await User.findOne({where: {id: req.user_id}});
-            const blackUsers = await BlackUser.findAll({where: {user_nickname: user.nickname}});
+            const blackUsers = await BlackUser.findAll({where: {user_id: user.id}});
             const userList = []
             for (i of blackUsers) {
                 userList.push(i.black_nickname)
             }
-            const blackuserPosts = await Post.findAll({where: {user_nickname: {[ Sequelize.Op.in ]: userList}}})
+            const blackuserPosts = await Post.findAll({where: {user_id: {[ Sequelize.Op.in ]: userList}}})
             const postList = []
             for (i of blackuserPosts) {
                 postList.push(i.id)
             }
-            const blackpostPosts = await BlackPost.findAll({where: {user_nickname: user.nickname}})
+            const blackpostPosts = await BlackPost.findAll({where: {user_id: user.id}})
             for (i of blackpostPosts) {
                 postList.push(i.black_id)
             }
@@ -46,7 +54,8 @@ const community = {
                 },
                 order: [
                     [ 'id', 'DESC' ],
-                ]
+                ],
+                raw: true
             });
             if (!list.length == 0) {
                 convertList(list);
@@ -61,17 +70,17 @@ const community = {
     },
     readPost: async function (req, res, next) {
         const user = await User.findOne({where: {id: req.user_id}});
-        const blackUsers = await BlackUser.findAll({where: {user_nickname: user.nickname}});
+        const blackUsers = await BlackUser.findAll({where: {user_id: user.id}});
         const userList = []
         for (i of blackUsers) {
-            userList.push(i.black_nickname)
+            userList.push(i.black_id)
         }
-        const blackuserComments = await Comment.findAll({where: {user_nickname: {[ Sequelize.Op.in ]: userList}}})
+        const blackuserComments = await Comment.findAll({where: {user_id: {[ Sequelize.Op.in ]: userList}}})
         const commentList = []
         for (i of blackuserComments) {
             commentList.push(i.id)
         }
-        const blackcomtComts = await BlackComment.findAll({where: {user_nickname: user.nickname}})
+        const blackcomtComts = await BlackComment.findAll({where: {user_id: user.id}})
         for (i of blackcomtComts) {
             commentList.push(i.black_id)
         }
@@ -80,25 +89,40 @@ const community = {
                 where: {
                     id: req.params.id
                 },
+                raw: true
             });
             if (post) {
                 convertDate(post)
                 var comment = await Comment.findAll({
                     where: {
-                        id: {[ Sequelize.Op.notIn ]: commentList,
+                        id: {
+                            [ Sequelize.Op.notIn ]: commentList,
                         },
                         post_id: req.params.id,
                     },
                     order: [
                         [ 'created_at', 'ASC' ],
                     ],
+                    raw: true
                 });
+                if(post.user_id==user.id){
+                    post[ 'isMine' ] = 'true'
+                } else {
+                    post[ 'isMine' ] = 'false'
+                }
             } else {
                 return res.status(404).json({msg: "post deleted"})
             }
 
             if (!comment.length == 0) {
                 convertList(comment)
+                for (const i of comment) {
+                    if (i.user_id==user.id) {
+                      i[ 'isMine' ] = 'true'
+                    } else {
+                      i[ 'isMine' ] = 'false'
+                    }
+                  }
                 list = {
                     post: post,
                     comment: comment
@@ -124,6 +148,7 @@ const community = {
             } else {
                 try {
                     var newPost = await Post.create({
+                        user_id: user.id,
                         user_nickname: user.nickname,
                         title: title,
                         contents: contents,
@@ -141,9 +166,10 @@ const community = {
     modifyPost: async function (req, res, next) {
         try {
             const user = await User.findOne({where: {id: req.user_id}});
-            const post = await Post.findOne({where: {id: req.params.id, user_nickname: user.nickname}})
+            const post = await Post.findOne({where: {id: req.params.id, user_id: user.id}})
             try {
                 updatedPost = await post.update({
+                    nickname: user.nickname,
                     title: req.body.title,
                     contents: req.body.contents,
                     updatedAt: sequelize.literal('CURRENT_TIMESTAMP')
@@ -160,9 +186,9 @@ const community = {
     deletePost: async function (req, res, next) {
         try {
             const user = await User.findOne({where: {id: req.user_id}});
-            const post = await Post.findOne({where: {id: req.params.id, user_nickname: user.nickname}})
+            const post = await Post.findOne({where: {id: req.params.id, user_id: user.id}})
             if (post) {
-                await Post.destroy({where: {id: req.params.id, user_nickname: user.nickname}})
+                await Post.destroy({where: {id: req.params.id, user_id: user.id}})
                 return res.status(204).send()
             } else {
                 return res.status(404).json({msg: "not exist"})
@@ -181,6 +207,7 @@ const community = {
             } else {
                 try {
                     var newComment = await Comment.create({
+                        user_id: user.id,
                         user_nickname: user.nickname,
                         post_id: post.id,
                         contents: contents,
@@ -197,17 +224,18 @@ const community = {
     modifyComment: async function (req, res, next) {
         try {
             const user = await User.findOne({where: {id: req.user_id}});
-            const comment = await Comment.findOne({where: {id: req.params.id, user_nickname: user.nickname}})
+            const comment = await Comment.findOne({where: {id: req.params.id, user_id: user.id}})
             try {
-                var updatedPost = await comment.update({
+                var updatedComment = await comment.update({
+                    user_nickname: user.nickname,
                     contents: req.body.contents,
                     updatedAt: sequelize.literal('CURRENT_TIMESTAMP')
                 })
             } catch (error) {
                 return res.status(400).json(error)
             }
-            updatedPost = convertDate(updatedPost)
-            return res.status(201).json(updatedPost)
+            updatedComment = convertDate(updatedComment)
+            return res.status(201).json(updatedComment)
         } catch (error) {
             return res.status(500).json(error)
         }
@@ -215,9 +243,9 @@ const community = {
     deleteComment: async function (req, res, next) {
         try {
             const user = await User.findOne({where: {id: req.user_id}});
-            const comment = await Comment.findOne({where: {id: req.params.id, user_nickname: user.nickname}})
+            const comment = await Comment.findOne({where: {id: req.params.id, user_id: user.id}})
             if (comment) {
-                await Comment.destroy({where: {id: req.params.id, user_nickname: user.nickname}})
+                await Comment.destroy({where: {id: req.params.id, user_id: user.id}})
                 return res.status(204).send()
             } else {
                 return res.status(404).json({msg: "not exist"})
