@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1053422796814",
+    "project_id": "phishing-vaccine",
+    "storage_bucket": "phishing-vaccine.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053422796814:android:51379e8f5d871a3d073c5f",
+        "android_client_info": {
+          "package_name": "com.nimo.phishingvaccine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1053422796814-93tcm6vns4nig27vuoe0rahce2oti1hu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKJsFykf1O13IZzZT_D_Iv3JhEn0ZaIKI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1053422796814-93tcm6vns4nig27vuoe0rahce2oti1hu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

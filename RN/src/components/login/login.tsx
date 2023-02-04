@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import { Platform } from "react-native";
 import Axios from "axios";
+import Notification from "../notification/Notification";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Notifications from 'expo-notifications';
+import * as Device from 'expo-device';
 import {
   SafeAreaView,
   KeyboardAvoidingView,
@@ -23,6 +27,46 @@ const Login = ({ navigation }: any) => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
 
+  async function registerForPushNotificationsAsync(accessToken : string) {
+    let pushToken;
+    if (Device.isDevice) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      console.log('statue : ' + existingStatus)
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      pushToken = (await Notifications.getExpoPushTokenAsync()).data;
+      console.log(pushToken);
+
+      await Axios.post(baseURL + "/notification/save", 
+        { pushToken : `${pushToken}` },
+        { headers: { accessToken: `${accessToken}`} }        
+      ).then((res) => {
+        console.log(res)
+      });
+      
+    } else {
+      alert('Must use physical device for Push Notifications');
+    }
+  
+    if (Platform.OS === 'android') {
+      Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
+    }
+  
+    return pushToken;
+  }
+
   const showToast = () => {
     ToastAndroid.show("유효하지 않은 계정입니다.", ToastAndroid.SHORT);
   };
@@ -36,8 +80,12 @@ const Login = ({ navigation }: any) => {
         .then((res) => {
           if (res.status == 200) {
             const token = String(res.data["token"]["accessToken"]);
+            registerForPushNotificationsAsync(token)
             AsyncStorage.setItem("user_Token", token);
-            navigation.replace("MainStackNavigator");
+            navigation.reset({
+              index: 0,
+              routes: [{name: "MainStackNavigator"}],
+            });
           }
         })
         .catch((err) => {

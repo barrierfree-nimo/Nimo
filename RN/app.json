@@ -27,8 +27,18 @@
       "permissions": [
         "RECORD_AUDIO"
       ],
+      "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./src/assets/icons/notification/ic_notification.png",
+          "color": "#ffffff"
+        }
+      ]
+    ],
       "softwareKeyboardLayoutMode": "pan",
-      "versionCode": 8
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 10
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

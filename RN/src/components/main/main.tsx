@@ -18,6 +18,8 @@ import { useIsFocused } from "@react-navigation/native";
 const Main = ({ navigation }: any) => {
   const [nickname, setNickname] = useState("니모");
   const [donePercent, setDonePercent] = useState(50);
+  const [pushOk, setPushOk] = useState(false);
+  const [pushString, setPushString] = useState("알림 끄기");
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -32,6 +34,7 @@ const Main = ({ navigation }: any) => {
 
   const setUserInfo = async () => {
     let token;
+    
     try {
       token = await AsyncStorage.getItem("user_Token");
       if (token != null) {
@@ -42,6 +45,8 @@ const Main = ({ navigation }: any) => {
         }).then((res) => {
           setNickname(String(res.data["nickname"]));
           setDonePercent(Number((100 * res.data["done"]) / res.data["all"]));
+          res.data["pushOk"] == 0  ? setPushOk(false) : setPushOk(true);
+          console.log(res.data)
         });
       }
     } catch (err) {
@@ -49,16 +54,18 @@ const Main = ({ navigation }: any) => {
     }
   };
 
-  const clear = async () => {
-    try {
-      await AsyncStorage.clear();
-    } catch (err) {
-      console.log(err);
-    }
+  // AsyncStorage
+  const local = async () => {
+    const name = await AsyncStorage.getItem("name");
+    const bank = await AsyncStorage.getItem("bank");
+    const gender = await AsyncStorage.getItem("gender");
+    const interest = await AsyncStorage.getItem("interest");
+    console.log(name + ' ' + bank + ' ' + gender + ' ' + interest);
   };
+
   return (
     <SafeAreaView style={CommonStyle.container}>
-      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />      
       <View style={MainStyle.container_header}>
         <Text style={MainStyle.text_header}>피싱백신</Text>
         <View style={MainStyle.btn_setting}>
@@ -67,7 +74,8 @@ const Main = ({ navigation }: any) => {
               navigation.navigate("Setting", {
                 nickname: nickname,
                 donePercent: donePercent,
-              });
+                pushOk: pushOk
+              })
             }}
           >
             <Image
