@@ -120,7 +120,10 @@ const simulation = {
     try {
       const type = "voice";
       const user = await User.findOne({where: {id: req.user_id}});
-      const simulCustom = await isCustom(user, type);
+
+      if (user.custom != null || user.custom != undefined) {
+        var simulCustom = await isCustom(user, type);
+      }
       const simul = await SimulData.findAll({
         where: {
           type: "voice",
@@ -235,7 +238,9 @@ const simulation = {
     try {
       const type = "msg";
       const user = await User.findOne({where: {id: req.user_id}});
-      const simulCustom = await isCustom(user, type);
+      if (user.custom != null || user.custom != undefined) {
+        var simulCustom = await isCustom(user, type);
+      }
       const simul = await SimulData.findAll({
         where: {
           type: type,
@@ -308,7 +313,9 @@ const simulation = {
     try {
       const type = "sns";
       const user = await User.findOne({where: {id: req.user_id}});
-      const simulCustom = await isCustom(user, type);
+      if (user.custom != null || user.custom != undefined) {
+        var simulCustom = await isCustom(user, type);
+      }
       const simul = await SimulData.findAll({
         where: {
           type: type,
