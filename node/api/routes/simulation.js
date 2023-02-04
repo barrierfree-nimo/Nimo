@@ -12,6 +12,5 @@ router.get("/voice", auth, simulController.voiceDoneList);
 router.get("/voice/:num", auth, simulController.voiceSimul);
 router.post("/done", auth, simulController.addDoneList);
 router.get("/history", auth, simulController.showHistory);
-router.post("/custom", auth, simulController.customSimulation);
 
 module.exports = router;
