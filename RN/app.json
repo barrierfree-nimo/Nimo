@@ -38,7 +38,7 @@
     ],
       "softwareKeyboardLayoutMode": "pan",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 8
+      "versionCode": 10
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
