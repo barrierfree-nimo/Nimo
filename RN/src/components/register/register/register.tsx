@@ -110,6 +110,7 @@ const Register = ({ navigation }: any) => {
     }
 
     if (userIdOk && nicknameOk && passwordOk && terms1Ok && terms2Ok) {
+      console.log("hello")
       Axios.post(baseURL + "/user/join", {
         userId: userId,
         nickname: nickname,

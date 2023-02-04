@@ -86,7 +86,7 @@ const RegisterInfo = ({route, navigation}: any) => {
 
     const bank = String(inputs.bank);
     if(bank != "") {
-      await AsyncStorage.setItem("bank", name);
+      await AsyncStorage.setItem("bank", bank);
       custom += "bank,";
     }
 

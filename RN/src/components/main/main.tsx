@@ -34,6 +34,7 @@ const Main = ({ navigation }: any) => {
 
   const setUserInfo = async () => {
     let token;
+    
     try {
       token = await AsyncStorage.getItem("user_Token");
       if (token != null) {
@@ -53,13 +54,15 @@ const Main = ({ navigation }: any) => {
     }
   };
 
-  const clear = async () => {
-    try {
-      await AsyncStorage.clear();
-    } catch (err) {
-      console.log(err);
-    }
+  // AsyncStorage
+  const local = async () => {
+    const name = await AsyncStorage.getItem("name");
+    const bank = await AsyncStorage.getItem("bank");
+    const gender = await AsyncStorage.getItem("gender");
+    const interest = await AsyncStorage.getItem("interest");
+    console.log(name + ' ' + bank + ' ' + gender + ' ' + interest);
   };
+
   return (
     <SafeAreaView style={CommonStyle.container}>
       <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />      
@@ -72,7 +75,7 @@ const Main = ({ navigation }: any) => {
                 nickname: nickname,
                 donePercent: donePercent,
                 pushOk: pushOk
-              });
+              })
             }}
           >
             <Image
