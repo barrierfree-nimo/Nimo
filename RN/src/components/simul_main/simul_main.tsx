@@ -1,22 +1,35 @@
 import React, { useEffect, useState } from "react";
+import { Dimensions } from "react-native";
 import {
   SafeAreaView,
   TouchableOpacity,
   View,
   Image,
   Text,
+  StatusBar
 } from "react-native";
 import CommonStyle from "../common/common_style";
-import ExitBtn from "../simul_common/exit_btn";
+import ExitBtn from "../common/exit_btn";
 import SimulMainStyle from "./simul_main_style";
 import Axios from "axios";
 import baseURL from "../baseURL";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useIsFocused } from "@react-navigation/native";
+
+const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const SimulMain = ({ navigation }: any) => {
   const [type, setType] = useState<string>("");
   const [num, setNum] = useState<number>();
+  const [title, setTitle] = useState<string>("");
   const [red, setRed] = useState<string[]>();
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    return () => {
+      fetchSimulMain();
+    };
+  }, [isFocused]);
 
   useEffect(() => {
     fetchSimulMain();
@@ -32,6 +45,7 @@ const SimulMain = ({ navigation }: any) => {
       }).then((res) => {
         setTimeout(() => setType(res.data.type), 2000);
         setNum(res.data.num);
+        setTitle(res.data.title);
         setRed(res.data.red);
       });
     } catch (err) {
@@ -39,29 +53,25 @@ const SimulMain = ({ navigation }: any) => {
     }
   };
 
-  useEffect(() => {
-    console.log(type, num, red);
-  }, [red]);
-
   const isInRed = (appType: string) => {
     if (red?.includes(appType)) return true;
   };
 
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <Image
         source={require("../../assets/icons/simul_main/galaxy.png")}
         style={SimulMainStyle.img_galaxy}
       />
-      {/* 스마트폰 */}
       <View style={SimulMainStyle.phone_div}>
-        {/* 앱 푸시 바 */}
         <View style={SimulMainStyle.phone_push_div}>
           {type === "sns" && (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("MessageDetail", {
+                navigation.navigate("SnsDetail", {
                   simulNum: num,
+                  title: title,
                 })
               }
             >
@@ -71,9 +81,14 @@ const SimulMain = ({ navigation }: any) => {
               />
             </TouchableOpacity>
           )}
-          {type === "message" && (
+          {type === "msg" && (
             <TouchableOpacity
-              onPress={() => navigation.navigate("MessageSimul")}
+              onPress={() =>
+                navigation.navigate("MessageDetail", {
+                  simulNum: num,
+                  title: title,
+                })
+              }
             >
               <Image
                 source={require("../../assets/icons/simul_main/message_push.png")}
@@ -81,8 +96,14 @@ const SimulMain = ({ navigation }: any) => {
               />
             </TouchableOpacity>
           )}
-          {type === "call" && (
-            <TouchableOpacity>
+          {type === "voice" && (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("VoiceDetail", {
+                  simulNum: num,
+                })
+              }
+            >
               <Image
                 source={require("../../assets/icons/simul_main/call_push.png")}
                 style={SimulMainStyle.img_push}
@@ -91,7 +112,6 @@ const SimulMain = ({ navigation }: any) => {
           )}
         </View>
 
-        {/*  앱 바탕 */}
         <View style={SimulMainStyle.phone_app_div}>
           <>
             <Image
@@ -140,12 +160,11 @@ const SimulMain = ({ navigation }: any) => {
             />
           </>
 
-          {/*  SNS */}
-          <TouchableOpacity onPress={() => navigation.navigate("MessageSimul")}>
+          <TouchableOpacity onPress={() => navigation.navigate("SnsSimul")}>
             {type === "sns" || isInRed("sns") ? (
               <Image
                 source={require(`../../assets/icons/simul_main/sns_red.png`)}
-                style={SimulMainStyle.img_app_icon}
+                style={[{ width: SCREEN_WIDTH / 5, height: SCREEN_WIDTH / 5 }]}
               />
             ) : (
               <Image
@@ -156,11 +175,9 @@ const SimulMain = ({ navigation }: any) => {
           </TouchableOpacity>
         </View>
 
-        {/*  앱 하단바 */}
         <View style={SimulMainStyle.phone_bottom_div}>
-          {/*  CALL */}
           <TouchableOpacity onPress={() => navigation.navigate("VoiceSimul")}>
-            {type === "call" || isInRed("call") ? (
+            {type === "voice" || isInRed("voice") ? (
               <Image
                 source={require(`../../assets/icons/simul_main/call_red.png`)}
                 style={SimulMainStyle.img_bottom_app_icon}
@@ -173,7 +190,6 @@ const SimulMain = ({ navigation }: any) => {
             )}
           </TouchableOpacity>
 
-          {/*  앱 서랍장 */}
           <TouchableOpacity>
             <Image
               source={require("../../assets/icons/simul_main/app_container.png")}
@@ -181,9 +197,8 @@ const SimulMain = ({ navigation }: any) => {
             />
           </TouchableOpacity>
 
-          {/*  MSG */}
           <TouchableOpacity onPress={() => navigation.navigate("MessageSimul")}>
-            {type === "message" || isInRed("message") ? (
+            {type === "msg" || isInRed("msg") ? (
               <Image
                 source={require(`../../assets/icons/simul_main/message_red.png`)}
                 style={SimulMainStyle.img_bottom_app_icon}
@@ -196,10 +211,15 @@ const SimulMain = ({ navigation }: any) => {
             )}
           </TouchableOpacity>
         </View>
+        <View style={SimulMainStyle.text_notice_div}>
+          <View style={SimulMainStyle.text_div}>
+            <Text style={SimulMainStyle.text_notice}>
+              체험하려는 어플이나 알림을 클릭해주세요
+            </Text>
+          </View>
+        </View>
       </View>
-
-      {/* 이동버튼 */}
-      <ExitBtn navigation={navigation} />
+      <ExitBtn navigation={navigation} content={"피싱 체험 나가기"} />
     </SafeAreaView>
   );
 };

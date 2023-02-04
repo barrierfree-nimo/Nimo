@@ -7,12 +7,14 @@ import {
   TouchableOpacity,
   Button,
   Image,
-  ToastAndroid
+  ToastAndroid,
+  StatusBar
 } from "react-native";
 import CommonStyle from "../common/common_style";
 import QuizStyle from "./quiz_style";
 import baseURL from "../baseURL";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ExitBtn from "../common/exit_btn";
 
 const Quiz = ({ navigation }: any) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,45 +27,45 @@ const Quiz = ({ navigation }: any) => {
   const [commentaryData, setCommentaryData] = useState();
 
   useEffect(() => {
-    fetchQuiz()
+    fetchQuiz();
   }, []);
 
   const showToast = () => {
-    ToastAndroid.show('더이상 불러올 문제가 없습니다.', ToastAndroid.SHORT)
-  }
+    ToastAndroid.show("더이상 불러올 문제가 없습니다.", ToastAndroid.SHORT);
+  };
 
   const fetchQuiz = async () => {
     try {
-      const token = await AsyncStorage.getItem('user_Token')
+      const token = await AsyncStorage.getItem("user_Token");
 
-      if(token != null) {
-        //console.log("QUIZ TOKEN : " + token)
-        
+      if (token != null) {
         try {
           Axios.get(baseURL + "/quiz", {
             headers: {
-              'accessToken': `${token}`
-            }
+              accessToken: `${token}`,
+            },
           }).then((res) => {
-            if(res.status == 200) {
-              //console.log(res.data)
+            if (res.status == 200) {
               setIdData(Number(res.data[0]["id"]));
               setQTextData(res.data[0]["qText"]);
               setATextData(res.data[0]["aText"].split(","));
               setAnswerData(res.data[0]["answer"]);
               setCommentaryData(res.data[0]["commentary"]);
               setShowCommentary(false);
+            } else {
+              showToast();
+              return;
             }
           });
-        } catch(err) {
-          console.log(err)
+        } catch (err) {
+          console.log(err);
         }
-      } 
-    } catch(e) {
-      console.log(e)
+      }
+    } catch (e) {
+      console.log(e);
     }
 
-    setIsLoading(false)    
+    setIsLoading(false);
   };
 
   const check_answer = (answer: String) => {
@@ -78,46 +80,55 @@ const Quiz = ({ navigation }: any) => {
 
   const move_back = async () => {
     var backId = idData - 2;
-    const token = await AsyncStorage.getItem('user_Token')
+    const token = await AsyncStorage.getItem("user_Token");
 
-    if(token != null) {
+    if (backId < 0) {
+      showToast();
+      return;
+    }
+
+    if (token != null) {
       await Axios.get(baseURL + "/quiz/" + String(backId), {
-        headers: { 'accessToken': `${token}` }
+        headers: { accessToken: `${token}` },
       }).then((res) => {
-          fetchQuiz();
-        });
+        fetchQuiz();
+      });
     }
   };
 
   const move_next = async () => {
-    const token = await AsyncStorage.getItem('user_Token')
+    const token = await AsyncStorage.getItem("user_Token");
 
-    if(token != null) {
+    if (token != null) {
       await Axios.get(baseURL + "/quiz/" + String(idData), {
-        headers: { 'accessToken': `${token}` }
+        headers: { accessToken: `${token}` },
       }).then((res) => {
-          fetchQuiz();
-        });
+        if (Number(res.data[0]["id"]) == idData) {
+          showToast();
+          return;
+        }
+        fetchQuiz();
+      });
     }
   };
 
-  
-
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <View style={CommonStyle.container_header}>
         <Text style={CommonStyle.text_header}>피싱 문제 풀기</Text>
       </View>
 
       <View style={QuizStyle.container_question}>
-        <Text style={QuizStyle.text_question_num}>문제 {idData}.</Text> 
+        <Text style={QuizStyle.text_question_num}>문제 {idData}.</Text>
         <Text style={QuizStyle.text_question}>{qTextData}</Text>
       </View>
 
       {showCommentary === false ? (
         <View style={QuizStyle.container_option}>
           {aTextData.map((item) => (
-            <TouchableOpacity key={item}
+            <TouchableOpacity
+              key={item}
               onPress={() => check_answer(item)}
               style={QuizStyle.btn_container_option}
             >
@@ -127,7 +138,16 @@ const Quiz = ({ navigation }: any) => {
         </View>
       ) : (
         <View style={QuizStyle.container_commentary}>
-          <Text style={QuizStyle.text_quizResult}>{quizResult}</Text>
+          <Text
+            style={[
+              QuizStyle.text_quizResult,
+              quizResult === "정답입니다!"
+                ? { color: "blue" }
+                : { color: "red" },
+            ]}
+          >
+            {quizResult}
+          </Text>
           <Text style={QuizStyle.text_commentary}>{commentaryData}</Text>
         </View>
       )}
@@ -135,24 +155,26 @@ const Quiz = ({ navigation }: any) => {
       <View style={QuizStyle.container_navigator}>
         <TouchableOpacity
           onPress={move_back}
-          style={QuizStyle.btn_container_back}>
-            <Image source={require("../../assets/icons/quiz/ic_quiz_move_back.png")} />
-            <Text style={QuizStyle.btn_move_text}>이전 문제</Text>
+          style={QuizStyle.btn_container_back}
+        >
+          <Image
+            source={require("../../assets/icons/quiz/ic_quiz_move_back.png")}
+          />
+          <Text style={QuizStyle.btn_move_text}>이전 문제</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={move_next}
-          style={QuizStyle.btn_container_next}>
-            <Image source={require("../../assets/icons/quiz/ic_quiz_move_next.png")} />
-            <Text style={QuizStyle.btn_move_text}>다음 문제</Text>
+          style={QuizStyle.btn_container_next}
+        >
+          <Image
+            source={require("../../assets/icons/quiz/ic_quiz_move_next.png")}
+          />
+          <Text style={QuizStyle.btn_move_text}>다음 문제</Text>
         </TouchableOpacity>
       </View>
 
-      <View style={CommonStyle.container_exit}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={CommonStyle.btnText_exit}>피싱 문제 나가기</Text>
-        </TouchableOpacity>
-      </View>
+      <ExitBtn navigation={navigation} content={"피싱문제 나가기"} />
     </SafeAreaView>
   );
 };

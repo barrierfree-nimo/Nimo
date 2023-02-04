@@ -9,16 +9,16 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  ScrollViewComponent,
+  StatusBar
 } from "react-native";
-import CommonStyle from "../common/common_style";
-import SimulMainStyle from "../simul_main/simul_main_style";
-import SpeechBubble from "../simul_common/speech_bubble";
-import NavigateBtn from "../simul_common/navigate_btn";
+import CommonStyle from "../../common/common_style";
+import SimulMainStyle from "../../simul_main/simul_main_style";
+import SpeechBubble from "../../simul_common/speech_bubble";
+import NavigateBtn from "../../simul_common/navigate_btn";
 import { Audio } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import baseURL from "../baseURL";
-import ExitBtn from "../simul_common/exit_btn";
+import baseURL from "../../baseURL";
+import ExitBtn from "../../common/exit_btn";
 
 const VoiceDetail = ({ route, navigation }: any) => {
   const [ok, setOk] = useState(false);
@@ -32,7 +32,6 @@ const VoiceDetail = ({ route, navigation }: any) => {
   const sound = useRef(new Audio.Sound());
   const scrollViewRef = useRef<ScrollView>(null);
 
-  // 통화 버튼 클릭 시
   const start = async () => {
     setOk(true);
   };
@@ -41,7 +40,6 @@ const VoiceDetail = ({ route, navigation }: any) => {
     fetchData();
   }, []);
 
-  // Fetch JSON Data
   const fetchData = async () => {
     const token = await AsyncStorage.getItem("user_Token");
 
@@ -65,7 +63,6 @@ const VoiceDetail = ({ route, navigation }: any) => {
     setScriptItem();
   }, [data]);
 
-  // Data to [Scripts or Options]
   const setScriptItem = async () => {
     let temp_scripts = [];
     let temp_options = [];
@@ -86,7 +83,6 @@ const VoiceDetail = ({ route, navigation }: any) => {
     }
   };
 
-  // 화면 터치 시 말풍선 보이게
   const showScriptItem = async () => {
     if (scripts.length == nextId.current) {
       setShowOptions(true);
@@ -95,7 +91,6 @@ const VoiceDetail = ({ route, navigation }: any) => {
 
     const item = scripts[nextId.current];
 
-    // 음성 재생
     await sound.current.unloadAsync();
     await sound.current.loadAsync({
       uri: item[2],
@@ -106,7 +101,6 @@ const VoiceDetail = ({ route, navigation }: any) => {
     nextId.current += 1;
   };
 
-  // 대응방법 선택 시 >> 완료 처리
   const handleClickCorrect = async (response: number) => {
     const isCorrect = response === 3 ? true : false;
     const token = await AsyncStorage.getItem("user_Token");
@@ -134,8 +128,9 @@ const VoiceDetail = ({ route, navigation }: any) => {
 
   return (
     <SafeAreaView style={CommonStyle.container}>
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <Image
-        source={require("../../assets/icons/simul_voice/voice_bg_purple.png")}
+        source={require("../../../assets/icons/simul_voice/voice_bg_purple.png")}
         style={SimulMainStyle.img_galaxy}
       />
       <View style={styles.phone_div}>
@@ -144,20 +139,22 @@ const VoiceDetail = ({ route, navigation }: any) => {
             <View style={styles.container_phone}>
               <Text style={styles.text_phoneNum}>010-1234-5678</Text>
               <Image
-                source={require("../../assets/icons/simul_voice/voice_profile.png")}
+                source={require("../../../assets/icons/simul_voice/voice_profile.png")}
                 style={styles.img_profile}
               />
 
               <View style={styles.container_btn_call}>
                 <TouchableOpacity onPress={() => start()}>
                   <Image
-                    source={require("../../assets/icons/simul_voice/ic_call.png")}
+                    source={require("../../../assets/icons/simul_voice/ic_call.png")}
                   />
+                  <Text style={styles.text_call}>전화 받기</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                   <Image
-                    source={require("../../assets/icons/simul_voice/ic_call_red.png")}
+                    source={require("../../../assets/icons/simul_voice/ic_call_red.png")}
                   />
+                  <Text style={styles.text_call}>전화 끊기</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -165,11 +162,12 @@ const VoiceDetail = ({ route, navigation }: any) => {
             <View style={styles.container_phone}>
               <Text style={styles.text_phoneNum}>010-1234-5678</Text>
               {showOptions === false ? (
-                <Text style={styles.text_callTime}>화면을 터치해주세요</Text>
+                <Text style={styles.text_callTime}>
+                  화면을 터치하면 대화가 나옵니다
+                </Text>
               ) : (
                 <Text></Text>
               )}
-
               <ScrollView
                 ref={scrollViewRef}
                 onContentSizeChange={() =>
@@ -180,7 +178,7 @@ const VoiceDetail = ({ route, navigation }: any) => {
               >
                 {visibleScripts?.map((item) => (
                   <View
-                    key={item}
+                    key={item[0]}
                     style={[
                       {
                         left:
@@ -220,10 +218,9 @@ const VoiceDetail = ({ route, navigation }: any) => {
           )}
         </View>
 
-        {/* 이동버튼 */}
         <NavigateBtn navigation={navigation} />
       </View>
-      <ExitBtn navigation={navigation} />
+      <ExitBtn navigation={navigation} content={"피싱 체험 나가기"} />
     </SafeAreaView>
   );
 };
@@ -276,12 +273,18 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "space-between",
     paddingHorizontal: 60,
-    marginTop: 120,
+    marginTop: 110,
+  },
+  text_call: {
+    textAlign: "center",
+    color: "#FFFFFF",
+    fontSize: 13,
+    fontWeight: "600",
+    marginTop: 5,
   },
   container_bubble_voice: {
     width: SCREEN_WIDTH,
     marginTop: 20,
-    marginBottom: 120,
     paddingTop: 10,
     paddingHorizontal: 40,
     alignContent: "center",

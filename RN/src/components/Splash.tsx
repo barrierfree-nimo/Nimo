@@ -36,10 +36,10 @@ const Splash = ({navigation}: any) => {
 
   return (
     <SafeAreaView style={CommonStyle.container}>
-      <StatusBar />
+      <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
       <View>
         <View style={styles.container}>
-          <Image source={require('../assets/images/main_progress.png')} 
+          <Image source={require('../assets/icons/simul_common/ic_correct.png')} 
             style={styles.img} 
             resizeMode="contain" />
           <Text style={styles.text_title}>피싱백신</Text>
@@ -55,8 +55,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   img: {
-    width: 80,
-    height: 250,
+    width: 200,
     marginTop: 70,
     marginBottom: 20,
   },
