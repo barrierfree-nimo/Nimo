@@ -27,6 +27,7 @@ const user = {
                 userId: userId,
                 nickname: nickname,
                 password: hash,
+                push_ok: false
               }).then(function (newUser) {
                 res.status(200).json({ id: newUser.id });
               });
