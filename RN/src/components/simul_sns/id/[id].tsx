@@ -69,6 +69,8 @@ const SnsDetail = ({ route, navigation }: any) => {
 
         const localName = await AsyncStorage.getItem("name");
         const localBank = await AsyncStorage.getItem("bank");
+        const localGender = await AsyncStorage.getItem("gender");
+        const localChild = await AsyncStorage.getItem("child");
 
         if (contents.includes("$name")) {
           localName
@@ -80,6 +82,18 @@ const SnsDetail = ({ route, navigation }: any) => {
           localBank
             ? (contents = contents.replaceAll("$name", `${localBank}은행`))
             : (contents = contents.replaceAll("$bank", "국민은행"));
+        }
+
+        if (contents.includes("$gender")) {
+          localGender === "male"
+            ? (contents = contents.replaceAll("$gender", "아빠"))
+            : (contents = contents.replaceAll("$gender", "엄마"));
+        }
+
+        if (contents.includes("$child")) {
+          localChild === "son"
+            ? (contents = contents.replaceAll("$gender", "아들"))
+            : (contents = contents.replaceAll("$gender", "딸"));
         }
 
         if (response == 1 || response == 2)
