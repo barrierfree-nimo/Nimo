@@ -7,7 +7,7 @@ import {
   Text,
   Dimensions,
   ScrollView,
-  StatusBar
+  StatusBar,
 } from "react-native";
 import CommonStyle from "../../common/common_style";
 import SpeechBubble from "../../simul_common/speech_bubble";
@@ -64,8 +64,37 @@ const SnsDetail = ({ route, navigation }: any) => {
 
     if (data) {
       for (let i = 0; i < data.length; i++) {
-        const contents = String(data[i][0]);
+        let contents = String(data[i][0]);
         const response = Number(data[i][1]);
+
+        const localName = await AsyncStorage.getItem("name");
+        const localBank = await AsyncStorage.getItem("bank");
+        const localGender = await AsyncStorage.getItem("gender");
+        const localChild = await AsyncStorage.getItem("child");
+
+        if (contents.includes("$name")) {
+          localName
+            ? (contents = contents.replaceAll("$name", localName))
+            : (contents = contents.replaceAll("$name", "홍길동"));
+        }
+
+        if (contents.includes("$bank")) {
+          localBank
+            ? (contents = contents.replaceAll("$name", `${localBank}은행`))
+            : (contents = contents.replaceAll("$bank", "국민은행"));
+        }
+
+        if (contents.includes("$gender")) {
+          localGender === "male"
+            ? (contents = contents.replaceAll("$gender", "아빠"))
+            : (contents = contents.replaceAll("$gender", "엄마"));
+        }
+
+        if (contents.includes("$child")) {
+          localChild === "son"
+            ? (contents = contents.replaceAll("$gender", "아들"))
+            : (contents = contents.replaceAll("$gender", "딸"));
+        }
 
         if (response == 1 || response == 2)
           temp_scripts.push([contents, response]);
