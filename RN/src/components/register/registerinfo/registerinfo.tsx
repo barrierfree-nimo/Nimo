@@ -124,13 +124,15 @@ const RegisterInfo = ({route, navigation}: any) => {
       }
       await AsyncStorage.setItem("interest", interest_str);
     }
+
+    console.log(route.params.id)
     
     Axios.post(baseURL + "/user/info", {
-        id: route.params.id,
+        userId: route.params.id,
         custom: custom
       })
         .then((res) => {
-          if(res.status == 200) {
+          if(res.status == 204) {
             showToast("정보 입력이 완료되었습니다.");
           } else {
             showToast("정보 입력 과정에서 문제가 발생했습니다.");
