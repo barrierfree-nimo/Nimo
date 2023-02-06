@@ -27,18 +27,23 @@
       "permissions": [
         "RECORD_AUDIO"
       ],
-      "plugins": [
+      "softwareKeyboardLayoutMode": "pan",
+      "googleServicesFile": "./google-services.json",
+      "useNextNotificationsApi": true,
+      "versionCode": 10
+    },
+    "plugins": [
       [
         "expo-notifications",
         {
-          "icon": "./src/assets/icons/notification/ic_notification.png",
+          "icon": "./src/assets/icons/push.png",
           "color": "#ffffff"
         }
       ]
     ],
-      "softwareKeyboardLayoutMode": "pan",
-      "googleServicesFile": "./google-services.json",
-      "versionCode": 10
+    "notification": {
+      "icon": "./src/assets/icons/push.png",
+      "color": "#59ff59"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

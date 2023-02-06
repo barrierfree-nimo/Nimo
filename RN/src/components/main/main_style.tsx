@@ -73,7 +73,7 @@ const MainStyle  = StyleSheet.create({
   },
   btn_menu_tutorial: {
     width: SCREEN_WIDTH - 70,
-    height: 60,
+    paddingVertical: 15,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 20,

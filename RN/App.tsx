@@ -8,7 +8,17 @@ import MainStackNavigator from "./src/components/navigators/MainStackNavigator";
 import AuthStackNavigator from "./src/components/navigators/AuthStackNavigator";
 import Notification from "./src/components/notification/Notification";
 
+import * as Notifications from 'expo-notifications';
+
 const Stack = createNativeStackNavigator();
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 const App = () => {
   return (

@@ -14,6 +14,7 @@ import MainStyle from "./main_style";
 import baseURL from "../baseURL";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
+import * as Notifications from 'expo-notifications';
 
 const Main = ({ navigation }: any) => {
   const [nickname, setNickname] = useState("니모");
@@ -130,12 +131,12 @@ const Main = ({ navigation }: any) => {
         >
           <Text style={MainStyle.btnText_menu}>소통하기</Text>
         </TouchableOpacity>
-        {/* <TouchableOpacity
+        <TouchableOpacity
           onPress={() => navigation.navigate("Info")}
           style={MainStyle.btn_menu}
         >
           <Text style={MainStyle.btnText_menu}>정보 얻기</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

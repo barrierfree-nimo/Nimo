@@ -7,8 +7,13 @@ import AuthStackNavigator from "./AuthStackNavigator";
 import Main from "../main/main";
 import Setting from "../setting/setting";
 import AdminNotification from "../setting/admin_notification";
+
 import Quiz from "../quiz/quiz";
+
 import Info from "../info/info";
+import InfoPrecaution from "../info/detail/info_precaution";
+import InfoHelp from "../info/detail/info_help";
+
 import AppDoc from "../application_doc/AppDoc";
 
 import SimulMain from "../simul_main/simul_main";
@@ -47,6 +52,8 @@ const MainStackNavigator = () => {
         <Stack.Screen name="CommunityDetail" component={CommunityDetail} />
         <Stack.Screen name="CommunityPostPatch" component={PatchPost} />
         <Stack.Screen name="Info" component={Info} />
+        <Stack.Screen name="InfoPrecaution" component={InfoPrecaution} />
+        <Stack.Screen name="InfoHelp" component={InfoHelp} />
         <Stack.Screen name="SimulMain" component={SimulMain} />
         <Stack.Screen name="MessageSimul" component={MessageSimul} />
         <Stack.Screen name="MessageDetail" component={MessageDetail} />
