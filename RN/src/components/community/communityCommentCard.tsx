@@ -23,11 +23,13 @@ export interface CommunityCardProps {
   user_nickname: string;
   selectedProps: string;
   commentModify: boolean;
+  isMine: string;
   setSelectedProps: (selectedProps: string) => void;
   setCommentModify: (modify: string) => void;
   setFocusedType: (focusedType: string) => void;
   setPostName: (postName: string) => void;
   setCommentId: (postId: number) => void;
+  setIsCommentMine: (isCommentMine: string) => void;
 }
 
 const CommunityCommentCard = (props: CommunityCardProps) => {
@@ -40,11 +42,13 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
     user_nickname,
     commentModify,
     selectedProps,
+    isMine,
     setSelectedProps,
     setCommentModify,
     setFocusedType,
     setPostName,
     setCommentId,
+    setIsCommentMine,
   } = props;
   const [userTime, setUserTime] = useState<string | number>("");
   const [newComment, setNewComment] = useState<string>(contents);
@@ -132,6 +136,7 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
               setFocusedType("comment");
               setCommentId(commentId);
               setPostName(user_nickname);
+              setIsCommentMine(isMine);
             }}
           >
             <Text style={styles.modal_btn_text}>수정 / 신고</Text>

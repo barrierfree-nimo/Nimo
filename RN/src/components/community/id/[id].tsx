@@ -7,7 +7,7 @@ import {
   TextInput,
   ScrollView,
   KeyboardAvoidingView,
-  StatusBar
+  StatusBar,
 } from "react-native";
 import Axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -27,6 +27,7 @@ interface PostContent {
   tag: string;
   createdAt: string;
   updatedAt: string;
+  isMine: string;
 }
 
 const CommunityDetail = ({ route, navigation }: any) => {
@@ -34,7 +35,6 @@ const CommunityDetail = ({ route, navigation }: any) => {
   const [userTime, setUserTime] = useState<string | number>("");
   const [comment, setComment] = useState<any[]>([]);
   const [userComment, setUserComment] = useState<string>("");
-  const [isUpdated, setIsUpdated] = useState<boolean>(false);
 
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selected, setSelected] = useState<string>("");
@@ -42,9 +42,10 @@ const CommunityDetail = ({ route, navigation }: any) => {
   const [postName, setPostName] = useState<string>("");
   const [postId, setPostId] = useState<number>(-1);
   const [commentId, setCommentId] = useState<number>(-1);
-  const [localName, setLocalName] = useState<string | null>("");
   const [commentModify, setCommentModify] = useState<string>("");
   const [selectedProps, setSelectedProps] = useState<string>("");
+
+  const [isCommentMine, setIsCommentMine] = useState<string>("");
 
   const [postTitle, setPostTitle] = useState<string>("");
   const [postContents, setPostContents] = useState<string>("");
@@ -65,17 +66,6 @@ const CommunityDetail = ({ route, navigation }: any) => {
       fetchCommunityDetail();
     };
   }, [isFocused]);
-
-  const getLocalName = async () => {
-    const local_nickname = await AsyncStorage.getItem("user_nickname");
-    await setLocalName(local_nickname);
-  };
-
-  useEffect(() => {
-    postContent?.createdAt === postContent?.updatedAt
-      ? setIsUpdated(true)
-      : setIsUpdated(true);
-  }, [postContent?.createdAt, postContent?.updatedAt]);
 
   useEffect(() => {
     let timeString;
@@ -105,7 +95,6 @@ const CommunityDetail = ({ route, navigation }: any) => {
 
   useEffect(() => {
     fetchCommunityDetail();
-    getLocalName();
   }, []);
 
   const fetchCommunityDetail = async () => {
@@ -231,7 +220,6 @@ const CommunityDetail = ({ route, navigation }: any) => {
 
   const fetchCommunityCommentReport = async () => {
     const token = await AsyncStorage.getItem("user_Token");
-    console.log("commentId>>>>", commentId);
     try {
       Axios.get(baseURL + `/admin/comment/${commentId}`, {
         headers: {
@@ -291,13 +279,25 @@ const CommunityDetail = ({ route, navigation }: any) => {
   return (
     <SafeAreaView style={CommonStyle.container}>
       <StatusBar barStyle={"light-content"} backgroundColor="#00284E" />
-      <CommunityModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        setSelected={setSelected}
-        setFocusedType={setFocusedType}
-        canUD={postName === localName}
-      />
+      {focusedType === "comment" && comment && isCommentMine && (
+        <CommunityModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          setSelected={setSelected}
+          setFocusedType={setFocusedType}
+          canUD={isCommentMine === "true" ? true : false}
+        />
+      )}
+      {focusedType === "post" && postContent && (
+        <CommunityModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          setSelected={setSelected}
+          setFocusedType={setFocusedType}
+          canUD={postContent?.isMine === "true" ? true : false}
+        />
+      )}
+
       <View style={CommonStyle.container_contents}>
         <View style={communityDetailStyle.community_container}>
           <View style={communityDetailStyle.title_container}>
@@ -345,7 +345,14 @@ const CommunityDetail = ({ route, navigation }: any) => {
                   <View>
                     {comment?.map(
                       (
-                        { user_nickname, createdAt, updatedAt, contents, id },
+                        {
+                          user_nickname,
+                          createdAt,
+                          updatedAt,
+                          contents,
+                          id,
+                          isMine,
+                        },
                         idx
                       ) => (
                         <CommunityCommentCard
@@ -357,12 +364,14 @@ const CommunityDetail = ({ route, navigation }: any) => {
                           updatedAt={updatedAt}
                           user_nickname={user_nickname}
                           commentModify={commentId === id}
+                          isMine={isMine}
                           selectedProps={selectedProps}
                           setSelectedProps={setSelectedProps}
                           setCommentModify={setCommentModify}
                           setFocusedType={setFocusedType}
                           setPostName={setPostName}
                           setCommentId={setCommentId}
+                          setIsCommentMine={setIsCommentMine}
                         />
                       )
                     )}
