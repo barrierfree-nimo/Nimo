@@ -110,7 +110,6 @@ const community = {
                 });
                 try{
                    if(post.user_id==user.id){
-                    p
                     post[ 'isMine' ] = 'true'
                 } else {
                     post[ 'isMine' ] = 'false'
