@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, TouchableOpacity, View, Text, StatusBar } from "react-native";
+import {
+  SafeAreaView,
+  TouchableOpacity,
+  View,
+  Text,
+  StatusBar,
+} from "react-native";
 import CommonStyle from "../common/common_style";
 import Banner from "../application_doc/banner";
 import AppDocStyle from "../application_doc/appDoc_style";
@@ -88,35 +94,60 @@ const AppDoc = ({ navigation }: any) => {
             AppDocStyle.index_box,
             { marginRight: 20 },
             docIndex === "simul"
-              ? { backgroundColor: "#D2ECFA" }
+              ? { backgroundColor: "#00284E" }
               : { backgroundColor: "#E8E8E8" },
           ]}
           onPress={() => setDocIndex("simul")}
         >
-          <Text style={AppDocStyle.index_text}>체험</Text>
+          <Text
+            style={[
+              AppDocStyle.index_text,
+              docIndex === "simul"
+                ? { color: "#ffffff" }
+                : { color: "#000000" },
+            ]}
+          >
+            체험
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
             AppDocStyle.index_box,
             { marginRight: 20 },
             docIndex === "quiz"
-              ? { backgroundColor: "#D2ECFA" }
+              ? { backgroundColor: "#00284E" }
               : { backgroundColor: "#E8E8E8" },
           ]}
           onPress={() => setDocIndex("quiz")}
         >
-          <Text style={AppDocStyle.index_text}>퀴즈</Text>
+          <Text
+            style={[
+              AppDocStyle.index_text,
+              docIndex === "quiz" ? { color: "#ffffff" } : { color: "#000000" },
+            ]}
+          >
+            퀴즈
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
             AppDocStyle.index_box,
             docIndex === "community"
-              ? { backgroundColor: "#D2ECFA" }
+              ? { backgroundColor: "#00284E" }
               : { backgroundColor: "#E8E8E8" },
           ]}
           onPress={() => setDocIndex("community")}
         >
-          <Text style={AppDocStyle.index_text}>소통</Text>
+          <Text
+            style={[
+              AppDocStyle.index_text,
+              docIndex === "community"
+                ? { color: "#ffffff" }
+                : { color: "#000000" },
+            ]}
+          >
+            소통
+          </Text>
         </TouchableOpacity>
       </View>
       <View style={AppDocStyle.banner_wrapper}>

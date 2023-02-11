@@ -42,8 +42,11 @@ const Banner = (props: BannerProps) => {
         nextButton={
           <>
             <View style={styles.container_move}>
-              <Image style={styles.img_move} resizeMode="contain" 
-                source={require("../../assets/icons/quiz/ic_quiz_move_next.png")} />
+              <Image
+                style={styles.img_move}
+                resizeMode="contain"
+                source={require("../../assets/icons/quiz/ic_quiz_move_next.png")}
+              />
               <Text style={styles.buttonText}>다음</Text>
             </View>
           </>
@@ -51,8 +54,11 @@ const Banner = (props: BannerProps) => {
         prevButton={
           <>
             <View style={styles.container_move}>
-              <Image style={styles.img_move} resizeMode="contain"
-                source={require("../../assets/icons/quiz/ic_quiz_move_back.png")} />
+              <Image
+                style={styles.img_move}
+                resizeMode="contain"
+                source={require("../../assets/icons/quiz/ic_quiz_move_back.png")}
+              />
               <Text style={styles.buttonText}>이전</Text>
             </View>
           </>
@@ -81,10 +87,11 @@ const Banner = (props: BannerProps) => {
 
 const styles = StyleSheet.create({
   swiper_div: {
-    backgroundColor: "#D2ECFA",
+    backgroundColor: "#ffffff",
     padding: 20,
     borderRadius: 15,
-    margin: 10,
+    borderColor: "#00284E",
+    borderWidth: 3,
     alignItems: "center",
     height: "97%",
   },
@@ -107,11 +114,11 @@ const styles = StyleSheet.create({
     width: 50,
   },
   buttonText: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 17,
     fontWeight: "600",
     color: "#00284E",
-  }
+  },
 });
 
 export default Banner;
