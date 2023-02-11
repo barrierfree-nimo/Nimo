@@ -71,6 +71,7 @@ const Main = ({ navigation }: any) => {
         <Text style={MainStyle.text_header}>피싱백신</Text>
         <View style={MainStyle.btn_setting}>
           <TouchableOpacity
+            style={MainStyle.container_setting}
             onPress={() => {
               navigation.navigate("Setting", {
                 nickname: nickname,
@@ -79,11 +80,12 @@ const Main = ({ navigation }: any) => {
               })
             }}
           >
-            <Image
+            <Text style={MainStyle.text_setting}>설정</Text>
+            {/* <Image
               source={require("../../assets/icons/setting/setting.png")}
               style={MainStyle.img_setting}
               resizeMode="contain"
-            />
+            /> */}
           </TouchableOpacity>
         </View>
       </View>

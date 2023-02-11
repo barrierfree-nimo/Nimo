@@ -74,6 +74,25 @@ const SimulMainStyle = StyleSheet.create({
     width: SCREEN_WIDTH / 5,
     height: SCREEN_WIDTH / 5,
   },
+  container_pointer: {
+    alignItems: 'center',
+    height: 80
+  },
+  text_pointer: {
+    color: "gray",
+    fontSize: 15,
+    fontWeight: "900"
+  },
+  text_pointer_voice: {
+    color: "#2E2E2E",
+    fontSize: 15,
+    fontWeight: "900"
+  },
+  img_pointer: {
+    alignContent: 'center',
+    alignItems: 'center',
+    height: 50
+  },
 });
 
 export default SimulMainStyle;

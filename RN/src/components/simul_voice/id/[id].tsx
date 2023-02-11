@@ -163,7 +163,7 @@ const VoiceDetail = ({ route, navigation }: any) => {
               <Text style={styles.text_phoneNum}>010-1234-5678</Text>
               {showOptions === false ? (
                 <Text style={styles.text_callTime}>
-                  화면을 터치하면 대화가 나옵니다
+                  아래 화면을 터치하면 대화가 나옵니다
                 </Text>
               ) : (
                 <Text></Text>
@@ -196,7 +196,14 @@ const VoiceDetail = ({ route, navigation }: any) => {
                 ))}
 
                 {showOptions === false ? (
-                  <Text></Text>
+                  <View style={SimulMainStyle.container_pointer}>
+                    <Image
+                      source={require("../../../assets/icons/simul_common/pointer.png")}
+                      style={SimulMainStyle.img_pointer}
+                      resizeMode="contain"
+                    /> 
+                    <Text style={SimulMainStyle.text_pointer_voice}>터치</Text>
+                </View>
                 ) : (
                   <View style={styles.container_option}>
                     <Text style={styles.text_notice_select}>

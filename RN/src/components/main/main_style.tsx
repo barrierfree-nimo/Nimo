@@ -24,9 +24,18 @@ const MainStyle  = StyleSheet.create({
     fontSize: 30,
     fontWeight: "900",    
   },
+  container_setting: {
+    paddingVertical: 3,
+    paddingHorizontal: 12,
+  },
+  text_setting: {
+    color: "#9A9A9A",
+    fontSize: 20,
+    fontWeight: "900",    
+  },
   btn_setting: {
     position: "absolute",
-    left: SCREEN_WIDTH - 55,
+    left: SCREEN_WIDTH - 70,
   },
   img_setting: {
     width: 30,

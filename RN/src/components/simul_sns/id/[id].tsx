@@ -164,7 +164,7 @@ const SnsDetail = ({ route, navigation }: any) => {
               </Text>
               {showOptions === false ? (
                 <Text style={snsDetailStyle.press_msg_text}>
-                  화면을 터치하면 대화가 나옵니다
+                  아래 화면을 터치하면 대화가 나옵니다
                 </Text>
               ) : (
                 <Text></Text>
@@ -199,7 +199,14 @@ const SnsDetail = ({ route, navigation }: any) => {
               ))}
             </View>
             {showOptions === false ? (
-              <Text></Text>
+              <View style={SimulMainStyle.container_pointer}>
+                <Image
+                  source={require("../../../assets/icons/simul_common/pointer.png")}
+                  style={SimulMainStyle.img_pointer}
+                  resizeMode="contain"
+                /> 
+                <Text style={SimulMainStyle.text_pointer}>터치</Text>
+              </View> 
             ) : (
               <View style={snsDetailStyle.choice_box}>
                 <Text style={snsDetailStyle.text_notice_select}>
