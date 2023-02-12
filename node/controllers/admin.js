@@ -12,17 +12,17 @@ const settings = {
 				if (type == "user") {
 					const block = await BlackUser.create({
 						user_id: user.id,
-						black_id: req.params.value
+						black_id: id
 					})
 				} else if (type == "post") {
 					const block = await BlackPost.create({
 						user_id: user.id,
-						black_id: req.params.value
+						black_id: id
 					})
 				} else {
 					const block = await BlackComment.create({
 						user_id: user.id,
-						black_id: req.params.value
+						black_id: id
 					})
 				}
 			} catch (error) {

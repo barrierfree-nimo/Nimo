@@ -39,9 +39,11 @@ const community = {
             const user = await User.findOne({where: {id: req.user_id}});
             const blackUsers = await BlackUser.findAll({where: {user_id: user.id}});
             const userList = []
+            
             for (i of blackUsers) {
-                userList.push(i.black_nickname)
+                userList.push(i.black_id)
             }
+
             const blackuserPosts = await Post.findAll({where: {user_id: {[ Sequelize.Op.in ]: userList}}})
             const postList = []
             for (i of blackuserPosts) {
