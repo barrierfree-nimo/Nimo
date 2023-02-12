@@ -74,26 +74,26 @@ const SnsDetail = ({ route, navigation }: any) => {
 
         if (contents.includes("$name")) {
           localName
-            ? (contents = contents.replaceAll("$name", localName))
-            : (contents = contents.replaceAll("$name", "홍길동"));
+            ? (contents = contents.split("$name").join(localName))
+            : (contents = contents.split("$name").join("김니모"));
         }
 
         if (contents.includes("$bank")) {
           localBank
-            ? (contents = contents.replaceAll("$name", `${localBank}은행`))
-            : (contents = contents.replaceAll("$bank", "국민은행"));
+            ? (contents = contents.split("$bank").join(`${localBank}은행`))
+            : (contents = contents.split("$bank").join("니모은행"));
         }
 
         if (contents.includes("$gender")) {
           localGender === "male"
-            ? (contents = contents.replaceAll("$gender", "아빠"))
-            : (contents = contents.replaceAll("$gender", "엄마"));
+            ? (contents = contents.split("$gender").join("아빠"))
+            : (contents = contents.split("$gender").join("엄마"));
         }
 
         if (contents.includes("$child")) {
           localChild === "son"
-            ? (contents = contents.replaceAll("$child", "아들"))
-            : (contents = contents.replaceAll("$child", "딸"));
+            ? (contents = contents.split("$child").join("아들"))
+            : (contents = contents.split("$child").join("딸"));
         }
 
         if (response == 1 || response == 2)
