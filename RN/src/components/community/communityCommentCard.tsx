@@ -24,10 +24,11 @@ export interface CommunityCardProps {
   selectedProps: string;
   commentModify: boolean;
   isMine: string;
+  user_id: number;
   setSelectedProps: (selectedProps: string) => void;
   setCommentModify: (modify: string) => void;
   setFocusedType: (focusedType: string) => void;
-  setPostName: (postName: string) => void;
+  setPostName: (postName: number) => void;
   setCommentId: (postId: number) => void;
   setIsCommentMine: (isCommentMine: string) => void;
 }
@@ -43,6 +44,7 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
     commentModify,
     selectedProps,
     isMine,
+    user_id,
     setSelectedProps,
     setCommentModify,
     setFocusedType,
@@ -135,7 +137,7 @@ const CommunityCommentCard = (props: CommunityCardProps) => {
             onPress={() => {
               setFocusedType("comment");
               setCommentId(commentId);
-              setPostName(user_nickname);
+              setPostName(user_id);
               setIsCommentMine(isMine);
             }}
           >

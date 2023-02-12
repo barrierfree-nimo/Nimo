@@ -74,26 +74,26 @@ const MessageDetail = ({ route, navigation }: any) => {
 
         if (contents.includes("$name")) {
           localName
-            ? (contents = contents.replaceAll("$name", localName))
-            : (contents = contents.replaceAll("$name", "홍길동"));
+            ? (contents = contents.split("$name").join(localName))
+            : (contents = contents.split("$name").join("김니모"));
         }
 
         if (contents.includes("$bank")) {
           localBank
-            ? (contents = contents.replaceAll("$name", `${localBank}은행`))
-            : (contents = contents.replaceAll("$bank", "국민은행"));
+            ? (contents = contents.split("$bank").join(`${localBank}은행`))
+            : (contents = contents.split("$bank").join("니모은행"));
         }
 
         if (contents.includes("$gender")) {
           localGender === "male"
-            ? (contents = contents.replaceAll("$gender", "아빠"))
-            : (contents = contents.replaceAll("$gender", "엄마"));
+            ? (contents = contents.split("$gender").join("아빠"))
+            : (contents = contents.split("$gender").join("엄마"));
         }
 
         if (contents.includes("$child")) {
           localChild === "son"
-            ? (contents = contents.replaceAll("$gender", "아들"))
-            : (contents = contents.replaceAll("$gender", "딸"));
+            ? (contents = contents.split("$child").join("아들"))
+            : (contents = contents.split("$child").join("딸"));
         }
 
         if (response == 1 || response == 2)
@@ -198,16 +198,16 @@ const MessageDetail = ({ route, navigation }: any) => {
                 </View>
               ))}
             </View>
-            
+
             {showOptions === false ? (
               <View style={SimulMainStyle.container_pointer}>
                 <Image
                   source={require("../../../assets/icons/simul_common/pointer.png")}
                   style={SimulMainStyle.img_pointer}
                   resizeMode="contain"
-                /> 
+                />
                 <Text style={SimulMainStyle.text_pointer}>터치</Text>
-              </View>           
+              </View>
             ) : (
               <View style={msgDetailStyle.choice_box}>
                 <Text style={msgDetailStyle.text_notice_select}>
