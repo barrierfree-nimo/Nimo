@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import { SafeAreaView, View, ScrollView, Text, TextInput, TouchableOpacity, ToastAndroid } from "react-native";
+import { SafeAreaView, View, ScrollView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, ToastAndroid } from "react-native";
 import Checkbox from "expo-checkbox";
 import CommonStyle from "../../common/common_style";
 import RegisterInfoStyle from "./registerInfo_style";
@@ -154,136 +154,140 @@ const RegisterInfo = ({route, navigation}: any) => {
         </View>
         
         <ScrollView style={RegisterInfoStyle.container_info}>
+          <TouchableWithoutFeedback>
+            <View>
+              <View style={RegisterInfoStyle.container_info_row}>
+                <Text style={RegisterInfoStyle.text_input_title}>이름</Text>
+                <TextInput
+                  value={inputs.name}
+                  style={RegisterInfoStyle.textInput_name}
+                  onChangeText={(value) => {onChangeTextInputs("name", value)}}
+                  placeholder="이름"
+                />
+              </View>
+              
+              <View style={RegisterInfoStyle.container_info_row}>
+                <Text style={RegisterInfoStyle.text_input_title}>주거래 은행</Text>
+                <TextInput
+                  value={inputs.bank}
+                  style={RegisterInfoStyle.textInput_bank}
+                  onChangeText={(value) => {onChangeTextInputs("bank", value)}}
+                  placeholder="은행명 (예. 국민)"
+                />
+              </View>
 
-          <View style={RegisterInfoStyle.container_info_row}>
-            <Text style={RegisterInfoStyle.text_input_title}>이름</Text>
-            <TextInput
-              value={inputs.name}
-              style={RegisterInfoStyle.textInput_name}
-              onChangeText={(value) => {onChangeTextInputs("name", value)}}
-              placeholder="이름"
-            />
-          </View>
+              <View style={RegisterInfoStyle.container_info_row}>
+                <Text style={RegisterInfoStyle.text_input_title}>성별</Text>
+                <View style={RegisterInfoStyle.container_checkbox_row}>
+                  <View style={RegisterInfoStyle.container_checkbox}>
+                    <Checkbox
+                      style={RegisterInfoStyle.checkbox}
+                      value={inputs.gender.male}
+                      onValueChange={(value) => {onChangeGender("male", value)}}
+                      color={inputs.gender.male ? "#FFD542" : undefined}
+                    />
+                    <Text style={RegisterInfoStyle.text_checkbox_title}>
+                      남
+                    </Text>
+                  </View>
+                  <View style={RegisterInfoStyle.container_checkbox}>
+                    <Checkbox
+                      style={RegisterInfoStyle.checkbox}
+                      value={inputs.gender.female}
+                      onValueChange={(value) => {onChangeGender("female", value)}}
+                      color={inputs.gender.female ? "#FFD542" : undefined}
+                    />
+                    <Text style={RegisterInfoStyle.text_checkbox_title}>
+                      여
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              
+              <View style={RegisterInfoStyle.container_info_row}>
+                <Text style={RegisterInfoStyle.text_input_title}>자녀유무</Text>
+                <View style={RegisterInfoStyle.container_checkbox_row}>
+                  <View style={RegisterInfoStyle.container_checkbox}>
+                    <Checkbox
+                      style={RegisterInfoStyle.checkbox}
+                      value={inputs.child.daughter}
+                      onValueChange={(value) => {onChangechild("daughter", value)}}
+                      color={inputs.child.daughter ? "#FFD542" : undefined}
+                    />
+                    <Text style={RegisterInfoStyle.text_checkbox_title}>
+                      딸
+                    </Text>
+                  </View>
+                  <View style={RegisterInfoStyle.container_checkbox}>
+                    <Checkbox
+                      style={RegisterInfoStyle.checkbox}
+                      value={inputs.child.son}
+                      onValueChange={(value) => {onChangechild("son", value)}}
+                      color={inputs.child.son ? "#FFD542" : undefined}
+                    />
+                    <Text style={RegisterInfoStyle.text_checkbox_title}>
+                      아들
+                    </Text>
+                  </View>
+                </View>
+              </View>
+
+              <View style={RegisterInfoStyle.container_info_col}>
+                <Text style={RegisterInfoStyle.text_input_title}>관심사</Text>
+                <View style={RegisterInfoStyle.container_checkbox_interest_main}>
+                  <View style={RegisterInfoStyle.container_checkbox_interest_sub}>
+                    <View style={RegisterInfoStyle.container_checkbox_interest}>
+                      <Checkbox
+                        style={RegisterInfoStyle.checkbox}
+                        value={inputs.interest.loan}
+                        onValueChange={(value) => {onChangeInterest("loan", value)}}
+                        color={inputs.interest.loan ? "#FFD542" : undefined}
+                      />
+                      <Text style={RegisterInfoStyle.text_checkbox_title}>
+                        대출
+                      </Text>
+                    </View>
+                    <View style={RegisterInfoStyle.container_checkbox_interest}>
+                      <Checkbox
+                        style={RegisterInfoStyle.checkbox}
+                        value={inputs.interest.invest}
+                        onValueChange={(value) => {onChangeInterest("invest", value)}}
+                        color={inputs.interest.invest ? "#FFD542" : undefined}
+                      />
+                      <Text style={RegisterInfoStyle.text_checkbox_title}>
+                        투자
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={RegisterInfoStyle.container_checkbox_interest_sub}>
+                    <View style={RegisterInfoStyle.container_checkbox_interest}>
+                      <Checkbox
+                        style={RegisterInfoStyle.checkbox}
+                        value={inputs.interest.money}
+                        onValueChange={(value) => {onChangeInterest("money", value)}}
+                        color={inputs.interest.money ? "#FFD542" : undefined}
+                      />
+                      <Text style={RegisterInfoStyle.text_checkbox_title}>
+                        지원금
+                      </Text>
+                    </View>
+                    <View style={RegisterInfoStyle.container_checkbox_interest}>
+                      <Checkbox
+                        style={RegisterInfoStyle.checkbox}
+                        value={inputs.interest.shopping}
+                        onValueChange={(value) => {onChangeInterest("shopping", value)}}
+                        color={inputs.interest.shopping ? "#FFD542" : undefined}
+                      />
+                      <Text style={RegisterInfoStyle.text_checkbox_title}>
+                        온라인 쇼핑
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
           
-          <View style={RegisterInfoStyle.container_info_row}>
-            <Text style={RegisterInfoStyle.text_input_title}>주거래 은행</Text>
-            <TextInput
-              value={inputs.bank}
-              style={RegisterInfoStyle.textInput_bank}
-              onChangeText={(value) => {onChangeTextInputs("bank", value)}}
-              placeholder="은행명 (예. 국민)"
-            />
-          </View>
-
-          <View style={RegisterInfoStyle.container_info_row}>
-            <Text style={RegisterInfoStyle.text_input_title}>성별</Text>
-            <View style={RegisterInfoStyle.container_checkbox_row}>
-              <View style={RegisterInfoStyle.container_checkbox}>
-                <Checkbox
-                  style={RegisterInfoStyle.checkbox}
-                  value={inputs.gender.male}
-                  onValueChange={(value) => {onChangeGender("male", value)}}
-                  color={inputs.gender.male ? "#FFD542" : undefined}
-                />
-                <Text style={RegisterInfoStyle.text_checkbox_title}>
-                  남
-                </Text>
-              </View>
-              <View style={RegisterInfoStyle.container_checkbox}>
-                <Checkbox
-                  style={RegisterInfoStyle.checkbox}
-                  value={inputs.gender.female}
-                  onValueChange={(value) => {onChangeGender("female", value)}}
-                  color={inputs.gender.female ? "#FFD542" : undefined}
-                />
-                <Text style={RegisterInfoStyle.text_checkbox_title}>
-                  여
-                </Text>
-              </View>
-            </View>
-          </View>
-          
-          <View style={RegisterInfoStyle.container_info_row}>
-            <Text style={RegisterInfoStyle.text_input_title}>자녀유무</Text>
-            <View style={RegisterInfoStyle.container_checkbox_row}>
-              <View style={RegisterInfoStyle.container_checkbox}>
-                <Checkbox
-                  style={RegisterInfoStyle.checkbox}
-                  value={inputs.child.daughter}
-                  onValueChange={(value) => {onChangechild("daughter", value)}}
-                  color={inputs.child.daughter ? "#FFD542" : undefined}
-                />
-                <Text style={RegisterInfoStyle.text_checkbox_title}>
-                  딸
-                </Text>
-              </View>
-              <View style={RegisterInfoStyle.container_checkbox}>
-                <Checkbox
-                  style={RegisterInfoStyle.checkbox}
-                  value={inputs.child.son}
-                  onValueChange={(value) => {onChangechild("son", value)}}
-                  color={inputs.child.son ? "#FFD542" : undefined}
-                />
-                <Text style={RegisterInfoStyle.text_checkbox_title}>
-                  아들
-                </Text>
-              </View>
-            </View>
-          </View>
-
-          <View style={RegisterInfoStyle.container_info_col}>
-            <Text style={RegisterInfoStyle.text_input_title}>관심사</Text>
-            <View style={RegisterInfoStyle.container_checkbox_interest_main}>
-              <View style={RegisterInfoStyle.container_checkbox_interest_sub}>
-                <View style={RegisterInfoStyle.container_checkbox_interest}>
-                  <Checkbox
-                    style={RegisterInfoStyle.checkbox}
-                    value={inputs.interest.loan}
-                    onValueChange={(value) => {onChangeInterest("loan", value)}}
-                    color={inputs.interest.loan ? "#FFD542" : undefined}
-                  />
-                  <Text style={RegisterInfoStyle.text_checkbox_title}>
-                    대출
-                  </Text>
-                </View>
-                <View style={RegisterInfoStyle.container_checkbox_interest}>
-                  <Checkbox
-                    style={RegisterInfoStyle.checkbox}
-                    value={inputs.interest.invest}
-                    onValueChange={(value) => {onChangeInterest("invest", value)}}
-                    color={inputs.interest.invest ? "#FFD542" : undefined}
-                  />
-                  <Text style={RegisterInfoStyle.text_checkbox_title}>
-                    투자
-                  </Text>
-                </View>
-              </View>
-              <View style={RegisterInfoStyle.container_checkbox_interest_sub}>
-                <View style={RegisterInfoStyle.container_checkbox_interest}>
-                  <Checkbox
-                    style={RegisterInfoStyle.checkbox}
-                    value={inputs.interest.money}
-                    onValueChange={(value) => {onChangeInterest("money", value)}}
-                    color={inputs.interest.money ? "#FFD542" : undefined}
-                  />
-                  <Text style={RegisterInfoStyle.text_checkbox_title}>
-                    지원금
-                  </Text>
-                </View>
-                <View style={RegisterInfoStyle.container_checkbox_interest}>
-                  <Checkbox
-                    style={RegisterInfoStyle.checkbox}
-                    value={inputs.interest.shopping}
-                    onValueChange={(value) => {onChangeInterest("shopping", value)}}
-                    color={inputs.interest.shopping ? "#FFD542" : undefined}
-                  />
-                  <Text style={RegisterInfoStyle.text_checkbox_title}>
-                    온라인 쇼핑
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </View>
           
           
         </ScrollView>

@@ -150,151 +150,157 @@ const Register = ({ navigation }: any) => {
         </View>
 
         <ScrollView style={RegisterStyle.container}>
-          <View style={RegisterStyle.container_input}>
-            <View style={RegisterStyle.container_item}>
-              <Text style={RegisterStyle.title_item}>아이디</Text>
-              <View style={RegisterStyle.container_item_input}>
-                <TextInput
-                  value={userId}
-                  onChangeText={(userId) => {
-                    setUserId(userId), setUserIdOk(false);
-                  }}
-                  style={RegisterStyle.textInput_item_id}
-                  placeholder="아이디"
-                />
+          <TouchableWithoutFeedback>
+            <View>
+              <View style={RegisterStyle.container_input}>
+                <View style={RegisterStyle.container_item}>
+                  <Text style={RegisterStyle.title_item}>아이디</Text>
+                  <View style={RegisterStyle.container_item_input}>
+                    <TextInput
+                      value={userId}
+                      onChangeText={(userId) => {
+                        setUserId(userId), setUserIdOk(false);
+                      }}
+                      style={RegisterStyle.textInput_item_id}
+                      placeholder="아이디"
+                    />
+                    <TouchableOpacity
+                      style={RegisterStyle.btn_overlapping}
+                      onPress={() => checkUserId()}>
+                      <Text style={RegisterStyle.btnText_overlapping}>
+                        중복확인
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  {userIdOk === false ? (
+                    <View></View>
+                  ) : (
+                    <Text style={RegisterStyle.text_notice}>
+                      * 사용 가능한 아이디입니다.
+                    </Text>
+                  )}
+                </View>
+
+                <View style={RegisterStyle.container_item}>
+                  <Text style={RegisterStyle.title_item}>닉네임</Text>
+                  <View style={RegisterStyle.container_item_input}>
+                    <TextInput
+                      value={nickname}
+                      onChangeText={(nickname) => {
+                        setNickname(nickname), setNicknameOk(false);
+                      }}
+                      style={RegisterStyle.textInput_item_id}
+                      placeholder="닉네임"
+                    />
+                    <TouchableOpacity
+                      style={RegisterStyle.btn_overlapping}
+                      onPress={() => checkNickname()}>
+                      <Text style={RegisterStyle.btnText_overlapping}>
+                        중복확인
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  {nicknameOk === false ? (
+                    <View></View>
+                  ) : (
+                    <Text style={RegisterStyle.text_notice}>
+                      * 사용 가능한 닉네임입니다.
+                    </Text>
+                  )}
+                </View>
+
+                <View style={RegisterStyle.container_item}>
+                  <Text style={RegisterStyle.title_item}>비밀번호</Text>
+                  <View style={RegisterStyle.container_item_input}>
+                    <TextInput
+                      value={password}
+                      onChangeText={(password) => setPassword(password)}
+                      secureTextEntry={true}
+                      style={RegisterStyle.textInput_item}
+                      placeholder="비밀번호"
+                    />
+                  </View>
+                </View>
+
+                <View style={RegisterStyle.container_item}>
+                  <Text style={RegisterStyle.title_item}>비밀번호 확인</Text>
+                  <View style={RegisterStyle.container_item_input}>
+                    <TextInput
+                      value={passwordAgain}
+                      onChangeText={(passwordAgain) => {
+                        setPasswordAgain(passwordAgain);
+                        checkPassword(passwordAgain);
+                      }}
+                      secureTextEntry={true}
+                      style={RegisterStyle.textInput_item}
+                      placeholder="비밀번호를 한번 더 입력해주세요"
+                    />
+                  </View>
+                  {passwordOk === false ? (
+                    <View></View>
+                  ) : (
+                    <Text style={RegisterStyle.text_notice}>
+                      * 비밀번호 확인이 완료되었습니다.
+                    </Text>
+                  )}
+                </View>
+
+                <View style={RegisterStyle.container_item}>
+                  <Text style={RegisterStyle.title_item}>약관 동의</Text>
+                  <View style={RegisterStyle.container_checkbox}>
+                    <Checkbox
+                      style={RegisterStyle.checkbox}
+                      value={terms1Ok}
+                      onValueChange={(terms1Ok) => setTerms1Ok(terms1Ok)}
+                      color={terms1Ok ? "#FFD542" : undefined}
+                    />
+                    <Text style={RegisterStyle.text_checkbox_title}>
+                      (필수) 이용약관 동의{" "}
+                    </Text>
+                    <TouchableOpacity
+                      style={RegisterStyle.btn_checkbox_link}
+                      onPress={() => Linking.openURL(terms1URL)}
+                    >
+                      <Text style={RegisterStyle.text_checkbox_link}>보기</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={RegisterStyle.container_checkbox}>
+                    <Checkbox
+                      style={RegisterStyle.checkbox}
+                      value={terms2Ok}
+                      onValueChange={(terms2Ok) => setTerms2Ok(terms2Ok)}
+                      color={terms2Ok ? "#FFD542" : undefined}
+                    />
+                    <Text style={RegisterStyle.text_checkbox_title}>
+                      (필수) 개인정보처리방침 동의{" "}
+                    </Text>
+                    <TouchableOpacity
+                      style={RegisterStyle.btn_checkbox_link}
+                      onPress={() => Linking.openURL(terms2URL)}
+                    >
+                      <Text style={RegisterStyle.text_checkbox_link}>보기</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+
+              <View style={RegisterStyle.container_btn}>
                 <TouchableOpacity
-                  style={RegisterStyle.btn_overlapping}
-                  onPress={() => checkUserId()}>
-                  <Text style={RegisterStyle.btnText_overlapping}>
-                    중복확인
+                  onPress={() => {
+                    addUser();
+                  }}
+                  style={RegisterStyle.btn_register}
+                >
+                  <Text style={RegisterStyle.btnText_register}>
+                    회원가입 완료하기
                   </Text>
                 </TouchableOpacity>
               </View>
-              {userIdOk === false ? (
-                <View></View>
-              ) : (
-                <Text style={RegisterStyle.text_notice}>
-                  * 사용 가능한 아이디입니다.
-                </Text>
-              )}
             </View>
-
-            <View style={RegisterStyle.container_item}>
-              <Text style={RegisterStyle.title_item}>닉네임</Text>
-              <View style={RegisterStyle.container_item_input}>
-                <TextInput
-                  value={nickname}
-                  onChangeText={(nickname) => {
-                    setNickname(nickname), setNicknameOk(false);
-                  }}
-                  style={RegisterStyle.textInput_item_id}
-                  placeholder="닉네임"
-                />
-                <TouchableOpacity
-                  style={RegisterStyle.btn_overlapping}
-                  onPress={() => checkNickname()}>
-                  <Text style={RegisterStyle.btnText_overlapping}>
-                    중복확인
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              {nicknameOk === false ? (
-                <View></View>
-              ) : (
-                <Text style={RegisterStyle.text_notice}>
-                  * 사용 가능한 닉네임입니다.
-                </Text>
-              )}
-            </View>
-
-            <View style={RegisterStyle.container_item}>
-              <Text style={RegisterStyle.title_item}>비밀번호</Text>
-              <View style={RegisterStyle.container_item_input}>
-                <TextInput
-                  value={password}
-                  onChangeText={(password) => setPassword(password)}
-                  secureTextEntry={true}
-                  style={RegisterStyle.textInput_item}
-                  placeholder="비밀번호"
-                />
-              </View>
-            </View>
-
-            <View style={RegisterStyle.container_item}>
-              <Text style={RegisterStyle.title_item}>비밀번호 확인</Text>
-              <View style={RegisterStyle.container_item_input}>
-                <TextInput
-                  value={passwordAgain}
-                  onChangeText={(passwordAgain) => {
-                    setPasswordAgain(passwordAgain);
-                    checkPassword(passwordAgain);
-                  }}
-                  style={RegisterStyle.textInput_item}
-                  secureTextEntry={true}
-                  placeholder="비밀번호를 한번 더 입력해주세요"
-                />
-              </View>
-              {passwordOk === false ? (
-                <View></View>
-              ) : (
-                <Text style={RegisterStyle.text_notice}>
-                  * 비밀번호 확인이 완료되었습니다.
-                </Text>
-              )}
-            </View>
-
-            <View style={RegisterStyle.container_item}>
-              <Text style={RegisterStyle.title_item}>약관 동의</Text>
-              <View style={RegisterStyle.container_checkbox}>
-                <Checkbox
-                  style={RegisterStyle.checkbox}
-                  value={terms1Ok}
-                  onValueChange={(terms1Ok) => setTerms1Ok(terms1Ok)}
-                  color={terms1Ok ? "#FFD542" : undefined}
-                />
-                <Text style={RegisterStyle.text_checkbox_title}>
-                  (필수) 이용약관 동의{" "}
-                </Text>
-                <TouchableOpacity
-                  style={RegisterStyle.btn_checkbox_link}
-                  onPress={() => Linking.openURL(terms1URL)}
-                >
-                  <Text style={RegisterStyle.text_checkbox_link}>보기</Text>
-                </TouchableOpacity>
-              </View>
-
-              <View style={RegisterStyle.container_checkbox}>
-                <Checkbox
-                  style={RegisterStyle.checkbox}
-                  value={terms2Ok}
-                  onValueChange={(terms2Ok) => setTerms2Ok(terms2Ok)}
-                  color={terms2Ok ? "#FFD542" : undefined}
-                />
-                <Text style={RegisterStyle.text_checkbox_title}>
-                  (필수) 개인정보처리방침 동의{" "}
-                </Text>
-                <TouchableOpacity
-                  style={RegisterStyle.btn_checkbox_link}
-                  onPress={() => Linking.openURL(terms2URL)}
-                >
-                  <Text style={RegisterStyle.text_checkbox_link}>보기</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-
-          <View style={RegisterStyle.container_btn}>
-            <TouchableOpacity
-              onPress={() => {
-                addUser();
-              }}
-              style={RegisterStyle.btn_register}
-            >
-              <Text style={RegisterStyle.btnText_register}>
-                회원가입 완료하기
-              </Text>
-            </TouchableOpacity>
-          </View>
+            
+          </TouchableWithoutFeedback>
+          
         </ScrollView>
       </SafeAreaView>
     </TouchableWithoutFeedback>
