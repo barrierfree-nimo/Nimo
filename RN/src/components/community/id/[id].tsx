@@ -28,6 +28,7 @@ interface PostContent {
   createdAt: string;
   updatedAt: string;
   isMine: string;
+  user_id: number;
 }
 
 const CommunityDetail = ({ route, navigation }: any) => {
@@ -39,7 +40,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [selected, setSelected] = useState<string>("");
   const [focusedType, setFocusedType] = useState<string>("");
-  const [postName, setPostName] = useState<string>("");
+  const [postName, setPostName] = useState<number>();
   const [postId, setPostId] = useState<number>(-1);
   const [commentId, setCommentId] = useState<number>(-1);
   const [commentModify, setCommentModify] = useState<string>("");
@@ -311,7 +312,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
                 onPress={() => {
                   setFocusedType("post");
                   postContent && setPostId(postContent.id);
-                  postContent && setPostName(postContent.user_nickname);
+                  postContent && setPostName(postContent.user_id);
                   postContent && setPostTitle(postContent.title);
                   postContent && setPostTag(postContent.tag);
                   postContent && setPostContents(postContent.contents);
@@ -352,6 +353,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
                           contents,
                           id,
                           isMine,
+                          user_id,
                         },
                         idx
                       ) => (
@@ -363,6 +365,7 @@ const CommunityDetail = ({ route, navigation }: any) => {
                           createdAt={createdAt}
                           updatedAt={updatedAt}
                           user_nickname={user_nickname}
+                          user_id={user_id}
                           commentModify={commentId === id}
                           isMine={isMine}
                           selectedProps={selectedProps}
