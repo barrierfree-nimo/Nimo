@@ -85,7 +85,6 @@ const Setting = ({ route, navigation }: any) => {
         console.log(res)
       });
 
-      await AsyncStorage.clear();
       navigation.reset({
         index: 0,
         routes: [{name: "AuthStackNavigator"}],

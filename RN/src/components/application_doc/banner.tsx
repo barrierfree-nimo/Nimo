@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     marginTop: 20,
+    lineHeight: 30,
   },
   container_move: {
     paddingHorizontal: 10,

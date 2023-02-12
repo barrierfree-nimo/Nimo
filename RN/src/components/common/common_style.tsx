@@ -67,7 +67,6 @@ const CommonStyle = StyleSheet.create({
   },
   navigate_btn: {
     width: 130,
-    height: 50,
     padding: 10,
 
     marginHorizontal: 20,

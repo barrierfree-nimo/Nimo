@@ -30,7 +30,7 @@
       "softwareKeyboardLayoutMode": "pan",
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true,
-      "versionCode": 12
+      "versionCode": 13
     },
     "plugins": [
       [

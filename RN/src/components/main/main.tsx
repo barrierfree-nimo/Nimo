@@ -61,7 +61,8 @@ const Main = ({ navigation }: any) => {
     const bank = await AsyncStorage.getItem("bank");
     const gender = await AsyncStorage.getItem("gender");
     const interest = await AsyncStorage.getItem("interest");
-    console.log(name + ' ' + bank + ' ' + gender + ' ' + interest);
+    const token = await AsyncStorage.getItem("user_Token");
+    console.log(name + ' ' + bank + ' ' + gender + ' ' + interest + " " + token);
   };
 
   return (
