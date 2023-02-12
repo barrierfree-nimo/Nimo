@@ -92,8 +92,8 @@ const MessageDetail = ({ route, navigation }: any) => {
 
         if (contents.includes("$child")) {
           localChild === "son"
-            ? (contents = contents.replaceAll("$gender", "아들"))
-            : (contents = contents.replaceAll("$gender", "딸"));
+            ? (contents = contents.replaceAll("$child", "아들"))
+            : (contents = contents.replaceAll("$child", "딸"));
         }
 
         if (response == 1 || response == 2)
@@ -198,16 +198,16 @@ const MessageDetail = ({ route, navigation }: any) => {
                 </View>
               ))}
             </View>
-            
+
             {showOptions === false ? (
               <View style={SimulMainStyle.container_pointer}>
                 <Image
                   source={require("../../../assets/icons/simul_common/pointer.png")}
                   style={SimulMainStyle.img_pointer}
                   resizeMode="contain"
-                /> 
+                />
                 <Text style={SimulMainStyle.text_pointer}>터치</Text>
-              </View>           
+              </View>
             ) : (
               <View style={msgDetailStyle.choice_box}>
                 <Text style={msgDetailStyle.text_notice_select}>
