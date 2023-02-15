@@ -1,7 +1,8 @@
 ### 2022 배리어프리 앱개발 콘테스트 
 > **공식 홈**  https://www.autoeverapp.kr/ </br> 
 > **다운로드** https://play.google.com/store/apps/details?id=com.nimo.phishingvaccine&hl=ko </br> 
-> **진행기간**  2022.04.18 - 2022.02.15
+> **진행기간**  2022.04.18 - 2022.02.15 </br> 
+> **수상** 우수상
 </br>
 
 # :syringe: 피싱백신
@@ -28,6 +29,10 @@
 ###  :three: 소통하기
 - 신종 피싱 수법을 `빠르게 공유`해요
 - 의심되는 사례를 `질문`해요
+
+###  :four: 정보얻기
+- 피싱의 정의, 예방법을 한눈에 알아봐요
+- 피싱 피해 시 신고 및 대처 방법을 알아봐요
 </br>
 
 ## :seedling: Structure
@@ -54,4 +59,4 @@
 |:--:|:--:|:--:|
 |주송아|김민서|최수현|
 |![emoji (5)](https://user-images.githubusercontent.com/86199517/212791926-d8045d23-7e80-49fc-ad8b-16cd667d91b8.png)|![emoji (4)](https://user-images.githubusercontent.com/86199517/212791895-5b75ae1d-5447-4d8e-8b1e-c491414136da.png)|![emoji (2)](https://user-images.githubusercontent.com/86199517/212791919-1f803a5a-6673-479d-b806-ac7bb03a27b5.png)|
-| [front] 사용설명서 <br> [front] 메세지, SNS 피싱체험 <br> [front] 소통하기 | [front] 회원가입, 로그인, 메인 <br> [full] 보이스 피싱체험 <br> [full] 피싱퀴즈 | [back] 회원가입, 로그인 <br> [back] 메세지, SNS 피싱체험 <br> [back] 소통하기 
+| [front] 사용설명서 <br> [front] 메세지, SNS 피싱체험 <br> [front] 소통하기 | [front] 회원가입, 로그인, 정보얻기 <br> [full] 보이스 피싱체험 <br> [full] 피싱퀴즈 | [back] 회원가입, 로그인 <br> [back] 메세지, SNS 피싱체험 <br> [back] 소통하기 
